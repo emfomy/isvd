@@ -1,6 +1,6 @@
 # Set complier flags
-set(CMAKE_C_FLAGS "-std=c11 -O2 -g -Wall -Wextra -pedantic")
-# set(CMAKE_C_FLAGS "-std=c11 -O0 -g -fsanitize=address -Wall -Wextra -pedantic")
+set(CMAKE_C_FLAGS "-std=c99 -O2 -g -Wall -Wextra -pedantic")
+set(CMAKE_CXX_FLAGS "-std=c++03 -O2 -g -Wall -Wextra -pedantic")
 
 if(ISVD_BUILD_BIN)
   set(findtype REQUIRED)
@@ -11,12 +11,22 @@ endif()
 # Check compiler support
 if(ISVD_BUILD_BIN)
   include(CheckCCompilerFlag)
-  CHECK_C_COMPILER_FLAG("-std=c11" COMPILER_SUPPORTS_C11)
-  if(NOT COMPILER_SUPPORTS_C11)
+  CHECK_C_COMPILER_FLAG("-std=c99" COMPILER_SUPPORTS_C99)
+  if(NOT COMPILER_SUPPORTS_C99)
     message(
       FATAL_ERROR
-      "The compiler ${CMAKE_C_COMPILER} has no C11 support. "
+      "The compiler ${CMAKE_C_COMPILER} has no C99 support. "
       "Please use a different C compiler."
+    )
+  endif()
+
+  include(CheckCXXCompilerFlag)
+  CHECK_CXX_COMPILER_FLAG("-std=c++03" COMPILER_SUPPORTS_CXX03)
+  if(NOT COMPILER_SUPPORTS_CXX03)
+    message(
+      FATAL_ERROR
+      "The compiler ${CMAKE_CXX_COMPILER} has no C++03 support. "
+      "Please use a different C++ compiler."
     )
   endif()
 endif()

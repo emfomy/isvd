@@ -8,7 +8,6 @@ message(STATUS "Set 'ISVD_BUILD_DOC'       to build documentation.")
 message(STATUS "Set 'ISVD_BUILD_DRIVER'    to build driver codes.")
 message(STATUS "Set 'ISVD_BUILD_REPORT'    to build report codes.")
 message(STATUS "Set 'ISVD_BUILD_TEST'      to build test codes.")
-message(STATUS "Set 'ISVD_INSTALL_DEMO'    to install demos.")
 message(STATUS "Set 'ISVD_INT_SIZE'        to select system integer size. [32/64]")
 message(STATUS "Set 'ISVD_OMP'             to select OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
 message(STATUS "Set 'ISVD_USE_GPU'         to enable GPU support.")
@@ -88,8 +87,8 @@ message(STATUS "================================================================
 message(STATUS "")
 
 # Display flags
-message(STATUS "Compiler:                  ${CMAKE_C_COMPILER}")
-message(STATUS "Compile flags:             ${ISVD_COMFLGS}")
+message(STATUS "C Compiler & flags:        ${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
+message(STATUS "C++ Compiler & flags:      ${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
 message(STATUS "Link flags:                ${ISVD_LNKFLGS}")
 message(STATUS "Include pathes:            ${ISVD_INCS}")
 message(STATUS "Libraries:                 ${ISVD_LIBS}")

@@ -32,8 +32,11 @@ function(ISVD_FLAGS_FN)
       set(defs "${defs} -D${d}")
     endif()
   endforeach()
-  string(REGEX REPLACE "  +" " " comflgs "${CMAKE_C_FLAGS} -DNDEBUG ${COMFLGS} ${defs}")
-  string(REGEX REPLACE "^ " "" comflgs "${comflgs}")
+  string(REGEX REPLACE "  +" " " cflgs "${CMAKE_C_FLAGS} -DNDEBUG ${COMFLGS} ${defs}")
+  string(REGEX REPLACE "^ " "" cflgs "${cflgs}")
+
+  string(REGEX REPLACE "  +" " " cxxflgs "${CMAKE_CXX_FLAGS} -DNDEBUG ${COMFLGS} ${defs}")
+  string(REGEX REPLACE "^ " "" cxxflgs "${cxxflgs}")
 
   string(REGEX REPLACE "  +" " " lnkflgs "${LNKFLGS}")
   string(REGEX REPLACE "^ " "" lnkflgs "${lnkflgs}")
@@ -41,7 +44,8 @@ function(ISVD_FLAGS_FN)
   # Set flags
   set(ISVD_INCS "${incs}" PARENT_SCOPE)
   set(ISVD_LIBS "${libs}" PARENT_SCOPE)
-  set(ISVD_COMFLGS "${comflgs}" PARENT_SCOPE)
+  set(ISVD_C_FLAGS "${cflgs}" PARENT_SCOPE)
+  set(ISVD_CXX_FLAGS "${cxxflgs}" PARENT_SCOPE)
   set(ISVD_LNKFLGS "${lnkflgs}" PARENT_SCOPE)
 endfunction()
 
