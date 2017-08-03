@@ -5,10 +5,15 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
+#include <stdio.h>
+#include <isvd.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Main function
 ///
 int main( int argc, char **argv ) {
+
+  printf("iSVD " ISVD_VERSION " test\n");
 
   return 0;
 }
