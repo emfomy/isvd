@@ -10,7 +10,7 @@ macro(SET_TARGET target files)
   # Set target
   add_executable(isvd_${target} EXCLUDE_FROM_ALL ${files})
 
-  isvd_set_target(isvd_${target})
+  isvd_set_target(isvd_${target} "")
 
   # Add run rule
   add_custom_target(
@@ -22,5 +22,10 @@ macro(SET_TARGET target files)
   )
 endmacro()
 
-# Set target (test)
-set_target(test test.c)
+# Set link directory
+link_directories("${PROJECT_BINARY_DIR}/src")
+
+# Set target
+set_target(ctest ctest.c)
+add_dependencies(isvd_ctest isvd)
+target_link_libraries(isvd_ctest isvd${BIN_SUFFIX})

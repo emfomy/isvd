@@ -20,7 +20,10 @@ set(CMAKE_COLOR_MAKEFILE ON)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 # Set the paths
-include_directories("${PROJECT_BINARY_DIR}/include" "${PROJECT_SOURCE_DIR}/include")
+include_directories("${PROJECT_BINARY_DIR}/include/c"
+                    "${PROJECT_SOURCE_DIR}/include/c"
+                    "${PROJECT_BINARY_DIR}/include/cxx"
+                    "${PROJECT_SOURCE_DIR}/include/cxx")
 
 # Include functions
 include(cmake/functions.cmake)

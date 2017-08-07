@@ -1,6 +1,6 @@
 # Set complier flags
 set(CMAKE_C_FLAGS "-std=c99 -O2 -g -Wall -Wextra -pedantic")
-set(CMAKE_CXX_FLAGS "-std=c++03 -O2 -g -Wall -Wextra -pedantic")
+set(CMAKE_CXX_FLAGS "-std=c++98 -O2 -g -Wall -Wextra -pedantic")
 
 if(ISVD_BUILD_BIN)
   set(findtype REQUIRED)
@@ -21,11 +21,11 @@ if(ISVD_BUILD_BIN)
   endif()
 
   include(CheckCXXCompilerFlag)
-  CHECK_CXX_COMPILER_FLAG("-std=c++03" COMPILER_SUPPORTS_CXX03)
-  if(NOT COMPILER_SUPPORTS_CXX03)
+  CHECK_CXX_COMPILER_FLAG("-std=c++98" COMPILER_SUPPORTS_CXX98)
+  if(NOT COMPILER_SUPPORTS_CXX98)
     message(
       FATAL_ERROR
-      "The compiler ${CMAKE_CXX_COMPILER} has no C++03 support. "
+      "The compiler ${CMAKE_CXX_COMPILER} has no C++98 support. "
       "Please use a different C++ compiler."
     )
   endif()

@@ -1,11 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    demo/test.c
-/// @brief   The test code
+/// @file    demo/ctest.c
+/// @brief   The C test code
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <isvd.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -13,7 +14,9 @@
 ///
 int main( int argc, char **argv ) {
 
-  printf("iSVD " ISVD_VERSION " test\n");
+  printf("iSVD " ISVD_VERSION " C test\n");
+
+  isvd_dsgp('R', 'R', 0, 0, 0, 0, NULL, 0, NULL, 0, rand(), MPI_COMM_WORLD);
 
   return 0;
 }

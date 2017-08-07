@@ -1,6 +1,6 @@
 # Functions
-macro(ISVD_SET_TARGET target)
-  set_target_properties(${target} PROPERTIES SUFFIX "${BIN_SUFFIX}")
+macro(ISVD_SET_TARGET target ext)
+  set_target_properties(${target} PROPERTIES SUFFIX "${BIN_SUFFIX}${ext}")
   target_include_directories(${target} SYSTEM PUBLIC ${INCS})
   target_link_libraries(${target} ${LIBS})
   target_compile_definitions(${target} PUBLIC ${DEFS})
