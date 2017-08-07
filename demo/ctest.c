@@ -16,7 +16,7 @@ int main( int argc, char **argv ) {
 
   printf("iSVD " ISVD_VERSION " C test\n");
 
-  isvd_dsgp('R', 'R', 0, 0, 0, 0, NULL, 0, NULL, 0, rand(), MPI_COMM_WORLD);
+  isvd_dsgp('?', 'R', 0, 0, 0, 0, NULL, 0, NULL, 0, rand(), MPI_COMM_WORLD);
 
   return 0;
 }

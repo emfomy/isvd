@@ -8,7 +8,7 @@
 #ifndef _ISVD_CORE_DTYPE_H_
 #define _ISVD_CORE_DTYPE_H_
 
-#include <isvd/def.h>
+#include <isvd/core/def.h>
 
 // Sketching
 void isvd_dsgp( const char storea, const char ordera, const index_t N, const index_t m, const index_t n, const index_t l,

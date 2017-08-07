@@ -6,7 +6,7 @@ message(STATUS "Set 'ISVD_BLAS'            to select BLAS/LAPACK library. [BLAS/
 message(STATUS "Set 'ISVD_BUILD_DEMO'      to build demo codes.")
 message(STATUS "Set 'ISVD_BUILD_DOC'       to build documentation.")
 message(STATUS "Set 'ISVD_BUILD_DRIVER'    to build driver codes.")
-message(STATUS "Set 'ISVD_BUILD_REPORT'    to build report codes.")
+message(STATUS "Set 'ISVD_BUILD_LIB'       to build libraries.")
 message(STATUS "Set 'ISVD_BUILD_TEST'      to build test codes.")
 message(STATUS "Set 'ISVD_INDEX_TYPE'      to select index type. [32/64]")
 message(STATUS "Set 'ISVD_OMP'             to select OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
@@ -21,6 +21,7 @@ message(STATUS "================================================================
 message(STATUS "")
 
 # Display options
+message(STATUS "Build libraries:           ${ISVD_BUILD_LIB}")
 message(STATUS "Build driver codes:        ${ISVD_BUILD_DRIVER}")
 message(STATUS "Build demo codes:          ${ISVD_BUILD_DEMO}")
 message(STATUS "Build test codes:          ${ISVD_BUILD_TEST}")

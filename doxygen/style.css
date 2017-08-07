@@ -1,0 +1,8 @@
+/* The standard CSS for doxygen 1.8.11 */
+
+.directory td.entry {
+	white-space: nowrap;
+	padding-right: 6px;
+	padding-top: 3px;
+	height: 24px;
+}

@@ -5,9 +5,11 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef ISVD_CORE_H_
-#define ISVD_CORE_H_
+#ifndef _ISVD_CORE_H_
+#define _ISVD_CORE_H_
 
+#include <isvd/core/def.h>
 #include <isvd/core/dtype.h>
+#include <isvd/core/param.h>
 
-#endif  // ISVD_CORE_H_
+#endif  // _ISVD_CORE_H_

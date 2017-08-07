@@ -28,10 +28,12 @@ typedef int64_t index_t;
 
 typedef int mpi_int_t;
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifdef ISVD_USE_MKL
 #define MKL_INT index_t
 #define MKL_Complex8  float complex
 #define MKL_Complex16 double complex
 #endif  // ISVD_USE_MKL
+#endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 #endif  // _ISVD_DEF_H_
