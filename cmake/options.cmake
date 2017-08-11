@@ -24,12 +24,6 @@ if(NOT ISVD_INDEX_TYPE STREQUAL "32" AND NOT ISVD_INDEX_TYPE STREQUAL "64" )
   message(FATAL_ERROR "ISVD_INDEX_TYPE must be either 32 or 64")
 endif()
 
-set(ISVD_VALUE_TYPE "double" CACHE STRING "Value type. [double/float]")
-set_property(CACHE ISVD_VALUE_TYPE PROPERTY STRINGS "double;float")
-if(NOT ISVD_VALUE_TYPE STREQUAL "double" AND NOT ISVD_VALUE_TYPE STREQUAL "float" )
-  message(FATAL_ERROR "ISVD_VALUE_TYPE must be either double or float")
-endif()
-
 # set(ISVD_BLAS "BLAS" CACHE STRING "Selected BLAS/LAPACK library. [BLAS/MKL]")
 # set_property(CACHE ISVD_BLAS PROPERTY STRINGS "BLAS;MKL")
 # if(NOT ISVD_BLAS STREQUAL "BLAS" AND NOT ISVD_BLAS STREQUAL "MKL" )

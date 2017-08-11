@@ -13,7 +13,7 @@
 #include <string.h>
 #include <mkl.h>
 
-inline index_t isvd_arg2int(
+inline isvd_int_t isvd_arg2int(
     const char *name,
     const char arg,
     const char *opts

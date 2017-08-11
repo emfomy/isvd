@@ -15,8 +15,8 @@ static inline void* isvd_malloc( const size_t num ) {
   return mkl_malloc(num, 64);
 }
 
-static inline index_t* isvd_imalloc( const size_t num ) {
-  return isvd_malloc(num * sizeof(index_t));
+static inline isvd_int_t* isvd_imalloc( const size_t num ) {
+  return isvd_malloc(num * sizeof(isvd_int_t));
 }
 
 static inline float* isvd_smalloc( const size_t num ) {

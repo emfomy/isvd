@@ -1,10 +1,5 @@
 # The CMake setting of 'src/'
 
-# Break
-if(NOT MCNLA_BUILD_LIB)
-  return()
-endif()
-
 # Macro
 macro(SET_TARGET target files)
   # Set library

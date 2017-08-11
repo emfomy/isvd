@@ -10,48 +10,80 @@
 
 #include <isvd/core/def.h>
 
-// Sketching
-void isvd_dsgp( const char storea, const char ordera, const index_t N, const index_t m, const index_t n, const index_t l,
-                const double *a, const index_t lda, double *y, const index_t ldy, const index_t seed,
-                const MPI_Comm mpi_comm );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @defgroup  c_core_dtype_s_module  Sketching Module (Double Precision)
+/// @ingroup   c_core_dtype_module
+/// @brief     The Sketching Module (Double Precision)
+///
+void isvd_dSketchGaussianProjection(
+    const char storea, const char ordera, const isvd_int_t N, const isvd_int_t m, const isvd_int_t n, const isvd_int_t l,
+    const double *a, const isvd_int_t lda, double *y, const isvd_int_t ldy, const isvd_int_t seed,
+    const MPI_Comm mpi_comm
+);
 
-// Orthogonalization
-void isvd_doqr( const index_t N, const index_t m, const index_t l,
-                double *y, const index_t ldy,
-                const MPI_Comm mpi_comm );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @defgroup  c_core_dtype_o_module  Orthogonalization Module (Double Precision)
+/// @ingroup   c_core_dtype_module
+/// @brief     The Orthogonalization Module (Double Precision)
+///
+void isvd_dOrthogonalizeTsqr(
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t l,
+    double *y, const isvd_int_t ldy,
+    const MPI_Comm mpi_comm
+);
 
-void isvd_dogr( const index_t N, const index_t m, const index_t l,
-                double *y, const index_t ldy,
-                const MPI_Comm mpi_comm );
+void isvd_dOrthogonalizeGramian(
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t l,
+    double *y, const isvd_int_t ldy,
+    const MPI_Comm mpi_comm
+);
 
-// Integration
-void isvd_dikn( const index_t N, const index_t m, const index_t l,
-                double *y, const index_t ldy, double *q, const index_t ldq,
-                const MPI_Comm mpi_comm );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @defgroup  c_core_dtype_i_module  Integration Module (Double Precision)
+/// @ingroup   c_core_dtype_module
+/// @brief     The Integration Module (Double Precision)
+///
+void isvd_dIntegrateKolmogorovNagumo(
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t l,
+    double *y, const isvd_int_t ldy, double *q, const isvd_int_t ldq,
+    const MPI_Comm mpi_comm
+);
 
-void isvd_diwy( const index_t N, const index_t m, const index_t l,
-                double *y, const index_t ldy, double *q, const index_t ldq,
-                const MPI_Comm mpi_comm );
+void isvd_dIntegrateWenYin(
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t l,
+    double *y, const isvd_int_t ldy, double *q, const isvd_int_t ldq,
+    const MPI_Comm mpi_comm
+);
 
-// Postprocessing
-void isvd_dpqr( const index_t jobu, const index_t jobv, const char storea,
-                const char ordera, const char majoru, const char majorv,
-                const index_t N, const index_t m, const index_t n, const index_t l, const index_t k,
-                const double *a, const index_t lda, const double *q, const index_t ldq,
-                double *s, double *u, const index_t ldu, double *v, const index_t ldv,
-                const mpi_int_t mpi_root, const MPI_Comm mpi_comm );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @defgroup  c_core_dtype_p_module  Postprocessing Module (Double Precision)
+/// @ingroup   c_core_dtype_module
+/// @brief     The Postprocessing Module (Double Precision)
+///
+void isvd_dPostprocessTsqr(
+    const isvd_int_t jobu, const isvd_int_t jobv, const char storea,
+    const char ordera, const char majoru, const char majorv,
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t n, const isvd_int_t l, const isvd_int_t k,
+    const double *a, const isvd_int_t lda, const double *q, const isvd_int_t ldq,
+    double *s, double *u, const isvd_int_t ldu, double *v, const isvd_int_t ldv,
+    const mpi_int_t mpi_root, const MPI_Comm mpi_comm
+);
 
-void isvd_dpgr( const index_t jobu, const index_t jobv, const char storea,
-                const char ordera, const char majoru, const char majorv,
-                const index_t N, const index_t m, const index_t n, const index_t l, const index_t k,
-                const double *a, const index_t lda, const double *q, const index_t ldq,
-                double *s, double *u, const index_t ldu, double *v, const index_t ldv,
-                const mpi_int_t mpi_root, const MPI_Comm mpi_comm );
+void isvd_dPostprocessGramian(
+    const isvd_int_t jobu, const isvd_int_t jobv, const char storea,
+    const char ordera, const char majoru, const char majorv,
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t n, const isvd_int_t l, const isvd_int_t k,
+    const double *a, const isvd_int_t lda, const double *q, const isvd_int_t ldq,
+    double *s, double *u, const isvd_int_t ldu, double *v, const isvd_int_t ldv,
+    const mpi_int_t mpi_root, const MPI_Comm mpi_comm
+);
 
-void isvd_dpsy( const index_t jobu, const char storea, const char ordera, const char majoru,
-                const index_t N, const index_t m, const index_t n, const index_t l, const index_t k,
-                const double *a, const index_t lda, const double *q, const index_t ldq,
-                double *s, double *u, const index_t ldu,
-                const mpi_int_t mpi_root, const MPI_Comm mpi_comm );
+void isvd_dPostprocessSymmetric(
+    const isvd_int_t jobu, const char storea, const char ordera, const char majoru,
+    const isvd_int_t N, const isvd_int_t m, const isvd_int_t n, const isvd_int_t l, const isvd_int_t k,
+    const double *a, const isvd_int_t lda, const double *q, const isvd_int_t ldq,
+    double *s, double *u, const isvd_int_t ldu,
+    const mpi_int_t mpi_root, const MPI_Comm mpi_comm
+);
 
 #endif  // _ISVD_CORE_DTYPE_H_
