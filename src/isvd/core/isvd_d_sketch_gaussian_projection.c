@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/isvd/core/psdbc.c
+/// @file    include/c/isvd/core/isvd_d_sketch_gaussian_projection.c
 /// @brief   The Gaussian Projection Sketching.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
@@ -21,15 +21,12 @@ void isvd_dsgp(
     const char ordera,       ///< [in]  The storage ordering of A <br>
                              ///< `'C'`: column-major ordering <br>
                              ///< `'R'`: row-major ordering
-    const isvd_int_t N,         ///< [in]  The number of random sketches.
-    const isvd_int_t m,         ///< [in]  The number of rows of A.
-    const isvd_int_t n,         ///< [in]  The number of columns of A.
-    const isvd_int_t l,         ///< [in]  The dimension of randomized sketches.
-    const isvd_val_t *a,        ///< [in]  The row/column-block A.
-    const isvd_int_t lda,       ///< [in]  The leading dimension of the block A.
-          isvd_val_t *y,        ///< [out] The row-block Y.
-    const isvd_int_t ldy,       ///< [in]  The leading dimension of the block Y.
-    const isvd_int_t seed,      ///< [in]  The random seed.
+    const isvd_Param param,  ///< [in]  The parameters
+    const isvd_val_t *a,     ///< [in]  The row/column-block A.
+    const isvd_int_t lda,    ///< [in]  The leading dimension of the block A.
+          isvd_val_t *y,     ///< [out] The row-block Y.
+    const isvd_int_t ldy,    ///< [in]  The leading dimension of the block Y.
+    const isvd_int_t seed,   ///< [in]  The random seed.
     const MPI_Comm mpi_comm  ///< [in]  The MPI communicator.
 ) {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

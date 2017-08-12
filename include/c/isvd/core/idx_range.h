@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/mcnla/core/matrix/kit/idx_range.h
+/// @file    include/c/isvd/core/idx_range.h
 /// @brief   The index range structure.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
@@ -14,7 +14,7 @@
 /// @ingroup  c_core_module
 /// The index range.
 ///
-struct isvd_IdxRange {
+typedef struct {
 
   /// The beginning index.
   isvd_int_t begin;
@@ -22,6 +22,6 @@ struct isvd_IdxRange {
   /// The end index.
   isvd_int_t end;
 
-};
+} isvd_IdxRange;
 
 #endif  // _ISVD_CORE_IDX_RANGE_H_

@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/isvd/core/param.h
+/// @file    include/c/isvd/core/param.h
 /// @brief   The parameter structure.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
@@ -15,7 +15,16 @@
 /// @ingroup  c_core_param_module
 /// The parameters.
 ///
-struct isvd_Param {
+typedef struct {
+
+  /// The MPI communicator.
+  const MPI_Comm mpi_comm;
+
+  /// The MPI size.
+  const mpi_int_t mpi_size;
+
+  /// The MPI rank.
+  const mpi_int_t mpi_rank;
 
   /// The number of rows of the matrix.
   const isvd_int_t nrow;
@@ -42,10 +51,10 @@ struct isvd_Param {
   const isvd_int_t ncol_total;
 
   /// The index range of the rows in current MPI process.
-  const struct isvd_IdxRange rowrange;
+  const isvd_IdxRange rowrange;
 
   /// The index range of the columns in current MPI process.
-  const struct isvd_IdxRange colrange;
+  const isvd_IdxRange colrange;
 
   /// The desired rank of approximate SVD.
   const isvd_int_t rank;
@@ -62,13 +71,13 @@ struct isvd_Param {
   /// The number of random sketches.
   const isvd_int_t num_sketch;
 
-};
+} isvd_Param;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  c_core_param_module
 /// Initialize the parameters.
 ///
-inline const struct isvd_Param isvd_createParam(
+inline isvd_Param isvd_createParam(
     const isvd_int_t nrow,
     const isvd_int_t ncol,
     const isvd_int_t rank,
@@ -104,14 +113,17 @@ inline const struct isvd_Param isvd_createParam(
   isvd_int_t nrow_per = (args.nrow_-1) / mpi_size + 1;
   isvd_int_t ncol_per = (args.ncol_-1) / mpi_size + 1;
 
-  struct isvd_IdxRange rowrange = {mpi_rank * nrow_per, (mpi_rank+1) * nrow_per};
-  struct isvd_IdxRange colrange = {mpi_rank * ncol_per, (mpi_rank+1) * ncol_per};
+  isvd_IdxRange rowrange = {mpi_rank * nrow_per, (mpi_rank+1) * nrow_per};
+  isvd_IdxRange colrange = {mpi_rank * ncol_per, (mpi_rank+1) * ncol_per};
   if ( rowrange.begin > args.nrow_ ) { rowrange.begin = args.nrow_; }
   if ( rowrange.end   > args.nrow_ ) { rowrange.end   = args.nrow_; }
   if ( colrange.begin > args.ncol_ ) { colrange.begin = args.ncol_; }
   if ( colrange.end   > args.ncol_ ) { colrange.end   = args.ncol_; }
 
-  struct isvd_Param param = {
+  isvd_Param param = {
+    .mpi_comm         = mpi_comm,
+    .mpi_size         = mpi_size,
+    .mpi_rank         = mpi_rank,
     .nrow             = args.nrow_,
     .ncol             = args.ncol_,
     .nrow_proc        = rowrange.end - rowrange.begin,
@@ -125,8 +137,8 @@ inline const struct isvd_Param isvd_createParam(
     .rank             = args.rank_,
     .over_rank        = args.over_rank_,
     .dim_sketch       = args.rank_ + args.over_rank_,
-    .dim_sketch_total = (args.rank_ + args.over_rank_) * num_sketch,
-    .num_sketch       = num_sketch
+    .dim_sketch_total = (args.rank_ + args.over_rank_) * args.num_sketch_,
+    .num_sketch       = args.num_sketch_
   };
 
   return param;
