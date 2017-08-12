@@ -19,7 +19,7 @@
 
 #define ISVD_UNUSED( x ) (void)(x)
 
-/// @ingroup  c_core_module
+/// @ingroup  core_module
 /// The type of index.
 #ifndef ISVD_USE_ILP64
 typedef int32_t isvd_int_t;
@@ -27,7 +27,7 @@ typedef int32_t isvd_int_t;
 typedef int64_t isvd_int_t;
 #endif  // ISVD_USE_ILP64
 
-/// @ingroup  c_core_module
+/// @ingroup  core_module
 /// The type of MPI index.
 typedef int mpi_int_t;
 
@@ -39,7 +39,7 @@ typedef int mpi_int_t;
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-/// @ingroup  c_core_module
+/// @ingroup  core_module
 //@{
 #ifndef MCNLA_USE_GTEST
 
@@ -80,7 +80,7 @@ typedef int mpi_int_t;
 #define isvd_assert_pass( condition )  { auto err = condition; ISVD_UNUSED(err); isvd_assert_eq(err, 0); }
 //@}
 
-/// @ingroup  c_core_module
+/// @ingroup  core_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
 #endif  // _ISVD_DEF_H_

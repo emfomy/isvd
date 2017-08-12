@@ -8,5 +8,5 @@ macro(SET_TARGET target files)
   install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
 endmacro()
 
-file(GLOB_RECURSE files ${CMAKE_CURRENT_SOURCE_DIR}/*.c ${CMAKE_CURRENT_SOURCE_DIR}/*.cxx)
+file(GLOB_RECURSE files ${CMAKE_CURRENT_SOURCE_DIR}/libisvd/*)
 set_target(isvd "${files}")

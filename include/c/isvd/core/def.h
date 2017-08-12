@@ -23,7 +23,7 @@ inline isvd_int_t isvd_arg2int(
       return i;
     }
   }
-  fprintf(stderr, "%s (='%c') must be one of the following characters \"%s\".\n", name, arg, opts);
+  fprintf(stderr, "%s ('%c') must be one of the following characters \"%s\".\n", name, arg, opts);
   return -1;
 }
 
@@ -38,7 +38,7 @@ inline char isvd_arg2char(
       return chars[i];
     }
   }
-  fprintf(stderr, "%s (='%c') must be one of the following characters \"%s\".\n", name, arg, opts);
+  fprintf(stderr, "%s ('%c') must be one of the following characters \"%s\".\n", name, arg, opts);
   return '\0';
 }
 

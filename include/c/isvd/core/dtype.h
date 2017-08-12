@@ -12,8 +12,8 @@
 #include <isvd/core/param.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_dtype_s_module  Sketching Module (Double Precision)
-/// @ingroup   c_core_dtype_module
+/// @defgroup  core_dtype_s_module  Sketching Module (Double Precision)
+/// @ingroup   core_dtype_module
 /// @brief     The Sketching Module (Double Precision)
 ///
 void isvd_dSketchGaussianProjection(
@@ -22,8 +22,8 @@ void isvd_dSketchGaussianProjection(
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_dtype_o_module  Orthogonalization Module (Double Precision)
-/// @ingroup   c_core_dtype_module
+/// @defgroup  core_dtype_o_module  Orthogonalization Module (Double Precision)
+/// @ingroup   core_dtype_module
 /// @brief     The Orthogonalization Module (Double Precision)
 ///
 void isvd_dOrthogonalizeTsqr(
@@ -35,8 +35,8 @@ void isvd_dOrthogonalizeGramian(
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_dtype_i_module  Integration Module (Double Precision)
-/// @ingroup   c_core_dtype_module
+/// @defgroup  core_dtype_i_module  Integration Module (Double Precision)
+/// @ingroup   core_dtype_module
 /// @brief     The Integration Module (Double Precision)
 ///
 void isvd_dIntegrateKolmogorovNagumo(
@@ -48,8 +48,8 @@ void isvd_dIntegrateWenYin(
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_dtype_p_module  Postprocessing Module (Double Precision)
-/// @ingroup   c_core_dtype_module
+/// @defgroup  core_dtype_p_module  Postprocessing Module (Double Precision)
+/// @ingroup   core_dtype_module
 /// @brief     The Postprocessing Module (Double Precision)
 ///
 void isvd_dPostprocessTsqr(

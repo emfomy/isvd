@@ -21,9 +21,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 # Set the paths
 include_directories("${PROJECT_BINARY_DIR}/include/c"
-                    "${PROJECT_SOURCE_DIR}/include/c"
-                    "${PROJECT_BINARY_DIR}/include/cxx"
-                    "${PROJECT_SOURCE_DIR}/include/cxx")
+                    "${PROJECT_SOURCE_DIR}/include/c")
 
 # Include functions
 include(cmake/functions.cmake)

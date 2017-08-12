@@ -14,20 +14,20 @@
 #include <isvd/core/dtype.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_param_module  Core Parameter Module
-/// @ingroup   c_core_module
+/// @defgroup  core_param_module  Core Parameter Module
+/// @ingroup   core_module
 /// @brief     The Core Parameter Module
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_stype_module  Core Module (Single Precision)
-/// @ingroup   c_core_module
+/// @defgroup  core_stype_module  Core Module (Single Precision)
+/// @ingroup   core_module
 /// @brief     The Core Module (Single Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  c_core_dtype_module  Core Module (Double Precision)
-/// @ingroup   c_core_module
+/// @defgroup  core_dtype_module  Core Module (Double Precision)
+/// @ingroup   core_module
 /// @brief     The Core Module (Double Precision)
 ///
 
