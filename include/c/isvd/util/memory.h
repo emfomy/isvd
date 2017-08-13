@@ -39,4 +39,28 @@ static inline void isvd_free( void *ptr ) {
   mkl_free(ptr);
 }
 
+static inline void isvd_memset0( void *ptr, const size_t num ) {
+  memset(ptr, 0, num);
+}
+
+static inline void isvd_imemset0( isvd_int_t *ptr, const size_t num ) {
+  memset(ptr, 0, num * sizeof(isvd_int_t));
+}
+
+static inline void isvd_smemset0( float *ptr, const size_t num ) {
+  memset(ptr, 0, num * sizeof(float));
+}
+
+static inline void isvd_dmemset0( double *ptr, const size_t num ) {
+  memset(ptr, 0, num * sizeof(double));
+}
+
+static inline void isvd_cmemset0( float complex *ptr, const size_t num ) {
+  memset(ptr, 0, num * sizeof(float complex));
+}
+
+static inline void isvd_zmemset0( double complex *ptr, const size_t num ) {
+  memset(ptr, 0, num * sizeof(double complex));
+}
+
 #endif  // _ISVD_UTIL_MEMORY_H_

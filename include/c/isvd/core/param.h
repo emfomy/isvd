@@ -20,34 +20,34 @@ typedef struct {
   /// The MPI communicator.
   const MPI_Comm mpi_comm;
 
-  /// The MPI size.
+  /// @f$P@f$ The MPI size.
   const mpi_int_t mpi_size;
 
-  /// The MPI rank.
+  /// @f$j@f$ The MPI rank.
   const mpi_int_t mpi_rank;
 
-  /// The number of rows of the matrix.
+  /// @f$m@f$ The number of rows of the matrix.
   const isvd_int_t nrow;
 
-  /// The number of columns of the matrix.
+  /// @f$n@f$ The number of columns of the matrix.
   const isvd_int_t ncol;
 
-  /// The number of rows of current MPI process.
+  /// @f$m_j@f$ The number of rows of current MPI process.
   const isvd_int_t nrow_proc;
 
-  /// The number of columns of current MPI process.
+  /// @f$n_j@f$ The number of columns of current MPI process.
   const isvd_int_t ncol_proc;
 
-  /// The number of rows per MPI process.
-  const isvd_int_t nrow_per;
+  /// @f$m_b@f$ The number of rows per MPI process.
+  const isvd_int_t nrow_each;
 
-  /// The number of columns per MPI process.
-  const isvd_int_t ncol_per;
+  /// @f$n_b@f$ The number of columns per MPI process.
+  const isvd_int_t ncol_each;
 
-  /// The total number of rows in all MPI processes.
+  /// @f$Pm_b@f$ The total number of rows in all MPI processes.
   const isvd_int_t nrow_total;
 
-  /// The total number of columns in all MPI processes.
+  /// @f$Pn_b@f$ The total number of columns in all MPI processes.
   const isvd_int_t ncol_total;
 
   /// The index range of the rows in current MPI process.
@@ -56,19 +56,19 @@ typedef struct {
   /// The index range of the columns in current MPI process.
   const isvd_IdxRange colrange;
 
-  /// The desired rank of approximate SVD.
+  /// @f$k@f$ The desired rank of approximate SVD.
   const isvd_int_t rank;
 
-  /// The oversampling dimension.
+  /// @f$p@f$ The oversampling dimension.
   const isvd_int_t over_rank;
 
-  /// The dimension of random sketches.
+  /// @f$l@f$ The dimension of random sketches.
   const isvd_int_t dim_sketch;
 
-  /// The total dimension of random sketches.
+  /// @f$Nl@f$ The total dimension of random sketches.
   const isvd_int_t dim_sketch_total;
 
-  /// The number of random sketches.
+  /// @f$N@f$ The number of random sketches.
   const isvd_int_t num_sketch;
 
 } isvd_Param;
@@ -110,11 +110,11 @@ inline isvd_Param isvd_createParam(
     isvd_assert_le(args.nrow_, args.ncol_);
   }
 
-  isvd_int_t nrow_per = (args.nrow_-1) / mpi_size + 1;
-  isvd_int_t ncol_per = (args.ncol_-1) / mpi_size + 1;
+  isvd_int_t nrow_each = (args.nrow_-1) / mpi_size + 1;
+  isvd_int_t ncol_each = (args.ncol_-1) / mpi_size + 1;
 
-  isvd_IdxRange rowrange = {mpi_rank * nrow_per, (mpi_rank+1) * nrow_per};
-  isvd_IdxRange colrange = {mpi_rank * ncol_per, (mpi_rank+1) * ncol_per};
+  isvd_IdxRange rowrange = {mpi_rank * nrow_each, (mpi_rank+1) * nrow_each};
+  isvd_IdxRange colrange = {mpi_rank * ncol_each, (mpi_rank+1) * ncol_each};
   if ( rowrange.begin > args.nrow_ ) { rowrange.begin = args.nrow_; }
   if ( rowrange.end   > args.nrow_ ) { rowrange.end   = args.nrow_; }
   if ( colrange.begin > args.ncol_ ) { colrange.begin = args.ncol_; }
@@ -128,10 +128,10 @@ inline isvd_Param isvd_createParam(
     .ncol             = args.ncol_,
     .nrow_proc        = rowrange.end - rowrange.begin,
     .ncol_proc        = colrange.end - colrange.begin,
-    .nrow_per         = nrow_per,
-    .ncol_per         = ncol_per,
-    .nrow_total       = nrow_per * mpi_size,
-    .ncol_total       = ncol_per * mpi_size,
+    .nrow_each        = nrow_each,
+    .ncol_each        = ncol_each,
+    .nrow_total       = nrow_each * mpi_size,
+    .ncol_total       = ncol_each * mpi_size,
     .rowrange         = rowrange,
     .colrange         = colrange,
     .rank             = args.rank_,

@@ -83,4 +83,28 @@ typedef int mpi_int_t;
 /// @ingroup  core_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
+/// @ingroup  core_module
+#define isvd_vdisp( format, len, vector ) printf(#vector ":\n"); \
+  for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
+    printf(format "\t", vector[_isvd_i_]); \
+  }
+
+/// @ingroup  core_module
+#define isvd_mcdisp( format, nrow, ncol, ld, matrix ) printf(#matrix ":\n"); \
+  for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
+    for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
+      printf(format "\t", matrix[_isvd_i_ + _isvd_j_ * ld]); \
+    } \
+    printf("\n"); \
+  }
+
+/// @ingroup  core_module
+#define isvd_mrdisp( format, nrow, ncol, ld, matrix ) printf(#matrix ":\n"); \
+  for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
+    for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
+      printf(format "\t", matrix[_isvd_i_ * ld + _isvd_j_]); \
+    } \
+    printf("\n"); \
+  }
+
 #endif  // _ISVD_DEF_H_
