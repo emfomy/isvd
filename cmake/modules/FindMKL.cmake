@@ -32,10 +32,10 @@ unset(MKL_LIBRARY_LP CACHE)
 ################################################################################
 
 if(NOT MKL_ILP64)
-  set(mkllib  "mkl_intel_lp64")
+  set(mkllib  "libmkl_intel_lp64.a")
   set(mklflag "-m64")
 else()
-  set(mkllib  "mkl_intel_ilp64")
+  set(mkllib  "libmkl_intel_ilp64.a")
   set(mklflag "-DMKL_ILP64 -m64")
 endif()
 
@@ -55,32 +55,32 @@ find_path(
 
 find_library(
   MKL_LIBRARY_CORE
-  NAMES mkl_core
-  HINTS "${MKL_ROOT}/lib/intel64"
+  NAMES libmkl_core.a
+  HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
   DOC "The core library of Intel MKL."
 )
 
 if(MKL_OMP STREQUAL "GOMP")
   find_library(
     MKL_LIBRARY_GNU_THREAD
-    NAMES mkl_gnu_thread
-    HINTS "${MKL_ROOT}/lib/intel64"
+    NAMES libmkl_gnu_thread.a
+    HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
     DOC "The GNU thread library of Intel MKL."
   )
   set(MKL_LIBRARY_THREAD ${MKL_LIBRARY_GNU_THREAD})
 elseif(MKL_OMP STREQUAL "IOMP")
   find_library(
     MKL_LIBRARY_INTEL_THREAD
-    NAMES mkl_intel_thread
-    HINTS "${MKL_ROOT}/lib/intel64"
+    NAMES libmkl_intel_thread.a
+    HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
     DOC "The Intel thread library of Intel MKL."
   )
   set(MKL_LIBRARY_THREAD ${MKL_LIBRARY_INTEL_THREAD})
 else()
   find_library(
     MKL_LIBRARY_SEQUENTIAL
-    NAMES mkl_sequential
-    HINTS "${MKL_ROOT}/lib/intel64"
+    NAMES libmkl_sequential.a
+    HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
     DOC "The sequential library of Intel MKL."
   )
   set(MKL_LIBRARY_THREAD ${MKL_LIBRARY_SEQUENTIAL})
@@ -89,7 +89,7 @@ endif()
 find_library(
   MKL_LIBRARY_LP
   NAMES ${mkllib}
-  HINTS "${MKL_ROOT}/lib/intel64"
+  HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
   DOC "The integer library of Intel MKL."
 )
 
@@ -123,5 +123,5 @@ endif()
 mark_as_advanced(MKL_LIBRARY_CORE MKL_LIBRARY_GNU_THREAD MKL_LIBRARY_INTEL_THREAD MKL_LIBRARY_SEQUENTIAL MKL_LIBRARY_LP MKL_INCLUDE MKL_FLAG)
 
 set(MKL_INCLUDES  "${MKL_INCLUDE}")
-set(MKL_LIBRARIES "-Wl,--no-as-needed" "${MKL_LIBRARY_LP}" "${MKL_LIBRARY_THREAD}" "${MKL_LIBRARY_CORE}" "m" "dl")
+set(MKL_LIBRARIES "${MKL_LIBRARY_LP}" "${MKL_LIBRARY_THREAD}" "${MKL_LIBRARY_CORE}" "m" "dl")
 set(MKL_FLAGS     "${MKL_FLAG}")
