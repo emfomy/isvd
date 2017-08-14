@@ -1,7 +1,3 @@
-# Set complier flags
-set(CMAKE_C_FLAGS "-std=c99 -O2 -g -Wall -Wextra -pedantic")
-set(CMAKE_CXX_FLAGS "-std=c++98 -O2 -g -Wall -Wextra -pedantic")
-
 if(ISVD_BUILD_BIN)
   set(findtype REQUIRED)
 else()
@@ -10,26 +6,39 @@ endif()
 
 # Check compiler support
 if(ISVD_BUILD_BIN)
+  list(APPEND cflags "-std=c99" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
   include(CheckCCompilerFlag)
-  CHECK_C_COMPILER_FLAG("-std=c99" COMPILER_SUPPORTS_C99)
-  if(NOT COMPILER_SUPPORTS_C99)
-    message(
-      FATAL_ERROR
-      "The compiler ${CMAKE_C_COMPILER} has no C99 support. "
-      "Please use a different C compiler."
-    )
-  endif()
+  foreach(cflag ${cflags})
+    string(REGEX REPLACE "=" "_" cflagname ${cflag})
+    CHECK_C_COMPILER_FLAG(${cflag} C_SUPPORTS_${cflagname})
+    if(NOT C_SUPPORTS_${cflagname})
+      message(
+        FATAL_ERROR
+        "The compiler ${CMAKE_C_COMPILER} does not support ${cflag}. "
+        "Please use a different C compiler."
+      )
+    endif()
+  endforeach()
 
+  list(APPEND cxxflags "-std=c++98" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
   include(CheckCXXCompilerFlag)
-  CHECK_CXX_COMPILER_FLAG("-std=c++98" COMPILER_SUPPORTS_CXX98)
-  if(NOT COMPILER_SUPPORTS_CXX98)
-    message(
-      FATAL_ERROR
-      "The compiler ${CMAKE_CXX_COMPILER} has no C++98 support. "
-      "Please use a different C++ compiler."
-    )
-  endif()
+  foreach(cxxflag ${cxxflags})
+    string(REGEX REPLACE "=" "_" cxxflagname ${cxxflag})
+    CHECK_CXX_COMPILER_FLAG(${cxxflag} CXX_SUPPORTS_${cxxflagname})
+    if(NOT CXX_SUPPORTS_${cxxflagname})
+      message(
+        FATAL_ERROR
+        "The compiler ${CMAKE_CXX_COMPILER} does not support ${cxxflag}. "
+        "Please use a different CXX compiler."
+      )
+    endif()
+  endforeach()
 endif()
+
+# Set complier flags
+string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
+string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
+list(APPEND LIBS "-Wl,--no-as-needed")
 
 # MPI
 find_package(MPI ${findtype})

@@ -32,10 +32,10 @@ unset(MKL_LIBRARY_LP CACHE)
 ################################################################################
 
 if(NOT MKL_ILP64)
-  set(mkllib  "libmkl_intel_lp64.a")
+  set(mkllp  "lp64")
   set(mklflag "-m64")
 else()
-  set(mkllib  "libmkl_intel_ilp64.a")
+  set(mkllp  "ilp64")
   set(mklflag "-DMKL_ILP64 -m64")
 endif()
 
@@ -55,7 +55,7 @@ find_path(
 
 find_library(
   MKL_LIBRARY_CORE
-  NAMES libmkl_core.a
+  NAMES mkl_core
   HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
   DOC "The core library of Intel MKL."
 )
@@ -63,7 +63,7 @@ find_library(
 if(MKL_OMP STREQUAL "GOMP")
   find_library(
     MKL_LIBRARY_GNU_THREAD
-    NAMES libmkl_gnu_thread.a
+    NAMES mkl_gnu_thread
     HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
     DOC "The GNU thread library of Intel MKL."
   )
@@ -71,7 +71,7 @@ if(MKL_OMP STREQUAL "GOMP")
 elseif(MKL_OMP STREQUAL "IOMP")
   find_library(
     MKL_LIBRARY_INTEL_THREAD
-    NAMES libmkl_intel_thread.a
+    NAMES mkl_intel_thread
     HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
     DOC "The Intel thread library of Intel MKL."
   )
@@ -79,7 +79,7 @@ elseif(MKL_OMP STREQUAL "IOMP")
 else()
   find_library(
     MKL_LIBRARY_SEQUENTIAL
-    NAMES libmkl_sequential.a
+    NAMES mkl_sequential
     HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
     DOC "The sequential library of Intel MKL."
   )
@@ -88,7 +88,7 @@ endif()
 
 find_library(
   MKL_LIBRARY_LP
-  NAMES ${mkllib}
+  NAMES mkl_intel_${mkllp}
   HINTS "${MKL_ROOT}/lib" "${MKL_ROOT}/lib/intel64"
   DOC "The integer library of Intel MKL."
 )

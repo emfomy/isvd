@@ -22,9 +22,11 @@
 /// @ingroup  core_module
 /// The type of index.
 #ifndef ISVD_USE_ILP64
-typedef int32_t isvd_int_t;
+typedef int32_t  isvd_int_t;
+typedef uint32_t isvd_uint_t;
 #else  // ISVD_USE_ILP64
-typedef int64_t isvd_int_t;
+typedef int64_t  isvd_int_t;
+typedef uint64_t isvd_uint_t;
 #endif  // ISVD_USE_ILP64
 
 /// @ingroup  core_module
@@ -33,7 +35,8 @@ typedef int mpi_int_t;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifdef ISVD_USE_MKL
-#define MKL_INT isvd_int_t
+#define MKL_INT  isvd_int_t
+#define MKL_UINT isvd_uint_t
 #define MKL_Complex8  float complex
 #define MKL_Complex16 double complex
 #endif  // ISVD_USE_MKL
