@@ -9,5 +9,7 @@
 #define _ISVD_UTIL_H_
 
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
+#include <isvd/util/omp.h>
 
 #endif  // _ISVD_UTIL_H_

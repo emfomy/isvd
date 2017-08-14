@@ -10,6 +10,7 @@
 
 #include <isvd/core/def.h>
 #include <isvd/core/idx_range.h>
+#include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  core_param_module
@@ -77,7 +78,7 @@ typedef struct {
 /// @ingroup  core_param_module
 /// Initialize the parameters.
 ///
-inline isvd_Param isvd_createParam(
+static inline isvd_Param isvd_createParam(
     const isvd_int_t nrow,
     const isvd_int_t ncol,
     const isvd_int_t rank,
@@ -87,9 +88,8 @@ inline isvd_Param isvd_createParam(
     const MPI_Comm   mpi_comm
 ) {
 
-  mpi_int_t mpi_size, mpi_rank;
-  MPI_Comm_size(mpi_comm, &mpi_size);
-  MPI_Comm_rank(mpi_comm, &mpi_rank);
+  mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
+  mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
 
   struct {
     isvd_int_t nrow_;

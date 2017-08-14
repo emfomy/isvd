@@ -13,7 +13,7 @@
 #include <string.h>
 #include <mkl.h>
 
-inline isvd_int_t isvd_arg2int(
+static inline isvd_int_t isvd_arg2int(
     const char *name,
     const char arg,
     const char *opts
@@ -27,7 +27,7 @@ inline isvd_int_t isvd_arg2int(
   return -1;
 }
 
-inline char isvd_arg2char(
+static inline char isvd_arg2char(
     const char *name,
     const char arg,
     const char *opts,

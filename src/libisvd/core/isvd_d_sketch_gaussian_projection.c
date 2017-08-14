@@ -7,6 +7,7 @@
 
 #include <isvd/core/dtype.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/omp.h>
 
 typedef double isvd_val_t;
 
@@ -18,7 +19,8 @@ void isvd_dSketchGaussianProjectionBlockCol(
     const isvd_int_t lda,
           isvd_val_t *yt,
     const isvd_int_t ldyt,
-    const isvd_int_t seed
+    const isvd_int_t seed,
+    const mpi_int_t mpi_root
 ) {
 
   // ====================================================================================================================== //
@@ -28,14 +30,15 @@ void isvd_dSketchGaussianProjectionBlockCol(
   isvd_int_t mb  = param.nrow_each;
   isvd_int_t Pmb = param.nrow_total;
   isvd_int_t nj  = param.ncol_proc;
+  isvd_int_t nb  = param.ncol_each;
   isvd_int_t Nl  = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Check arguments
 
   switch ( transa ) {
-    case 'T': isvd_assert_ge(lda,  m);  break;
-    case 'N': isvd_assert_ge(lda,  nj); break;
+    case 'N': isvd_assert_ge(lda,  m);  break;
+    case 'T': isvd_assert_ge(lda,  nj); break;
   }
   isvd_assert_eq(ldyt, Nl);
 
@@ -51,9 +54,29 @@ void isvd_dSketchGaussianProjectionBlockCol(
   // ====================================================================================================================== //
   // Random generate
 
-  #pragma warning
-  isvd_int_t iseed[] = {0, 0, 0, 1};
-  LAPACKE_dlarnv(3, iseed, nj * Nl, omega);
+  isvd_int_t seed_ = seed;
+  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
+
+#ifdef _OPENMP
+  #pragma omp parallel
+#endif  // _OPENMP
+  {
+    isvd_int_t omp_size = isvd_getOmpSize();
+    isvd_int_t omp_rank = isvd_getOmpRank();
+
+    isvd_int_t len   = nj * Nl / omp_size;
+    isvd_int_t start = len * omp_rank;
+    if ( omp_rank == omp_size-1 ) {
+      len = nj * Nl - start;
+    }
+
+    VSLStreamStatePtr stream;
+    vslNewStream(&stream, VSL_BRNG_SFMT19937, seed_);
+    vslSkipAheadStream(stream, (nb * Nl * param.mpi_rank + start) * 2);
+    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omega + start, 0.0, 1.0);
+
+    vslDeleteStream(&stream);
+  }
 
   // ====================================================================================================================== //
   // Project
@@ -81,7 +104,8 @@ void isvd_dSketchGaussianProjectionBlockRow(
     const isvd_int_t lda,
           isvd_val_t *yt,
     const isvd_int_t ldyt,
-    const isvd_int_t seed
+    const isvd_int_t seed,
+    const mpi_int_t mpi_root
 ) {
 
   // ====================================================================================================================== //
@@ -89,7 +113,6 @@ void isvd_dSketchGaussianProjectionBlockRow(
 
   isvd_int_t mj  = param.nrow_proc;
   isvd_int_t mb  = param.nrow_each;
-  isvd_int_t Pmb = param.nrow_total;
   isvd_int_t n   = param.ncol;
   isvd_int_t Nl  = param.dim_sketch_total;
 
@@ -111,9 +134,29 @@ void isvd_dSketchGaussianProjectionBlockRow(
   // ====================================================================================================================== //
   // Random generate
 
-  #pragma warning
-  isvd_int_t iseed[] = {0, 0, 0, 1};
-  LAPACKE_dlarnv(3, iseed, n * Nl, omega);
+  isvd_int_t seed_ = seed;
+  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
+
+#ifdef _OPENMP
+  #pragma omp parallel
+#endif  // _OPENMP
+  {
+    isvd_int_t omp_size = isvd_getOmpSize();
+    isvd_int_t omp_rank = isvd_getOmpRank();
+
+    isvd_int_t len   = n * Nl / omp_size;
+    isvd_int_t start = len * omp_rank;
+    if ( omp_rank == omp_size-1 ) {
+      len = n * Nl - start;
+    }
+
+    VSLStreamStatePtr stream;
+    vslNewStream(&stream, VSL_BRNG_SFMT19937, seed_);
+    vslSkipAheadStream(stream, start * 2);
+    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omega + start, 0.0, 1.0);
+
+    vslDeleteStream(&stream);
+  }
 
   // ====================================================================================================================== //
   // Project
@@ -141,18 +184,19 @@ void isvd_dSketchGaussianProjectionBlockRow(
 /// @see  isvd_Param
 ///
 void isvd_dSketchGaussianProjection(
-    const char dista,        ///< [in]  The parallel distribution of 𝑨. <br>
-                             ///< `'C'`: block-column parallelism. <br>
-                             ///< `'R'`: block-row parallelism.
-    const char ordera,       ///< [in]  The storage ordering of 𝑨. <br>
-                             ///< `'C'`: column-major ordering. <br>
-                             ///< `'R'`: row-major ordering.
-    const isvd_Param param,  ///< [in]  The parameters.
-    const isvd_val_t *a,     ///< [in]  The row/column-block 𝑨.
-    const isvd_int_t lda,    ///< [in]  The leading dimension of the block 𝑨.
-          isvd_val_t *yt,    ///< [out] The row-block 𝖄 (row-major).
-    const isvd_int_t ldyt,   ///< [in]  The leading dimension of the row-block 𝖄 (row-major).
-    const isvd_int_t seed    ///< [in]  The random seed.
+    const char dista,         ///< [in]  The parallel distribution of 𝑨. <br>
+                              ///< `'C'`: block-column parallelism. <br>
+                              ///< `'R'`: block-row parallelism.
+    const char ordera,        ///< [in]  The storage ordering of 𝑨. <br>
+                              ///< `'C'`: column-major ordering. <br>
+                              ///< `'R'`: row-major ordering.
+    const isvd_Param param,   ///< [in]  The parameters.
+    const isvd_val_t *a,      ///< [in]  The row/column-block 𝑨.
+    const isvd_int_t lda,     ///< [in]  The leading dimension of the block 𝑨.
+          isvd_val_t *yt,     ///< [out] The row-block 𝖄 (row-major).
+    const isvd_int_t ldyt,    ///< [in]  The leading dimension of the row-block 𝖄 (row-major).
+    const isvd_int_t seed,    ///< [in]  The random seed.
+    const mpi_int_t mpi_root  ///< [in]  The root MPI process ID.
 ) {
 
   // ====================================================================================================================== //
@@ -170,7 +214,7 @@ void isvd_dSketchGaussianProjection(
   // Run
 
   switch ( dista_ ) {
-    case 'C': isvd_dSketchGaussianProjectionBlockCol(transa_, param, a, lda, yt, ldyt, seed); break;
-    case 'R': isvd_dSketchGaussianProjectionBlockRow(transa_, param, a, lda, yt, ldyt, seed); break;
+    case 'C': isvd_dSketchGaussianProjectionBlockCol(transa_, param, a, lda, yt, ldyt, seed, mpi_root); break;
+    case 'R': isvd_dSketchGaussianProjectionBlockRow(transa_, param, a, lda, yt, ldyt, seed, mpi_root); break;
   }
 }

@@ -18,7 +18,8 @@
 ///
 void isvd_dSketchGaussianProjection(
     const char dista, const char ordera, const isvd_Param param,
-    const double *a, const isvd_int_t lda, double *yt, const isvd_int_t ldyt, const isvd_int_t seed
+    const double *a, const isvd_int_t lda, double *yt, const isvd_int_t ldyt, const isvd_int_t seed,
+    const mpi_int_t mpi_root
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
