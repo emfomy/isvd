@@ -45,8 +45,8 @@ void isvd_dSketchGaussianProjectionBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *omega = isvd_dmalloc(nj * Nl);
-  isvd_int_t ldomega = Nl;
+  isvd_val_t *omegat = isvd_dmalloc(nj * Nl);
+  isvd_int_t ldomegat = Nl;
 
   isvd_val_t *yt_ = isvd_dmalloc(Pmb * Nl);
   isvd_int_t ldyt_ = Nl;
@@ -73,7 +73,7 @@ void isvd_dSketchGaussianProjectionBlockCol(
     VSLStreamStatePtr stream;
     vslNewStream(&stream, VSL_BRNG_SFMT19937, seed_);
     vslSkipAheadStream(stream, (nb * Nl * param.mpi_rank + start) * 2);
-    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omega + start, 0.0, 1.0);
+    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omegat + start, 0.0, 1.0);
 
     vslDeleteStream(&stream);
   }
@@ -83,7 +83,8 @@ void isvd_dSketchGaussianProjectionBlockCol(
 
   isvd_dmemset0(yt_, Pmb * Nl);
   CBLAS_TRANSPOSE transa_ = (transa == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasRowMajor, transa_, CblasNoTrans, m, Nl, nj, 1.0, a, lda, omega, ldomega, 0.0, yt_, ldyt_);
+  cblas_dgemm(CblasRowMajor, transa_, CblasNoTrans, m, Nl, nj,
+              1.0, a, lda, omegat, ldomegat, 0.0, yt_, ldyt_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -93,7 +94,7 @@ void isvd_dSketchGaussianProjectionBlockCol(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(omega);
+  isvd_free(omegat);
 
 }
 
@@ -111,10 +112,10 @@ void isvd_dSketchGaussianProjectionBlockRow(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t mj  = param.nrow_proc;
-  isvd_int_t mb  = param.nrow_each;
-  isvd_int_t n   = param.ncol;
-  isvd_int_t Nl  = param.dim_sketch_total;
+  isvd_int_t mj = param.nrow_proc;
+  isvd_int_t mb = param.nrow_each;
+  isvd_int_t n  = param.ncol;
+  isvd_int_t Nl = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Check arguments
@@ -128,8 +129,8 @@ void isvd_dSketchGaussianProjectionBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *omega = isvd_dmalloc(n * Nl);
-  isvd_int_t ldomega = Nl;
+  isvd_val_t *omegat = isvd_dmalloc(n * Nl);
+  isvd_int_t ldomegat = Nl;
 
   // ====================================================================================================================== //
   // Random generate
@@ -153,7 +154,7 @@ void isvd_dSketchGaussianProjectionBlockRow(
     VSLStreamStatePtr stream;
     vslNewStream(&stream, VSL_BRNG_SFMT19937, seed_);
     vslSkipAheadStream(stream, start * 2);
-    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omega + start, 0.0, 1.0);
+    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omegat + start, 0.0, 1.0);
 
     vslDeleteStream(&stream);
   }
@@ -163,12 +164,12 @@ void isvd_dSketchGaussianProjectionBlockRow(
 
   isvd_dmemset0(yt, mb * Nl);
   CBLAS_TRANSPOSE transa_ = (transa == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasRowMajor, transa_, CblasNoTrans, mj, Nl, n, 1.0, a, lda, omega, ldomega, 0.0, yt, ldyt);
+  cblas_dgemm(CblasRowMajor, transa_, CblasNoTrans, mj, Nl, n, 1.0, a, lda, omegat, ldomegat, 0.0, yt, ldyt);
 
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(omega);
+  isvd_free(omegat);
 
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
@@ -177,38 +178,45 @@ void isvd_dSketchGaussianProjectionBlockRow(
 /// @ingroup  core_dtype_s_module
 /// Gaussian Projection Sketching (double precision)
 ///
-/// @attention  The size of 𝑨 must be @f$ m \times n_j @f$ for block-column parallelism.
-/// @attention  The size of 𝑨 must be @f$ m_j \times n @f$ for block-row parallelism.
-/// @attention  The size of 𝖄 must be @f$ m_b \times Nl @f$ in row-major with leading dimension @f$ Nl @f$.
-///
-/// @see  isvd_Param
+/// @param[in]   dista     The parallel distribution of 𝑨. <br>
+///                        `'C'`: block-column parallelism. <br>
+///                        `'R'`: block-row parallelism.
+/// @param[in]   ordera    The storage ordering of 𝑨. <br>
+///                        `'C'`: column-major ordering. <br>
+///                        `'R'`: row-major ordering.
+/// @param[in]   param     The @ref isvd_Param "parameters".
+/// @param[in]   a, lda    The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
+///                        If `dista='C'`: the size must be @f$m \times n_j@f$. <br>
+///                        If `dista='R'`: the size must be @f$m_j \times n@f$.
+/// @param[in]   yt, ldyt  The row-block 𝖄 (@f$m_b \times Nl@f$, row-major) and its leading dimension. <br>
+///                        If `dista='C'`: @p ldyt must be @f$Nl@f$.
+/// @param[in]   seed      The random seed.
+/// @param[in]   mpi_root  The root MPI process ID.
+/// <hr>
+/// @param[out]  yt        Replaced by the row-block 𝖄 (row-major).
 ///
 void isvd_dSketchGaussianProjection(
-    const char dista,         ///< [in]  The parallel distribution of 𝑨. <br>
-                              ///< `'C'`: block-column parallelism. <br>
-                              ///< `'R'`: block-row parallelism.
-    const char ordera,        ///< [in]  The storage ordering of 𝑨. <br>
-                              ///< `'C'`: column-major ordering. <br>
-                              ///< `'R'`: row-major ordering.
-    const isvd_Param param,   ///< [in]  The parameters.
-    const isvd_val_t *a,      ///< [in]  The row/column-block 𝑨.
-    const isvd_int_t lda,     ///< [in]  The leading dimension of the block 𝑨.
-          isvd_val_t *yt,     ///< [out] The row-block 𝖄 (row-major).
-    const isvd_int_t ldyt,    ///< [in]  The leading dimension of the row-block 𝖄 (row-major).
-    const isvd_int_t seed,    ///< [in]  The random seed.
-    const mpi_int_t mpi_root  ///< [in]  The root MPI process ID.
+    const char dista,
+    const char ordera,
+    const isvd_Param param,
+    const isvd_val_t *a,
+    const isvd_int_t lda,
+          isvd_val_t *yt,
+    const isvd_int_t ldyt,
+    const isvd_int_t seed,
+    const mpi_int_t mpi_root
 ) {
 
   // ====================================================================================================================== //
   // Check arguments
 
   char dista_  = isvd_arg2char("STOREA", dista,  "CR", "CR");
-  char transa_;
+  char transa_ = '\0';
   switch ( dista_ ) {
     case 'C': transa_ = isvd_arg2char("ORDERA", ordera, "CR", "NT"); break;
     case 'R': transa_ = isvd_arg2char("ORDERA", ordera, "CR", "TN"); break;
   }
-  if ( dista_ == 0 || transa_ == 0 ) return;
+  if ( dista_ == '\0' || transa_ == '\0' ) return;
 
   // ====================================================================================================================== //
   // Run

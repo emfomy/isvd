@@ -11,6 +11,8 @@
 #include <isvd/def.h>
 #include <mkl.h>
 
+#define isvd_malloc( num, type ) mkl_malloc(num * sizeof(type), 64);
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
 /// @brief  Allocates an array with size @a num.
@@ -20,28 +22,20 @@
 /// @return       The pointer to the array.
 ///
 //@{
-static inline void* isvd_malloc( const size_t num ) {
-  return mkl_malloc(num, 64);
-}
-
-static inline isvd_int_t* isvd_imalloc( const size_t num ) {
-  return isvd_malloc(num * sizeof(isvd_int_t));
-}
-
 static inline float* isvd_smalloc( const size_t num ) {
-  return isvd_malloc(num * sizeof(float));
+  return isvd_malloc(num, float);
 }
 
 static inline double* isvd_dmalloc( const size_t num ) {
-  return isvd_malloc(num * sizeof(double));
+  return isvd_malloc(num, double);
 }
 
 static inline float complex* isvd_cmalloc( const size_t num ) {
-  return isvd_malloc(num * sizeof(float complex));
+  return isvd_malloc(num, float complex);
 }
 
 static inline double complex* isvd_zmalloc( const size_t num ) {
-  return isvd_malloc(num * sizeof(double complex));
+  return isvd_malloc(num, double complex);
 }
 //@}
 
@@ -56,6 +50,8 @@ static inline void isvd_free( void *ptr ) {
 }
 //@}
 
+#define isvd_memset0( ptr, num, type ) memset(ptr, 0, num * sizeof(type));
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
 /// @brief  Sets the memory to zero.
@@ -63,28 +59,57 @@ static inline void isvd_free( void *ptr ) {
 /// @param  ptr  The destination pointer to the array.
 /// @param  num  The number of objects.
 ///
-static inline void isvd_memset0( void *ptr, const size_t num ) {
-  memset(ptr, 0, num);
-}
-
+//@{
 static inline void isvd_imemset0( isvd_int_t *ptr, const size_t num ) {
-  memset(ptr, 0, num * sizeof(isvd_int_t));
+  isvd_memset0(ptr, num, isvd_int_t);
 }
 
 static inline void isvd_smemset0( float *ptr, const size_t num ) {
-  memset(ptr, 0, num * sizeof(float));
+  isvd_memset0(ptr, num, float);
 }
 
 static inline void isvd_dmemset0( double *ptr, const size_t num ) {
-  memset(ptr, 0, num * sizeof(double));
+  isvd_memset0(ptr, num, double);
 }
 
 static inline void isvd_cmemset0( float complex *ptr, const size_t num ) {
-  memset(ptr, 0, num * sizeof(float complex));
+  isvd_memset0(ptr, num, float complex);
 }
 
 static inline void isvd_zmemset0( double complex *ptr, const size_t num ) {
-  memset(ptr, 0, num * sizeof(double complex));
+  isvd_memset0(ptr, num, double complex);
+}
+//@}
+
+#define isvd_memcpy( dst, src, num, type ) memcpy(dst, src, num * sizeof(type));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ingroup  utility_module
+/// @brief  Copies the array.
+///
+/// @param   dst  The destination pointer to the array.
+/// @param   src  The source pointer to the array.
+/// @param   num  The number of objects.
+///
+//@{
+static inline void isvd_imemcpy( isvd_int_t *dst, isvd_int_t *src, const size_t num ) {
+  isvd_memcpy(dst, src, num, isvd_int_t);
+}
+
+static inline void isvd_smemcpy( float *dst, float *src, const size_t num ) {
+  isvd_memcpy(dst, src, num, float);
+}
+
+static inline void isvd_dmemcpy( double *dst, double *src, const size_t num ) {
+  isvd_memcpy(dst, src, num, double);
+}
+
+static inline void isvd_cmemcpy( float complex *dst, float complex *src, const size_t num ) {
+  isvd_memcpy(dst, src, num, float complex);
+}
+
+static inline void isvd_zmemcpy( double complex *dst, double complex *src, const size_t num ) {
+  isvd_memcpy(dst, src, num, double complex);
 }
 //@}
 

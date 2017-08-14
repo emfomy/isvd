@@ -31,17 +31,15 @@ int main( int argc, char **argv ) {
   const isvd_int_t seed = 0;
 
   isvd_int_t m   = param.nrow;
-  isvd_int_t mj  = param.nrow_proc;
   isvd_int_t mb  = param.nrow_each;
   isvd_int_t n   = param.ncol;
-  isvd_int_t nj  = param.ncol_proc;
   isvd_int_t nb  = param.ncol_each;
   isvd_int_t Nl  = param.dim_sketch_total;
 
   double *a = isvd_dmalloc(m * n);
   isvd_int_t lda = m;
   for ( isvd_int_t i = 0; i < m * n; ++i ) {
-    a[i] = i;
+    a[i] = i*i;
   }
 
   double *yt = isvd_dmalloc(mb * Nl);
@@ -49,6 +47,8 @@ int main( int argc, char **argv ) {
 
   isvd_dSketchGaussianProjection('C', 'C', param, a + m * nb * param.mpi_rank, lda, yt, ldyt, seed, mpi_root);
   // isvd_dSketchGaussianProjection('R', 'C', param, a + mb * param.mpi_rank, lda, yt, ldyt, seed, mpi_root);
+
+  isvd_dOrthogonalizeGramian(param, yt, ldyt);
 
   isvd_mrdisp("%lf", mb, Nl, Nl, yt);
 
