@@ -135,8 +135,8 @@ void isvd_dIntegrateKolmogorovNagumo(
     // ================================================================================================================== //
     // Compute B, D, and G
 
-    // Gc := 1/N * Qs * Bc
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, mj, l, Nl, 1.0/N, qst, ldqst, bc, ldbc, 0.0, gct, ldgct);
+    // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
+    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
     // Bgc := Qs' * Gc
     cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
@@ -186,9 +186,9 @@ void isvd_dIntegrateKolmogorovNagumo(
     // Fc [in C] := C - Dc * inv(C)
     cblas_dsymm(CblasColMajor, CblasRight, CblasUpper, l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
 
-    // Q+ := Qc * Fc [in C] + Gc * inv(C)
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, mj, l, l, 1.0, qct, ldqct, c, ldc, 0.0, qpt, ldqpt);
-    cblas_dsymm(CblasRowMajor, CblasRight, CblasLower, mj, l, 1.0, gct, ldgct, cinv, ldcinv, 1.0, qpt, ldqpt);
+    // Q+ := Qc * Fc [in C] + Gc * inv(C) (Q+' := Fc' [in C] * Qc' + inv(C) * Gc')
+    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
+    cblas_dsymm(CblasColMajor, CblasLeft, CblasUpper, l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
 
     // B+ := Bc * Fc [in C] + Bgc * inv(C)
     cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
@@ -205,7 +205,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   // Copy Qbar
   isvd_val_t *qct  = qt_ + is_odd*mj*ldqt_;
   isvd_int_t ldqct = ldqt_;
-  mkl_domatcopy('R', 'N', mj, l, 1.0, qct, ldqct, qt, ldqt);
+  mkl_domatcopy('C', 'N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory
