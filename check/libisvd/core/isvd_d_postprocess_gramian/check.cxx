@@ -201,19 +201,33 @@ void testWithUV( char dista, char ordera ) {
   // Sketches
   isvd_dPostprocessGramian('S', 'S', dista_, ordera_, param, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, mpi_root);
 
+  // Compute space
+  isvd_val_t *uut_ = isvd_dmalloc(m * m);
+  isvd_int_t lduut_ = m;
+  isvd_val_t *uut0 = isvd_dmalloc(m * m);
+  isvd_int_t lduut0 = m;
+  isvd_val_t *vvt_ = isvd_dmalloc(n * n);
+  isvd_int_t ldvvt_ = n;
+  isvd_val_t *vvt0 = isvd_dmalloc(n * n);
+  isvd_int_t ldvvt0 = n;
+  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut,  ldut,  0.0, uut_, lduut_);
+  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt,  ldvt,  0.0, vvt_, ldvvt_);
+  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
+
   // Checks result
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < l; ++ir ) {
       ASSERT_NEAR(s[ir], s0[ir], 1e-8) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
     }
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      for ( isvd_int_t ic = 0; ic < l; ++ic ) {
-        ASSERT_NEAR(ut[ir*ldut+ic], ut0[ir*ldut0+ic], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+      for ( isvd_int_t ic = ir; ic < m; ++ic ) {
+        ASSERT_NEAR(uut_[ir+ic*lduut_], uut0[ir+ic*lduut0], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
       }
     }
     for ( isvd_int_t ir = 0; ir < n; ++ir ) {
-      for ( isvd_int_t ic = 0; ic < l; ++ic ) {
-        ASSERT_NEAR(vt[ir*ldvt+ic], vt0[ir*ldvt0+ic], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+      for ( isvd_int_t ic = ir; ic < n; ++ic ) {
+        ASSERT_NEAR(vvt_[ir+ic*ldvvt_], vvt0[ir+ic*ldvvt0], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
       }
     }
   }
@@ -223,17 +237,17 @@ TEST(PostprocessGramian, BlockCol_ColMajor_WithUV) {
   testWithUV('C', 'C');
 }
 
-// TEST(PostprocessGramian, BlockCol_RowMajor_WithUV) {
-//   testWithUV('C', 'R');
-// }
+TEST(PostprocessGramian, BlockCol_RowMajor_WithUV) {
+  testWithUV('C', 'R');
+}
 
-// TEST(PostprocessGramian, BlockRow_ColMajor_WithUV) {
-//   testWithUV('R', 'C');
-// }
+TEST(PostprocessGramian, BlockRow_ColMajor_WithUV) {
+  testWithUV('R', 'C');
+}
 
-// TEST(PostprocessGramian, BlockRow_RowMajor_WithUV) {
-//   testWithUV('R', 'R');
-// }
+TEST(PostprocessGramian, BlockRow_RowMajor_WithUV) {
+  testWithUV('R', 'R');
+}
 
 // TEST(PostprocessGramian, BlockCol_ColMajor_NoUV) {
 //   testNoUV('C', 'C');
