@@ -8,6 +8,9 @@ macro(SET_TARGET target files)
   install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
 endmacro()
 
+# Disable asserts
+# list(APPEND DEFS "NDEBUG")
+
 # Set include paths
 include_directories(
   "${PROJECT_BINARY_DIR}/include/c"

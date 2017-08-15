@@ -64,13 +64,13 @@ void isvd_dOrthogonalizeGramian(
   }
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
-  // eig(Wi) = Wi * Si * Wi'
+  // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1, superb));
   }
-
-  // Qi := Yi * Wi / sqrt(Si) (Qi' := (Wi / sqrt(Si))' * Yi' )
   vdSqrt(lds*N, s, s);
+
+  // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
   for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
     cblas_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
   }

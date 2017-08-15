@@ -28,7 +28,7 @@ typedef double isvd_val_t;
 ///
 isvd_int_t isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param,
-          isvd_val_t *qst,
+    const isvd_val_t *qst,
     const isvd_int_t ldqst,
           isvd_val_t *qt,
     const isvd_int_t ldqt,

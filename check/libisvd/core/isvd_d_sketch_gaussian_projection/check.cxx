@@ -21,7 +21,7 @@ void test( char dista, char ordera ) {
   MM_typecode matcode;
 
   // Check arguments
-  char dista_  = isvd_arg2char("STOREA", dista,  "CR", "CR");
+  char dista_  = isvd_arg2char("DISTA",  dista,  "CR", "CR");
   char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", "CR");
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');

@@ -39,10 +39,10 @@ typedef struct {
   /// @f$n_j@f$ The number of columns of current MPI process.
   const isvd_int_t ncol_proc;
 
-  /// @f$m_b@f$ The number of rows per MPI process.
+  /// @f$m_b = \lceil \frac{m}{P} \rceil@f$ The number of rows per MPI process.
   const isvd_int_t nrow_each;
 
-  /// @f$n_b@f$ The number of columns per MPI process.
+  /// @f$n_b = \lceil \frac{n}{P} \rceil@f$ The number of columns per MPI process.
   const isvd_int_t ncol_each;
 
   /// @f$Pm_b@f$ The total number of rows in all MPI processes.
