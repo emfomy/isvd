@@ -88,10 +88,11 @@ typedef int mpi_int_t;
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
 /// @ingroup  core_module
-#define isvd_vdisp( format, len, vector ) printf(#vector ":\n"); \
+#define isvd_vdisp( format, len, inc, vector ) printf(#vector ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
-    printf(format "\t", (vector)[_isvd_i_]); \
-  }
+    printf(format "\t", (vector)[_isvd_i_ * inc]); \
+  } \
+  printf("\n");
 
 /// @ingroup  core_module
 #define isvd_mcdisp( format, nrow, ncol, ld, matrix ) printf(#matrix ":\n"); \

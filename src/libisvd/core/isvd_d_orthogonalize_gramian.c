@@ -43,7 +43,8 @@ void isvd_dOrthogonalizeGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *yst_ = isvd_dmalloc(mj * Nl);
+  isvd_val_t *yst_ = isvd_dmalloc(mj * ldyst);
+  isvd_int_t ldyst_ = ldyst;
 
   isvd_val_t *w = isvd_dmalloc(l * Nl);
   isvd_int_t ldw = l;
@@ -59,8 +60,9 @@ void isvd_dOrthogonalizeGramian(
   // Wi := Yi' * Yi
   for ( isvd_int_t i = 0; i < N; ++i ) {
     cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, mj,
-                1.0, yst + i*l*ldyst, ldyst, yst + i*l*ldyst, ldyst, 0.0, w, ldw + i*ldw*l);
+                1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
   }
+  MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // eig(Wi) = Wi * Si * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
@@ -69,13 +71,13 @@ void isvd_dOrthogonalizeGramian(
 
   // Qi := Yi * Wi / sqrt(Si) (Qi' := (Wi / sqrt(Si))' * Yi' )
   vdSqrt(lds*N, s, s);
+  for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
+    cblas_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
+  }
   isvd_dmemcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
-      cblas_dscal(l, 1.0/s[ii], w + ldw*ii, 1);
-    }
     cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l,
-                1.0, w + i*ldw*l, ldw, yst_ + i*l*ldyst, ldyst, 0.0, yst + i*l*ldyst, ldyst);
+                1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
   }
 
   // ====================================================================================================================== //

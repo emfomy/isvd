@@ -11,13 +11,9 @@ void test( char dista, char ordera ) {
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
 
-        isvd_int_t m;
-        isvd_int_t n;
-  const isvd_int_t k  = 6;
-  const isvd_int_t p  = 5;
-  const isvd_int_t N  = 12;
-  const isvd_int_t l  = k+p;
-  const isvd_int_t Nl = N*l;
+  isvd_int_t m;
+  isvd_int_t n;
+  isvd_int_t Nl;
 
   FILE *file;
   MM_typecode matcode;
@@ -59,7 +55,7 @@ void test( char dista, char ordera ) {
     fclose(file);
   }
 
-  // Reads data
+  // Reads Ys
   file = fopen(YS_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -67,10 +63,9 @@ void test( char dista, char ordera ) {
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   {
-    isvd_int_t m_, Nl_;
-    ASSERT_EQ(mm_read_mtx_array_size(file, &m_, &Nl_), 0);
-    ASSERT_EQ(m_,  m);
-    ASSERT_EQ(Nl_, Nl);
+    isvd_int_t m_;
+    ASSERT_EQ(mm_read_mtx_array_size(file, &m_, &Nl), 0);
+    ASSERT_EQ(m_, m);
   }
 
   double *yst0 = isvd_dmalloc(m * Nl);
@@ -87,11 +82,15 @@ void test( char dista, char ordera ) {
   }
 
   // Sets parameters
+  const isvd_int_t k = Nl;
+  const isvd_int_t p = 0;
+  const isvd_int_t N = 1;
+
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
   const isvd_int_t seed = 0;
 
-  isvd_int_t mb  = param.nrow_each;
-  isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t mb  = param.nrow_each;
+  const isvd_int_t Pmb = param.nrow_total;
 
   // Creates matrices
   double *a;
