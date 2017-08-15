@@ -19,10 +19,6 @@ set(CMAKE_COLOR_MAKEFILE ON)
 # Set module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-# Set the paths
-include_directories("${PROJECT_BINARY_DIR}/include/c"
-                    "${PROJECT_SOURCE_DIR}/include/c")
-
 # Include functions
 include(cmake/functions.cmake)
 
@@ -35,7 +31,7 @@ include(cmake/packages.cmake)
 # Add subdirectories
 add_subdirectory(src)
 add_subdirectory(demo)
-# add_subdirectory(check)
+add_subdirectory(check)
 add_subdirectory(doxygen)
 
 # Sets the flags

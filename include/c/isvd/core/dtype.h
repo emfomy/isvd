@@ -14,27 +14,27 @@
 // Sketching
 void isvd_dSketchGaussianProjection(
     const char dista, const char ordera, const isvd_Param param,
-    const double *a, const isvd_int_t lda, double *yt, const isvd_int_t ldyt, const isvd_int_t seed,
+    const double *a, const isvd_int_t lda, double *yst, const isvd_int_t ldyst, const isvd_int_t seed,
     const mpi_int_t mpi_root
 );
 
 // Orthogonalization
 void isvd_dOrthogonalizeTallSkinnyQr(
-    const isvd_Param param, double *yt, const isvd_int_t ldyt
+    const isvd_Param param, double *yst, const isvd_int_t ldyst
 );
 
 void isvd_dOrthogonalizeGramian(
-    const isvd_Param param, double *yt, const isvd_int_t ldyt
+    const isvd_Param param, double *yst, const isvd_int_t ldyst
 );
 
 // Integration
 void isvd_dIntegrateKolmogorovNagumo(
-    const isvd_Param param, double *yt, const isvd_int_t ldyt, double *qt, const isvd_int_t ldqt,
+    const isvd_Param param, double *qst, const isvd_int_t ldqst, double *qt, const isvd_int_t ldqt,
     const isvd_int_t maxiter, const double tol
 );
 
 void isvd_dIntegrateWenYin(
-    const isvd_Param param, double *yt, const isvd_int_t ldyt, double *qt, const isvd_int_t ldqt,
+    const isvd_Param param, double *qst, const isvd_int_t ldqst, double *qt, const isvd_int_t ldqt,
     const isvd_int_t maxiter, const double tol
 );
 

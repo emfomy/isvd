@@ -14,17 +14,17 @@ typedef double isvd_val_t;
 /// @ingroup  core_dtype_module
 /// Gramian Orthogonalization (double precision)
 ///
-/// @param[in]   param     The @ref isvd_Param "parameters".
-/// @param[in]   yt, ldyt  The row-block 𝖄 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
+/// @param[in]   param       The @ref isvd_Param "parameters".
+/// @param[in]   yst, ldyst  The row-block 𝖄 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
 /// <hr>
-/// @param[out]  yt        Replaced by the row-block 𝕼 (row-major).
+/// @param[out]  yst          Replaced by the row-block 𝕼 (row-major).
 ///
 /// @see  isvd_Param
 ///
 void isvd_dOrthogonalizeGramian(
     const isvd_Param param,
-          isvd_val_t *yt,
-    const isvd_int_t ldyt
+          isvd_val_t *yst,
+    const isvd_int_t ldyst
 ) {
 
   // ====================================================================================================================== //
@@ -38,12 +38,12 @@ void isvd_dOrthogonalizeGramian(
   // ====================================================================================================================== //
   // Check arguments
 
-  isvd_assert_ge(ldyt, Nl);
+  isvd_assert_ge(ldyst, Nl);
 
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *yt_ = isvd_dmalloc(mj * Nl);
+  isvd_val_t *yst_ = isvd_dmalloc(mj * Nl);
 
   isvd_val_t *w = isvd_dmalloc(l * Nl);
   isvd_int_t ldw = l;
@@ -59,7 +59,7 @@ void isvd_dOrthogonalizeGramian(
   // Wi := Yi' * Yi
   for ( isvd_int_t i = 0; i < N; ++i ) {
     cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, mj,
-                1.0, yt + i*l*ldyt, ldyt, yt + i*l*ldyt, ldyt, 0.0, w, ldw + i*ldw*l);
+                1.0, yst + i*l*ldyst, ldyst, yst + i*l*ldyst, ldyst, 0.0, w, ldw + i*ldw*l);
   }
 
   // eig(Wi) = Wi * Si * Wi'
@@ -69,19 +69,19 @@ void isvd_dOrthogonalizeGramian(
 
   // Qi := Yi * Wi / sqrt(Si) (Qi' := (Wi / sqrt(Si))' * Yi' )
   vdSqrt(lds*N, s, s);
-  isvd_dmemcpy(yt_, yt, mj*ldyt);
+  isvd_dmemcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
     for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
       cblas_dscal(l, 1.0/s[ii], w + ldw*ii, 1);
     }
     cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l,
-                1.0, w + i*ldw*l, ldw, yt_ + i*l*ldyt, ldyt, 0.0, yt + i*l*ldyt, ldyt);
+                1.0, w + i*ldw*l, ldw, yst_ + i*l*ldyst, ldyst, 0.0, yst + i*l*ldyst, ldyst);
   }
 
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(yt_);
+  isvd_free(yst_);
   isvd_free(w);
   isvd_free(s);
   isvd_free(superb);

@@ -44,7 +44,7 @@ typedef int mpi_int_t;
 
 /// @ingroup  core_module
 //@{
-#ifndef MCNLA_USE_GTEST
+#ifndef ISVD_USE_GTEST
 
 #define isvd_assert_true( condition )   assert(condition);
 #define isvd_assert_false( condition )  assert(!(condition));
@@ -61,7 +61,7 @@ typedef int mpi_int_t;
 #define isvd_assert_gelt( val, bound1, bound2 )  assert(val >= bound1 && val <  bound2);
 #define isvd_assert_gele( val, bound1, bound2 )  assert(val >= bound1 && val <= bound2);
 
-#else  // MCNLA_USE_GTEST
+#else  // ISVD_USE_GTEST
 
 #define isvd_assert_true( condition )   EXPECT_TRUE(condition);
 #define isvd_assert_false( condition )  EXPECT_FALSE(condition);
@@ -78,9 +78,10 @@ typedef int mpi_int_t;
 #define isvd_assert_gelt( val, bound1, bound2 )  { EXPECT_GE(val, bound1); EXPECT_LT(val, bound2); }
 #define isvd_assert_gele( val, bound1, bound2 )  { EXPECT_GE(val, bound1); EXPECT_LE(val, bound2); }
 
-#endif  // MCNLA_USE_GTEST
+#endif  // ISVD_USE_GTEST
 
-#define isvd_assert_pass( condition )  { isvd_int_t err = condition; ISVD_UNUSED(err); isvd_assert_eq(err, 0); }
+#define isvd_assert_pass( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_eq(code, 0); }
+#define isvd_assert_code( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_ne(code, 0); }
 //@}
 
 /// @ingroup  core_module

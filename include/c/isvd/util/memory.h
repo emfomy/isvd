@@ -11,7 +11,7 @@
 #include <isvd/def.h>
 #include <mkl.h>
 
-#define isvd_malloc( num, type ) mkl_malloc(num * sizeof(type), 64);
+#define isvd_malloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
@@ -50,7 +50,7 @@ static inline void isvd_free( void *ptr ) {
 }
 //@}
 
-#define isvd_memset0( ptr, num, type ) memset(ptr, 0, num * sizeof(type));
+#define isvd_memset0( ptr, num, type ) memset((void*)(ptr), 0, num * sizeof(type));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
@@ -81,7 +81,7 @@ static inline void isvd_zmemset0( double complex *ptr, const size_t num ) {
 }
 //@}
 
-#define isvd_memcpy( dst, src, num, type ) memcpy(dst, src, num * sizeof(type));
+#define isvd_memcpy( dst, src, num, type ) memcpy((void*)(dst), (void*)(src), num * sizeof(type));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module

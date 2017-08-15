@@ -90,7 +90,7 @@ void isvd_dSketchGaussianProjectionBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(yt_, yt, mb * Nl, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+  MPI_Reduce_scatter_block(yt_, yt, mb*Nl, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Deallocate memory

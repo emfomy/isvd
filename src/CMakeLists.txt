@@ -8,5 +8,12 @@ macro(SET_TARGET target files)
   install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
 endmacro()
 
+# Set include paths
+include_directories(
+  "${PROJECT_BINARY_DIR}/include/c"
+  "${PROJECT_SOURCE_DIR}/include/c"
+)
+
+# libisvd
 file(GLOB_RECURSE files ${CMAKE_CURRENT_SOURCE_DIR}/libisvd/*)
 set_target(isvd "${files}")

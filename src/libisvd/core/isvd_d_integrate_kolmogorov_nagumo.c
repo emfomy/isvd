@@ -14,23 +14,23 @@ typedef double isvd_val_t;
 /// @ingroup  core_dtype_module
 /// Kolmogorov-Nagumo Integration (double precision)
 ///
-/// @param[in]   param     The @ref isvd_Param "parameters".
-/// @param[in]   yt, ldyt  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
-/// @param[in]   qt, ldqt  The row-block 𝑸bar (@f$ m_b \times l @f$, row-major) and its leading dimension.
-/// @param[in]   maxiter   The maximum number of iteration.
-/// @param[in]   tol       The tolerance of convergence condition.
+/// @param[in]   param       The @ref isvd_Param "parameters".
+/// @param[in]   qst, ldqst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
+/// @param[in]   qt, ldqt    The row-block 𝑸bar (@f$ m_b \times l @f$, row-major) and its leading dimension.
+/// @param[in]   maxit       The maximum number of iteration.
+/// @param[in]   tol         The tolerance of convergence condition.
 /// <hr>
-/// @param[out]  qt        Replaced by the row-block 𝑸bar (row-major).
+/// @param[out]  qt          Replaced by the row-block 𝑸bar (row-major).
 ///
 /// @see  isvd_Param
 ///
 void isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param,
-          isvd_val_t *yt,
-    const isvd_int_t ldyt,
+          isvd_val_t *qst,
+    const isvd_int_t ldqst,
           isvd_val_t *qt,
     const isvd_int_t ldqt,
-    const isvd_int_t maxiter,
+    const isvd_int_t maxit,
     const isvd_val_t tol
 ) {
 
@@ -45,16 +45,13 @@ void isvd_dIntegrateKolmogorovNagumo(
   // ====================================================================================================================== //
   // Check arguments
 
-  isvd_assert_ge(ldyt, Nl);
+  isvd_assert_ge(ldqst, Nl);
   isvd_assert_ge(ldqt, l);
-  isvd_assert_ge(maxiter, 0);
+  isvd_assert_ge(maxit, 0);
   isvd_assert_ge(tol, 0);
 
   // ====================================================================================================================== //
   // Allocate memory
-
-  isvd_val_t *qst = yt;
-  isvd_int_t ldqst = ldyt;
 
   isvd_val_t *qt_ = isvd_dmalloc(mj * l * 2);
   isvd_int_t ldqt_ = l;
@@ -108,7 +105,7 @@ void isvd_dIntegrateKolmogorovNagumo(
 
   isvd_int_t iter;
 
-  for ( iter = 0; iter < maxiter && !is_converged; ++iter ) {
+  for ( iter = 0; iter < maxit && !is_converged; ++iter ) {
 
     isvd_val_t *bc  = b_ +   is_odd *ldb_*l;
     isvd_int_t ldbc = ldb_;
