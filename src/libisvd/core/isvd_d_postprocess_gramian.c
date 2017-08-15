@@ -310,7 +310,11 @@ void isvd_dPostprocessGramian(
     cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( mpi_root >= 0 ) {
-      MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, mpi_root, param.mpi_comm);
+      if ( param.mpi_rank == mpi_root ) {
+        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, mpi_root, param.mpi_comm);
+      } else {
+        MPI_Gather(ut, mb*ldut, MPI_DOUBLE, NULL, mb*ldut, MPI_DOUBLE, mpi_root, param.mpi_comm);
+      }
     }
   }
 
@@ -322,7 +326,11 @@ void isvd_dPostprocessGramian(
     cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
     if ( mpi_root >= 0 ) {
-      MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, mpi_root, param.mpi_comm);
+      if ( param.mpi_rank == mpi_root ) {
+        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, mpi_root, param.mpi_comm);
+      } else {
+        MPI_Gather(vt, nb*ldvt, MPI_DOUBLE, NULL, nb*ldvt, MPI_DOUBLE, mpi_root, param.mpi_comm);
+      }
     }
   }
 
