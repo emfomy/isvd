@@ -6,6 +6,8 @@
 #define A_PATH  ISVD_DATA_PATH "/a.mtx"
 #define YS_PATH ISVD_DATA_PATH "/ys_gp.mtx"
 
+typedef double isvd_val_t;
+
 void test( char dista, char ordera ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
@@ -33,7 +35,7 @@ void test( char dista, char ordera ) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &n), 0);
 
-  double *a0 = isvd_dmalloc(m * n);
+  isvd_val_t *a0 = isvd_dmalloc(m * n);
   isvd_int_t lda0;
   if ( ordera_ == 'C' ) {
     lda0 = m;
@@ -68,7 +70,7 @@ void test( char dista, char ordera ) {
     ASSERT_EQ(m_, m);
   }
 
-  double *yst0 = isvd_dmalloc(m * Nl);
+  isvd_val_t *yst0 = isvd_dmalloc(m * Nl);
   isvd_int_t ldyst0 = Nl;
 
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
@@ -87,13 +89,13 @@ void test( char dista, char ordera ) {
   const isvd_int_t N = 1;
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
-  const isvd_int_t seed = 0;
 
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t seed = 0;
 
   // Creates matrices
-  double *a;
+  isvd_val_t *a;
   if ( dista_ == 'C' ) {
     if ( ordera_ == 'C' ) {
       a = a0 + param.colrange.begin * lda0;
@@ -109,14 +111,14 @@ void test( char dista, char ordera ) {
   }
   isvd_int_t lda = lda0;
 
-  double *yst = isvd_dmalloc(mb * Nl);
+  isvd_val_t *yst = isvd_dmalloc(mb * Nl);
   isvd_int_t ldyst = Nl;
 
   // Sketches
   isvd_dSketchGaussianProjection(dista_, ordera_, param, a, lda, yst, ldyst, seed, mpi_root);
 
   // Gather result
-  double *yst_ = isvd_dmalloc(Pmb * Nl);
+  isvd_val_t *yst_ = isvd_dmalloc(Pmb * Nl);
   isvd_int_t ldyst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_DOUBLE, yst_, mb*ldyst, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
 

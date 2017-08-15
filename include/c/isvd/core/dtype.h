@@ -28,12 +28,12 @@ void isvd_dOrthogonalizeGramian(
 );
 
 // Integration
-void isvd_dIntegrateKolmogorovNagumo(
+isvd_int_t isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param, double *qst, const isvd_int_t ldqst, double *qt, const isvd_int_t ldqt,
     const isvd_int_t maxiter, const double tol
 );
 
-void isvd_dIntegrateWenYin(
+isvd_int_t isvd_dIntegrateWenYin(
     const isvd_Param param, double *qst, const isvd_int_t ldqst, double *qt, const isvd_int_t ldqt,
     const isvd_int_t maxiter, const double tol
 );

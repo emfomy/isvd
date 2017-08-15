@@ -22,9 +22,11 @@ typedef double isvd_val_t;
 /// <hr>
 /// @param[out]  qt          Replaced by the row-block 𝑸bar (row-major).
 ///
+/// @return  The number of iteration
+///
 /// @see  isvd_Param
 ///
-void isvd_dIntegrateKolmogorovNagumo(
+isvd_int_t isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param,
           isvd_val_t *qst,
     const isvd_int_t ldqst,
@@ -107,10 +109,10 @@ void isvd_dIntegrateKolmogorovNagumo(
 
   for ( iter = 0; iter < maxit && !is_converged; ++iter ) {
 
-    isvd_val_t *bc  = b_ +   is_odd *ldb_*l;
+    isvd_val_t *bc  = b_   +   is_odd *ldb_*l;
     isvd_int_t ldbc = ldb_;
 
-    isvd_val_t *bp  = b_ + (!is_odd)*ldb_*l;
+    isvd_val_t *bp  = b_   + (!is_odd)*ldb_*l;
     isvd_int_t ldbp = ldb_;
 
     isvd_val_t *qct  = qt_ +   is_odd *mj*ldqt_;
@@ -189,7 +191,7 @@ void isvd_dIntegrateKolmogorovNagumo(
 
     // B+ := Bc * Fc [in C] + Bgc * inv(C)
     cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
-    cblas_dsymm(CblasColMajor, CblasRight, CblasUpper, Nl, l, 1.0, bgc, ldbgc, cinv, ldcinv, 1.0, bp, ldbp);
+    cblas_dsymm(CblasColMajor, CblasRight, CblasUpper, Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
 
     // ================================================================================================================== //
     // Check convergence: || I - C ||_F < tol
@@ -216,5 +218,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   isvd_free(c);
   isvd_free(cinv);
   isvd_free(s);
+
+  return iter;
 
 }
