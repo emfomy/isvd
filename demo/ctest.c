@@ -34,6 +34,7 @@ int main( int argc, char **argv ) {
   isvd_int_t mb  = param.nrow_each;
   isvd_int_t n   = param.ncol;
   isvd_int_t nb  = param.ncol_each;
+  isvd_int_t l   = param.dim_sketch;
   isvd_int_t Nl  = param.dim_sketch_total;
 
   double *a = isvd_dmalloc(m * n);
@@ -45,12 +46,17 @@ int main( int argc, char **argv ) {
   double *yt = isvd_dmalloc(mb * Nl);
   isvd_int_t ldyt = Nl;
 
+  double *qt = isvd_dmalloc(mb * l);
+  isvd_int_t ldqt = l;
+
   isvd_dSketchGaussianProjection('C', 'C', param, a + m * nb * param.mpi_rank, lda, yt, ldyt, seed, mpi_root);
   // isvd_dSketchGaussianProjection('R', 'C', param, a + mb * param.mpi_rank, lda, yt, ldyt, seed, mpi_root);
 
   isvd_dOrthogonalizeGramian(param, yt, ldyt);
 
-  isvd_mrdisp("%lf", mb, Nl, Nl, yt);
+  isvd_dIntegrateKolmogorovNagumo(param, yt, ldyt, qt, ldqt, 256, 1e-4);
+
+  isvd_mrdisp("%lf", mb, l, ldqt, qt);
 
   MPI_Finalize();
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @file    src/libisvd/core/isvd_d_sketch_gaussian_projection.c
-/// @brief   The Gaussian Projection Sketching.
+/// @brief   The Gaussian Projection Sketching (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
@@ -81,10 +81,11 @@ void isvd_dSketchGaussianProjectionBlockCol(
   // ====================================================================================================================== //
   // Project
 
+  // Yi := A * Omegai (Yi' := Omegai' * A')
   isvd_dmemset0(yt_, Pmb * Nl);
-  CBLAS_TRANSPOSE transa_ = (transa == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasRowMajor, transa_, CblasNoTrans, m, Nl, nj,
-              1.0, a, lda, omegat, ldomegat, 0.0, yt_, ldyt_);
+  CBLAS_TRANSPOSE transa_ = (transa == 'N') ? CblasTrans : CblasNoTrans;
+  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, Nl, m, nj,
+              1.0, omegat, ldomegat, a, lda, 0.0, yt_, ldyt_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -162,9 +163,10 @@ void isvd_dSketchGaussianProjectionBlockRow(
   // ====================================================================================================================== //
   // Project
 
+  // Yi := A * Omegai (Yi' := Omegai' * A')
   isvd_dmemset0(yt, mb * Nl);
-  CBLAS_TRANSPOSE transa_ = (transa == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasRowMajor, transa_, CblasNoTrans, mj, Nl, n, 1.0, a, lda, omegat, ldomegat, 0.0, yt, ldyt);
+  CBLAS_TRANSPOSE transa_ = (transa == 'N') ? CblasTrans : CblasNoTrans;
+  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, Nl, mj, n, 1.0, omegat, ldomegat, a, lda, 0.0, yt, ldyt);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -175,7 +177,7 @@ void isvd_dSketchGaussianProjectionBlockRow(
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_dtype_s_module
+/// @ingroup  core_dtype_module
 /// Gaussian Projection Sketching (double precision)
 ///
 /// @param[in]   dista     The parallel distribution of 𝑨. <br>
@@ -211,11 +213,7 @@ void isvd_dSketchGaussianProjection(
   // Check arguments
 
   char dista_  = isvd_arg2char("STOREA", dista,  "CR", "CR");
-  char transa_ = '\0';
-  switch ( dista_ ) {
-    case 'C': transa_ = isvd_arg2char("ORDERA", ordera, "CR", "NT"); break;
-    case 'R': transa_ = isvd_arg2char("ORDERA", ordera, "CR", "TN"); break;
-  }
+  char transa_ = isvd_arg2char("ORDERA", ordera, "CR", "NT");
   if ( dista_ == '\0' || transa_ == '\0' ) return;
 
   // ====================================================================================================================== //

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @file    src/libisvd/core/isvd_d_orthogonalize_gramian.c
-/// @brief   The Gramian Orthogonalization.
+/// @brief   The Gramian Orthogonalization (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
@@ -11,7 +11,7 @@
 typedef double isvd_val_t;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_dtype_o_module
+/// @ingroup  core_dtype_module
 /// Gramian Orthogonalization (double precision)
 ///
 /// @param[in]   param     The @ref isvd_Param "parameters".
@@ -64,19 +64,18 @@ void isvd_dOrthogonalizeGramian(
 
   // eig(Wi) = Wi * Si * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'N', l, l,
-                                    w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1, superb));
+    isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1, superb));
   }
 
-  // Qi := Yi * Wi / sqrt(Si)
+  // Qi := Yi * Wi / sqrt(Si) (Qi' := (Wi / sqrt(Si))' * Yi' )
   vdSqrt(lds*N, s, s);
   isvd_dmemcpy(yt_, yt, mj*ldyt);
   for ( isvd_int_t i = 0; i < N; ++i ) {
     for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
       cblas_dscal(l, 1.0/s[ii], w + ldw*ii, 1);
     }
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, mj, l, l,
-                1.0, yt_ + i*l*ldyt, ldyt, w + i*ldw*l, ldw, 0.0, yt + i*l*ldyt, ldyt);
+    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l,
+                1.0, w + i*ldw*l, ldw, yt_ + i*l*ldyt, ldyt, 0.0, yt + i*l*ldyt, ldyt);
   }
 
   // ====================================================================================================================== //

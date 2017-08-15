@@ -11,22 +11,14 @@
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_dtype_s_module  Sketching Module (Double Precision)
-/// @ingroup   core_dtype_module
-/// @brief     The Sketching Module (Double Precision)
-///
+// Sketching
 void isvd_dSketchGaussianProjection(
     const char dista, const char ordera, const isvd_Param param,
     const double *a, const isvd_int_t lda, double *yt, const isvd_int_t ldyt, const isvd_int_t seed,
     const mpi_int_t mpi_root
 );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_dtype_o_module  Orthogonalization Module (Double Precision)
-/// @ingroup   core_dtype_module
-/// @brief     The Orthogonalization Module (Double Precision)
-///
+// Orthogonalization
 void isvd_dOrthogonalizeTallSkinnyQr(
     const isvd_Param param, double *yt, const isvd_int_t ldyt
 );
@@ -35,24 +27,18 @@ void isvd_dOrthogonalizeGramian(
     const isvd_Param param, double *yt, const isvd_int_t ldyt
 );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_dtype_i_module  Integration Module (Double Precision)
-/// @ingroup   core_dtype_module
-/// @brief     The Integration Module (Double Precision)
-///
+// Integration
 void isvd_dIntegrateKolmogorovNagumo(
-    const isvd_Param param, double *yt, const isvd_int_t ldyt, double *qt, const isvd_int_t ldqt
+    const isvd_Param param, double *yt, const isvd_int_t ldyt, double *qt, const isvd_int_t ldqt,
+    const isvd_int_t maxiter, const double tol
 );
 
 void isvd_dIntegrateWenYin(
-    const isvd_Param param, double *yt, const isvd_int_t ldyt, double *qt, const isvd_int_t ldqt
+    const isvd_Param param, double *yt, const isvd_int_t ldyt, double *qt, const isvd_int_t ldqt,
+    const isvd_int_t maxiter, const double tol
 );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_dtype_p_module  Postprocessing Module (Double Precision)
-/// @ingroup   core_dtype_module
-/// @brief     The Postprocessing Module (Double Precision)
-///
+// Postprocessing
 void isvd_dPostprocessTallSkinnyQr(
     const isvd_int_t jobut, const isvd_int_t jobvt, const char dista, const char ordera, const isvd_Param param,
     const double *a, const isvd_int_t lda, const double *qt, const isvd_int_t ldqt,
