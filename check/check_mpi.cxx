@@ -12,13 +12,10 @@ int main( int argc, char **argv ) {
     std::fclose(stdout);
   }
 
-  std::cout << "iSVD "
-            << ISVD_MAJOR_VERSION << "."
-            << ISVD_MINOR_VERSION << "."
-            << ISVD_PATCH_VERSION << " "
-            << ISVD_CHECK_NAME << std::endl << std::endl;
-
-  std::cout << "Using " << isvd_getMpiSize(MPI_COMM_WORLD) << " MPI nodes." << std::endl << std::endl;
+  isvd_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
+  isvd_int_t omp_size = isvd_getOmpSize();
+  printf("iSVD " ISVD_VERSION " " ISVD_CHECK_NAME " test\n");
+  printf("%d nodes, %d threads per node\n\n", mpi_size, omp_size);
 
   testing::InitGoogleTest(&argc, argv);
   int retval = RUN_ALL_TESTS();

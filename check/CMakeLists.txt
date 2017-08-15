@@ -33,7 +33,7 @@ set(DEFS_TMP "${DEFS}")
 list(REMOVE_ITEM DEFS "ISVD_USE_GPU")
 
 # Sketching
-add_mpi_check(libisvd/core/isvd_d_sketch_gaussian_projection "Gaussian Projection Sketching check" "SketchGaussianProjectionCheck" 1 2 3 4 6 12)
+add_mpi_check(libisvd/core/isvd_d_sketch_gaussian_projection "Gaussian Projection Sketching check" "SketchGaussianProjection" 1 2 3 4 6 12)
 
 set(DEFS "${DEFS_TMP}")
 unset(DEFS_TMP)

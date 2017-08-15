@@ -6,7 +6,7 @@
 #define A_PATH  ISVD_DATA_PATH "/a.mtx"
 #define YS_PATH ISVD_DATA_PATH "/ys_gp.mtx"
 
-TEST(SketchGaussianProjectionCheck, BlockColColMajor) {
+void test( char dista, char ordera ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -22,6 +22,12 @@ TEST(SketchGaussianProjectionCheck, BlockColColMajor) {
   FILE *file;
   MM_typecode matcode;
 
+  // Check arguments
+  char dista_  = isvd_arg2char("STOREA", dista,  "CR", "CR");
+  char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", "CR");
+  ASSERT_NE(dista_,  '\0');
+  ASSERT_NE(ordera_, '\0');
+
   // Reads A
   file = fopen(A_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
@@ -32,11 +38,20 @@ TEST(SketchGaussianProjectionCheck, BlockColColMajor) {
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &n), 0);
 
   double *a0 = isvd_dmalloc(m * n);
-  isvd_int_t lda0 = m;
-
-  for ( isvd_int_t ic = 0; ic < n; ++ic ) {
-    for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &a0[ir+ic*lda0]);
+  isvd_int_t lda0;
+  if ( ordera_ == 'C' ) {
+    lda0 = m;
+    for ( isvd_int_t ic = 0; ic < n; ++ic ) {
+      for ( isvd_int_t ir = 0; ir < m; ++ir ) {
+        fscanf(file, "%lg", &a0[ir+ic*lda0]);
+      }
+    }
+  } else {
+    lda0 = n;
+    for ( isvd_int_t ic = 0; ic < n; ++ic ) {
+      for ( isvd_int_t ir = 0; ir < m; ++ir ) {
+        fscanf(file, "%lg", &a0[ir*lda0+ic]);
+      }
     }
   }
 
@@ -79,14 +94,27 @@ TEST(SketchGaussianProjectionCheck, BlockColColMajor) {
   isvd_int_t Pmb = param.nrow_total;
 
   // Creates matrices
-  double *a  = a0 + param.colrange.begin * lda0;
+  double *a;
+  if ( dista_ == 'C' ) {
+    if ( ordera_ == 'C' ) {
+      a = a0 + param.colrange.begin * lda0;
+    } else {
+      a = a0 + param.colrange.begin;
+    }
+  } else {
+    if ( ordera_ == 'C' ) {
+      a = a0 + param.rowrange.begin;
+    } else {
+      a = a0 + param.rowrange.begin * lda0;
+    }
+  }
   isvd_int_t lda = lda0;
 
   double *yst = isvd_dmalloc(mb * Nl);
   isvd_int_t ldyst = Nl;
 
   // Sketches
-  isvd_dSketchGaussianProjection('C', 'C', param, a, lda, yst, ldyst, seed, mpi_root);
+  isvd_dSketchGaussianProjection(dista_, ordera_, param, a, lda, yst, ldyst, seed, mpi_root);
 
   // Gather result
   double *yst_ = isvd_dmalloc(Pmb * Nl);
@@ -101,4 +129,20 @@ TEST(SketchGaussianProjectionCheck, BlockColColMajor) {
       }
     }
   }
+}
+
+TEST(SketchGaussianProjection, BlockCol_ColMajor) {
+  test('C', 'C');
+}
+
+TEST(SketchGaussianProjection, BlockCol_RowMajor) {
+  test('C', 'R');
+}
+
+TEST(SketchGaussianProjection, BlockRow_ColMajor) {
+  test('R', 'C');
+}
+
+TEST(SketchGaussianProjection, BlockRow_RowMajor) {
+  test('R', 'R');
 }

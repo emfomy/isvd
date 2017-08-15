@@ -13,7 +13,7 @@ typedef double isvd_val_t;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 void isvd_dSketchGaussianProjectionBlockCol(
-    const char transa,
+    const char ordera,
     const isvd_Param param,
     const isvd_val_t *a,
     const isvd_int_t lda,
@@ -36,9 +36,9 @@ void isvd_dSketchGaussianProjectionBlockCol(
   // ====================================================================================================================== //
   // Check arguments
 
-  switch ( transa ) {
-    case 'N': isvd_assert_ge(lda,  m);  break;
-    case 'T': isvd_assert_ge(lda,  nj); break;
+  switch ( ordera ) {
+    case 'C': isvd_assert_ge(lda, m);  break;
+    case 'R': isvd_assert_ge(lda, nj); break;
   }
   isvd_assert_eq(ldyt, Nl);
 
@@ -83,7 +83,7 @@ void isvd_dSketchGaussianProjectionBlockCol(
 
   // Yi := A * Omegai (Yi' := Omegai' * A')
   isvd_dmemset0(yt_, Pmb * Nl);
-  CBLAS_TRANSPOSE transa_ = (transa == 'N') ? CblasTrans : CblasNoTrans;
+  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasTrans : CblasNoTrans;
   cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, Nl, m, nj,
               1.0, omegat, ldomegat, a, lda, 0.0, yt_, ldyt_);
 
@@ -100,7 +100,7 @@ void isvd_dSketchGaussianProjectionBlockCol(
 }
 
 void isvd_dSketchGaussianProjectionBlockRow(
-    const char transa,
+    const char ordera,
     const isvd_Param param,
     const isvd_val_t *a,
     const isvd_int_t lda,
@@ -121,9 +121,9 @@ void isvd_dSketchGaussianProjectionBlockRow(
   // ====================================================================================================================== //
   // Check arguments
 
-  switch ( transa ) {
-    case 'T': isvd_assert_ge(lda,  mj); break;
-    case 'N': isvd_assert_ge(lda,  n);  break;
+  switch ( ordera ) {
+    case 'C': isvd_assert_ge(lda, mj); break;
+    case 'R': isvd_assert_ge(lda, n);  break;
   }
   isvd_assert_ge(ldyt, Nl);
 
@@ -165,7 +165,7 @@ void isvd_dSketchGaussianProjectionBlockRow(
 
   // Yi := A * Omegai (Yi' := Omegai' * A')
   isvd_dmemset0(yt, mb * Nl);
-  CBLAS_TRANSPOSE transa_ = (transa == 'N') ? CblasTrans : CblasNoTrans;
+  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasTrans : CblasNoTrans;
   cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, Nl, mj, n, 1.0, omegat, ldomegat, a, lda, 0.0, yt, ldyt);
 
   // ====================================================================================================================== //
@@ -212,15 +212,15 @@ void isvd_dSketchGaussianProjection(
   // ====================================================================================================================== //
   // Check arguments
 
-  char dista_  = isvd_arg2char("STOREA", dista,  "CR", "CR");
-  char transa_ = isvd_arg2char("ORDERA", ordera, "CR", "NT");
-  if ( dista_ == '\0' || transa_ == '\0' ) return;
+  char dista_ = isvd_arg2char("STOREA", dista,  "CR", "CR");
+  char order_ = isvd_arg2char("ORDERA", ordera, "CR", "CR");
+  if ( dista_ == '\0' || order_ == '\0' ) abort();
 
   // ====================================================================================================================== //
   // Run
 
   switch ( dista_ ) {
-    case 'C': isvd_dSketchGaussianProjectionBlockCol(transa_, param, a, lda, yt, ldyt, seed, mpi_root); break;
-    case 'R': isvd_dSketchGaussianProjectionBlockRow(transa_, param, a, lda, yt, ldyt, seed, mpi_root); break;
+    case 'C': isvd_dSketchGaussianProjectionBlockCol(order_, param, a, lda, yt, ldyt, seed, mpi_root); break;
+    case 'R': isvd_dSketchGaussianProjectionBlockRow(order_, param, a, lda, yt, ldyt, seed, mpi_root); break;
   }
 }
