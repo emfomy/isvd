@@ -34,9 +34,8 @@ macro(_ADD_CHECK checktype)
     COMMAND $<TARGET_FILE:${checktarget}>
     DEPENDS ${checktarget}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Check test ${checkpath}"
+    COMMENT "Run check ${checkpath}"
   )
-  set(CMAKE_CHECK_RULES ${CMAKE_CHECK_RULES} check_${checkname} PARENT_SCOPE)
 endmacro()
 
 macro(_ADD_MPI_CHECK checktype procs)
@@ -52,9 +51,8 @@ macro(_ADD_MPI_CHECK checktype procs)
       COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${np} ${CMAKE_ENV} OMP_NUM_THREADS=4 $<TARGET_FILE:${checktarget}>
       DEPENDS ${checktarget}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-      COMMENT "Run test ${checkpath}"
+      COMMENT "Run check ${checkpath}"
     )
-    set(CMAKE_CHECK_RULES ${CMAKE_CHECK_RULES} check_${checkname0}_${np} PARENT_SCOPE)
   endforeach()
 endmacro()
 
@@ -77,7 +75,7 @@ endfunction()
 
 ################################################################################
 
-function(ADD_MPI_CHECK checkpath checkcomment checkname0 procs)
+function(ADD_MPI_CHECK checkpath checkcomment procs)
   list(APPEND DEFS "ISVD_USE_GTEST")
   _add_mpi_check("" "${procs}")
 endfunction()

@@ -283,51 +283,51 @@ void test( char dista, char ordera, const UV uv ) {
   }
 }
 
-TEST(PostprocessGramian, BlockCol_ColMajor_GatherUV) {
+TEST(GramianPostprocessing, BlockCol_ColMajor_GatherUV) {
   test('C', 'C', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockCol_RowMajor_GatherUV) {
+TEST(GramianPostprocessing, BlockCol_RowMajor_GatherUV) {
   test('C', 'R', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockRow_ColMajor_GatherUV) {
+TEST(GramianPostprocessing, BlockRow_ColMajor_GatherUV) {
   test('R', 'C', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockRow_RowMajor_GatherUV) {
+TEST(GramianPostprocessing, BlockRow_RowMajor_GatherUV) {
   test('R', 'R', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockCol_ColMajor_BlockUV) {
+TEST(GramianPostprocessing, BlockCol_ColMajor_BlockUV) {
   test('C', 'C', BlockUV);
 }
 
-TEST(PostprocessGramian, BlockCol_RowMajor_BlockUV) {
+TEST(GramianPostprocessing, BlockCol_RowMajor_BlockUV) {
   test('C', 'R', BlockUV);
 }
 
-TEST(PostprocessGramian, BlockRow_ColMajor_BlockUV) {
+TEST(GramianPostprocessing, BlockRow_ColMajor_BlockUV) {
   test('R', 'C', BlockUV);
 }
 
-TEST(PostprocessGramian, BlockRow_RowMajor_BlockUV) {
+TEST(GramianPostprocessing, BlockRow_RowMajor_BlockUV) {
   test('R', 'R', BlockUV);
 }
 
 
-TEST(PostprocessGramian, BlockCol_ColMajor_NoUV) {
+TEST(GramianPostprocessing, BlockCol_ColMajor_NoUV) {
   test('C', 'C', NoUV);
 }
 
-TEST(PostprocessGramian, BlockCol_RowMajor_NoUV) {
+TEST(GramianPostprocessing, BlockCol_RowMajor_NoUV) {
   test('C', 'R', NoUV);
 }
 
-TEST(PostprocessGramian, BlockRow_ColMajor_NoUV) {
+TEST(GramianPostprocessing, BlockRow_ColMajor_NoUV) {
   test('R', 'C', NoUV);
 }
 
-TEST(PostprocessGramian, BlockRow_RowMajor_NoUV) {
+TEST(GramianPostprocessing, BlockRow_RowMajor_NoUV) {
   test('R', 'R', NoUV);
 }

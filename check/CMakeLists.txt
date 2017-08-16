@@ -33,16 +33,16 @@ set(DEFS_TMP "${DEFS}")
 list(REMOVE_ITEM DEFS "ISVD_USE_GPU")
 
 # Sketching
-add_mpi_check(libisvd/core/isvd_d_sketch_gaussian_projection "Gaussian Projection Sketching check" "SketchGaussianProjection" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/isvd_d_sketch_gaussian_projection "Gaussian Projection Sketching check" "1;2;3;4;6;12")
 
 # Orthogonalization
-add_mpi_check(libisvd/core/isvd_d_orthogonalize_gramian "Gramian Orthogonalization check" "OrthogonalizeGramian" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/isvd_d_orthogonalize_gramian "Gramian Orthogonalization check" "1;2;3;4;6;12")
 
 # Integration
-add_mpi_check(libisvd/core/isvd_d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "IntegrateKolmogorovNagumo" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/isvd_d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
 
 # Postprocessing
-add_mpi_check(libisvd/core/isvd_d_postprocess_gramian "Gramian Postprocessing check" "PostprocessGramian" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/isvd_d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")
 
 set(DEFS "${DEFS_TMP}")
 unset(DEFS_TMP)

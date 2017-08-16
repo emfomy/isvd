@@ -132,18 +132,18 @@ void test( char dista, char ordera ) {
   }
 }
 
-TEST(SketchGaussianProjection, BlockCol_ColMajor) {
+TEST(GaussianProjectionSketching, BlockCol_ColMajor) {
   test('C', 'C');
 }
 
-TEST(SketchGaussianProjection, BlockCol_RowMajor) {
+TEST(GaussianProjectionSketching, BlockCol_RowMajor) {
   test('C', 'R');
 }
 
-TEST(SketchGaussianProjection, BlockRow_ColMajor) {
+TEST(GaussianProjectionSketching, BlockRow_ColMajor) {
   test('R', 'C');
 }
 
-TEST(SketchGaussianProjection, BlockRow_RowMajor) {
+TEST(GaussianProjectionSketching, BlockRow_RowMajor) {
   test('R', 'R');
 }
