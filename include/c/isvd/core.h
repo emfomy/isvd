@@ -11,24 +11,25 @@
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
 #include <isvd/core/idx_range.h>
-#include <isvd/core/dtype.h>
+#include <isvd/core/driver_d.h>
+#include <isvd/core/stage_d.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_param_module  Core Parameter Module
+/// @defgroup  core_param_module  Parameter Module
 /// @ingroup   core_module
-/// @brief     The Core Parameter Module
+/// @brief     The Parameter Module
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_stype_module  Core Module (Single Precision)
+/// @defgroup  core_driver_d_module  Driver Module (Double Precision)
 /// @ingroup   core_module
-/// @brief     The Core Module (Single Precision)
+/// @brief     The Driver Module (Double Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_dtype_module  Core Module (Double Precision)
+/// @defgroup  core_stage_d_module  Stage Module (Double Precision)
 /// @ingroup   core_module
-/// @brief     The Core Module (Double Precision)
+/// @brief     The Stage Module (Double Precision)
 ///
 
 #endif  // _ISVD_CORE_H_

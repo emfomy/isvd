@@ -1,2 +1,2 @@
 #include <gtest/gtest.h>
-#include <libisvd/core/isvd_d_sketch_gaussian_projection.c>
+#include <libisvd/core/stage_d/isvd_d_sketch_gaussian_projection.c>

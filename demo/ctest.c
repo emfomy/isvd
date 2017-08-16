@@ -29,6 +29,12 @@ int main( int argc, char **argv ) {
     printf("%d nodes, %d threads per node\n\n", mpi_size, omp_size);
   }
 
+  isvd_int_t seed = 0;
+
+  isvd_dIsvd(
+    "GP", "GR", "KN", "GR", 100, 1000, 20, 12, 4, 'C', 'C',
+    NULL, 0, NULL, NULL, 0, NULL, 0, seed, mpi_root, -1, -1, MPI_COMM_WORLD);
+
   MPI_Finalize();
 
   return 0;

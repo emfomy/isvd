@@ -1,11 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/isvd_d_integrate_kolmogorov_nagumo.c
+/// @file    src/libisvd/core/stage_d/isvd_d_integrate_kolmogorov_nagumo.c
 /// @brief   The Kolmogorov-Nagumo Integration (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/dtype.h>
+#include <isvd/core/stage_d.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -14,28 +14,29 @@ typedef double isvd_val_t;
 #define kTol   1e-4
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_dtype_module
+/// @ingroup  core_stage_d_module
 /// Kolmogorov-Nagumo Integration (double precision)
 ///
-/// @param[in]   param        The @ref isvd_Param "parameters".
-/// @param[in]   args, largs  The arguments and its length. <br>
-///                           `args[0]`: The maximum number of iteration. (optional, default as @ref kMaxit) <br>
-///                           `args[1]`: The tolerance of convergence condition. (optional, default as @ref kTol)
-/// @param[in]   rets, lrets  The return values and its length.
+/// @param[in]   param       The @ref isvd_Param "parameters".
+/// @param[in]   argv, argc  The arguments and its length. <br>
+///                          `argv[0]`: The maximum number of iteration. (optional, default as @ref kMaxit) <br>
+///                          `argv[1]`: The tolerance of convergence condition. (optional, default as @ref kTol)
+/// @param[in]   retv, retc  The return values and its length.
 /// <hr>
-/// @param[in]   qst, ldqst   The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
-/// @param[in]   qt, ldqt     The row-block 𝑸bar (@f$ m_b \times l @f$, row-major) and its leading dimension.
+/// @param[in]   qst, ldqst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
+/// @param[in]   qt, ldqt    The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
 /// <hr>
-/// @param[out]  qt           Replaced by the row-block 𝑸bar (row-major).
-/// @param[out]  rets         Replaced by return values.
-///                           `rets[0]`: The number of iteration.
+/// @param[out]  retv        Replaced by return values.
+///                          `retv[0]`: The number of iteration.
+///                          `retv[1]`: The error.
+/// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
 void isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param,
-    const isvd_val_t *args,
-    const isvd_int_t largs,
-          isvd_val_t *rets,
-    const isvd_int_t lrets,
+    const isvd_val_t *argv,
+    const isvd_int_t argc,
+          isvd_val_t *retv,
+    const isvd_int_t retc,
     const isvd_val_t *qst,
     const isvd_int_t ldqst,
           isvd_val_t *qt,
@@ -46,8 +47,8 @@ void isvd_dIntegrateKolmogorovNagumo(
   // Get arguments
 
   isvd_int_t argi = -1;
-  const isvd_int_t maxit = ( largs > ++argi ) ? args[argi] : kMaxit;
-  const isvd_val_t tol   = ( largs > ++argi ) ? args[argi] : kTol;
+  const isvd_int_t maxit = ( argc > ++argi ) ? argv[argi] : kMaxit;
+  const isvd_val_t tol   = ( argc > ++argi ) ? argv[argi] : kTol;
 
   // ====================================================================================================================== //
   // Get parameters
@@ -119,6 +120,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   bool is_odd       = false;
 
   isvd_int_t iter;
+  isvd_val_t error = -1.0/0.0;
 
   for ( iter = 0; iter < maxit && !is_converged; ++iter ) {
 
@@ -211,7 +213,8 @@ void isvd_dIntegrateKolmogorovNagumo(
     for ( isvd_int_t i = 0; i < l; ++i ) {
       s[i] -= 1.0;
     }
-    is_converged = !(cblas_dnrm2(l, s, 1) >= tol);
+    error = cblas_dnrm2(l, s, 1);
+    is_converged = !(error >= tol);
   }
 
   // Copy Qbar
@@ -236,6 +239,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   // Set return values
 
   isvd_int_t reti = -1;
-  if ( lrets > ++reti ) rets[reti] = iter;
+  if ( retc > ++reti ) retv[reti] = iter;
+  if ( retc > ++reti ) retv[reti] = error;
 
 }

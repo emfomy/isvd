@@ -74,10 +74,10 @@ TEST(KolmogorovNagumoIntegration, Test) {
   ASSERT_EQ(Nl % l, 0);
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
-  const isvd_val_t args[] = {256, 1e-4};
-  const isvd_int_t largs = sizeof(args) / sizeof(args[0]);
-  const isvd_int_t lrets = 1;
-        isvd_val_t rets[lrets];
+  const isvd_val_t argv[] = {256, 1e-4};
+  const isvd_int_t argc = sizeof(argv) / sizeof(argv[0]);
+  const isvd_int_t retc = 1;
+        isvd_val_t retv[retc];
 
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
@@ -90,8 +90,8 @@ TEST(KolmogorovNagumoIntegration, Test) {
   isvd_int_t ldqt = l;
 
   // Run stage
-  isvd_dIntegrateKolmogorovNagumo(param, args, largs, rets, lrets, qst, ldqst, qt, ldqt);
-  isvd_int_t iter = rets[0];
+  isvd_dIntegrateKolmogorovNagumo(param, argv, argc, retv, retc, qst, ldqst, qt, ldqt);
+  isvd_int_t iter = retv[0];
 
   // Gather results
   isvd_val_t *qt_ = isvd_dmalloc(Pmb * l);
