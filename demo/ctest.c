@@ -58,8 +58,8 @@ int main( int argc, char **argv ) {
   );
 
   isvd_dIeig(
-    "GP", "GR", "KN", "GR", m, k, p, N, 'R', 'C',
-    a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, -2, mpi_root, MPI_COMM_WORLD
+    "GP", "GR", "KN", "SY", m, k, p, N, 'R', 'C',
+    a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, mpi_root, MPI_COMM_WORLD
   );
 
   MPI_Finalize();

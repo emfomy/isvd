@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/driver_d/isvd_d_isvd.c
-/// @brief   The iSVD driver (double precision)
+/// @file    src/libisvd/core/driver_d/isvd_d_ieig.c
+/// @brief   The iEig driver (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
@@ -14,7 +14,7 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  core_driver_d_module
-/// iSVD driver (double precision)
+/// iEig driver (double precision)
 ///
 /// @param[in]   algs          The selection of sketching algorithms.
 /// @param[in]   algo          The selection of orthogonalization algorithms.
@@ -22,7 +22,6 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 /// @param[in]   algp          The selection of postprocessing algorithms.
 /// <hr>
 /// @param[in]   m             The number of rows of the matrix 𝑨.
-/// @param[in]   n             The number of columns of the matrix 𝑨.
 /// @param[in]   k             The desired rank of approximate SVD.
 /// @param[in]   p             The oversampling dimension.
 /// @param[in]   N             The number of random sketches.
@@ -41,20 +40,12 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 ///                            `ut_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
 ///                            `ut_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$. <br>
 ///                            `ut_root < -1`: not referenced.
-/// @param[in]   vt, ldvt      The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                            `vt_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
-///                            `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
-///                            `vt_root < -1`: not referenced.
 /// <hr>
 /// @param[in]   seed          The random seed (significant only at MPI process of ID `mpi_root`).
 /// @param[in]   ut_root       The option for computing 𝑼. <br>
 ///                            `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
 ///                            `ut_root = -1`: compute row-block 𝑼. <br>
 ///                            `ut_root < -1`: does not compute 𝑼.
-/// @param[in]   vt_root       The option for computing 𝑽. <br>
-///                            `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
-///                            `vt_root = -1`: compute row-block 𝑽. <br>
-///                            `vt_root < -1`: does not compute 𝑽.
 /// @param[in]   mpi_root       The MPI process ID containing the parameters and random seed.
 /// @param[in]   mpi_comm      The MPI communicator.
 /// <hr>
@@ -62,17 +53,15 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 /// @param[out]  retvo         Replaced by the orthogonalization return values.
 /// @param[out]  retvi         Replaced by the integration return values.
 /// @param[out]  retvp         Replaced by the postprocessing return values.
-/// @param[out]  s             Replaced by the singular values 𝝈.
-/// @param[out]  ut            Replaced by the left singular vectors 𝑼 (row-major).
-/// @param[out]  vt            Replaced by the right singular vectors 𝑽 (row-major).
+/// @param[out]  s             Replaced by the eigenvalues 𝝈.
+/// @param[out]  ut            Replaced by the left eigenvectors 𝑼 (row-major).
 ///
-void isvd_dIsvd(
+void isvd_dIeig(
     const char *algs,
     const char *algo,
     const char *algi,
     const char *algp,
     const isvd_int_t m,
-    const isvd_int_t n,
     const isvd_int_t k,
     const isvd_int_t p,
     const isvd_int_t N,
@@ -83,11 +72,8 @@ void isvd_dIsvd(
           isvd_val_t *s,
           isvd_val_t *ut,
     const isvd_int_t ldut,
-          isvd_val_t *vt,
-    const isvd_int_t ldvt,
     const isvd_int_t seed,
     const mpi_int_t ut_root,
-    const mpi_int_t vt_root,
     const mpi_int_t mpi_root,
     const MPI_Comm mpi_comm
 ) {
@@ -98,7 +84,7 @@ void isvd_dIsvd(
   const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP");
   const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR");
   const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR");
-  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGR");
+  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "SY");
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
   // ====================================================================================================================== //
@@ -106,24 +92,24 @@ void isvd_dIsvd(
 
   typedef void (*fun_t)(isvd_Param, ...);
 
-  fun_t funs = dummy;
+  fun_t funs = (fun_t) dummy;
   switch ( algs_ ) {
     case isvd_char2('G', 'P'): funs = (fun_t) isvd_dSketchGaussianProjection; break;
   }
 
-  fun_t funo = dummy;
+  fun_t funo = (fun_t) dummy;
   switch ( algo_ ) {
     // case isvd_char2('T', 'S'): funo = (fun_t) isvd_dOrthogonalizeTallSkinnyQr; break;
     case isvd_char2('G', 'R'): funo = (fun_t) isvd_dOrthogonalizeGramian; break;
   }
 
-  fun_t funi = dummy;
+  fun_t funi = (fun_t) dummy;
   switch ( algi_ ) {
     case isvd_char2('K', 'N'): funi = (fun_t) isvd_dIntegrateKolmogorovNagumo; break;
     // case isvd_char2('W', 'Y'): funi = (fun_t) isvd_dIntegrateWenYin; break;
   }
 
-  fun_t funp = dummy;
+  fun_t funp = (fun_t) dummy;
   switch ( algp_ ) {
     // case isvd_char2('T', 'S'): funp = (fun_t) isvd_dPostprocessTallSkinnyQr; break;
     case isvd_char2('G', 'R'): funp = (fun_t) isvd_dPostprocessGramian; break;
@@ -132,6 +118,7 @@ void isvd_dIsvd(
   // ====================================================================================================================== //
   // Create parameters
 
+  const isvd_int_t n  = m;
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, mpi_comm);
 
   const isvd_int_t mb = param.nrow_each;
@@ -153,6 +140,6 @@ void isvd_dIsvd(
   funs(param, NULL, 0, NULL, 0, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
   funo(param, NULL, 0, NULL, 0, yst, ldyst);
   funi(param, NULL, 0, NULL, 0, yst, ldyst, qt, ldqt);
-  funp(param, NULL, 0, NULL, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
+  funp(param, NULL, 0, NULL, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, ut_root);
 
 }
