@@ -35,7 +35,7 @@ void test( char dista, char ordera, const UV uv ) {
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');
 
-  // Reads A
+  // Read A
   file = fopen(A_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -66,7 +66,7 @@ void test( char dista, char ordera, const UV uv ) {
     fclose(file);
   }
 
-  // Reads Q
+  // Read Q
   file = fopen(Q_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -91,7 +91,7 @@ void test( char dista, char ordera, const UV uv ) {
     fclose(file);
   }
 
-  // Reads S
+  // Read S
   file = fopen(S_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -114,7 +114,7 @@ void test( char dista, char ordera, const UV uv ) {
     fclose(file);
   }
 
-  // Reads U
+  // Read U
   file = fopen(U_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -140,7 +140,7 @@ void test( char dista, char ordera, const UV uv ) {
     fclose(file);
   }
 
-  // Reads V
+  // Read V
   file = fopen(V_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -166,7 +166,7 @@ void test( char dista, char ordera, const UV uv ) {
     fclose(file);
   }
 
-  // Sets parameters
+  // Set parameters
   const isvd_int_t k = l;
   const isvd_int_t p = 0;
   const isvd_int_t N = 1;
@@ -178,7 +178,7 @@ void test( char dista, char ordera, const UV uv ) {
   const isvd_int_t nb  = param.ncol_each;
   const isvd_int_t Pnb = param.ncol_total;
 
-  // Creates matrices
+  // Create matrices
   isvd_val_t *a;
   if ( dista_ == 'C' ) {
     if ( ordera_ == 'C' ) {
@@ -209,25 +209,26 @@ void test( char dista, char ordera, const UV uv ) {
   switch ( uv ) {
     case GatherUV: {
 
-      // Sketches
-      isvd_dPostprocessGramian(param, dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
+      // Run stage
+      isvd_dPostprocessGramian(param, NULL, 0, NULL, 0,
+                               dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
 
       break;
     }
 
     case BlockUV: {
 
-      // Creates matrices
+      // Create matrices
       isvd_val_t *ut = isvd_dmalloc(mb * l);
       isvd_int_t ldut = l;
 
       isvd_val_t *vt = isvd_dmalloc(nb * l);
       isvd_int_t ldvt = l;
 
-      // Sketches
-      isvd_dPostprocessGramian(param, dista_, ordera_, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
+      // Run stage
+      isvd_dPostprocessGramian(param, NULL, 0, NULL, 0, dista_, ordera_, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
 
-      // Gather result
+      // Gather results
       MPI_Gather(ut, mb*ldut, MPI_DOUBLE, ut_, mb*ldut, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
       MPI_Gather(vt, nb*ldvt, MPI_DOUBLE, vt_, nb*ldvt, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
 
@@ -236,8 +237,8 @@ void test( char dista, char ordera, const UV uv ) {
 
     default: {
 
-      // Sketches
-      isvd_dPostprocessGramian(param, dista_, ordera_, a, lda, qt, ldqt, s, NULL, 0, NULL, 0, -2, -2);
+      // Run stage
+      isvd_dPostprocessGramian(param, NULL, 0, NULL, 0, dista_, ordera_, a, lda, qt, ldqt, s, NULL, 0, NULL, 0, -2, -2);
 
       break;
     }
@@ -258,7 +259,7 @@ void test( char dista, char ordera, const UV uv ) {
     cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
     cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
 
-    // Checks result
+    // Check results
     if ( mpi_rank == mpi_root ) {
       for ( isvd_int_t ir = 0; ir < l; ++ir ) {
         ASSERT_NEAR(s[ir], s0[ir], 1e-8) << "(ir, ic) =  (" << ir << ", " << 1 << ")";

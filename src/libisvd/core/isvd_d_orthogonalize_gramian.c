@@ -14,16 +14,28 @@ typedef double isvd_val_t;
 /// @ingroup  core_dtype_module
 /// Gramian Orthogonalization (double precision)
 ///
-/// @param[in]   param       The @ref isvd_Param "parameters".
-/// @param[in]   yst, ldyst  The row-block 𝖄 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
+/// @param[in]   param        The @ref isvd_Param "parameters".
+/// @param[in]   args, largs  The arguments and its length. (not using)
+/// @param[in]   rets, lrets  The return values and its length. (not using)
+/// <hr>
+/// @param[in]   yst, ldyst   The row-block 𝖄 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
 /// <hr>
 /// @param[out]  yst          Replaced by the row-block 𝕼 (row-major).
 ///
 void isvd_dOrthogonalizeGramian(
     const isvd_Param param,
+    const isvd_val_t *args,
+    const isvd_int_t largs,
+          isvd_val_t *rets,
+    const isvd_int_t lrets,
           isvd_val_t *yst,
     const isvd_int_t ldyst
 ) {
+
+  ISVD_UNUSED(args);
+  ISVD_UNUSED(largs);
+  ISVD_UNUSED(rets);
+  ISVD_UNUSED(lrets);
 
   // ====================================================================================================================== //
   // Get parameters

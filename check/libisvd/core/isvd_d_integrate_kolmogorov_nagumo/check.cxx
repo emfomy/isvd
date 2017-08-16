@@ -20,7 +20,7 @@ TEST(KolmogorovNagumoIntegration, Test) {
   FILE *file;
   MM_typecode matcode;
 
-  // Reads Qs
+  // Read Qs
   file = fopen(QS_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -41,7 +41,7 @@ TEST(KolmogorovNagumoIntegration, Test) {
     fclose(file);
   }
 
-  // Reads Qbar
+  // Read Qbar
   file = fopen(Q_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -66,7 +66,7 @@ TEST(KolmogorovNagumoIntegration, Test) {
     fclose(file);
   }
 
-  // Sets parameters
+  // Set parameters
   const isvd_int_t n = m;
   const isvd_int_t k = l;
   const isvd_int_t p = 0;
@@ -74,28 +74,31 @@ TEST(KolmogorovNagumoIntegration, Test) {
   ASSERT_EQ(Nl % l, 0);
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
+  const isvd_val_t args[] = {256, 1e-4};
+  const isvd_int_t largs = sizeof(args) / sizeof(args[0]);
+  const isvd_int_t lrets = 1;
+        isvd_val_t rets[lrets];
 
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
-  const isvd_int_t maxit = 256;
-  const isvd_val_t tol   = 1e-4;
 
-  // Creates matrices
+  // Create matrices
   isvd_val_t *qst = qst0 + param.rowrange.begin * ldqst0;
   isvd_int_t ldqst = ldqst0;
 
   isvd_val_t *qt = isvd_dmalloc(mb * l);
   isvd_int_t ldqt = l;
 
-  // Sketches
-  isvd_int_t iter = isvd_dIntegrateKolmogorovNagumo(param, qst, ldqst, qt, ldqt, maxit, tol);
+  // Run stage
+  isvd_dIntegrateKolmogorovNagumo(param, args, largs, rets, lrets, qst, ldqst, qt, ldqt);
+  isvd_int_t iter = rets[0];
 
-  // Gather result
+  // Gather results
   isvd_val_t *qt_ = isvd_dmalloc(Pmb * l);
   isvd_int_t ldqt_ = l;
   MPI_Gather(qt, mb*ldqt, MPI_DOUBLE, qt_, mb*ldqt, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
 
-  // Checks result
+  // Check results
   if ( mpi_rank == mpi_root ) {
     ASSERT_EQ(iter, 81);
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {

@@ -38,17 +38,17 @@ macro(_ADD_CHECK checktype)
   )
 endmacro()
 
-macro(_ADD_MPI_CHECK checktype procs)
+macro(_ADD_MPI_CHECK checktype listprocs)
   set(checkmain check_mpi.cxx)
   _add_check_predo("${checktype}")
 
-  gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${procs}" "" ${checkmain} ${files})
+  gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${listprocs}" "" ${checkmain} ${files})
 
   # Add rule
-  foreach(np ${procs})
+  foreach(procs ${listprocs})
     add_custom_target(
-      check_${checkname}_${np}
-      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${np} ${CMAKE_ENV} OMP_NUM_THREADS=4 $<TARGET_FILE:${checktarget}>
+      check_${checkname}_${procs}
+      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_ENV} OMP_NUM_THREADS=4 $<TARGET_FILE:${checktarget}>
       DEPENDS ${checktarget}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Run check ${checkpath}"
@@ -75,7 +75,7 @@ endfunction()
 
 ################################################################################
 
-function(ADD_MPI_CHECK checkpath checkcomment procs)
+function(ADD_MPI_CHECK checkpath checkcomment listprocs)
   list(APPEND DEFS "ISVD_USE_GTEST")
-  _add_mpi_check("" "${procs}")
+  _add_mpi_check("" "${listprocs}")
 endfunction()

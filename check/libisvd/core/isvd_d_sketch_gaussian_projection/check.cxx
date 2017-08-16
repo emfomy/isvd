@@ -26,7 +26,7 @@ void test( char dista, char ordera ) {
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');
 
-  // Reads A
+  // Read A
   file = fopen(A_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -57,7 +57,7 @@ void test( char dista, char ordera ) {
     fclose(file);
   }
 
-  // Reads Ys
+  // Read Ys
   file = fopen(YS_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -83,7 +83,7 @@ void test( char dista, char ordera ) {
     fclose(file);
   }
 
-  // Sets parameters
+  // Set parameters
   const isvd_int_t k = Nl;
   const isvd_int_t p = 0;
   const isvd_int_t N = 1;
@@ -94,7 +94,7 @@ void test( char dista, char ordera ) {
   const isvd_int_t Pmb = param.nrow_total;
   const isvd_int_t seed = 0;
 
-  // Creates matrices
+  // Create matrices
   isvd_val_t *a;
   if ( dista_ == 'C' ) {
     if ( ordera_ == 'C' ) {
@@ -114,15 +114,15 @@ void test( char dista, char ordera ) {
   isvd_val_t *yst = isvd_dmalloc(mb * Nl);
   isvd_int_t ldyst = Nl;
 
-  // Sketches
-  isvd_dSketchGaussianProjection(param, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
+  // Run stage
+  isvd_dSketchGaussianProjection(param, NULL, 0, NULL, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
 
-  // Gather result
+  // Gather results
   isvd_val_t *yst_ = isvd_dmalloc(Pmb * Nl);
   isvd_int_t ldyst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_DOUBLE, yst_, mb*ldyst, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
 
-  // Checks result
+  // Check results
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
       for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {

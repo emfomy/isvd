@@ -176,41 +176,48 @@ void projectBlockRow(
 /// @ingroup  core_dtype_module
 /// Gramian Postprocessing (double precision)
 ///
-/// @param[in]   param     The @ref isvd_Param "parameters".
-/// @param[in]   dista     The parallel distribution of 𝑨. <br>
-///                        `'C'`: block-column parallelism. <br>
-///                        `'R'`: block-row parallelism.
-/// @param[in]   ordera    The storage ordering of 𝑨. <br>
-///                        `'C'`: column-major ordering. <br>
-///                        `'R'`: row-major ordering.
-/// @param[in]   a, lda    The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                        `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                        `dista='R'`: the size must be @f$m_j \times n@f$.
-/// @param[in]   qt, ldqt  The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
-/// @param[in]   s         The vector 𝝈 (@f$k \times 1@f$).
-/// @param[in]   ut, ldut  The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                        `ut_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
-///                        `ut_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$. <br>
-///                        `ut_root < -1`: not referenced.
-/// @param[in]   vt, ldvt  The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                        `vt_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
-///                        `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
-///                        `vt_root < -1`: not referenced.
-/// @param[in]   ut_root   The option for computing 𝑼. <br>
-///                        `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
-///                        `ut_root = -1`: compute row-block 𝑼. <br>
-///                        `ut_root < -1`: does not compute 𝑼.
-/// @param[in]   vt_root   The option for computing 𝑽. <br>
-///                        `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
-///                        `vt_root = -1`: compute row-block 𝑽. <br>
-///                        `vt_root < -1`: does not compute 𝑽.
+/// @param[in]   param        The @ref isvd_Param "parameters".
+/// @param[in]   args, largs  The arguments and its length. (not using)
+/// @param[in]   rets, lrets  The return values and its length. (not using)
 /// <hr>
-/// @param[out]  s         Replaced by the singular values 𝝈.
-/// @param[out]  ut        Replaced by the left singular vectors 𝑼 (row-major).
-/// @param[out]  vt        Replaced by the right singular vectors 𝑽 (row-major).
+/// @param[in]   dista        The parallel distribution of 𝑨. <br>
+///                           `'C'`: block-column parallelism. <br>
+///                           `'R'`: block-row parallelism.
+/// @param[in]   ordera       The storage ordering of 𝑨. <br>
+///                           `'C'`: column-major ordering. <br>
+///                           `'R'`: row-major ordering.
+/// @param[in]   a, lda       The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
+///                           `dista='C'`: the size must be @f$m \times n_j@f$. <br>
+///                           `dista='R'`: the size must be @f$m_j \times n@f$.
+/// @param[in]   qt, ldqt     The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
+/// @param[in]   s            The vector 𝝈 (@f$k \times 1@f$).
+/// @param[in]   ut, ldut     The matrix 𝑼 (row-major) and its leading dimension. <br>
+///                           `ut_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
+///                           `ut_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$. <br>
+///                           `ut_root < -1`: not referenced.
+/// @param[in]   vt, ldvt     The matrix 𝑽 (row-major) and its leading dimension. <br>
+///                           `vt_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
+///                           `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
+///                           `vt_root < -1`: not referenced.
+/// @param[in]   ut_root      The option for computing 𝑼. <br>
+///                           `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
+///                           `ut_root = -1`: compute row-block 𝑼. <br>
+///                           `ut_root < -1`: does not compute 𝑼.
+/// @param[in]   vt_root      The option for computing 𝑽. <br>
+///                           `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
+///                           `vt_root = -1`: compute row-block 𝑽. <br>
+///                           `vt_root < -1`: does not compute 𝑽.
+/// <hr>
+/// @param[out]  s            Replaced by the singular values 𝝈.
+/// @param[out]  ut           Replaced by the left singular vectors 𝑼 (row-major).
+/// @param[out]  vt           Replaced by the right singular vectors 𝑽 (row-major).
 ///
 void isvd_dPostprocessGramian(
     const isvd_Param param,
+    const isvd_val_t *args,
+    const isvd_int_t largs,
+          isvd_val_t *rets,
+    const isvd_int_t lrets,
     const char dista,
     const char ordera,
     const isvd_val_t *a,
@@ -225,6 +232,11 @@ void isvd_dPostprocessGramian(
     const mpi_int_t  ut_root,
     const mpi_int_t  vt_root
 ) {
+
+  ISVD_UNUSED(args);
+  ISVD_UNUSED(largs);
+  ISVD_UNUSED(rets);
+  ISVD_UNUSED(lrets);
 
   // ====================================================================================================================== //
   // Get parameters

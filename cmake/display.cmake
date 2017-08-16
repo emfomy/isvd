@@ -29,6 +29,12 @@ message(STATUS "Build documentation:       ${ISVD_BUILD_DOC}")
 
 message(STATUS "")
 
+# Display compilers
+message(STATUS "Use C   Compiler:          ${CMAKE_C_COMPILER}")
+message(STATUS "Use C++ Compiler:          ${CMAKE_CXX_COMPILER}")
+
+message(STATUS "")
+
 # Display libraries
 if(ISVD_OMP)
   message(STATUS "Use OpenMP:                ${OpenMP_C_FLAGS} ${OpenMP_LIBRARIES}")
@@ -88,7 +94,7 @@ message(STATUS "================================================================
 message(STATUS "")
 
 # Display flags
-message(STATUS "C Compiler & flags:        ${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
+message(STATUS "C   Compiler & flags:      ${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
 message(STATUS "C++ Compiler & flags:      ${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
 message(STATUS "Link flags:                ${ISVD_LNKFLGS}")
 message(STATUS "Include pathes:            ${ISVD_INCS}")

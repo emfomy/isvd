@@ -19,7 +19,7 @@ TEST(GramianOrthogonalization, Test) {
   FILE *file;
   MM_typecode matcode;
 
-  // Reads Ys
+  // Read Ys
   file = fopen(YS_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -40,7 +40,7 @@ TEST(GramianOrthogonalization, Test) {
     fclose(file);
   }
 
-  // Reads Qs
+  // Read Qs
   file = fopen(QS_PATH, "r");
   ASSERT_NE(file, (void*)(NULL));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
@@ -66,7 +66,7 @@ TEST(GramianOrthogonalization, Test) {
     fclose(file);
   }
 
-  // Sets parameters
+  // Set parameters
   const isvd_int_t n = m;
   const isvd_int_t k = 11;
   const isvd_int_t p = 0;
@@ -79,14 +79,14 @@ TEST(GramianOrthogonalization, Test) {
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
 
-  // Creates matrices
+  // Create matrices
   isvd_val_t *yst = yst0 + param.rowrange.begin * ldyst0;
   isvd_int_t ldyst = ldyst0;
 
-  // Sketches
-  isvd_dOrthogonalizeGramian(param, yst, ldyst);
+  // Run
+  isvd_dOrthogonalizeGramian(param, NULL, 0, NULL, 0, yst, ldyst);
 
-  // Gather result
+  // Gather results
   isvd_val_t *qst_ = isvd_dmalloc(Pmb * Nl);
   isvd_int_t ldqst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_DOUBLE, qst_, mb*ldyst, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
@@ -99,7 +99,7 @@ TEST(GramianOrthogonalization, Test) {
   cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, Nl, 1.0, qst_, ldqst_, 0.0, qqt_, ldqqt_);
   cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, Nl, 1.0, qst0, ldqst0, 0.0, qqt0, ldqqt0);
 
-  // Checks result
+  // Check results
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
       for ( isvd_int_t ic = ir; ic < m; ++ic ) {

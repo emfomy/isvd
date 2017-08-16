@@ -10,29 +10,44 @@
 
 typedef double isvd_val_t;
 
+#define kMaxit 256
+#define kTol   1e-4
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  core_dtype_module
 /// Kolmogorov-Nagumo Integration (double precision)
 ///
-/// @param[in]   param       The @ref isvd_Param "parameters".
-/// @param[in]   qst, ldqst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
-/// @param[in]   qt, ldqt    The row-block 𝑸bar (@f$ m_b \times l @f$, row-major) and its leading dimension.
-/// @param[in]   maxit       The maximum number of iteration.
-/// @param[in]   tol         The tolerance of convergence condition.
+/// @param[in]   param        The @ref isvd_Param "parameters".
+/// @param[in]   args, largs  The arguments and its length. <br>
+///                           `args[0]`: The maximum number of iteration. (optional, default as @ref kMaxit) <br>
+///                           `args[1]`: The tolerance of convergence condition. (optional, default as @ref kTol)
+/// @param[in]   rets, lrets  The return values and its length.
 /// <hr>
-/// @param[out]  qt          Replaced by the row-block 𝑸bar (row-major).
+/// @param[in]   qst, ldqst   The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
+/// @param[in]   qt, ldqt     The row-block 𝑸bar (@f$ m_b \times l @f$, row-major) and its leading dimension.
+/// <hr>
+/// @param[out]  qt           Replaced by the row-block 𝑸bar (row-major).
+/// @param[out]  rets         Replaced by return values.
+///                           `rets[0]`: The number of iteration.
 ///
-/// @return  The number of iteration
-///
-isvd_int_t isvd_dIntegrateKolmogorovNagumo(
+void isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param,
+    const isvd_val_t *args,
+    const isvd_int_t largs,
+          isvd_val_t *rets,
+    const isvd_int_t lrets,
     const isvd_val_t *qst,
     const isvd_int_t ldqst,
           isvd_val_t *qt,
-    const isvd_int_t ldqt,
-    const isvd_int_t maxit,
-    const isvd_val_t tol
+    const isvd_int_t ldqt
 ) {
+
+  // ====================================================================================================================== //
+  // Get arguments
+
+  isvd_int_t argi = -1;
+  const isvd_int_t maxit = ( largs > ++argi ) ? args[argi] : kMaxit;
+  const isvd_val_t tol   = ( largs > ++argi ) ? args[argi] : kTol;
 
   // ====================================================================================================================== //
   // Get parameters
@@ -217,6 +232,10 @@ isvd_int_t isvd_dIntegrateKolmogorovNagumo(
   isvd_free(cinv);
   isvd_free(s);
 
-  return iter;
+  // ====================================================================================================================== //
+  // Set return values
+
+  isvd_int_t reti = -1;
+  if ( lrets > ++reti ) rets[reti] = iter;
 
 }

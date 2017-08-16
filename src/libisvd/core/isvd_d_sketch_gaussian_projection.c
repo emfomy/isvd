@@ -179,26 +179,33 @@ void sketchBlockRow(
 /// @ingroup  core_dtype_module
 /// Gaussian Projection Sketching (double precision)
 ///
-/// @param[in]   param       The @ref isvd_Param "parameters".
-/// @param[in]   dista       The parallel distribution of 𝑨. <br>
-///                          `'C'`: block-column parallelism. <br>
-///                          `'R'`: block-row parallelism.
-/// @param[in]   ordera      The storage ordering of 𝑨. <br>
-///                          `'C'`: column-major ordering. <br>
-///                          `'R'`: row-major ordering.
-/// @param[in]   a, lda      The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                          `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                          `dista='R'`: the size must be @f$m_j \times n@f$.
-/// @param[in]   yst, ldyst  The row-block 𝖄 (@f$m_b \times Nl@f$, row-major) and its leading dimension. <br>
-///                          `dista='C'`: @p ldyst must be @f$Nl@f$. <br>
-///                          `dista='R'`: no condition.
-/// @param[in]   seed        The random seed (significant only at root MPI process).
-/// @param[in]   mpi_root    The root MPI process ID.
+/// @param[in]   param        The @ref isvd_Param "parameters".
+/// @param[in]   args, largs  The arguments and its length. (not using)
+/// @param[in]   rets, lrets  The return values and its length. (not using)
 /// <hr>
-/// @param[out]  yst         Replaced by the row-block 𝖄 (row-major).
+/// @param[in]   dista        The parallel distribution of 𝑨. <br>
+///                           `'C'`: block-column parallelism. <br>
+///                           `'R'`: block-row parallelism.
+/// @param[in]   ordera       The storage ordering of 𝑨. <br>
+///                           `'C'`: column-major ordering. <br>
+///                           `'R'`: row-major ordering.
+/// @param[in]   a, lda       The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
+///                           `dista='C'`: the size must be @f$m \times n_j@f$. <br>
+///                           `dista='R'`: the size must be @f$m_j \times n@f$.
+/// @param[in]   yst, ldyst   The row-block 𝖄 (@f$m_b \times Nl@f$, row-major) and its leading dimension. <br>
+///                           `dista='C'`: @p ldyst must be @f$Nl@f$. <br>
+///                           `dista='R'`: no condition.
+/// @param[in]   seed         The random seed (significant only at root MPI process).
+/// @param[in]   mpi_root     The root MPI process ID.
+/// <hr>
+/// @param[out]  yst          Replaced by the row-block 𝖄 (row-major).
 ///
 void isvd_dSketchGaussianProjection(
     const isvd_Param param,
+    const isvd_val_t *args,
+    const isvd_int_t largs,
+          isvd_val_t *rets,
+    const isvd_int_t lrets,
     const char dista,
     const char ordera,
     const isvd_val_t *a,
@@ -208,6 +215,11 @@ void isvd_dSketchGaussianProjection(
     const isvd_int_t seed,
     const mpi_int_t mpi_root
 ) {
+
+  ISVD_UNUSED(args);
+  ISVD_UNUSED(largs);
+  ISVD_UNUSED(rets);
+  ISVD_UNUSED(lrets);
 
   // ====================================================================================================================== //
   // Check arguments
