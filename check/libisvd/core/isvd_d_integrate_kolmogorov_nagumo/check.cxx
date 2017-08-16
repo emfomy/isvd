@@ -8,7 +8,7 @@
 
 typedef double isvd_val_t;
 
-TEST(IntegrateKolmogorovNagumo, ) {
+TEST(IntegrateKolmogorovNagumo, Test) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -33,7 +33,7 @@ TEST(IntegrateKolmogorovNagumo, ) {
   isvd_int_t ldqst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &qst0[ir*ldqst0+ic]);
+      ASSERT_EQ(fscanf(file, "%lg", &qst0[ir*ldqst0+ic]), 1);
     }
   }
 
@@ -58,7 +58,7 @@ TEST(IntegrateKolmogorovNagumo, ) {
   isvd_int_t ldqt0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &qt0[ir*ldqt0+ic]);
+      ASSERT_EQ(fscanf(file, "%lg", &qt0[ir*ldqt0+ic]), 1);
     }
   }
 

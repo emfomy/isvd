@@ -19,8 +19,6 @@ typedef double isvd_val_t;
 /// <hr>
 /// @param[out]  yst          Replaced by the row-block 𝕼 (row-major).
 ///
-/// @see  isvd_Param
-///
 void isvd_dOrthogonalizeGramian(
     const isvd_Param param,
           isvd_val_t *yst,

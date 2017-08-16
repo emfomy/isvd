@@ -24,8 +24,6 @@ typedef double isvd_val_t;
 ///
 /// @return  The number of iteration
 ///
-/// @see  isvd_Param
-///
 isvd_int_t isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param,
     const isvd_val_t *qst,

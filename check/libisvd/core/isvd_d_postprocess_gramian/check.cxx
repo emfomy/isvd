@@ -11,7 +11,13 @@
 
 typedef double isvd_val_t;
 
-void testWithUV( char dista, char ordera ) {
+typedef enum {
+  GatherUV,
+  BlockUV,
+  NoUV
+} UV;
+
+void test( char dista, char ordera, const UV uv ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -44,14 +50,14 @@ void testWithUV( char dista, char ordera ) {
     lda0 = m;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        fscanf(file, "%lg", &a0[ir+ic*lda0]);
+        EXPECT_EQ(fscanf(file, "%lg", &a0[ir+ic*lda0]), 1);
       }
     }
   } else {
     lda0 = n;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        fscanf(file, "%lg", &a0[ir*lda0+ic]);
+        EXPECT_EQ(fscanf(file, "%lg", &a0[ir*lda0+ic]), 1);
       }
     }
   }
@@ -77,7 +83,7 @@ void testWithUV( char dista, char ordera ) {
   isvd_int_t ldqt0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &qt0[ir*ldqt0+ic]);
+      EXPECT_EQ(fscanf(file, "%lg", &qt0[ir*ldqt0+ic]), 1);
     }
   }
 
@@ -101,7 +107,7 @@ void testWithUV( char dista, char ordera ) {
 
   isvd_val_t *s0 = isvd_dmalloc(l);
   for ( isvd_int_t ir = 0; ir < l; ++ir ) {
-    fscanf(file, "%lg", &s0[ir]);
+    EXPECT_EQ(fscanf(file, "%lg", &s0[ir]), 1);
   }
 
   if ( file != stdin ) {
@@ -126,7 +132,7 @@ void testWithUV( char dista, char ordera ) {
   isvd_int_t ldut0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &ut0[ir*ldqt0+ic]);
+      EXPECT_EQ(fscanf(file, "%lg", &ut0[ir*ldqt0+ic]), 1);
     }
   }
 
@@ -152,7 +158,7 @@ void testWithUV( char dista, char ordera ) {
   isvd_int_t ldvt0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < n; ++ir ) {
-      fscanf(file, "%lg", &vt0[ir*ldqt0+ic]);
+      EXPECT_EQ(fscanf(file, "%lg", &vt0[ir*ldqt0+ic]), 1);
     }
   }
 
@@ -167,7 +173,9 @@ void testWithUV( char dista, char ordera ) {
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
 
+  const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t nb  = param.ncol_each;
   const isvd_int_t Pnb = param.ncol_total;
 
   // Creates matrices
@@ -192,75 +200,134 @@ void testWithUV( char dista, char ordera ) {
 
   isvd_val_t *s = isvd_dmalloc(l);
 
-  isvd_val_t *ut = isvd_dmalloc(Pmb * l);
-  isvd_int_t ldut = l;
+  isvd_val_t *ut_ = isvd_dmalloc(Pmb * l);
+  isvd_int_t ldut_ = l;
 
-  isvd_val_t *vt = isvd_dmalloc(Pnb * l);
-  isvd_int_t ldvt = l;
+  isvd_val_t *vt_ = isvd_dmalloc(Pnb * l);
+  isvd_int_t ldvt_ = l;
 
-  // Sketches
-  isvd_dPostprocessGramian('S', 'S', dista_, ordera_, param, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, mpi_root);
+  switch ( uv ) {
+    case GatherUV: {
 
-  // Compute space
-  isvd_val_t *uut_ = isvd_dmalloc(m * m);
-  isvd_int_t lduut_ = m;
-  isvd_val_t *uut0 = isvd_dmalloc(m * m);
-  isvd_int_t lduut0 = m;
-  isvd_val_t *vvt_ = isvd_dmalloc(n * n);
-  isvd_int_t ldvvt_ = n;
-  isvd_val_t *vvt0 = isvd_dmalloc(n * n);
-  isvd_int_t ldvvt0 = n;
-  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut,  ldut,  0.0, uut_, lduut_);
-  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
-  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt,  ldvt,  0.0, vvt_, ldvvt_);
-  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
+      // Sketches
+      isvd_dPostprocessGramian(param, dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
 
-  // Checks result
-  if ( mpi_rank == mpi_root ) {
-    for ( isvd_int_t ir = 0; ir < l; ++ir ) {
-      ASSERT_NEAR(s[ir], s0[ir], 1e-8) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
+      break;
     }
-    for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      for ( isvd_int_t ic = ir; ic < m; ++ic ) {
-        ASSERT_NEAR(uut_[ir+ic*lduut_], uut0[ir+ic*lduut0], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+
+    case BlockUV: {
+
+      // Creates matrices
+      isvd_val_t *ut = isvd_dmalloc(mb * l);
+      isvd_int_t ldut = l;
+
+      isvd_val_t *vt = isvd_dmalloc(nb * l);
+      isvd_int_t ldvt = l;
+
+      // Sketches
+      isvd_dPostprocessGramian(param, dista_, ordera_, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
+
+      // Gather result
+      MPI_Gather(ut, mb*ldut, MPI_DOUBLE, ut_, mb*ldut, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
+      MPI_Gather(vt, nb*ldvt, MPI_DOUBLE, vt_, nb*ldvt, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
+
+      break;
+    }
+
+    default: {
+
+      // Sketches
+      isvd_dPostprocessGramian(param, dista_, ordera_, a, lda, qt, ldqt, s, NULL, 0, NULL, 0, -2, -2);
+
+      break;
+    }
+  }
+
+  if ( uv != NoUV ) {
+    // Compute space
+    isvd_val_t *uut_ = isvd_dmalloc(m * m);
+    isvd_int_t lduut_ = m;
+    isvd_val_t *uut0 = isvd_dmalloc(m * m);
+    isvd_int_t lduut0 = m;
+    isvd_val_t *vvt_ = isvd_dmalloc(n * n);
+    isvd_int_t ldvvt_ = n;
+    isvd_val_t *vvt0 = isvd_dmalloc(n * n);
+    isvd_int_t ldvvt0 = n;
+    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
+    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
+    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
+
+    // Checks result
+    if ( mpi_rank == mpi_root ) {
+      for ( isvd_int_t ir = 0; ir < l; ++ir ) {
+        ASSERT_NEAR(s[ir], s0[ir], 1e-8) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
+      }
+      for ( isvd_int_t ir = 0; ir < m; ++ir ) {
+        for ( isvd_int_t ic = ir; ic < m; ++ic ) {
+          ASSERT_NEAR(uut_[ir+ic*lduut_], uut0[ir+ic*lduut0], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+        }
+      }
+      for ( isvd_int_t ir = 0; ir < n; ++ir ) {
+        for ( isvd_int_t ic = ir; ic < n; ++ic ) {
+          ASSERT_NEAR(vvt_[ir+ic*ldvvt_], vvt0[ir+ic*ldvvt0], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+        }
       }
     }
-    for ( isvd_int_t ir = 0; ir < n; ++ir ) {
-      for ( isvd_int_t ic = ir; ic < n; ++ic ) {
-        ASSERT_NEAR(vvt_[ir+ic*ldvvt_], vvt0[ir+ic*ldvvt0], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+  } else {
+    if ( mpi_rank == mpi_root ) {
+      for ( isvd_int_t ir = 0; ir < l; ++ir ) {
+        ASSERT_NEAR(s[ir], s0[ir], 1e-8) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
       }
     }
   }
 }
 
-TEST(PostprocessGramian, BlockCol_ColMajor_WithUV) {
-  testWithUV('C', 'C');
+TEST(PostprocessGramian, BlockCol_ColMajor_GatherUV) {
+  test('C', 'C', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockCol_RowMajor_WithUV) {
-  testWithUV('C', 'R');
+TEST(PostprocessGramian, BlockCol_RowMajor_GatherUV) {
+  test('C', 'R', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockRow_ColMajor_WithUV) {
-  testWithUV('R', 'C');
+TEST(PostprocessGramian, BlockRow_ColMajor_GatherUV) {
+  test('R', 'C', GatherUV);
 }
 
-TEST(PostprocessGramian, BlockRow_RowMajor_WithUV) {
-  testWithUV('R', 'R');
+TEST(PostprocessGramian, BlockRow_RowMajor_GatherUV) {
+  test('R', 'R', GatherUV);
 }
 
-// TEST(PostprocessGramian, BlockCol_ColMajor_NoUV) {
-//   testNoUV('C', 'C');
-// }
+TEST(PostprocessGramian, BlockCol_ColMajor_BlockUV) {
+  test('C', 'C', BlockUV);
+}
 
-// TEST(PostprocessGramian, BlockCol_RowMajor_NoUV) {
-//   testNoUV('C', 'R');
-// }
+TEST(PostprocessGramian, BlockCol_RowMajor_BlockUV) {
+  test('C', 'R', BlockUV);
+}
 
-// TEST(PostprocessGramian, BlockRow_ColMajor_NoUV) {
-//   testNoUV('R', 'C');
-// }
+TEST(PostprocessGramian, BlockRow_ColMajor_BlockUV) {
+  test('R', 'C', BlockUV);
+}
 
-// TEST(PostprocessGramian, BlockRow_RowMajor_NoUV) {
-//   testNoUV('R', 'R');
-// }
+TEST(PostprocessGramian, BlockRow_RowMajor_BlockUV) {
+  test('R', 'R', BlockUV);
+}
+
+
+TEST(PostprocessGramian, BlockCol_ColMajor_NoUV) {
+  test('C', 'C', NoUV);
+}
+
+TEST(PostprocessGramian, BlockCol_RowMajor_NoUV) {
+  test('C', 'R', NoUV);
+}
+
+TEST(PostprocessGramian, BlockRow_ColMajor_NoUV) {
+  test('R', 'C', NoUV);
+}
+
+TEST(PostprocessGramian, BlockRow_RowMajor_NoUV) {
+  test('R', 'R', NoUV);
+}

@@ -13,8 +13,8 @@ typedef double isvd_val_t;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 void sketchBlockCol(
-    const char ordera,
     const isvd_Param param,
+    const char ordera,
     const isvd_val_t *a,
     const isvd_int_t lda,
           isvd_val_t *yst,
@@ -101,8 +101,8 @@ void sketchBlockCol(
 }
 
 void sketchBlockRow(
-    const char ordera,
     const isvd_Param param,
+    const char ordera,
     const isvd_val_t *a,
     const isvd_int_t lda,
           isvd_val_t *yst,
@@ -179,27 +179,28 @@ void sketchBlockRow(
 /// @ingroup  core_dtype_module
 /// Gaussian Projection Sketching (double precision)
 ///
+/// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   dista       The parallel distribution of 𝑨. <br>
 ///                          `'C'`: block-column parallelism. <br>
 ///                          `'R'`: block-row parallelism.
 /// @param[in]   ordera      The storage ordering of 𝑨. <br>
 ///                          `'C'`: column-major ordering. <br>
 ///                          `'R'`: row-major ordering.
-/// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   a, lda      The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                          If `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                          If `dista='R'`: the size must be @f$m_j \times n@f$.
+///                          `dista='C'`: the size must be @f$m \times n_j@f$. <br>
+///                          `dista='R'`: the size must be @f$m_j \times n@f$.
 /// @param[in]   yst, ldyst  The row-block 𝖄 (@f$m_b \times Nl@f$, row-major) and its leading dimension. <br>
-///                          If `dista='C'`: @p ldyst must be @f$Nl@f$.
+///                          `dista='C'`: @p ldyst must be @f$Nl@f$. <br>
+///                          `dista='R'`: no condition.
 /// @param[in]   seed        The random seed (significant only at root MPI process).
 /// @param[in]   mpi_root    The root MPI process ID.
 /// <hr>
 /// @param[out]  yst         Replaced by the row-block 𝖄 (row-major).
 ///
 void isvd_dSketchGaussianProjection(
+    const isvd_Param param,
     const char dista,
     const char ordera,
-    const isvd_Param param,
     const isvd_val_t *a,
     const isvd_int_t lda,
           isvd_val_t *yst,
@@ -219,7 +220,7 @@ void isvd_dSketchGaussianProjection(
   // Run
 
   switch ( dista_ ) {
-    case 'C': sketchBlockCol(ordera_, param, a, lda, yst, ldyst, seed, mpi_root); break;
-    case 'R': sketchBlockRow(ordera_, param, a, lda, yst, ldyst, seed, mpi_root); break;
+    case 'C': sketchBlockCol(param, ordera_, a, lda, yst, ldyst, seed, mpi_root); break;
+    case 'R': sketchBlockRow(param, ordera_, a, lda, yst, ldyst, seed, mpi_root); break;
   }
 }

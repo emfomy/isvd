@@ -26,7 +26,7 @@ endmacro()
 macro(_ADD_CHECK checktype)
   set(checkmain check.cxx)
   _add_check_predo("${checktype}" "")
-  gtest_add_tests(${checktarget} "" ${checkmain} ${files})
+  gtest_add_tests($<TARGET_FILE:${checktarget}> "" ${checkmain} ${files})
 
   # Add rule
   add_custom_target(
@@ -39,26 +39,22 @@ macro(_ADD_CHECK checktype)
   set(CMAKE_CHECK_RULES ${CMAKE_CHECK_RULES} check_${checkname} PARENT_SCOPE)
 endmacro()
 
-macro(_ADD_MPI_CHECK checktype)
-  if(NOT ARGN)
-      message(FATAL_ERROR "Missing ARGN for _ADD_MPI_CHECK")
-  endif()
-
+macro(_ADD_MPI_CHECK checktype procs)
   set(checkmain check_mpi.cxx)
   _add_check_predo("${checktype}")
 
-  foreach(procs ${ARGN})
-    add_test(NAME ${checkname0}_${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} $<TARGET_FILE:${checktarget}>)
+  gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${procs}" "" ${checkmain} ${files})
 
-    # Add rule
+  # Add rule
+  foreach(np ${procs})
     add_custom_target(
-      check_${checkname}_${procs}
-      COMMAND OMP_NUM_THREADS=4 ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} $<TARGET_FILE:${checktarget}>
+      check_${checkname}_${np}
+      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${np} ${CMAKE_ENV} OMP_NUM_THREADS=4 $<TARGET_FILE:${checktarget}>
       DEPENDS ${checktarget}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Run test ${checkpath}"
     )
-    set(CMAKE_CHECK_RULES ${CMAKE_CHECK_RULES} check_${checkname0}_${procs} PARENT_SCOPE)
+    set(CMAKE_CHECK_RULES ${CMAKE_CHECK_RULES} check_${checkname0}_${np} PARENT_SCOPE)
   endforeach()
 endmacro()
 
@@ -81,7 +77,7 @@ endfunction()
 
 ################################################################################
 
-function(ADD_MPI_CHECK checkpath checkcomment checkname0)
+function(ADD_MPI_CHECK checkpath checkcomment checkname0 procs)
   list(APPEND DEFS "ISVD_USE_GTEST")
-  _add_mpi_check("" ${ARGN})
+  _add_mpi_check("" "${procs}")
 endfunction()

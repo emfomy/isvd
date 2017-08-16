@@ -8,7 +8,7 @@
 
 typedef double isvd_val_t;
 
-TEST(OrthogonalizeGramian, ) {
+TEST(OrthogonalizeGramian, Test) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -32,7 +32,7 @@ TEST(OrthogonalizeGramian, ) {
   isvd_int_t ldyst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &yst0[ir*ldyst0+ic]);
+      EXPECT_EQ(fscanf(file, "%lg", &yst0[ir*ldyst0+ic]), 1);
     }
   }
 
@@ -58,7 +58,7 @@ TEST(OrthogonalizeGramian, ) {
   isvd_int_t ldqst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &qst0[ir*ldqst0+ic]);
+      EXPECT_EQ(fscanf(file, "%lg", &qst0[ir*ldqst0+ic]), 1);
     }
   }
 

@@ -12,10 +12,8 @@ typedef double isvd_val_t;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 void projectBlockCol(
-    const char jobut,
-    const char jobvt,
-    const char ordera,
     const isvd_Param param,
+    const char ordera,
     const isvd_val_t *a,
     const isvd_int_t lda,
     const isvd_val_t *qt,
@@ -27,14 +25,15 @@ void projectBlockCol(
     const isvd_int_t ldut,
           isvd_val_t *vt,
     const isvd_int_t ldvt,
-    const mpi_int_t mpi_root
+    const mpi_int_t  ut_root,
+    const mpi_int_t  vt_root
 ) {
 
-  ISVD_UNUSED(jobvt);
   ISVD_UNUSED(s);
   ISVD_UNUSED(vt);
   ISVD_UNUSED(ldut);
   ISVD_UNUSED(ldvt);
+  ISVD_UNUSED(vt_root);
 
   // ====================================================================================================================== //
   // Get parameters
@@ -48,7 +47,7 @@ void projectBlockCol(
   // ====================================================================================================================== //
   // Check arguments
 
-  bool use_ut = (jobut == 'S' && mpi_root >= 0);
+  bool use_ut = (ut_root >= 0);
 
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, m);  break;
@@ -93,10 +92,8 @@ void projectBlockCol(
 }
 
 void projectBlockRow(
-    const char jobut,
-    const char jobvt,
-    const char ordera,
     const isvd_Param param,
+    const char ordera,
     const isvd_val_t *a,
     const isvd_int_t lda,
     const isvd_val_t *qt,
@@ -108,14 +105,15 @@ void projectBlockRow(
     const isvd_int_t ldut,
           isvd_val_t *vt,
     const isvd_int_t ldvt,
-    const mpi_int_t mpi_root
+    const mpi_int_t  ut_root,
+    const mpi_int_t  vt_root
 ) {
 
-  ISVD_UNUSED(jobut);
   ISVD_UNUSED(s);
   ISVD_UNUSED(ut);
   ISVD_UNUSED(ldut);
   ISVD_UNUSED(ldvt);
+  ISVD_UNUSED(ut_root);
 
   // ====================================================================================================================== //
   // Get parameters
@@ -129,7 +127,7 @@ void projectBlockRow(
   // ====================================================================================================================== //
   // Check arguments
 
-  bool use_vt = (jobvt == 'S' && mpi_root >= 0);
+  bool use_vt = (vt_root >= 0);
 
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, mj); break;
@@ -178,47 +176,43 @@ void projectBlockRow(
 /// @ingroup  core_dtype_module
 /// Gramian Postprocessing (double precision)
 ///
-/// @param[in]   jobut     The option for computing 𝑼. <br>
-///                        `'S'`: computes 𝑼. <br>
-///                        `'N'`: does not compute 𝑼.
-/// @param[in]   jobvt     The option for computing 𝑽. <br>
-///                        `'S'`: computes 𝑽. <br>
-///                        `'N'`: does not compute 𝑽.
+/// @param[in]   param     The @ref isvd_Param "parameters".
 /// @param[in]   dista     The parallel distribution of 𝑨. <br>
 ///                        `'C'`: block-column parallelism. <br>
 ///                        `'R'`: block-row parallelism.
 /// @param[in]   ordera    The storage ordering of 𝑨. <br>
 ///                        `'C'`: column-major ordering. <br>
 ///                        `'R'`: row-major ordering.
-/// @param[in]   param     The @ref isvd_Param "parameters".
 /// @param[in]   a, lda    The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                        If `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                        If `dista='R'`: the size must be @f$m_j \times n@f$.
+///                        `dista='C'`: the size must be @f$m \times n_j@f$. <br>
+///                        `dista='R'`: the size must be @f$m_j \times n@f$.
 /// @param[in]   qt, ldqt  The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
 /// @param[in]   s         The vector 𝝈 (@f$k \times 1@f$).
-/// @param[in]   ut, ldut  The matrix ̂̂𝑼 (row-major) and its leading dimension. <br>
-///                        If `mpi_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
-///                        If `mpi_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$.
+/// @param[in]   ut, ldut  The matrix 𝑼 (row-major) and its leading dimension. <br>
+///                        `ut_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
+///                        `ut_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$. <br>
+///                        `ut_root < -1`: not referenced.
 /// @param[in]   vt, ldvt  The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                        If `mpi_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
-///                        If `mpi_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$.
-/// @param[in]   mpi_root  The root MPI process ID. <br>
+///                        `vt_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
+///                        `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
+///                        `vt_root < -1`: not referenced.
+/// @param[in]   ut_root   The option for computing 𝑼. <br>
+///                        `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
+///                        `ut_root = -1`: compute row-block 𝑼. <br>
+///                        `ut_root < -1`: does not compute 𝑼.
+/// @param[in]   vt_root   The option for computing 𝑽. <br>
+///                        `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
+///                        `vt_root = -1`: compute row-block 𝑽. <br>
+///                        `vt_root < -1`: does not compute 𝑽.
 /// <hr>
 /// @param[out]  s         Replaced by the singular values 𝝈.
 /// @param[out]  ut        Replaced by the left singular vectors 𝑼 (row-major).
 /// @param[out]  vt        Replaced by the right singular vectors 𝑽 (row-major).
 ///
-/// @attention  If `mpi_root >= 0`, then the result matrices are sent to the MPI process of ID `mpi_root`. <br>
-///             If `mpi_root = -1`, then the result matrices are left on each MPI process and stored in row-blocks.
-///
-/// @see  isvd_Param
-///
 void isvd_dPostprocessGramian(
-    const char jobut,
-    const char jobvt,
+    const isvd_Param param,
     const char dista,
     const char ordera,
-    const isvd_Param param,
     const isvd_val_t *a,
     const isvd_int_t lda,
     const isvd_val_t *qt,
@@ -228,7 +222,8 @@ void isvd_dPostprocessGramian(
     const isvd_int_t ldut,
           isvd_val_t *vt,
     const isvd_int_t ldvt,
-    const mpi_int_t mpi_root
+    const mpi_int_t  ut_root,
+    const mpi_int_t  vt_root
 ) {
 
   // ====================================================================================================================== //
@@ -244,26 +239,20 @@ void isvd_dPostprocessGramian(
   // ====================================================================================================================== //
   // Check arguments
 
-  char jobut_  = isvd_arg2char("JOBUT",  jobut,  "SN", "SN");
-  char jobvt_  = isvd_arg2char("JOBVT",  jobvt,  "SN", "SN");
   char dista_  = isvd_arg2char("DISTA",  dista,  "CR", "CR");
   char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", "CR");
   if ( dista_ == '\0' || ordera_ == '\0' ) abort();
 
-  if ( jobut == 'S' ) {
-    if ( mpi_root >= 0 ) {
-      isvd_assert_eq(ldut, l);
-    } else {
-      isvd_assert_ge(ldut, l);
-    }
+  if ( ut_root >= 0 ) {
+    isvd_assert_eq(ldut, l);
+  } else if ( ut_root == -1 ) {
+    isvd_assert_ge(ldut, l);
   }
 
-  if ( jobvt == 'S' ) {
-    if ( mpi_root >= 0 ) {
-      isvd_assert_eq(ldvt, l);
-    } else {
-      isvd_assert_ge(ldvt, l);
-    }
+  if ( vt_root >= 0 ) {
+    isvd_assert_eq(ldvt, l);
+  } else if ( vt_root == -1 ) {
+    isvd_assert_ge(ldvt, l);
   }
 
   // ====================================================================================================================== //
@@ -282,11 +271,11 @@ void isvd_dPostprocessGramian(
 
   switch ( dista_ ) {
     case 'C': {
-      projectBlockCol(jobut_, jobvt_, ordera_, param, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, mpi_root);
+      projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
       break;
     }
     case 'R': {
-      projectBlockRow(jobut_, jobvt_, ordera_, param, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, mpi_root);
+      projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
       break;
     }
   }
@@ -306,30 +295,30 @@ void isvd_dPostprocessGramian(
   // Compute singular vectors
 
   // U := Q * W (U' := W' * Q')
-  if ( jobvt == 'S' ) {
+  if ( ut_root >= -1 ) {
     cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
-    if ( mpi_root >= 0 ) {
-      if ( param.mpi_rank == mpi_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, mpi_root, param.mpi_comm);
+    if ( ut_root >= 0 ) {
+      if ( param.mpi_rank == ut_root ) {
+        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_DOUBLE, NULL, mb*ldut, MPI_DOUBLE, mpi_root, param.mpi_comm);
+        MPI_Gather(ut, mb*ldut, MPI_DOUBLE, NULL, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
       }
     }
   }
 
   // V := Z * W / S (V' := (W / S)' * Z')
-  if ( jobvt == 'S' ) {
+  if ( vt_root >= -1 ) {
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
       cblas_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
     }
     cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
-    if ( mpi_root >= 0 ) {
-      if ( param.mpi_rank == mpi_root ) {
-        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, mpi_root, param.mpi_comm);
+    if ( vt_root >= 0 ) {
+      if ( param.mpi_rank == vt_root ) {
+        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, vt_root, param.mpi_comm);
       } else {
-        MPI_Gather(vt, nb*ldvt, MPI_DOUBLE, NULL, nb*ldvt, MPI_DOUBLE, mpi_root, param.mpi_comm);
+        MPI_Gather(vt, nb*ldvt, MPI_DOUBLE, NULL, nb*ldvt, MPI_DOUBLE, vt_root, param.mpi_comm);
       }
     }
   }

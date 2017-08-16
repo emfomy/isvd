@@ -41,14 +41,14 @@ void test( char dista, char ordera ) {
     lda0 = m;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        fscanf(file, "%lg", &a0[ir+ic*lda0]);
+        EXPECT_EQ(fscanf(file, "%lg", &a0[ir+ic*lda0]), 1);
       }
     }
   } else {
     lda0 = n;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        fscanf(file, "%lg", &a0[ir*lda0+ic]);
+        EXPECT_EQ(fscanf(file, "%lg", &a0[ir*lda0+ic]), 1);
       }
     }
   }
@@ -75,7 +75,7 @@ void test( char dista, char ordera ) {
 
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      fscanf(file, "%lg", &yst0[ir*ldyst0+ic]);
+      EXPECT_EQ(fscanf(file, "%lg", &yst0[ir*ldyst0+ic]), 1);
     }
   }
 
@@ -115,7 +115,7 @@ void test( char dista, char ordera ) {
   isvd_int_t ldyst = Nl;
 
   // Sketches
-  isvd_dSketchGaussianProjection(dista_, ordera_, param, a, lda, yst, ldyst, seed, mpi_root);
+  isvd_dSketchGaussianProjection(param, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
 
   // Gather result
   isvd_val_t *yst_ = isvd_dmalloc(Pmb * Nl);
