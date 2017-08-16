@@ -16,10 +16,10 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 /// @ingroup  core_driver_d_module
 /// iSVD driver (double precision)
 ///
-/// @param[in]   algs          The selection of sketching algorithms.
-/// @param[in]   algo          The selection of orthogonalization algorithms.
-/// @param[in]   algi          The selection of integration algorithms.
-/// @param[in]   algp          The selection of postprocessing algorithms.
+/// @param[in]   algs          The selection of sketching algorithm.
+/// @param[in]   algo          The selection of orthogonalization algorithm.
+/// @param[in]   algi          The selection of integration algorithm.
+/// @param[in]   algp          The selection of postprocessing algorithm.
 /// <hr>
 /// @param[in]   m             The number of rows of the matrix 𝑨.
 /// @param[in]   n             The number of columns of the matrix 𝑨.
@@ -58,10 +58,6 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 /// @param[in]   mpi_root       The MPI process ID containing the parameters and random seed.
 /// @param[in]   mpi_comm      The MPI communicator.
 /// <hr>
-/// @param[out]  retvs         Replaced by the sketching return values.
-/// @param[out]  retvo         Replaced by the orthogonalization return values.
-/// @param[out]  retvi         Replaced by the integration return values.
-/// @param[out]  retvp         Replaced by the postprocessing return values.
 /// @param[out]  s             Replaced by the singular values 𝝈.
 /// @param[out]  ut            Replaced by the left singular vectors 𝑼 (row-major).
 /// @param[out]  vt            Replaced by the right singular vectors 𝑽 (row-major).

@@ -17,7 +17,7 @@ typedef enum {
   NoUV
 } UV;
 
-void test( char dista, char ordera, const UV uv ) {
+static void test( char dista, char ordera, const UV uv ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;

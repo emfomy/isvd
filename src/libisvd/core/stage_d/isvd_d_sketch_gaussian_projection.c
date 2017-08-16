@@ -12,7 +12,7 @@
 typedef double isvd_val_t;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-void sketchBlockCol(
+static void sketchBlockCol(
     const isvd_Param param,
     const char ordera,
     const isvd_val_t *a,
@@ -100,7 +100,7 @@ void sketchBlockCol(
 
 }
 
-void sketchBlockRow(
+static void sketchBlockRow(
     const isvd_Param param,
     const char ordera,
     const isvd_val_t *a,

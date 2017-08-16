@@ -16,12 +16,12 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 /// @ingroup  core_driver_d_module
 /// iEig driver (double precision)
 ///
-/// @param[in]   algs          The selection of sketching algorithms.
-/// @param[in]   algo          The selection of orthogonalization algorithms.
-/// @param[in]   algi          The selection of integration algorithms.
-/// @param[in]   algp          The selection of postprocessing algorithms.
+/// @param[in]   algs          The selection of sketching algorithm.
+/// @param[in]   algo          The selection of orthogonalization algorithm.
+/// @param[in]   algi          The selection of integration algorithm.
+/// @param[in]   algp          The selection of postprocessing algorithm.
 /// <hr>
-/// @param[in]   m             The number of rows of the matrix 𝑨.
+/// @param[in]   m             The number of size of the symmetric matrix 𝑨.
 /// @param[in]   k             The desired rank of approximate SVD.
 /// @param[in]   p             The oversampling dimension.
 /// @param[in]   N             The number of random sketches.
@@ -49,10 +49,6 @@ static void dummy() { fprintf(stderr, "Not implemented!\n"); }
 /// @param[in]   mpi_root       The MPI process ID containing the parameters and random seed.
 /// @param[in]   mpi_comm      The MPI communicator.
 /// <hr>
-/// @param[out]  retvs         Replaced by the sketching return values.
-/// @param[out]  retvo         Replaced by the orthogonalization return values.
-/// @param[out]  retvi         Replaced by the integration return values.
-/// @param[out]  retvp         Replaced by the postprocessing return values.
 /// @param[out]  s             Replaced by the eigenvalues 𝝈.
 /// @param[out]  ut            Replaced by the left eigenvectors 𝑼 (row-major).
 ///
@@ -111,8 +107,7 @@ void isvd_dIeig(
 
   fun_t funp = (fun_t) dummy;
   switch ( algp_ ) {
-    // case isvd_char2('T', 'S'): funp = (fun_t) isvd_dPostprocessTallSkinnyQr; break;
-    case isvd_char2('G', 'R'): funp = (fun_t) isvd_dPostprocessGramian; break;
+    case isvd_char2('S', 'Y'): funp = (fun_t) isvd_dPostprocessSymmetric; break;
   }
 
   // ====================================================================================================================== //

@@ -8,7 +8,7 @@
 
 typedef double isvd_val_t;
 
-void test( char dista, char ordera ) {
+static void test( char dista, char ordera ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
