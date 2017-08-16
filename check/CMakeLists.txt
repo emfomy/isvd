@@ -22,7 +22,10 @@ include_directories(
   "${PROJECT_SOURCE_DIR}/ext"
 )
 
-# Set definition
+# Set libraries
+list(APPEND LIBS extmmiox)
+
+# Set definitions
 list(APPEND DEFS "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
 
 # Include macros
@@ -43,6 +46,7 @@ add_mpi_check(libisvd/core/isvd_d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo
 
 # Postprocessing
 add_mpi_check(libisvd/core/isvd_d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/isvd_d_postprocess_symmetric "Symmetric Postprocessing check" "1;2;3;4;6;12")
 
 set(DEFS "${DEFS_TMP}")
 unset(DEFS_TMP)

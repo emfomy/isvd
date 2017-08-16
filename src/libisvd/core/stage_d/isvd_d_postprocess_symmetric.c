@@ -251,8 +251,6 @@ void isvd_dPostprocessSymmetric(
   isvd_val_t *w = isvd_dmalloc(l * l);
   isvd_int_t ldw = l;
 
-  isvd_val_t *superb = isvd_dmalloc(l-2);
-
   // ====================================================================================================================== //
   // Projection
 
@@ -271,12 +269,12 @@ void isvd_dPostprocessSymmetric(
   // Compute eigen-decomposition
 
   // W := Z' * Q
-  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
+  cblas_dgemmt(CblasColMajor, CblasUpper, CblasNoTrans, CblasTrans, l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S * W'
-  const char jobw_ = (ut_root >= -1) ? 'O' : 'N';
-  isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1, superb));
+  const char jobw_ = (ut_root >= -1) ? 'V' : 'N';
+  isvd_assert_pass(LAPACKE_dsyev(LAPACK_COL_MAJOR, jobw_, 'U', l, w, ldw, s));
 
   // ====================================================================================================================== //
   // Compute singular vectors
@@ -299,6 +297,5 @@ void isvd_dPostprocessSymmetric(
 
   isvd_free(zt);
   isvd_free(w);
-  isvd_free(superb);
 
 }
