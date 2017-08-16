@@ -35,9 +35,7 @@ static inline isvd_int_t isvd_arg2char(
   return 0;
 }
 
-static inline int16_t isvd_char2( const char *str ) {
-  return str[0] + (str[1] << 8);
-}
+#define isvd_char2( str0, str1 ) (str0 + (str1 << 8))
 
 static inline int16_t isvd_arg2char2(
     const char *name,
@@ -46,7 +44,7 @@ static inline int16_t isvd_arg2char2(
 ) {
   for ( size_t i = 0; i < strlen(opts); i += 2 ) {
     if ( lsame(arg, opts+i, 1, 1) && lsame(arg+1, opts+i+1, 1, 1) ) {
-      return isvd_char2(opts+i);
+      return isvd_char2(opts[i], opts[i+1]);
     }
   }
   fprintf(stderr, "%s ('%s') must be one of the following strings: ", name, arg);

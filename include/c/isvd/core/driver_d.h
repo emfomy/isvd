@@ -18,8 +18,8 @@ void isvd_dIsvd(
     const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, const isvd_int_t p, const isvd_int_t N,
     const char dista, const char ordera, const double *a, const isvd_int_t lda,
     double *s, double *ut, const isvd_int_t ldut, double *vt, const isvd_int_t ldvt,
-    const isvd_int_t seed, const mpi_int_t seed_root, const mpi_int_t ut_root, const mpi_int_t vt_root,
-    const MPI_Comm mpi_comm
+    const isvd_int_t seed, const mpi_int_t ut_root, const mpi_int_t vt_root,
+    const mpi_int_t mpi_root, const MPI_Comm mpi_comm
 );
 
 // Symmetric iSVD driver
@@ -28,8 +28,8 @@ void isvd_dIeig(
     const isvd_int_t m, const isvd_int_t k, const isvd_int_t p, const isvd_int_t N,
     const char dista, const char ordera, const double *a, const isvd_int_t lda,
     double *s, double *ut, const isvd_int_t ldut,
-    const isvd_int_t seed, const mpi_int_t seed_root, const mpi_int_t ut_root,
-    const MPI_Comm mpi_comm
+    const isvd_int_t seed, const mpi_int_t ut_root,
+    const mpi_int_t mpi_root, const MPI_Comm mpi_comm
 );
 
 #endif  // _ISVD_CORE_DRIVER_D_H_

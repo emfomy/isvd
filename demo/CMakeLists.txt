@@ -15,7 +15,7 @@ macro(SET_TARGET target files)
   # Add run rule
   add_custom_target(
     run_${target}
-    COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPI_PROCS} $<TARGET_FILE:isvd_${target}> ${ARGN}
+    COMMAND OMP_NUM_THREADS=4 ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPI_PROCS} $<TARGET_FILE:isvd_${target}> ${ARGN}
     DEPENDS isvd_${target}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Running ${target}"

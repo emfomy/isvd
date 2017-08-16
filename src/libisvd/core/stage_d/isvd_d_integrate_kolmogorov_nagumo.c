@@ -23,7 +23,7 @@ typedef double isvd_val_t;
 ///                          `argv[1]`: The tolerance of convergence condition. (optional, default as @ref kTol)
 /// @param[in]   retv, retc  The return values and its length.
 /// <hr>
-/// @param[in]   qst, ldqst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
+/// @param[in]   yst, ldyst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
 /// @param[in]   qt, ldqt    The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
 /// <hr>
 /// @param[out]  retv        Replaced by return values.
@@ -37,8 +37,8 @@ void isvd_dIntegrateKolmogorovNagumo(
     const isvd_int_t argc,
           isvd_val_t *retv,
     const isvd_int_t retc,
-    const isvd_val_t *qst,
-    const isvd_int_t ldqst,
+    const isvd_val_t *yst,
+    const isvd_int_t ldyst,
           isvd_val_t *qt,
     const isvd_int_t ldqt
 ) {
@@ -53,15 +53,14 @@ void isvd_dIntegrateKolmogorovNagumo(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t mj = param.nrow_proc;
-  isvd_int_t l  = param.dim_sketch;
-  isvd_int_t N  = param.num_sketch;
-  isvd_int_t Nl = param.dim_sketch_total;
+  const isvd_int_t mj = param.nrow_proc;
+  const isvd_int_t l  = param.dim_sketch;
+  const isvd_int_t N  = param.num_sketch;
+  const isvd_int_t Nl = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Check arguments
-
-  isvd_assert_ge(ldqst, Nl);
+  isvd_assert_ge(ldyst, Nl);
   isvd_assert_ge(ldqt, l);
   isvd_assert_ge(maxit, 0);
   isvd_assert_ge(tol, 0);
@@ -106,10 +105,10 @@ void isvd_dIntegrateKolmogorovNagumo(
     isvd_int_t ldqct = ldqt_;
 
     // Qc := Q0
-    mkl_domatcopy('R', 'N', mj, l, 1.0, qst, ldqst, qct, ldqct);
+    mkl_domatcopy('R', 'N', mj, l, 1.0, yst, ldyst, qct, ldqct);
 
     // Bc := Qs' * Qc
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, yst, ldyst, qct, ldqct, 0.0, bc, ldbc);
     MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
   }
 
@@ -150,10 +149,10 @@ void isvd_dIntegrateKolmogorovNagumo(
     // Compute B, D, and G
 
     // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
+    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, yst, ldyst, 0.0, gct, ldgct);
 
     // Bgc := Qs' * Gc
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, yst, ldyst, gct, ldgct, 0.0, bgc, ldbgc);
     MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
     // Dc := 1/N * Bc' * Bc

@@ -40,10 +40,10 @@ void isvd_dOrthogonalizeGramian(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t mj = param.nrow_proc;
-  isvd_int_t l  = param.dim_sketch;
-  isvd_int_t N  = param.num_sketch;
-  isvd_int_t Nl = param.dim_sketch_total;
+  const isvd_int_t mj = param.nrow_proc;
+  const isvd_int_t l  = param.dim_sketch;
+  const isvd_int_t N  = param.num_sketch;
+  const isvd_int_t Nl = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Check arguments

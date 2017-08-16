@@ -20,7 +20,7 @@ void sketchBlockCol(
           isvd_val_t *yst,
     const isvd_int_t ldyst,
     const isvd_int_t seed,
-    const mpi_int_t  seed_root
+    const mpi_int_t  mpi_root
 ) {
 
   ISVD_UNUSED(ldyst);
@@ -28,12 +28,12 @@ void sketchBlockCol(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t m   = param.nrow;
-  isvd_int_t mb  = param.nrow_each;
-  isvd_int_t Pmb = param.nrow_total;
-  isvd_int_t nj  = param.ncol_proc;
-  isvd_int_t nb  = param.ncol_each;
-  isvd_int_t Nl  = param.dim_sketch_total;
+  const isvd_int_t m   = param.nrow;
+  const isvd_int_t mb  = param.nrow_each;
+  const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t nj  = param.ncol_proc;
+  const isvd_int_t nb  = param.ncol_each;
+  const isvd_int_t Nl  = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Check arguments
@@ -57,7 +57,7 @@ void sketchBlockCol(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, seed_root, param.mpi_comm);
+  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
 
 #ifdef _OPENMP
   #pragma omp parallel
@@ -108,15 +108,15 @@ void sketchBlockRow(
           isvd_val_t *yst,
     const isvd_int_t ldyst,
     const isvd_int_t seed,
-    const mpi_int_t  seed_root
+    const mpi_int_t  mpi_root
 ) {
 
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t mj = param.nrow_proc;
-  isvd_int_t n  = param.ncol;
-  isvd_int_t Nl = param.dim_sketch_total;
+  const isvd_int_t mj = param.nrow_proc;
+  const isvd_int_t n  = param.ncol;
+  const isvd_int_t Nl = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Check arguments
@@ -137,7 +137,7 @@ void sketchBlockRow(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, seed_root, param.mpi_comm);
+  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
 
 #ifdef _OPENMP
   #pragma omp parallel
@@ -196,7 +196,7 @@ void sketchBlockRow(
 ///                          `dista='C'`: @p ldyst must be @f$Nl@f$. <br>
 ///                          `dista='R'`: no condition.
 /// @param[in]   seed        The random seed (significant only at root MPI process).
-/// @param[in]   seed_root   The root MPI process ID.
+/// @param[in]   mpi_root    The root MPI process ID.
 /// <hr>
 /// @param[out]  yst         Replaced by the row-block 𝖄 (row-major).
 ///
@@ -213,7 +213,7 @@ void isvd_dSketchGaussianProjection(
           isvd_val_t *yst,
     const isvd_int_t ldyst,
     const isvd_int_t seed,
-    const mpi_int_t  seed_root
+    const mpi_int_t  mpi_root
 ) {
 
   ISVD_UNUSED(argv);
@@ -224,15 +224,15 @@ void isvd_dSketchGaussianProjection(
   // ====================================================================================================================== //
   // Check arguments
 
-  char dista_  = isvd_arg2char("DISTA",  dista,  "CR");
-  char ordera_ = isvd_arg2char("ORDERA", ordera, "CR");
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR");
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR");
   if ( !dista_ || !ordera_ ) return;
 
   // ====================================================================================================================== //
   // Run
 
   switch ( dista_ ) {
-    case 'C': sketchBlockCol(param, ordera_, a, lda, yst, ldyst, seed, seed_root); break;
-    case 'R': sketchBlockRow(param, ordera_, a, lda, yst, ldyst, seed, seed_root); break;
+    case 'C': sketchBlockCol(param, ordera_, a, lda, yst, ldyst, seed, mpi_root); break;
+    case 'R': sketchBlockRow(param, ordera_, a, lda, yst, ldyst, seed, mpi_root); break;
   }
 }

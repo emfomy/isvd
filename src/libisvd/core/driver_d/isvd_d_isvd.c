@@ -20,7 +20,7 @@ typedef double isvd_val_t;
 /// @param[in]   algp          The selection of postprocessing algorithms.
 /// <hr>
 /// @param[in]   m             The number of rows of the matrix 𝑨.
-/// @param[in]   n             The number of rows of the matrix 𝑨.
+/// @param[in]   n             The number of columns of the matrix 𝑨.
 /// @param[in]   k             The desired rank of approximate SVD.
 /// @param[in]   p             The oversampling dimension.
 /// @param[in]   N             The number of random sketches.
@@ -44,8 +44,7 @@ typedef double isvd_val_t;
 ///                            `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
 ///                            `vt_root < -1`: not referenced.
 /// <hr>
-/// @param[in]   seed          The random seed (significant only at MPI process of ID `seed_root`).
-/// @param[in]   seed_root     The MPI process ID containing the random seed.
+/// @param[in]   seed          The random seed (significant only at MPI process of ID `mpi_root`).
 /// @param[in]   ut_root       The option for computing 𝑼. <br>
 ///                            `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
 ///                            `ut_root = -1`: compute row-block 𝑼. <br>
@@ -54,6 +53,7 @@ typedef double isvd_val_t;
 ///                            `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
 ///                            `vt_root = -1`: compute row-block 𝑽. <br>
 ///                            `vt_root < -1`: does not compute 𝑽.
+/// @param[in]   mpi_root       The MPI process ID containing the parameters and random seed.
 /// @param[in]   mpi_comm      The MPI communicator.
 /// <hr>
 /// @param[out]  retvs         Replaced by the sketching return values.
@@ -84,19 +84,73 @@ void isvd_dIsvd(
           isvd_val_t *vt,
     const isvd_int_t ldvt,
     const isvd_int_t seed,
-    const mpi_int_t seed_root,
     const mpi_int_t ut_root,
     const mpi_int_t vt_root,
+    const mpi_int_t mpi_root,
     const MPI_Comm mpi_comm
 ) {
 
   // ====================================================================================================================== //
   // Check arguments
 
-  int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP");
-  int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR");
-  int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR");
-  int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGRSY");
+  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP");
+  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR");
+  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR");
+  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGR");
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
+
+  // ====================================================================================================================== //
+  // Select stage
+
+  typedef void (*fun_t)(isvd_Param, ...);
+
+  fun_t funs = NULL;
+  switch ( algs_ ) {
+    case isvd_char2('G', 'P'): funs = (fun_t) isvd_dSketchGaussianProjection; break;
+  }
+
+  fun_t funo = NULL;
+  switch ( algo_ ) {
+    // case isvd_char2('T', 'S'): funo = (fun_t) isvd_dOrthogonalizeTallSkinnyQr; break;
+    case isvd_char2('G', 'R'): funo = (fun_t) isvd_dOrthogonalizeGramian; break;
+  }
+
+  fun_t funi = NULL;
+  switch ( algi_ ) {
+    case isvd_char2('K', 'N'): funi = (fun_t) isvd_dIntegrateKolmogorovNagumo; break;
+    // case isvd_char2('W', 'Y'): funi = (fun_t) isvd_dIntegrateWenYin; break;
+  }
+
+  fun_t funp = NULL;
+  switch ( algp_ ) {
+    // case isvd_char2('T', 'S'): funp = (fun_t) isvd_dPostprocessTallSkinnyQr; break;
+    case isvd_char2('G', 'R'): funp = (fun_t) isvd_dPostprocessGramian; break;
+  }
+
+  // ====================================================================================================================== //
+  // Create parameters
+
+  const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, mpi_comm);
+
+  const isvd_int_t mb = param.nrow_each;
+  const isvd_int_t l  = param.dim_sketch;
+  const isvd_int_t Nl = param.dim_sketch_total;
+
+  // ====================================================================================================================== //
+  // Allocate memory
+
+  isvd_val_t *yst = isvd_dmalloc(mb * Nl);
+  isvd_int_t ldyst = Nl;
+
+  isvd_val_t *qt = isvd_dmalloc(mb * l);
+  isvd_int_t ldqt = l;
+
+  // ====================================================================================================================== //
+  // Run
+
+  funs(param, NULL, 0, NULL, 0, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
+  funo(param, NULL, 0, NULL, 0, yst, ldyst);
+  funi(param, NULL, 0, NULL, 0, yst, ldyst, qt, ldqt);
+  funp(param, NULL, 0, NULL, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
 
 }

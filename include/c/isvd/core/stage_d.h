@@ -15,7 +15,7 @@
 void isvd_dSketchGaussianProjection(
     const isvd_Param param, const double *argv, const isvd_int_t argc, double *retv, const isvd_int_t retc,
     const char dista, const char ordera, const double *a, const isvd_int_t lda,
-    double *yst, const isvd_int_t ldyst, const isvd_int_t seed, const mpi_int_t seed_root
+    double *yst, const isvd_int_t ldyst, const isvd_int_t seed, const mpi_int_t mpi_root
 );
 
 // Orthogonalization
@@ -32,12 +32,12 @@ void isvd_dOrthogonalizeGramian(
 // Integration
 void isvd_dIntegrateKolmogorovNagumo(
     const isvd_Param param, const double *argv, const isvd_int_t argc, double *retv, const isvd_int_t retc,
-    const double *qst, const isvd_int_t ldqst, double *qt, const isvd_int_t ldqt
+    const double *yst, const isvd_int_t ldyst, double *qt, const isvd_int_t ldqt
 );
 
 void isvd_dIntegrateWenYin(
     const isvd_Param param, const double *argv, const isvd_int_t argc, double *retv, const isvd_int_t retc,
-    const double *qst, const isvd_int_t ldqst, double *qt, const isvd_int_t ldqt
+    const double *yst, const isvd_int_t ldyst, double *qt, const isvd_int_t ldqt
 );
 
 // Postprocessing

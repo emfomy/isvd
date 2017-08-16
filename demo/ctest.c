@@ -29,11 +29,38 @@ int main( int argc, char **argv ) {
     printf("%d nodes, %d threads per node\n\n", mpi_size, omp_size);
   }
 
+  const isvd_int_t mb = 100;
+  const isvd_int_t nb = 1000;
+  const isvd_int_t k  = 20;
+  const isvd_int_t p  = 12;
+  const isvd_int_t N  = 4;
+  const isvd_int_t P  = mpi_size;
+
+  const isvd_int_t m  = mb * P;
+  const isvd_int_t n  = nb * P;
+  const isvd_int_t l  = k+p;
+
+  isvd_val_t *a = isvd_dmalloc(m * n);
+  isvd_int_t lda = m;
+
+  isvd_val_t *s = isvd_dmalloc(l);
+
   isvd_int_t seed = 0;
 
+  VSLStreamStatePtr stream;
+  vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
+  vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, m * n, a, 0.0, 1.0);
+  vslDeleteStream(&stream);
+
   isvd_dIsvd(
-    "GP", "GR", "KN", "GR", 100, 1000, 20, 12, 4, 'C', 'C',
-    NULL, 0, NULL, NULL, 0, NULL, 0, seed, mpi_root, -1, -1, MPI_COMM_WORLD);
+    "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',
+    a + mb * mpi_rank, lda, s, NULL, 0, NULL, 0, seed, -2, -2, mpi_root, MPI_COMM_WORLD
+  );
+
+  isvd_dIeig(
+    "GP", "GR", "KN", "GR", m, k, p, N, 'R', 'C',
+    a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, -2, mpi_root, MPI_COMM_WORLD
+  );
 
   MPI_Finalize();
 

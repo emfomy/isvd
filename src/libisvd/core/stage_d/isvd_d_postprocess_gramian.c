@@ -38,16 +38,16 @@ void projectBlockCol(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t m   = param.nrow;
-  isvd_int_t mb  = param.nrow_each;
-  isvd_int_t Pmb = param.nrow_total;
-  isvd_int_t nj  = param.ncol_proc;
-  isvd_int_t l   = param.dim_sketch;
+  const isvd_int_t m   = param.nrow;
+  const isvd_int_t mb  = param.nrow_each;
+  const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t nj  = param.ncol_proc;
+  const isvd_int_t l   = param.dim_sketch;
 
   // ====================================================================================================================== //
   // Check arguments
 
-  bool use_ut = (ut_root >= 0);
+  const bool use_ut = (ut_root >= 0);
 
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, m);  break;
@@ -118,16 +118,16 @@ void projectBlockRow(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t mj  = param.nrow_proc;
-  isvd_int_t n   = param.ncol;
-  isvd_int_t nb  = param.ncol_each;
-  isvd_int_t Pnb = param.ncol_total;
-  isvd_int_t l   = param.dim_sketch;
+  const isvd_int_t mj  = param.nrow_proc;
+  const isvd_int_t n   = param.ncol;
+  const isvd_int_t nb  = param.ncol_each;
+  const isvd_int_t Pnb = param.ncol_total;
+  const isvd_int_t l   = param.dim_sketch;
 
   // ====================================================================================================================== //
   // Check arguments
 
-  bool use_vt = (vt_root >= 0);
+  const bool use_vt = (vt_root >= 0);
 
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, mj); break;
@@ -241,18 +241,18 @@ void isvd_dPostprocessGramian(
   // ====================================================================================================================== //
   // Get parameters
 
-  isvd_int_t mj = param.nrow_proc;
-  isvd_int_t mb = param.nrow_each;
-  isvd_int_t nj = param.ncol_proc;
-  isvd_int_t nb = param.ncol_each;
-  isvd_int_t k  = param.rank;
-  isvd_int_t l  = param.dim_sketch;
+  const isvd_int_t mj = param.nrow_proc;
+  const isvd_int_t mb = param.nrow_each;
+  const isvd_int_t nj = param.ncol_proc;
+  const isvd_int_t nb = param.ncol_each;
+  const isvd_int_t k  = param.rank;
+  const isvd_int_t l  = param.dim_sketch;
 
   // ====================================================================================================================== //
   // Check arguments
 
-  char dista_  = isvd_arg2char("DISTA",  dista,  "CR");
-  char ordera_ = isvd_arg2char("ORDERA", ordera, "CR");
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR");
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR");
   if ( !dista_ || !ordera_ ) return;
 
   if ( ut_root >= 0 ) {
@@ -300,7 +300,8 @@ void isvd_dPostprocessGramian(
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S^2 * W'
-  isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'N', l, l, w, ldw, s, NULL, 1, NULL, 1, superb));
+  const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
+  isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1, superb));
   vdSqrt(l, s, s);
 
   // ====================================================================================================================== //
