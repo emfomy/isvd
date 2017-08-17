@@ -79,6 +79,13 @@ void isvd_dIntegrateWenYin(
   isvd_assert_ge(ldqt, l);
   isvd_assert_ge(maxit, 0);
   isvd_assert_ge(tol, 0);
+  isvd_assert_ge(tau0, 0);
+  isvd_assert_ge(taumax, 0);
+  isvd_assert_ge(taumin, 0);
+  isvd_assert_ge(taumaxit, 0);
+  isvd_assert_gtlt(beta, 0, 1);
+  isvd_assert_gtlt(sigma, 0, 1);
+  isvd_assert_gtlt(eta, 0, 1);
 
   // ====================================================================================================================== //
   // Allocate memory

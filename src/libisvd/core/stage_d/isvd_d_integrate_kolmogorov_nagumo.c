@@ -114,13 +114,13 @@ void isvd_dIntegrateKolmogorovNagumo(
   // vector s
   isvd_val_t *s = isvd_dmalloc(l * 2);
 
-  // matrix sqrt(S) * Z
-  isvd_val_t *sz     = cinv;
-  isvd_int_t ldsz    = ldcinv;
+  // matrix Z * sqrt(S)
+  isvd_val_t *zs     = cinv;
+  isvd_int_t ldzs    = ldcinv;
 
-  // matrix sqrt(S) \ Z
-  isvd_val_t *sinvz  = z;
-  isvd_int_t ldsinvz = ldz;
+  // matrix Z / sqrt(S)
+  isvd_val_t *zinvs  = z;
+  isvd_int_t ldzinvs = ldz;
 
   // matrix sqrt(S)
   isvd_val_t *ss = s + l;
@@ -177,21 +177,21 @@ void isvd_dIntegrateKolmogorovNagumo(
     vdSqrt(l, s, ss);
     isvd_dmemcpy(cinv, z, l*l);
 
-    // Compute sqrt(S) * Z
+    // Compute Z * sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      cblas_dscal(l, ss[ii], sz + ldsz*ii, 1);
+      cblas_dscal(l, ss[ii], zs + ldzs*ii, 1);
     }
 
-    // Compute sqrt(S) \ Z [in Z]
+    // Compute Z / sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      cblas_dscal(l, 1.0/ss[ii], sinvz + ldsinvz*ii, 1);
+      cblas_dscal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
     }
 
     // C := Z * S * Z'
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, l, 1.0, sz, ldsz, sz, ldsz, 0.0, c, ldc);
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
 
     // inv(C) := Z * inv(S) * Z'
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasNoTrans, l, l, 1.0, sinvz, ldsinvz, 0.0, cinv, ldcinv);
+    cblas_dsyrk(CblasColMajor, CblasUpper, CblasNoTrans, l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
 
     // ================================================================================================================== //
     // Update for next iteration

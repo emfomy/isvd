@@ -116,7 +116,8 @@ void isvd_dIsvd(
   fun_t funi = (fun_t) dummy;
   switch ( algi_ ) {
     case isvd_char2('K', 'N'): funi = (fun_t) isvd_dIntegrateKolmogorovNagumo; break;
-    // case isvd_char2('W', 'Y'): funi = (fun_t) isvd_dIntegrateWenYin; break;
+    case isvd_char2('W', 'Y'): funi = (fun_t) isvd_dIntegrateWenYin; break;
+    case isvd_char2('H', 'R'): funi = (fun_t) isvd_dIntegrateHierarchicalReduction; break;
   }
 
   fun_t funp = (fun_t) dummy;

@@ -40,6 +40,11 @@ void isvd_dIntegrateWenYin(
     const double *yst, const isvd_int_t ldyst, double *qt, const isvd_int_t ldqt
 );
 
+void isvd_dIntegrateHierarchicalReduction(
+    const isvd_Param param, const double *argv, const isvd_int_t argc, double *retv, const isvd_int_t retc,
+          double *yst, const isvd_int_t ldyst, double *qt, const isvd_int_t ldqt
+);
+
 // Postprocessing
 void isvd_dPostprocessTallSkinnyQr(
     const isvd_Param param, const double *argv, const isvd_int_t argc, double *retv, const isvd_int_t retc,
