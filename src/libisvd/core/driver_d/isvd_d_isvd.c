@@ -102,24 +102,24 @@ void isvd_dIsvd(
 
   typedef void (*fun_t)(isvd_Param, ...);
 
-  fun_t funs = dummy;
+  fun_t funs = (fun_t) dummy;
   switch ( algs_ ) {
     case isvd_char2('G', 'P'): funs = (fun_t) isvd_dSketchGaussianProjection; break;
   }
 
-  fun_t funo = dummy;
+  fun_t funo = (fun_t) dummy;
   switch ( algo_ ) {
     // case isvd_char2('T', 'S'): funo = (fun_t) isvd_dOrthogonalizeTallSkinnyQr; break;
     case isvd_char2('G', 'R'): funo = (fun_t) isvd_dOrthogonalizeGramian; break;
   }
 
-  fun_t funi = dummy;
+  fun_t funi = (fun_t) dummy;
   switch ( algi_ ) {
     case isvd_char2('K', 'N'): funi = (fun_t) isvd_dIntegrateKolmogorovNagumo; break;
     // case isvd_char2('W', 'Y'): funi = (fun_t) isvd_dIntegrateWenYin; break;
   }
 
-  fun_t funp = dummy;
+  fun_t funp = (fun_t) dummy;
   switch ( algp_ ) {
     // case isvd_char2('T', 'S'): funp = (fun_t) isvd_dPostprocessTallSkinnyQr; break;
     case isvd_char2('G', 'R'): funp = (fun_t) isvd_dPostprocessGramian; break;

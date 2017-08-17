@@ -43,6 +43,7 @@ add_mpi_check(libisvd/core/isvd_d_orthogonalize_gramian "Gramian Orthogonalizati
 
 # Integration
 add_mpi_check(libisvd/core/isvd_d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/isvd_d_integrate_wen_yin "Wen Yin Integration check" "1;2;3;4;6;12")
 
 # Postprocessing
 add_mpi_check(libisvd/core/isvd_d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")

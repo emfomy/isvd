@@ -22,6 +22,10 @@
 /// @return       The pointer to the array.
 ///
 //@{
+static inline isvd_int_t* isvd_imalloc( const size_t num ) {
+  return isvd_malloc(num, isvd_int_t);
+}
+
 static inline float* isvd_smalloc( const size_t num ) {
   return isvd_malloc(num, float);
 }

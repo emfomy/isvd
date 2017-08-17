@@ -62,6 +62,9 @@ int main( int argc, char **argv ) {
     a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, mpi_root, MPI_COMM_WORLD
   );
 
+  isvd_free(a);
+  isvd_free(s);
+
   MPI_Finalize();
 
   return 0;

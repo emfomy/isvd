@@ -68,91 +68,91 @@ void isvd_dIntegrateKolmogorovNagumo(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *qt_ = isvd_dmalloc(mj * l * 2);
-  isvd_int_t ldqt_ = l;
+  const isvd_val_t *qst = yst;
+  isvd_int_t ldqst = ldyst;
 
+  // matrix Qc'
+  isvd_val_t *qct = isvd_dmalloc(mj * l);
+  isvd_int_t ldqct = l;
+
+  // matrix Q+'
+  isvd_val_t *qpt = isvd_dmalloc(mj * l);
+  isvd_int_t ldqpt = l;
+
+  // matrix Gc'
   isvd_val_t *gct = isvd_dmalloc(mj * l);
   isvd_int_t ldgct = l;
 
-  isvd_val_t *b_ = isvd_dmalloc(Nl * l * 2);
-  isvd_int_t ldb_ = Nl;
+  // matrix Bc
+  isvd_val_t *bc = isvd_dmalloc(Nl * l);
+  isvd_int_t ldbc = Nl;
 
+  // matrix B+
+  isvd_val_t *bp = isvd_dmalloc(Nl * l);
+  isvd_int_t ldbp = Nl;
+
+  // matrix Bgc
   isvd_val_t *bgc = isvd_dmalloc(Nl * l);
   isvd_int_t ldbgc = Nl;
 
+  // matrix Dc
   isvd_val_t *dc = isvd_dmalloc(l * l);
   isvd_int_t lddc = l;
 
+  // matrix Z
   isvd_val_t *z = isvd_dmalloc(l * l);
   isvd_int_t ldz = l;
 
+  // matrix C
   isvd_val_t *c = isvd_dmalloc(l * l);
   isvd_int_t ldc = l;
 
+  // matrix inv(C)
   isvd_val_t *cinv = isvd_dmalloc(l * l);
   isvd_int_t ldcinv = l;
 
+  // vector s
   isvd_val_t *s = isvd_dmalloc(l * 2);
+
+  // matrix sqrt(S) * Z
+  isvd_val_t *sz     = cinv;
+  isvd_int_t ldsz    = ldcinv;
+
+  // matrix sqrt(S) \ Z
+  isvd_val_t *sinvz  = z;
+  isvd_int_t ldsinvz = ldz;
+
+  // matrix sqrt(S)
+  isvd_val_t *ss = s + l;
+
+  isvd_val_t *tmp;
 
   // ====================================================================================================================== //
   // Initializing
 
-  {
-    isvd_val_t *bc  = b_;
-    isvd_int_t ldbc = ldb_;
+  // Qc := Q0
+  mkl_domatcopy('R', 'N', mj, l, 1.0, qst, ldqst, qct, ldqct);
 
-    isvd_val_t *qct  = qt_;
-    isvd_int_t ldqct = ldqt_;
-
-    // Qc := Q0
-    mkl_domatcopy('R', 'N', mj, l, 1.0, yst, ldyst, qct, ldqct);
-
-    // Bc := Qs' * Qc
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, yst, ldyst, qct, ldqct, 0.0, bc, ldbc);
-    MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
-  }
+  // Bc := Qs' * Qc
+  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Iterating
 
-  bool is_converged = false;
-  bool is_odd       = false;
-
   isvd_int_t iter;
   isvd_val_t error = -1.0/0.0;
 
-  for ( iter = 0; iter < maxit && !is_converged; ++iter ) {
-
-    isvd_val_t *bc  = b_   +   is_odd *ldb_*l;
-    isvd_int_t ldbc = ldb_;
-
-    isvd_val_t *bp  = b_   + (!is_odd)*ldb_*l;
-    isvd_int_t ldbp = ldb_;
-
-    isvd_val_t *qct  = qt_ +   is_odd *mj*ldqt_;
-    isvd_int_t ldqct = ldqt_;
-
-    isvd_val_t *qpt  = qt_ + (!is_odd)*mj*ldqt_;
-    isvd_int_t ldqpt = ldqt_;
-
-    isvd_val_t *sz     = cinv;
-    isvd_int_t ldsz    = ldcinv;
-
-    isvd_val_t *sinvz  = z;
-    isvd_int_t ldsinvz = ldz;
-
-    isvd_val_t *ss = s + l;
-
-    is_odd = !is_odd;
+  for ( iter = 1; ; ++iter ) {
 
     // ================================================================================================================== //
     // Compute B, D, and G
 
     // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, yst, ldyst, 0.0, gct, ldgct);
+    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
     // Bgc := Qs' * Gc
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, yst, ldyst, gct, ldgct, 0.0, bgc, ldbgc);
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
     MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
     // Dc := 1/N * Bc' * Bc
@@ -168,7 +168,7 @@ void isvd_dIntegrateKolmogorovNagumo(
     cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, l, l, -1.0, dc, lddc, 1.0, z, ldz);
 
     // eig(Z) = Z * S * Z'
-    LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', l, z, ldz, s);
+    isvd_assert_pass(LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', l, z, ldz, s));
 
     // S := sqrt( I/2 + sqrt( I/4 - S ) )
     for ( isvd_int_t i = 0; i < l; ++i ) {
@@ -213,20 +213,35 @@ void isvd_dIntegrateKolmogorovNagumo(
       s[i] -= 1.0;
     }
     error = cblas_dnrm2(l, s, 1);
-    is_converged = !(error >= tol);
+    if ( error <= tol ) {
+      break;
+    }
+
+    if ( iter == maxit ) {
+      ++iter;
+      break;
+    }
+
+    // ================================================================================================================== //
+    // Swap
+    tmp = qct; qct = qpt; qpt = tmp;
+    tmp = bc;  bc  = bp;  bp  = tmp;
   }
 
+  // Swap
+  tmp = qct; qct = qpt; qpt = tmp;
+
   // Copy Qbar
-  isvd_val_t *qct  = qt_ + is_odd*mj*ldqt_;
-  isvd_int_t ldqct = ldqt_;
   mkl_domatcopy('C', 'N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(qt_);
+  isvd_free(qct);
+  isvd_free(qpt);
   isvd_free(gct);
-  isvd_free(b_);
+  isvd_free(bc);
+  isvd_free(bp);
   isvd_free(bgc);
   isvd_free(dc);
   isvd_free(z);
