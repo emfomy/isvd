@@ -12,7 +12,6 @@ endif()
 
 # Set options
 option(ISVD_BUILD_LIB     "Build libraries."      "ON")
-option(ISVD_BUILD_DRIVER  "Build driver codes."   "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
 option(ISVD_BUILD_TEST    "Build test codes."     "OFF")
 option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
@@ -45,7 +44,7 @@ set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
 set(OMP_PROCS 4 CACHE STRING "The number of OpenMP processes used in demo codes.")
 
 # Set variables
-if(ISVD_BUILD_DEMO OR ISVD_BUILD_DRIVER OR ISVD_BUILD_LIB OR ISVD_BUILD_TEST)
+if(ISVD_BUILD_DEMO OR ISVD_BUILD_LIB OR ISVD_BUILD_TEST)
   set(ISVD_BUILD_BIN "ON")
 endif()
 
