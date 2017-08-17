@@ -182,20 +182,20 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   isvd_val_t *a;
   if ( dista_ == 'C' ) {
     if ( ordera_ == 'C' ) {
-      a = a0 + param.colrange.begin * lda0;
+      a = a0 + param.colidxbegin * lda0;
     } else {
-      a = a0 + param.colrange.begin;
+      a = a0 + param.colidxbegin;
     }
   } else {
     if ( ordera_ == 'C' ) {
-      a = a0 + param.rowrange.begin;
+      a = a0 + param.rowidxbegin;
     } else {
-      a = a0 + param.rowrange.begin * lda0;
+      a = a0 + param.rowidxbegin * lda0;
     }
   }
   isvd_int_t lda = lda0;
 
-  isvd_val_t *qt = qt0 + param.rowrange.begin * ldqt0;
+  isvd_val_t *qt = qt0 + param.rowidxbegin * ldqt0;
   isvd_int_t ldqt = ldqt0;
 
   isvd_val_t *s = isvd_dmalloc(l);

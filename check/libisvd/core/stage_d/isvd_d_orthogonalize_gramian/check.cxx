@@ -80,7 +80,7 @@ TEST(GramianOrthogonalization, Test) {
   const isvd_int_t Pmb = param.nrow_total;
 
   // Create matrices
-  isvd_val_t *yst = yst0 + param.rowrange.begin * ldyst0;
+  isvd_val_t *yst = yst0 + param.rowidxbegin * ldyst0;
   isvd_int_t ldyst = ldyst0;
 
   // Run

@@ -79,7 +79,7 @@ TEST(HierarchicalReductionIntegration, Test) {
   const isvd_int_t Pmb = param.nrow_total;
 
   // Create matrices
-  isvd_val_t *qst = qst0 + param.rowrange.begin * ldqst0;
+  isvd_val_t *qst = qst0 + param.rowidxbegin * ldqst0;
   isvd_int_t ldqst = ldqst0;
 
   isvd_val_t *qt = isvd_dmalloc(mb * l);

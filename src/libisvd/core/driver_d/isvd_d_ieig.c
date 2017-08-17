@@ -10,16 +10,21 @@
 
 typedef double isvd_val_t;
 
-static void dummy() { fprintf(stderr, "Not implemented!\n"); }
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  core_driver_d_module
 /// iEig driver (double precision)
 ///
-/// @param[in]   algs          The selection of sketching algorithm.
-/// @param[in]   algo          The selection of orthogonalization algorithm.
-/// @param[in]   algi          The selection of integration algorithm.
-/// @param[in]   algp          The selection of postprocessing algorithm.
+/// @param[in]   algs          The selection of sketching algorithm. <br>
+///                            `"GP"`: @ref isvd_dSketchGaussianProjection "Gaussian Projection sketching".
+/// @param[in]   algo          The selection of orthogonalization algorithm. <br>
+///                            `"TS"`: @ref isvd_dOrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
+///                            `"GR"`: @ref isvd_dOrthogonalizeGramian "GRamian orthogonalization".
+/// @param[in]   algi          The selection of integration algorithm. <br>
+///                            `"KN"`: @ref isvd_dIntegrateKolmogorovNagumo "Kolmogorov-Nagumo integration". <br>
+///                            `"WY"`: @ref isvd_dIntegrateWenYin "Wen-Yin integration". <br>
+///                            `"HR"`: @ref isvd_dIntegrateHierarchicalReduction "Hierarchical Reduction integration".
+/// @param[in]   algp          The selection of postprocessing algorithm. <br>
+///                            `"SY"`: @ref isvd_dPostprocessSymmetric "SYmmetric postprocessing".
 /// <hr>
 /// @param[in]   m             The number of size of the symmetric matrix 𝑨.
 /// @param[in]   k             The desired rank of approximate SVD.
@@ -83,33 +88,10 @@ void isvd_dIeig(
   const int16_t algp_ = isvd_arg2char2("ALGP", algp, "SY");
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
-  // ====================================================================================================================== //
-  // Select stage
-
-  typedef void (*fun_t)(isvd_Param, ...);
-
-  fun_t funs = (fun_t) dummy;
-  switch ( algs_ ) {
-    case isvd_char2('G', 'P'): funs = (fun_t) isvd_dSketchGaussianProjection; break;
-  }
-
-  fun_t funo = (fun_t) dummy;
-  switch ( algo_ ) {
-    // case isvd_char2('T', 'S'): funo = (fun_t) isvd_dOrthogonalizeTallSkinnyQr; break;
-    case isvd_char2('G', 'R'): funo = (fun_t) isvd_dOrthogonalizeGramian; break;
-  }
-
-  fun_t funi = (fun_t) dummy;
-  switch ( algi_ ) {
-    case isvd_char2('K', 'N'): funi = (fun_t) isvd_dIntegrateKolmogorovNagumo; break;
-    case isvd_char2('W', 'Y'): funi = (fun_t) isvd_dIntegrateWenYin; break;
-    case isvd_char2('H', 'R'): funi = (fun_t) isvd_dIntegrateHierarchicalReduction; break;
-  }
-
-  fun_t funp = (fun_t) dummy;
-  switch ( algp_ ) {
-    case isvd_char2('S', 'Y'): funp = (fun_t) isvd_dPostprocessSymmetric; break;
-  }
+  isvd_fun_t funs = isvd_arg2algs(algs_);
+  isvd_fun_t funo = isvd_arg2algo(algo_);
+  isvd_fun_t funi = isvd_arg2algi(algi_);
+  isvd_fun_t funp = isvd_arg2algp(algp_);
 
   // ====================================================================================================================== //
   // Create parameters

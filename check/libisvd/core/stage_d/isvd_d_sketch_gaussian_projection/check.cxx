@@ -98,15 +98,15 @@ static void test( char dista, char ordera ) {
   isvd_val_t *a;
   if ( dista_ == 'C' ) {
     if ( ordera_ == 'C' ) {
-      a = a0 + param.colrange.begin * lda0;
+      a = a0 + param.colidxbegin * lda0;
     } else {
-      a = a0 + param.colrange.begin;
+      a = a0 + param.colidxbegin;
     }
   } else {
     if ( ordera_ == 'C' ) {
-      a = a0 + param.rowrange.begin;
+      a = a0 + param.rowidxbegin;
     } else {
-      a = a0 + param.rowrange.begin * lda0;
+      a = a0 + param.rowidxbegin * lda0;
     }
   }
   isvd_int_t lda = lda0;

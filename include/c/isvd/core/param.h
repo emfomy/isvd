@@ -9,7 +9,6 @@
 #define _ISVD_CORE_PARAM_H_
 
 #include <isvd/core/def.h>
-#include <isvd/core/idx_range.h>
 #include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,11 +50,17 @@ typedef struct {
   /// @f$Pn_b@f$ The total number of columns in all MPI processes.
   const isvd_int_t ncol_total;
 
-  /// The index range of the rows in current MPI process.
-  const isvd_IdxRange rowrange;
+  /// The beginning index of rows in current MPI process.
+  const isvd_int_t rowidxbegin;
 
-  /// The index range of the columns in current MPI process.
-  const isvd_IdxRange colrange;
+  /// The end index of rows in current MPI process.
+  const isvd_int_t rowidxend;
+
+  /// The beginning index of columns in current MPI process.
+  const isvd_int_t colidxbegin;
+
+  /// The end index of columns in current MPI process.
+  const isvd_int_t colidxend;
 
   /// @f$k@f$ The desired rank of approximate SVD.
   const isvd_int_t rank;
@@ -113,12 +118,14 @@ static inline isvd_Param isvd_createParam(
   isvd_int_t nrow_each = (args.nrow_-1) / mpi_size + 1;
   isvd_int_t ncol_each = (args.ncol_-1) / mpi_size + 1;
 
-  isvd_IdxRange rowrange = {mpi_rank * nrow_each, (mpi_rank+1) * nrow_each};
-  isvd_IdxRange colrange = {mpi_rank * ncol_each, (mpi_rank+1) * ncol_each};
-  if ( rowrange.begin > args.nrow_ ) { rowrange.begin = args.nrow_; }
-  if ( rowrange.end   > args.nrow_ ) { rowrange.end   = args.nrow_; }
-  if ( colrange.begin > args.ncol_ ) { colrange.begin = args.ncol_; }
-  if ( colrange.end   > args.ncol_ ) { colrange.end   = args.ncol_; }
+  isvd_int_t rowidxbegin = mpi_rank * nrow_each;
+  isvd_int_t rowidxend   = rowidxbegin + nrow_each;
+  isvd_int_t colidxbegin = mpi_rank * ncol_each;
+  isvd_int_t colidxend   = colidxbegin + ncol_each;
+  if ( rowidxbegin > args.nrow_ ) { rowidxbegin = args.nrow_; }
+  if ( rowidxend   > args.nrow_ ) { rowidxend   = args.nrow_; }
+  if ( colidxbegin > args.ncol_ ) { colidxbegin = args.ncol_; }
+  if ( colidxend   > args.ncol_ ) { colidxend   = args.ncol_; }
 
   isvd_Param param = {
     .mpi_comm         = mpi_comm,
@@ -126,14 +133,16 @@ static inline isvd_Param isvd_createParam(
     .mpi_rank         = mpi_rank,
     .nrow             = args.nrow_,
     .ncol             = args.ncol_,
-    .nrow_proc        = rowrange.end - rowrange.begin,
-    .ncol_proc        = colrange.end - colrange.begin,
+    .nrow_proc        = rowidxend - rowidxbegin,
+    .ncol_proc        = colidxend - colidxbegin,
     .nrow_each        = nrow_each,
     .ncol_each        = ncol_each,
     .nrow_total       = nrow_each * mpi_size,
     .ncol_total       = ncol_each * mpi_size,
-    .rowrange         = rowrange,
-    .colrange         = colrange,
+    .rowidxbegin      = rowidxbegin,
+    .rowidxend        = rowidxend,
+    .colidxbegin      = colidxbegin,
+    .colidxend        = colidxend,
     .rank             = args.rank_,
     .over_rank        = args.over_rank_,
     .dim_sketch       = args.rank_ + args.over_rank_,
