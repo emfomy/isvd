@@ -12,11 +12,10 @@ endif()
 
 # Set options
 option(ISVD_BUILD_LIB     "Build libraries."      "ON")
-option(ISVD_BUILD_DRIVER  "Build driver codes."   "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
 option(ISVD_BUILD_TEST    "Build test codes."     "OFF")
 option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
-option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
+# option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
 
 set(ISVD_INDEX_TYPE "32" CACHE STRING "Index type. [32/64]")
 set_property(CACHE ISVD_INDEX_TYPE PROPERTY STRINGS "32;64")
@@ -35,7 +34,7 @@ if(NOT ISVD_BLAS STREQUAL "MKL" )
   message(FATAL_ERROR "BLAS must be MKL")
 endif()
 
-set(ISVD_OMP "OFF" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
+set(ISVD_OMP "GOMP" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
 set_property(CACHE ISVD_OMP PROPERTY STRINGS "OFF;GOMP;IOMP")
 if(NOT ISVD_OMP STREQUAL "OFF" AND NOT ISVD_OMP STREQUAL "GOMP" AND NOT ISVD_OMP STREQUAL "IOMP" )
   message(FATAL_ERROR "ISVD_OMP must be either OFF, GOMP, or IOMP")
@@ -45,7 +44,7 @@ set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
 set(OMP_PROCS 4 CACHE STRING "The number of OpenMP processes used in demo codes.")
 
 # Set variables
-if(ISVD_BUILD_DEMO OR ISVD_BUILD_DRIVER OR ISVD_BUILD_LIB OR ISVD_BUILD_TEST)
+if(ISVD_BUILD_DEMO OR ISVD_BUILD_LIB OR ISVD_BUILD_TEST)
   set(ISVD_BUILD_BIN "ON")
 endif()
 
