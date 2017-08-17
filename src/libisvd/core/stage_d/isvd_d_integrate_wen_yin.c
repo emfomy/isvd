@@ -216,14 +216,14 @@ void isvd_dIntegrateWenYin(
       mkl_domatcopy('C', 'N', l, l,  0.5, dc,  lddc,  c11, ldc);
       mkl_domatcopy('C', 'N', l, l, -0.5, dgc, lddgc, c21, ldc);
       mkl_domatcopy('C', 'N', l, l, -0.5, dc,  lddc,  c22, ldc);
-      for ( isvd_int_t i = 0; i < l; ++i ) {
-        c11[i+ldc*i] -= 1.0/tau;
+      for ( isvd_int_t ii = 0; ii < l; ++ii ) {
+        c11[ii+ldc*ii] -= 1.0/tau;
       }
-      for ( isvd_int_t i = 0; i < l; ++i ) {
-        c12[i+ldc*i] += 0.5;
+      for ( isvd_int_t ii = 0; ii < l; ++ii ) {
+        c12[ii+ldc*ii] += 0.5;
       }
-      for ( isvd_int_t i = 0; i < l; ++i ) {
-        c22[i+ldc*i] -= 1.0/tau;
+      for ( isvd_int_t ii = 0; ii < l; ++ii ) {
+        c22[ii+ldc*ii] -= 1.0/tau;
       }
 
       // Compute inv(C)
@@ -233,8 +233,8 @@ void isvd_dIntegrateWenYin(
       // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
       // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
       cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
-      for ( isvd_int_t i = 0; i < l; ++i ) {
-        c21[i+ldc*i] += 1.0;
+      for ( isvd_int_t ii = 0; ii < l; ++ii ) {
+        c21[ii+ldc*ii] += 1.0;
       }
 
       // B+ := Bc * Fc + Bgc * Fgc

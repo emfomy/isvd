@@ -171,8 +171,8 @@ void isvd_dIntegrateKolmogorovNagumo(
     isvd_assert_pass(LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', l, z, ldz, s));
 
     // S := sqrt( I/2 + sqrt( I/4 - S ) )
-    for ( isvd_int_t i = 0; i < l; ++i ) {
-      s[i] = sqrt(0.5 + sqrt(0.25 - s[i]));
+    for ( isvd_int_t ii = 0; ii < l; ++ii ) {
+      s[ii] = sqrt(0.5 + sqrt(0.25 - s[ii]));
     }
     vdSqrt(l, s, ss);
     isvd_dmemcpy(cinv, z, l*l);
@@ -209,8 +209,8 @@ void isvd_dIntegrateKolmogorovNagumo(
 
     // ================================================================================================================== //
     // Check convergence: || I - C ||_F < tol
-    for ( isvd_int_t i = 0; i < l; ++i ) {
-      s[i] -= 1.0;
+    for ( isvd_int_t ii = 0; ii < l; ++ii ) {
+      s[ii] -= 1.0;
     }
     error = cblas_dnrm2(l, s, 1);
     if ( error <= tol ) {

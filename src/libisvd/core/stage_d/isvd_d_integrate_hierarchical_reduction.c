@@ -66,12 +66,8 @@ void isvd_dIntegrateHierarchicalReduction(
   isvd_int_t ldbs = l;
 
   // matrix T
-  isvd_val_t *t = isvd_dmalloc(l * l);
-  isvd_int_t ldt = l;
-
-  // temporary matrix
-  isvd_val_t *tmpt = isvd_dmalloc(mj * ldqst);
-  isvd_int_t ldtmpt = ldqst;
+  isvd_val_t *tt = isvd_dmalloc(l * l);
+  isvd_int_t ldtt = l;
 
   // vector s
   isvd_val_t *s = isvd_dmalloc(l);
@@ -79,15 +75,18 @@ void isvd_dIntegrateHierarchicalReduction(
   // vector superb
   isvd_val_t *superb = isvd_dmalloc(l-2);
 
+  isvd_val_t *tmpt = qt;
+  isvd_int_t ldtmpt = ldqt;
+
   // ====================================================================================================================== //
   // Loop
-  for ( isvd_int_t N_ = N; N_ > 1; N_ = (N_+1)/2 ) {
-    const isvd_int_t h = N_ / 2;
+  for ( isvd_int_t Nt = N; Nt > 1; Nt = (Nt+1)/2 ) {
+    const isvd_int_t h = Nt / 2;
 
     // B(i) := Q(i)' * Q(i+h)
     for ( isvd_int_t i = 0; i < h; ++i ) {
       cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, mj, 1.0,
-                  qst + i*l, ldqst, qst, ldqst + (i+h)*l, 0.0, bs + i*ldbs*l, ldbs);
+                  qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
     MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
@@ -106,16 +105,16 @@ void isvd_dIntegrateHierarchicalReduction(
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'
-      isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'S', l, l, w, ldw, s, NULL, 1, t, ldt, superb));
+      isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt, superb));
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
-      isvd_dmemcpy(tmpt, qit, mj*ldqst);
+      mkl_domatcopy('C', 'N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
       cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
-      cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, t, ldt, qiht, ldqiht, 1.0, qit, ldqit);
+      cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
 
       // Q(i) /= sqrt(2(I+S))
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-        cblas_dscal(l, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
+        cblas_dscal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
       }
     }
   }
@@ -127,8 +126,7 @@ void isvd_dIntegrateHierarchicalReduction(
   // Deallocate memory
 
   isvd_free(bs);
-  isvd_free(t);
-  isvd_free(tmpt);
+  isvd_free(tt);
   isvd_free(s);
   isvd_free(superb);
 
