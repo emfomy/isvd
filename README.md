@@ -50,7 +50,7 @@ ccmake <path-to-source>
 * Set 'ISVD_BUILD_TEST'   to build test codes.
 * Set 'ISVD_INDEX_TYPE'   to select index type. \[32/64\]
 * Set 'ISVD_OMP'          to select OpenMP library. \[OFF/GOMP/IOMP\] (Require 'ISVD_BLAS = MKL')
-* Set 'ISVD_USE_GPU'      to enable GPU support.
+<!-- * Set 'ISVD_USE_GPU'      to enable GPU support. -->
 
 * Set 'GTEST_ROOT'        for the root path of Google Test.         (Require 'ISVD_BUILD_TEST')
 * Set 'INTEL_ROOT'        for the root path of Intel libraries.     (Require 'ISVD_BLAS = MKL')
