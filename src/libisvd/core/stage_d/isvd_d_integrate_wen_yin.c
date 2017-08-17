@@ -291,22 +291,22 @@ void isvd_dIntegrateWenYin(
 
     // Delta1 [in Qc] := Qc - Q+; Delta2 [in Xc] := Xc - X+
     vdSub(mj*ldqct, qct, qpt, qct);
-    vdSub(mj*ldqct, xct, xpt, xct);
+    vdSub(mj*ldxct, xct, xpt, xct);
 
     // Update taug
     isvd_val_t t[2];
 
     if ( iter % 2 ) {
-      t[1] = cblas_ddot(ldqct*l, qct, 1, qct, 1);
-      t[2] = cblas_ddot(ldqct*l, qct, 1, xct, 1);
+      t[0] = cblas_ddot(mj*ldqct, qct, 1, qct, 1);
+      t[1] = cblas_ddot(mj*ldqct, qct, 1, xct, 1);
     } else {
-      t[1] = cblas_ddot(ldxct*l, xct, 1, qct, 1);
-      t[2] = cblas_ddot(ldxct*l, xct, 1, xct, 1);
+      t[0] = cblas_ddot(mj*ldxct, xct, 1, qct, 1);
+      t[1] = cblas_ddot(mj*ldxct, xct, 1, xct, 1);
     }
 
     MPI_Allreduce(MPI_IN_PLACE, t, 2, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
-    taug = abs(t[1]/t[2]);
+    taug = fabs(t[0]/t[1]);
     if ( taug < taumin ) { taug = taumin; }
     if ( taug > taumax ) { taug = taumax; }
 
