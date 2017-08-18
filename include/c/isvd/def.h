@@ -33,6 +33,10 @@ typedef uint64_t isvd_uint_t;
 /// The type of MPI index.
 typedef int mpi_int_t;
 
+/// @ingroup  core_module
+/// The type of OpenMP index.
+typedef int omp_int_t;
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifdef ISVD_USE_MKL
 #define MKL_INT  isvd_int_t

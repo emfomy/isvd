@@ -19,7 +19,7 @@
 ///
 /// @return  The number of threads in the current team.
 ///
-static inline isvd_int_t isvd_getOmpSize( void ) {
+static inline omp_int_t isvd_getOmpSize( void ) {
 #ifdef _OPENMP
   return omp_get_max_threads();
 #else  // _OPENMP
@@ -33,7 +33,7 @@ static inline isvd_int_t isvd_getOmpSize( void ) {
 ///
 /// @return  The thread identification number within the current team.
 ///
-static inline isvd_int_t isvd_getOmpRank( void ) {
+static inline omp_int_t isvd_getOmpRank( void ) {
 #ifdef _OPENMP
   return omp_get_thread_num();
 #else  // _OPENMP
