@@ -22,7 +22,7 @@ int main( int argc, char **argv ) {
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
 
-  isvd_int_t omp_size = isvd_getOmpSize();
+  omp_int_t omp_size = isvd_getOmpSize();
 
   if ( mpi_rank == mpi_root ) {
     printf("iSVD " ISVD_VERSION " C test\n");

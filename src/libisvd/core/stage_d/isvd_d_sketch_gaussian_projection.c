@@ -63,8 +63,8 @@ static void sketchBlockCol(
   #pragma omp parallel
 #endif  // _OPENMP
   {
-    isvd_int_t omp_size = isvd_getOmpSize();
-    isvd_int_t omp_rank = isvd_getOmpRank();
+    omp_int_t omp_size = isvd_getOmpSize();
+    omp_int_t omp_rank = isvd_getOmpRank();
 
     isvd_int_t len   = nj * Nl / omp_size;
     isvd_int_t start = len * omp_rank;
@@ -143,8 +143,8 @@ static void sketchBlockRow(
   #pragma omp parallel
 #endif  // _OPENMP
   {
-    isvd_int_t omp_size = isvd_getOmpSize();
-    isvd_int_t omp_rank = isvd_getOmpRank();
+    omp_int_t omp_size = isvd_getOmpSize();
+    omp_int_t omp_rank = isvd_getOmpRank();
 
     isvd_int_t len   = n * Nl / omp_size;
     isvd_int_t start = len * omp_rank;
