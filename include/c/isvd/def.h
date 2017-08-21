@@ -15,6 +15,11 @@
 #include <complex.h>
 #include <math.h>
 #include <mpi.h>
+
+#ifdef _OPENMP
+  #include <omp.h>
+#endif  // _OPENMP
+
 #include <isvd/config.h>
 
 #define ISVD_UNUSED( x ) (void)(x)
@@ -46,7 +51,11 @@ typedef int omp_int_t;
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-/// @ingroup  core_module
+#ifdef ISVD_USE_MKL
+  #include <mkl.h>
+#endif // ISVD_USE_MKL
+
+/// @ingroup  util_module
 //@{
 #ifndef ISVD_USE_GTEST
 
@@ -88,17 +97,17 @@ typedef int omp_int_t;
 #define isvd_assert_code( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_ne(code, 0); }
 //@}
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_vdisp( format, len, vector, inc ) printf(#vector ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
     printf(format "\t", (vector)[_isvd_i_ * inc]); \
   } \
   printf("\n");
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_mcdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
@@ -107,7 +116,7 @@ typedef int omp_int_t;
     printf("\n"); \
   }
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_mrdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \

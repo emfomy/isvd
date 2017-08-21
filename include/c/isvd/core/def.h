@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <mkl.h>
 
 static inline isvd_int_t isvd_arg2char(
     const char *name,
