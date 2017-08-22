@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @file    src/libisvd/core/driver_d/isvd_d_ieig.c
-/// @brief   The iEig driver (double precision)
+/// @brief   The iEig driver (double precision).
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
@@ -12,7 +12,7 @@ typedef double isvd_val_t;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  core_driver_d_module
-/// iEig driver (double precision)
+/// iEig driver (double precision).
 ///
 /// @param[in]   algs          The selection of sketching algorithm. <br>
 ///                            `"GP"`: @ref isvd_dSketchGaussianProjection "Gaussian Projection sketching".
