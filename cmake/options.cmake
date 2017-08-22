@@ -35,6 +35,13 @@ if(NOT ISVD_OMP STREQUAL "OFF" AND NOT ISVD_OMP STREQUAL "GOMP" AND NOT ISVD_OMP
   message(FATAL_ERROR "ISVD_OMP must be either OFF, GOMP, or IOMP")
 endif()
 
+if(ISVD_OMP STREQUAL "GOMP" AND CMAKE_C_COMPILER_ID STREQUAL "Intel")
+  message(FATAL_ERROR "Intel ICC is not compatible with GNU OpenMP")
+endif()
+if(ISVD_OMP STREQUAL "GOMP" AND CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+  message(FATAL_ERROR "Intel ICC is not compatible with GNU OpenMP")
+endif()
+
 set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
 set(OMP_THRDS 4 CACHE STRING "The number of OpenMP threads used in demo/check codes.")
 

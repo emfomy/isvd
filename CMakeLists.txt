@@ -9,7 +9,7 @@ set(ISVD_NAME "Integrated Singular Value Decomposition")
 # Set version number
 set(ISVD_MAJOR_VERSION 1)
 set(ISVD_MINOR_VERSION 0)
-set(ISVD_PATCH_VERSION 0)
+set(ISVD_PATCH_VERSION 2)
 set(ISVD_VERSION "${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}.${ISVD_PATCH_VERSION}")
 
 # Set Makefile
