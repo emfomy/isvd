@@ -11,7 +11,7 @@
 
 typedef double isvd_val_t;
 
-#if not defined(DOXYGEN_SHOULD_SKIP_THIS)
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void sketchBlockCol(
     const isvd_Param param,
     const char ordera,
