@@ -8,6 +8,10 @@
 #ifndef _ISVD_DEF_H_
 #define _ISVD_DEF_H_
 
+#if defined(ISVD_USE_ILP64)
+  #define MKL_ILP64
+#endif  // ISVD_USE_ILP64
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -21,7 +25,7 @@
 
 /// @ingroup  core_module
 /// The type of index.
-#ifndef ISVD_USE_ILP64
+#if not defined(ISVD_USE_ILP64)
 typedef int32_t  isvd_int_t;
 typedef uint32_t isvd_uint_t;
 #else  // ISVD_USE_ILP64
@@ -37,7 +41,7 @@ typedef int mpi_int_t;
 /// The type of OpenMP index.
 typedef int omp_int_t;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if not defined(DOXYGEN_SHOULD_SKIP_THIS)
 #ifdef ISVD_USE_MKL
 #define MKL_INT  isvd_int_t
 #define MKL_UINT isvd_uint_t
@@ -48,7 +52,7 @@ typedef int omp_int_t;
 
 /// @ingroup  core_module
 //@{
-#ifndef ISVD_USE_GTEST
+#if not defined(ISVD_USE_GTEST)
 
 #define isvd_assert_true( condition )   assert(condition);
 #define isvd_assert_false( condition )  assert(!(condition));

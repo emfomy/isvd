@@ -11,7 +11,7 @@
 
 typedef double isvd_val_t;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if not defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void sketchBlockCol(
     const isvd_Param param,
     const char ordera,
@@ -59,7 +59,7 @@ static void sketchBlockCol(
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
 
-#ifdef _OPENMP
+#if defined(_OPENMP)
   #pragma omp parallel
 #endif  // _OPENMP
   {
@@ -139,7 +139,7 @@ static void sketchBlockRow(
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
 
-#ifdef _OPENMP
+#if defined(_OPENMP)
   #pragma omp parallel
 #endif  // _OPENMP
   {

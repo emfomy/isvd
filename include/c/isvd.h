@@ -12,7 +12,7 @@
 #include <isvd/core.h>
 #include <isvd/util.h>
 
-// #ifdef ISVD_USE_GPU
+// #if defined(ISVD_USE_GPU)
 //   #include <isvd/core_gpu.h>
 // #endif  // ISVD_USE_GPU
 
