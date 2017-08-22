@@ -98,8 +98,6 @@
 #
 # Modified by Mu Yang <emfomy@gmail.com>
 
-set(GTEST_ROOT "${GTEST_ROOT}" CACHE PATH "The root path of Google Test." FORCE)
-
 find_program(CMAKE_ENV env)
 mark_as_advanced(CMAKE_ENV)
 

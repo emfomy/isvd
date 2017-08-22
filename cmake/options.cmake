@@ -5,6 +5,13 @@ set(DEFS "")
 set(COMFLGS "")
 set(LNKFLGS "")
 
+# Check Compiler
+if(CMAKE_C_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+  set(ISVD_USE_ICC "ON")
+else()
+  set(ISVD_USE_ICC "OFF")
+endif()
+
 # Set install prefix
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix." FORCE)
@@ -29,16 +36,17 @@ if(NOT ISVD_BLAS STREQUAL "BLAS" AND NOT ISVD_BLAS STREQUAL "MKL" )
   message(FATAL_ERROR "BLAS must be either BLAS or MKL")
 endif()
 
-set(ISVD_OMP "GOMP" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
+if(ISVD_USE_ICC)
+  set(ISVD_OMP "IOMP")
+else()
+  set(ISVD_OMP "GOMP")
+endif()
+set(ISVD_OMP "${ISVD_OMP}" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
 set_property(CACHE ISVD_OMP PROPERTY STRINGS "OFF;GOMP;IOMP")
 if(NOT ISVD_OMP STREQUAL "OFF" AND NOT ISVD_OMP STREQUAL "GOMP" AND NOT ISVD_OMP STREQUAL "IOMP" )
   message(FATAL_ERROR "ISVD_OMP must be either OFF, GOMP, or IOMP")
 endif()
-
-if(ISVD_OMP STREQUAL "GOMP" AND CMAKE_C_COMPILER_ID STREQUAL "Intel")
-  message(FATAL_ERROR "Intel ICC is not compatible with GNU OpenMP")
-endif()
-if(ISVD_OMP STREQUAL "GOMP" AND CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+if(ISVD_USE_ICC AND ISVD_OMP STREQUAL "GOMP")
   message(FATAL_ERROR "Intel ICC is not compatible with GNU OpenMP")
 endif()
 
