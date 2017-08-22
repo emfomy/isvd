@@ -56,7 +56,7 @@ ccmake <path-to-source>
 * Set 'INTEL_ROOT'        for the root path of Intel libraries.     (Require 'ISVD_BLAS = MKL')
 * Set 'MKL_ROOT'          for the root path of Intel MKL.           (Require 'ISVD_BLAS = MKL')
 * Set 'MPI_PROCS'         to set the number of MPI processes used in demo codes.
-* Set 'OMP_THRDS'         to set the number of OpenMP threads used in demo codes.
+* Set 'OMP_THRDS'         to set the number of OpenMP threads used in demo/check codes.
 
 ### Makefile
 

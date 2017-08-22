@@ -36,7 +36,7 @@ if(NOT ISVD_OMP STREQUAL "OFF" AND NOT ISVD_OMP STREQUAL "GOMP" AND NOT ISVD_OMP
 endif()
 
 set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
-set(OMP_PROCS 4 CACHE STRING "The number of OpenMP processes used in demo codes.")
+set(OMP_THRDS 4 CACHE STRING "The number of OpenMP threads used in demo/check codes.")
 
 # Set variables
 if(ISVD_BUILD_DEMO OR ISVD_BUILD_LIB OR ISVD_BUILD_TEST)
