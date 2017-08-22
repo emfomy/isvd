@@ -47,7 +47,7 @@ ccmake <path-to-source>
 * Set 'ISVD_BUILD_DEMO'   to build demo codes.
 * Set 'ISVD_BUILD_DOC'    to build documentation.
 * Set 'ISVD_BUILD_LIB'    to build libraries.
-* Set 'ISVD_BUILD_TEST'   to build test codes.
+* Set 'ISVD_BUILD_TEST'   to build unit tests.
 * Set 'ISVD_INDEX_TYPE'   to select index type. \[32/64\]
 * Set 'ISVD_OMP'          to select OpenMP library. \[OFF/GOMP/IOMP\] (Require 'ISVD_BLAS = MKL')
 <!-- * Set 'ISVD_USE_GPU'      to enable GPU support. -->
@@ -64,7 +64,7 @@ ccmake <path-to-source>
 |----------------|--------------------------|
 | `make all`     | build all binaries       |
 | `make install` | install package          |
-| `make check`   | build and run test codes |
+| `make check`   | build and run unit tests |
 | `make doc`     | build documentation      |
 | `make help`    | display make-rules       |
 

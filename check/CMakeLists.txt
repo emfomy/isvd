@@ -2,6 +2,15 @@
 
 # Break
 if(NOT ISVD_BUILD_TEST)
+  string(ASCII 27 Esc)
+
+  # Add rule 'check'
+  add_custom_target(
+    check
+    COMMAND eval "exit 1"
+    COMMENT "${Esc}[33mWarning: Unit tests are not enabled! Please set 'ISVD_BUILD_TEST' using ccmake."
+  )
+
   return()
 endif()
 
