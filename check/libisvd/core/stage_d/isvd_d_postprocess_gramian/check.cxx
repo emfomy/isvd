@@ -22,9 +22,9 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
 
-  isvd_int_t m;
-  isvd_int_t n;
-  isvd_int_t l;
+  int m;
+  int n;
+  int l;
 
   FILE *file;
   MM_typecode matcode;
@@ -74,7 +74,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   {
-    isvd_int_t m_;
+    int m_;
     ASSERT_EQ(mm_read_mtx_array_size(file, &m_, &l), 0);
     ASSERT_EQ(m_, m);
   }
@@ -99,7 +99,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   {
-    isvd_int_t l_, one_;
+    int l_, one_;
     ASSERT_EQ(mm_read_mtx_array_size(file, &l_, &one_), 0);
     ASSERT_EQ(l_,   l);
     ASSERT_EQ(one_, 1);
@@ -122,7 +122,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   {
-    isvd_int_t m_, l_;
+    int m_, l_;
     ASSERT_EQ(mm_read_mtx_array_size(file, &m_, &l_), 0);
     ASSERT_EQ(m_, m);
     ASSERT_EQ(l_, l);
@@ -148,7 +148,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   {
-    isvd_int_t n_, l_;
+    int n_, l_;
     ASSERT_EQ(mm_read_mtx_array_size(file, &n_, &l_), 0);
     ASSERT_EQ(n_, n);
     ASSERT_EQ(l_, l);

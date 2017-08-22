@@ -13,9 +13,9 @@ TEST(HierarchicalReductionIntegration, Test) {
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
 
-  isvd_int_t m;
-  isvd_int_t l;
-  isvd_int_t Nl;
+  int m;
+  int l;
+  int Nl;
 
   FILE *file;
   MM_typecode matcode;
@@ -49,7 +49,7 @@ TEST(HierarchicalReductionIntegration, Test) {
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   {
-    isvd_int_t m_;
+    int m_;
     ASSERT_EQ(mm_read_mtx_array_size(file, &m_, &l), 0);
     ASSERT_EQ(m_, m);
   }
