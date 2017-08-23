@@ -169,7 +169,7 @@ void isvd_dIntegrateKolmogorovNagumo(
     isvd_dsyrk('U', 'T', l, l, -1.0, dc, lddc, 1.0, z, ldz);
 
     // eig(Z) = Z * S * Z'
-    isvd_assert_pass(LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', l, z, ldz, s));
+    isvd_dsyev('V', 'U', l, z, ldz, s);
 
     // S := sqrt( I/2 + sqrt( I/4 - S ) )
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {

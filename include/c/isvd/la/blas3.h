@@ -19,11 +19,11 @@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-#if !defined(ISVD_USE_MKL)
-
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
+
+#if !defined(ISVD_USE_MKL)
 
 extern void sgemm();
 extern void dgemm();
@@ -40,11 +40,11 @@ extern void dsyrk();
 extern void cherk();
 extern void zherk();
 
+#endif  // ISVD_USE_MKL
+
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
-
-#endif  // ISVD_USE_MKL
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 

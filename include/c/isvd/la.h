@@ -13,6 +13,10 @@
 #include <isvd/la/blas3.h>
 #include <isvd/la/blas_like.h>
 
+#include <isvd/la/lapack_le.h>
+#include <isvd/la/lapack_ls.h>
+#include <isvd/la/lapack_aux.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @defgroup  la_blas_module  BLAS Module
 /// @ingroup   la_module

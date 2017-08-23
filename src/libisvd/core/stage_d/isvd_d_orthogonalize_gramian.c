@@ -63,8 +63,6 @@ void isvd_dOrthogonalizeGramian(
   isvd_val_t *s = isvd_dmalloc(l * N);
   isvd_int_t lds = l;
 
-  isvd_val_t *superb = isvd_dmalloc(l-2);
-
   // ====================================================================================================================== //
   // Orthogonalize
 
@@ -76,7 +74,7 @@ void isvd_dOrthogonalizeGramian(
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1, superb));
+    isvd_dgesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1);
   }
   vdSqrt(lds*N, s, s);
 
@@ -95,6 +93,5 @@ void isvd_dOrthogonalizeGramian(
   isvd_free(yst_);
   isvd_free(w);
   isvd_free(s);
-  isvd_free(superb);
 
 }

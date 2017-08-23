@@ -73,9 +73,6 @@ void isvd_dIntegrateHierarchicalReduction(
   // vector s
   isvd_val_t *s = isvd_dmalloc(l);
 
-  // vector superb
-  isvd_val_t *superb = isvd_dmalloc(l-2);
-
   isvd_val_t *tmpt = qt;
   isvd_int_t ldtmpt = ldqt;
 
@@ -105,7 +102,7 @@ void isvd_dIntegrateHierarchicalReduction(
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'
-      isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, 'O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt, superb));
+      isvd_dgesvd('O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt);
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
       mkl_domatcopy('C', 'N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
@@ -128,6 +125,5 @@ void isvd_dIntegrateHierarchicalReduction(
   isvd_free(bs);
   isvd_free(tt);
   isvd_free(s);
-  isvd_free(superb);
 
 }

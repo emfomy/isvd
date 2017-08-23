@@ -1,0 +1,105 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file    include/c/isvd/la/lapack_le.h
+/// @brief   The LAPACK linear equation header.
+///
+/// @author  Mu Yang <<emfomy@gmail.com>>
+///
+
+#ifndef _ISVD_LA_LAPACK_LE_H_
+#define _ISVD_LA_LAPACK_LE_H_
+
+#include <isvd/def.h>
+
+#include <isvd/util/memory.h>
+
+#define CHAR1 char
+#define INT   isvd_int_t
+#define REAL4 float
+#define REAL8 double
+#define COMP4 float complex
+#define COMP8 double complex
+
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
+
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
+#if !defined(ISVD_USE_MKL)
+
+extern void sgetrf();
+extern void dgetrf();
+extern void cgetrf();
+extern void zgetrf();
+
+extern void sgetri();
+extern void dgetri();
+extern void cgetri();
+extern void zgetri();
+
+#endif  // ISVD_USE_MKL
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
+
+#endif  // DOXYGEN_SHOULD_SKIP_THIS
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ingroup  la_lapack_module
+/// Computes the inverse of a square matrix using LU factorization.
+//@{
+static inline void isvd_sgeinv(
+    const INT n, REAL4 *a, const INT lda
+) {
+  REAL4 qwork; INT lwork = -1, info;
+  sgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  lwork = qwork;
+  INT *ipiv = isvd_imalloc(n);
+  REAL4 *work = isvd_smalloc(lwork);
+  sgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  sgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+}
+static inline void isvd_dgeinv(
+    const INT n, REAL8 *a, const INT lda
+) {
+  REAL8 qwork; INT lwork = -1, info;
+  dgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  lwork = qwork;
+  INT *ipiv = isvd_imalloc(n);
+  REAL8 *work = isvd_dmalloc(lwork);
+  dgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  dgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+}
+static inline void isvd_cgeinv(
+    const INT n, COMP4 *a, const INT lda
+) {
+  COMP4 qwork; INT lwork = -1, info;
+  cgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  lwork = creal(qwork);
+  INT *ipiv = isvd_imalloc(n);
+  COMP4 *work  = isvd_cmalloc(lwork);
+  cgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  cgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+}
+static inline void isvd_zgeinv(
+    const INT n, COMP8 *a, const INT lda
+) {
+  COMP8 qwork; INT lwork = -1, info;
+  zgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  lwork = creal(qwork);
+  INT *ipiv = isvd_imalloc(n);
+  COMP8 *work  = isvd_zmalloc(lwork);
+  zgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  zgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+}
+//@}
+
+#undef CHAR1
+#undef INT
+#undef REAL4
+#undef REAL8
+#undef COMP4
+#undef COMP8
+
+#endif  // _ISVD_LA_LAPACK_LE_H_

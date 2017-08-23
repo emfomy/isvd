@@ -138,9 +138,6 @@ void isvd_dIntegrateWenYin(
   isvd_val_t *c = isvd_dmalloc(l2 * l2);
   isvd_int_t ldc = l2;
 
-  // matrix Ipiv
-  isvd_int_t *ipiv = isvd_imalloc(l2);
-
   // matrix inv(C)_??
   isvd_val_t *c11 = c;
   isvd_val_t *c21 = c + l;
@@ -228,8 +225,7 @@ void isvd_dIntegrateWenYin(
       }
 
       // Compute inv(C)
-      isvd_assert_pass(LAPACKE_dgetrf(LAPACK_COL_MAJOR, l2, l2, c, ldc, ipiv));
-      isvd_assert_pass(LAPACKE_dgetri(LAPACK_COL_MAJOR, l2, c, ldc, ipiv));
+      isvd_dgeinv(l2, c, ldc);
 
       // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
       // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
@@ -345,7 +341,6 @@ void isvd_dIntegrateWenYin(
   isvd_free(dc);
   isvd_free(dgc);
   isvd_free(c);
-  isvd_free(ipiv);
 
   // ====================================================================================================================== //
   // Set return values

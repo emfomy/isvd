@@ -19,11 +19,11 @@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-#if !defined(ISVD_USE_MKL)
-
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
+
+#if !defined(ISVD_USE_MKL)
 
 extern REAL4 sdot();
 extern REAL8 ddot();
@@ -45,11 +45,11 @@ extern void zscal();
 extern void csscal();
 extern void zdscal();
 
+#endif  // ISVD_USE_MKL
+
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
-
-#endif  // ISVD_USE_MKL
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 

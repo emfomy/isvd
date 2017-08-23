@@ -277,8 +277,6 @@ void isvd_dPostprocessGramian(
   isvd_val_t *w = isvd_dmalloc(l * l);
   isvd_int_t ldw = l;
 
-  isvd_val_t *superb = isvd_dmalloc(l-2);
-
   // ====================================================================================================================== //
   // Projection
 
@@ -302,7 +300,7 @@ void isvd_dPostprocessGramian(
 
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
-  isvd_assert_pass(LAPACKE_dgesvd(LAPACK_COL_MAJOR, jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1, superb));
+  isvd_dgesvd(jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1);
   vdSqrt(l, s, s);
 
   // ====================================================================================================================== //
@@ -342,6 +340,5 @@ void isvd_dPostprocessGramian(
 
   isvd_free(zt);
   isvd_free(w);
-  isvd_free(superb);
 
 }

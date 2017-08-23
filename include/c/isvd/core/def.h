@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <isvd/la.h>
 
 static inline isvd_int_t isvd_arg2char(
     const char *name,
@@ -19,7 +20,7 @@ static inline isvd_int_t isvd_arg2char(
     const char *opts
 ) {
   for ( size_t i = 0; i < strlen(opts); ++i ) {
-    if ( lsame(&arg, opts+i, 1, 1) ) {
+    if ( isvd_lsame(arg, opts[i]) ) {
       return opts[i];
     }
   }
@@ -42,7 +43,7 @@ static inline int16_t isvd_arg2char2(
     const char *opts
 ) {
   for ( size_t i = 0; i < strlen(opts); i += 2 ) {
-    if ( lsame(arg, opts+i, 1, 1) && lsame(arg+1, opts+i+1, 1, 1) ) {
+    if ( isvd_lsame(arg[0], opts[i]) && isvd_lsame(arg[1], opts[i+1]) ) {
       return isvd_char2(opts[i], opts[i+1]);
     }
   }

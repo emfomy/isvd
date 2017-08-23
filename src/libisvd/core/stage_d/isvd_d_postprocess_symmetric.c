@@ -275,7 +275,7 @@ void isvd_dPostprocessSymmetric(
 
   // eig(W) = W * S * W'
   const char jobw_ = (ut_root >= -1) ? 'V' : 'N';
-  isvd_assert_pass(LAPACKE_dsyev(LAPACK_COL_MAJOR, jobw_, 'U', l, w, ldw, s));
+  isvd_dsyev(jobw_, 'U', l, w, ldw, s);
 
   // ====================================================================================================================== //
   // Compute singular vectors
