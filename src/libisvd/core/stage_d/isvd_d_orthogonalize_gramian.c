@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -69,8 +70,7 @@ void isvd_dOrthogonalizeGramian(
 
   // Wi := Yi' * Yi
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, mj,
-                1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
+    isvd_dgemm('N', 'T', l, l, mj, 1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
   }
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
@@ -82,12 +82,11 @@ void isvd_dOrthogonalizeGramian(
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
   for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
-    cblas_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
+    isvd_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
   }
   isvd_dmemcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l,
-                1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
+    isvd_dgemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
   }
 
   // ====================================================================================================================== //

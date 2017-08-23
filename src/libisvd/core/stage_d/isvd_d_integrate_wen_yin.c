@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -169,33 +170,33 @@ void isvd_dIntegrateWenYin(
   mkl_domatcopy('R', 'N', mj, l, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
-  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+  isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
   MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // Dc := 1/N * Bc' * Bc
-  cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
+  isvd_dgemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
 
   // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-  cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
+  isvd_dgemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
   // Bgc := Qs' * Gc
-  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+  isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
   MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // Dgc := 1/N * Bc' * Bgc
-  cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, dgc, lddgc);
+  isvd_dgemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, dgc, lddgc);
 
   // Xc := Gc - Qc * Dc (Xc' := Gc' - Dc' * Qc')
   isvd_dmemcpy(xct, gct, mj * l);
-  cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, -1.0, dc, lddc, qct, ldqct, 1.0, xct, ldxct);
+  isvd_dgemm('T', 'N', l, mj, l, -1.0, dc, lddc, qct, ldqct, 1.0, xct, ldxct);
 
   // mu := tr( Dgc ) - norm( Dc )_F^2
-  mu = cblas_dasum(l, dgc, lddgc+1) - cblas_ddot(lddc*l, dc, 1, dc, 1);
+  mu = isvd_dasum(l, dgc, lddgc+1) - isvd_ddot(lddc*l, dc, 1, dc, 1);
 
   // taug := tau0; zeta := 1; phi := 1/2N * norm( Bc )_F^2
   taug = tau0;
   zeta = 1.0;
-  phi = 0.5/N * cblas_ddot(ldbc*l, bc, 1, bc, 1);
+  phi = 0.5/N * isvd_ddot(ldbc*l, bc, 1, bc, 1);
 
   // ====================================================================================================================== //
   // Iterating
@@ -232,17 +233,17 @@ void isvd_dIntegrateWenYin(
 
       // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
       // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
-      cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
+      isvd_dgemm('N', 'N', l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c21[ii+ldc*ii] += 1.0;
       }
 
       // B+ := Bc * Fc + Bgc * Fgc
-      cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, Nl, l, l, 1.0, bc,  ldbc,  fc,  ldfc,  0.0, bp, ldbp);
-      cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, Nl, l, l, 1.0, bgc, ldbgc, fgc, ldfgc, 1.0, bp, ldbp);
+      isvd_dgemm('N', 'N', Nl, l, l, 1.0, bc,  ldbc,  fc,  ldfc,  0.0, bp, ldbp);
+      isvd_dgemm('N', 'N', Nl, l, l, 1.0, bgc, ldbgc, fgc, ldfgc, 1.0, bp, ldbp);
 
       // ~phi := 1/2N * norm( B+ )_F^2
-      phit = 0.5/N * cblas_ddot(ldbp*l, bp, 1, bp, 1);
+      phit = 0.5/N * isvd_ddot(ldbp*l, bp, 1, bp, 1);
 
       // Check condition
       if ( phit >= phi + tau * sigma * mu ) {
@@ -258,24 +259,24 @@ void isvd_dIntegrateWenYin(
     zeta = eta * zeta + 1;
 
     // Q+ := Qc * Fc + Gc * Fgc (Q+' := Fc' * Qc' + Fgc' * Gc')
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, fc,  ldfc,  qct, ldqct, 0.0, qpt, ldqpt);
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, fgc, ldfgc, gct, ldgct, 1.0, qpt, ldqpt);
+    isvd_dgemm('T', 'N', l, mj, l, 1.0, fc,  ldfc,  qct, ldqct, 0.0, qpt, ldqpt);
+    isvd_dgemm('T', 'N', l, mj, l, 1.0, fgc, ldfgc, gct, ldgct, 1.0, qpt, ldqpt);
 
     // D+ [in Dc] := 1/N * B+' * B+
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, l, Nl, 1.0/N, bp, ldbp, bp, ldbp, 0.0, dc, lddc);
+    isvd_dgemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bp, ldbp, 0.0, dc, lddc);
 
     // G+ [in Gc] := 1/N * Qs * B+ (G+'[in Gc'] := 1/N * B+' * Qs')
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bp, ldbp, qst, ldqst, 0.0, gct, ldgct);
+    isvd_dgemm('T', 'N', l, mj, Nl, 1.0/N, bp, ldbp, qst, ldqst, 0.0, gct, ldgct);
 
     // Bg+ [in Bgc] := Qs' * G+ [in Gc]
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+    isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
     MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
     // Dg+ [in Dgc] := 1/N * B+' * Bg+ [in Bgc]
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, l, Nl, 1.0/N, bp, ldbp, bgc, ldbgc, 0.0, dgc, lddgc);
+    isvd_dgemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bgc, ldbgc, 0.0, dgc, lddgc);
 
     // mu := tr( Dg+ [in Dgc] ) - norm( D+ [in Dc] )_F^2
-    mu = cblas_dasum(l, dgc, lddgc+1) - cblas_ddot(lddc*l, dc, 1, dc, 1);
+    mu = isvd_dasum(l, dgc, lddgc+1) - isvd_ddot(lddc*l, dc, 1, dc, 1);
 
     // ================================================================================================================== //
     // Check convergence: mu < tol^2
@@ -294,7 +295,7 @@ void isvd_dIntegrateWenYin(
 
     // X+ := G+ [in Gc] - Q+ * D+ [in Dc]
     isvd_dmemcpy(xpt, gct, mj * l);
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, -1.0, dc, lddc, qpt, ldqpt, 1.0, xpt, ldxpt);
+    isvd_dgemm('T', 'N', l, mj, l, -1.0, dc, lddc, qpt, ldqpt, 1.0, xpt, ldxpt);
 
     // Delta1 [in Qc] := Qc - Q+; Delta2 [in Xc] := Xc - X+
     vdSub(mj*ldqct, qct, qpt, qct);
@@ -304,11 +305,11 @@ void isvd_dIntegrateWenYin(
     isvd_val_t t[2];
 
     if ( iter % 2 ) {
-      t[0] = cblas_ddot(mj*ldqct, qct, 1, qct, 1);
-      t[1] = cblas_ddot(mj*ldqct, qct, 1, xct, 1);
+      t[0] = isvd_ddot(mj*ldqct, qct, 1, qct, 1);
+      t[1] = isvd_ddot(mj*ldqct, qct, 1, xct, 1);
     } else {
-      t[0] = cblas_ddot(mj*ldxct, xct, 1, qct, 1);
-      t[1] = cblas_ddot(mj*ldxct, xct, 1, xct, 1);
+      t[0] = isvd_ddot(mj*ldxct, xct, 1, qct, 1);
+      t[1] = isvd_ddot(mj*ldxct, xct, 1, xct, 1);
     }
 
     MPI_Allreduce(MPI_IN_PLACE, t, 2, MPI_DOUBLE, MPI_SUM, param.mpi_comm);

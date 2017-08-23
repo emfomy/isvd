@@ -32,7 +32,7 @@ include_directories(
 )
 
 # Set libraries
-list(APPEND LIBS extmmiox)
+list(APPEND LIBS extmmio)
 
 # Set definitions
 list(APPEND DEFS "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")

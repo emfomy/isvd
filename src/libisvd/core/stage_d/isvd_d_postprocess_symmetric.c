@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -73,8 +74,8 @@ static void projectBlockCol(
   // Project
 
   // Z := A' * Q (Z' := Q' * A)
-  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
+  char transa_ = (ordera == 'C') ? 'N' : 'T';
+  isvd_dgemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -144,8 +145,8 @@ static void projectBlockRow(
   // Project
 
   // Z := A' * Q (Z' := Q' * A)
-  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
+  char transa_ = (ordera == 'C') ? 'N' : 'T';
+  isvd_dgemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -269,7 +270,7 @@ void isvd_dPostprocessSymmetric(
   // Compute eigen-decomposition
 
   // W := Z' * Q
-  cblas_dgemmt(CblasColMajor, CblasUpper, CblasNoTrans, CblasTrans, l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
+  isvd_dgemmt('U', 'N', 'T', l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S * W'
@@ -281,7 +282,7 @@ void isvd_dPostprocessSymmetric(
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_dgemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {

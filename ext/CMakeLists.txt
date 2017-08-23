@@ -13,5 +13,4 @@ endmacro()
 list(APPEND DEFS "NDEBUG")
 
 # mmio
-set_target(extmmio  ${CMAKE_CURRENT_SOURCE_DIR}/mmio/mmio.c)
-set_target(extmmiox ${CMAKE_CURRENT_SOURCE_DIR}/mmio/mmio.cxx)
+set_target(extmmio ${CMAKE_CURRENT_SOURCE_DIR}/mmio/mmio.c)

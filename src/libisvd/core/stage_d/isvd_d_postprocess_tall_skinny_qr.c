@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;

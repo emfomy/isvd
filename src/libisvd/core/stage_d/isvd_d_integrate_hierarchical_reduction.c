@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -85,8 +86,7 @@ void isvd_dIntegrateHierarchicalReduction(
 
     // B(i) := Q(i)' * Q(i+h)
     for ( isvd_int_t i = 0; i < h; ++i ) {
-      cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, mj, 1.0,
-                  qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
+      isvd_dgemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
     MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
@@ -109,12 +109,12 @@ void isvd_dIntegrateHierarchicalReduction(
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
       mkl_domatcopy('C', 'N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
-      cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
-      cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
+      isvd_dgemm('T', 'N', l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
+      isvd_dgemm('N', 'N', l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
 
       // Q(i) /= sqrt(2(I+S))
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-        cblas_dscal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
+        isvd_dscal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
       }
     }
   }

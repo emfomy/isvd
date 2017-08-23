@@ -20,7 +20,7 @@
 #include <math.h>
 #include <mpi.h>
 
-#ifdef _OPENMP
+#if defined(_OPENMP)
   #include <omp.h>
 #endif  // _OPENMP
 
@@ -47,15 +47,15 @@ typedef int mpi_int_t;
 typedef int omp_int_t;
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-#ifdef ISVD_USE_MKL
-#define MKL_INT  isvd_int_t
-#define MKL_UINT isvd_uint_t
+#if defined(ISVD_USE_MKL)
+#define MKL_INT       isvd_int_t
+#define MKL_UINT      isvd_uint_t
 #define MKL_Complex8  float complex
 #define MKL_Complex16 double complex
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#ifdef ISVD_USE_MKL
+#if defined(ISVD_USE_MKL)
   #include <mkl.h>
 #endif // ISVD_USE_MKL
 

@@ -11,7 +11,7 @@
 #include <isvd/def.h>
 #include <stdlib.h>
 
-#ifdef ISVD_USE_MKL
+#if defined(ISVD_USE_MKL)
   #define isvd_malloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
 #else // ISVD_USE_MKL
   #define isvd_malloc( num, type ) (type*)(malloc(num * sizeof(type)));
@@ -54,7 +54,7 @@ static inline double complex* isvd_zmalloc( const size_t num ) {
 ///
 //@{
 static inline void isvd_free( void *ptr ) {
-#ifdef ISVD_USE_MKL
+#if defined(ISVD_USE_MKL)
   mkl_free(ptr);
 #else // ISVD_USE_MKL
   free(ptr);

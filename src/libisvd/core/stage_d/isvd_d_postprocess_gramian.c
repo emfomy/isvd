@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -79,8 +80,8 @@ static void projectBlockCol(
   // Project
 
   // Z := A' * Q (Z' := Q' * A)
-  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
+  char transa_ = (ordera == 'C') ? 'N' : 'T';
+  isvd_dgemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -154,8 +155,8 @@ static void projectBlockRow(
   // Project
 
   // Z := A' * Q (Z' := Q' * A)
-  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasNoTrans : CblasTrans;
-  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
+  char transa_ = (ordera == 'C') ? 'N' : 'T';
+  isvd_dgemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -296,7 +297,7 @@ void isvd_dPostprocessGramian(
   // Compute eigen-decomposition
 
   // W := Z' * Z
-  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
+  isvd_dgemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S^2 * W'
@@ -309,7 +310,7 @@ void isvd_dPostprocessGramian(
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_dgemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
@@ -323,9 +324,9 @@ void isvd_dPostprocessGramian(
   // V := Z * W / S (V' := (W / S)' * Z')
   if ( vt_root >= -1 ) {
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      cblas_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
+      isvd_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
     }
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
+    isvd_dgemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {

@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 
 typedef double isvd_val_t;
@@ -134,7 +135,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   mkl_domatcopy('R', 'N', mj, l, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
-  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+  isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
   MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
@@ -149,23 +150,23 @@ void isvd_dIntegrateKolmogorovNagumo(
     // Compute B, D, and G
 
     // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
+    isvd_dgemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
     // Bgc := Qs' * Gc
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+    isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
     MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
 
     // Dc := 1/N * Bc' * Bc
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
+    isvd_dgemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
 
     // Dgc [in Z] := 1/N * Bc' * Bgc
-    cblas_dgemmt(CblasColMajor, CblasUpper, CblasTrans, CblasNoTrans, l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, z, ldz);
+    isvd_dgemmt('U', 'T', 'N', l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, z, ldz);
 
     // ================================================================================================================== //
     // Compute C and inv(C)
 
     // Z := Dgc - Dc^2
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, l, l, -1.0, dc, lddc, 1.0, z, ldz);
+    isvd_dsyrk('U', 'T', l, l, -1.0, dc, lddc, 1.0, z, ldz);
 
     // eig(Z) = Z * S * Z'
     isvd_assert_pass(LAPACKE_dsyev(LAPACK_COL_MAJOR, 'V', 'U', l, z, ldz, s));
@@ -179,40 +180,40 @@ void isvd_dIntegrateKolmogorovNagumo(
 
     // Compute Z * sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      cblas_dscal(l, ss[ii], zs + ldzs*ii, 1);
+      isvd_dscal(l, ss[ii], zs + ldzs*ii, 1);
     }
 
     // Compute Z / sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      cblas_dscal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
+      isvd_dscal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
     }
 
     // C := Z * S * Z'
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasTrans, l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
+    isvd_dgemm('N', 'T', l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
 
     // inv(C) := Z * inv(S) * Z'
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasNoTrans, l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
+    isvd_dsyrk('U', 'N', l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
 
     // ================================================================================================================== //
     // Update for next iteration
 
     // Fc [in C] := C - Dc * inv(C)
-    cblas_dsymm(CblasColMajor, CblasRight, CblasUpper, l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
+    isvd_dsymm('R', 'U', l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
 
     // Q+ := Qc * Fc [in C] + Gc * inv(C) (Q+' := Fc' [in C] * Qc' + inv(C) * Gc')
-    cblas_dgemm(CblasColMajor, CblasTrans, CblasNoTrans, l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
-    cblas_dsymm(CblasColMajor, CblasLeft, CblasUpper, l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
+    isvd_dgemm('T', 'N', l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
+    isvd_dsymm('L', 'U', l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
 
     // B+ := Bc * Fc [in C] + Bgc * inv(C)
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
-    cblas_dsymm(CblasColMajor, CblasRight, CblasUpper, Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
+    isvd_dgemm('N', 'N', Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
+    isvd_dsymm('R', 'U', Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
 
     // ================================================================================================================== //
     // Check convergence: || I - C ||_F < tol
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
       s[ii] -= 1.0;
     }
-    error = cblas_dnrm2(l, s, 1);
+    error = isvd_dnrm2(l, s, 1);
     if ( error <= tol ) {
       break;
     }

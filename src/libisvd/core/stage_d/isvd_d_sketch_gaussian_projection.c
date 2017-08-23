@@ -6,6 +6,7 @@
 ///
 
 #include <isvd/core/stage_d.h>
+#include <isvd/la.h>
 #include <isvd/util/memory.h>
 #include <isvd/util/omp.h>
 
@@ -84,9 +85,8 @@ static void sketchBlockCol(
   // Project
 
   // Yi := A * Omegai (Yi' := Omegai' * A')
-  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasTrans : CblasNoTrans;
-  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, Nl, m, nj,
-              1.0, omegat, ldomegat, a, lda, 0.0, yst_, ldyst_);
+  char transa_ = (ordera == 'C') ? 'T' : 'N';
+  isvd_dgemm('N', transa_, Nl, m, nj, 1.0, omegat, ldomegat, a, lda, 0.0, yst_, ldyst_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -164,8 +164,8 @@ static void sketchBlockRow(
   // Project
 
   // Yi := A * Omegai (Yi' := Omegai' * A')
-  CBLAS_TRANSPOSE transa_ = (ordera == 'C') ? CblasTrans : CblasNoTrans;
-  cblas_dgemm(CblasColMajor, CblasNoTrans, transa_, Nl, mj, n, 1.0, omegat, ldomegat, a, lda, 0.0, yst, ldyst);
+  char transa_ = (ordera == 'C') ? 'T' : 'N';
+  isvd_dgemm('N', transa_, Nl, mj, n, 1.0, omegat, ldomegat, a, lda, 0.0, yst, ldyst);
 
   // ====================================================================================================================== //
   // Deallocate memory

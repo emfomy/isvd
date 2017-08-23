@@ -254,10 +254,10 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     isvd_int_t ldvvt_ = n;
     isvd_val_t *vvt0 = isvd_dmalloc(n * n);
     isvd_int_t ldvvt0 = n;
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
-    cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
+    isvd_dsyrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
+    isvd_dsyrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+    isvd_dsyrk('U', 'T', n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
+    isvd_dsyrk('U', 'T', n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
 
     // Check results
     if ( mpi_rank == mpi_root ) {

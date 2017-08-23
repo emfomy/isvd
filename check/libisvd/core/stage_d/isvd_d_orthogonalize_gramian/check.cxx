@@ -96,8 +96,8 @@ TEST(GramianOrthogonalization, Test) {
   isvd_int_t ldqqt_ = m;
   isvd_val_t *qqt0 = isvd_dmalloc(m * m);
   isvd_int_t ldqqt0 = m;
-  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, Nl, 1.0, qst_, ldqst_, 0.0, qqt_, ldqqt_);
-  cblas_dsyrk(CblasColMajor, CblasUpper, CblasTrans, m, Nl, 1.0, qst0, ldqst0, 0.0, qqt0, ldqqt0);
+  isvd_dsyrk('U', 'T', m, Nl, 1.0, qst_, ldqst_, 0.0, qqt_, ldqqt_);
+  isvd_dsyrk('U', 'T', m, Nl, 1.0, qst0, ldqst0, 0.0, qqt0, ldqqt0);
 
   // Check results
   if ( mpi_rank == mpi_root ) {

@@ -8,6 +8,11 @@
 #ifndef _ISVD_LA_H_
 #define _ISVD_LA_H_
 
+#include <isvd/la/blas1.h>
+#include <isvd/la/blas2.h>
+#include <isvd/la/blas3.h>
+#include <isvd/la/blas_like.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @defgroup  la_blas_module  BLAS Module
 /// @ingroup   la_module
