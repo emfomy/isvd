@@ -1,9 +1,9 @@
 # Set default variables
-set(INCS "")
-set(LIBS "")
-set(DEFS "")
-set(COMFLGS "")
-set(LNKFLGS "")
+unset(INCS)
+unset(LIBS)
+unset(DEFS)
+unset(COMFLGS)
+unset(LNKFLGS)
 
 # Check Compiler
 if(CMAKE_C_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
@@ -14,7 +14,7 @@ endif()
 
 # Set install prefix
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix." FORCE)
+  set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix.")
 endif()
 
 # Set options
@@ -47,6 +47,7 @@ else()
   set(ISVD_OMP "GOMP")
 endif()
 set(ISVD_OMP "${ISVD_OMP}" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
+unset(ISVD_OMP)
 set_property(CACHE ISVD_OMP PROPERTY STRINGS "OFF;GOMP;IOMP")
 if(NOT ISVD_OMP STREQUAL "OFF" AND NOT ISVD_OMP STREQUAL "GOMP" AND NOT ISVD_OMP STREQUAL "IOMP" )
   message(FATAL_ERROR "ISVD_OMP must be either OFF, GOMP, or IOMP")

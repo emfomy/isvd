@@ -6,27 +6,30 @@
 #
 
 if(OpenMP STREQUAL "GOMP")
-  set(GOMP_LIBRARY "gomp" CACHE STRING "The GNU thread library." FORCE)
-  set(OMP_LIBRARY ${GOMP_LIBRARY})
+
+  set(GOMP_LIBRARY "gomp" CACHE STRING "The GNU thread library.")
+
+  include(FindPackageHandleStandardArgs)
+  find_package_handle_standard_args(
+    OpenMPLib DEFAULT_MSG GOMP_LIBRARY
+  )
+
+  set(OpenMP_LIBRARIES "${GOMP_LIBRARY}")
+
 elseif(OpenMP STREQUAL "IOMP")
+
   find_library(
     IOMP_LIBRARY
     NAMES iomp5
-    HINTS "${INTEL_ROOT}/lib/intel64"
+    HINTS "${INTEL_ROOT}/lib/intel64" "${INTEL_ROOT}/compiler/lib/intel64"
     DOC "The Intel thread library."
   )
-  set(OMP_LIBRARY ${IOMP_LIBRARY})
-else()
-  unset(OMP_LIBRARY)
+
+  include(FindPackageHandleStandardArgs)
+  find_package_handle_standard_args(
+    OpenMPLib DEFAULT_MSG IOMP_LIBRARY
+  )
+
+  set(OpenMP_LIBRARIES "${IOMP_LIBRARY}")
+
 endif()
-
-################################################################################
-
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(
-  OpenMPLib DEFAULT_MSG OMP_LIBRARY
-)
-
-mark_as_advanced(OMP_LIBRARY)
-
-set(OpenMP_LIBRARIES "${OMP_LIBRARY}")

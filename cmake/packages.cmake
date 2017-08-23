@@ -77,6 +77,7 @@ if(ISVD_USE_GPU)
     endif()
   endif()
   set(CUDA_TOOLKIT_ROOT_DIR "${CUDA_TOOLKIT_ROOT_DIR}" CACHE PATH "The root path of CUDA toolkit." FORCE)
+  unset(CUDA_TOOLKIT_ROOT_DIR)
 
   find_package(CUDA ${findtype})
   find_package(MAGMA ${findtype})
@@ -115,7 +116,6 @@ elseif(ISVD_USE_GPU)
     list(APPEND LIBS "${OpenMP_LIBRARIES}" "pthread")
   endif()
 
-  unset(OMP_LIBRARY)
   unset(OpenMP)
 endif()
 
