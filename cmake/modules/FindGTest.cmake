@@ -232,6 +232,19 @@ else()
   _gtest_find_library(GTEST_MAIN_LIBRARY_DEBUG gtest_maind)
 endif()
 
+################################################################################
+
+if(NOT GTEST_ROOT)
+  set(GTEST_ROOT "$ENV{GTEST_ROOT}")
+endif()
+if(NOT GTEST_ROOT AND DEFINED GTEST_INCLUDE_DIR)
+  get_filename_component(GTEST_ROOT "${GTEST_INCLUDE_DIR}/.." REALPATH)
+endif()
+
+set(GTEST_ROOT "${GTEST_ROOT}" CACHE PATH "The root path of Google Test." FORCE)
+
+################################################################################
+
 include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(GTest DEFAULT_MSG GTEST_LIBRARY GTEST_INCLUDE_DIR GTEST_MAIN_LIBRARY)
 
@@ -297,13 +310,3 @@ if(GTEST_FOUND)
       endif()
   endif()
 endif()
-
-################################################################################
-
-if(NOT GTEST_ROOT)
-  set(GTEST_ROOT "$ENV{GTEST_ROOT}")
-endif()
-if(NOT GTEST_ROOT AND DEFINED GTEST_INCLUDE_DIR)
-  get_filename_component(GTEST_ROOT "${GTEST_INCLUDE_DIR}/.." REALPATH)
-endif()
-set(GTEST_ROOT "${GTEST_ROOT}" CACHE PATH "The root path of Google Test." FORCE)

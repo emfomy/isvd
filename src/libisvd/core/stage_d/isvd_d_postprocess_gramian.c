@@ -10,7 +10,7 @@
 
 typedef double isvd_val_t;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol(
     const isvd_Param param,
     const char ordera,
