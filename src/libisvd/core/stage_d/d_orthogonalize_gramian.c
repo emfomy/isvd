@@ -76,7 +76,7 @@ void isvd_dOrthogonalizeGramian(
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_dgesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1);
   }
-  vdSqrt(lds*N, s, s);
+  isvd_vdsqrt(lds*N, s, s);
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
   for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
