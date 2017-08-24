@@ -18,6 +18,7 @@ endif()
 if(GTEST_FOUND)
   list(APPEND INCS "${GTEST_INCLUDE_DIRS}")
   list(APPEND LIBS "${GTEST_BOTH_LIBRARIES}")
+  list(APPEND DEFS "ISVD_USE_GTEST")
 endif()
 
 # Set include paths
@@ -31,8 +32,29 @@ include_directories(
   "${PROJECT_SOURCE_DIR}/ext"
 )
 
+# Add library
+unset(srcfiles)
+file(
+  GLOB_RECURSE srcfiles
+  RELATIVE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/*.c"
+                                       "${PROJECT_SOURCE_DIR}/src/*.c.*"
+)
+foreach(srcfile ${srcfiles})
+  string(REGEX REPLACE "\\.c(.|$)" ".cxx\\1" file ${srcfile})
+  configure_file(
+    "${PROJECT_SOURCE_DIR}/src/${srcfile}"
+    "${CMAKE_CURRENT_BINARY_DIR}/src/${file}"
+    COPYONLY
+  )
+endforeach()
+file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/src/libisvd/*"
+                        "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/*")
+add_library(checkisvd EXCLUDE_FROM_ALL ${files})
+isvd_set_target(checkisvd ".a")
+
 # Set libraries
-list(APPEND LIBS extmmiox)
+list(APPEND LIBS checkisvd)
+list(APPEND LIBS extmmio)
 
 # Set definitions
 list(APPEND DEFS "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
@@ -45,19 +67,19 @@ set(DEFS_TMP "${DEFS}")
 list(REMOVE_ITEM DEFS "ISVD_USE_GPU")
 
 # Sketching
-add_mpi_check(libisvd/core/stage_d/isvd_d_sketch_gaussian_projection "Gaussian Projection Sketching check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_sketch_gaussian_projection "Gaussian Projection Sketching check" "1;2;3;4;6;12")
 
 # Orthogonalization
-add_mpi_check(libisvd/core/stage_d/isvd_d_orthogonalize_gramian "Gramian Orthogonalization check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_orthogonalize_gramian "Gramian Orthogonalization check" "1;2;3;4;6;12")
 
 # Integration
-add_mpi_check(libisvd/core/stage_d/isvd_d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
-add_mpi_check(libisvd/core/stage_d/isvd_d_integrate_wen_yin "Wen Yin Integration check" "1;2;3;4;6;12")
-add_mpi_check(libisvd/core/stage_d/isvd_d_integrate_hierarchical_reduction "Hierarchical Reduction Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_integrate_wen_yin "Wen Yin Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_integrate_hierarchical_reduction "Hierarchical Reduction Integration check" "1;2;3;4;6;12")
 
 # Postprocessing
-add_mpi_check(libisvd/core/stage_d/isvd_d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")
-add_mpi_check(libisvd/core/stage_d/isvd_d_postprocess_symmetric "Symmetric Postprocessing check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_postprocess_symmetric "Symmetric Postprocessing check" "1;2;3;4;6;12")
 
 set(DEFS "${DEFS_TMP}")
 unset(DEFS_TMP)

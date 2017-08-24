@@ -28,6 +28,9 @@ include(cmake/options.cmake)
 # Sets the packages
 include(cmake/packages.cmake)
 
+# Create configure files
+include(cmake/configure.cmake)
+
 # Add subdirectories
 add_subdirectory(ext)
 add_subdirectory(src)
@@ -38,7 +41,7 @@ add_subdirectory(doxygen)
 # Sets the flags
 include(cmake/flags.cmake)
 
-# Create configure files
+# Recreate configure files
 include(cmake/configure.cmake)
 
 # Display message

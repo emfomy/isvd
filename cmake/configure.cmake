@@ -7,9 +7,22 @@ function(ISVD_CONFIGURE_FN)
     RELATIVE "${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/*.in"
   )
   foreach(cfgfile ${cfgfiles})
-    string(REGEX REPLACE "\\.[^.]*$" "" file ${cfgfile})
+    string(REGEX REPLACE "\\.in$" "" file ${cfgfile})
     configure_file(
       "${PROJECT_SOURCE_DIR}/${cfgfile}"
+      "${PROJECT_BINARY_DIR}/${file}"
+      @ONLY
+    )
+  endforeach()
+  unset(cfgfiles)
+  file(
+    GLOB_RECURSE cfgfiles
+    RELATIVE "${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}/*.in"
+  )
+  foreach(cfgfile ${cfgfiles})
+    string(REGEX REPLACE "\\.in$" "" file ${cfgfile})
+    configure_file(
+      "${PROJECT_BINARY_DIR}/${cfgfile}"
       "${PROJECT_BINARY_DIR}/${file}"
       @ONLY
     )

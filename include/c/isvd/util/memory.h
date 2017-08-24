@@ -9,9 +9,14 @@
 #define _ISVD_UTIL_MEMORY_H_
 
 #include <isvd/def.h>
-#include <mkl.h>
+#include <stdlib.h>
+#include <string.h>
 
-#define isvd_malloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
+#if defined(ISVD_USE_MKL)
+  #define isvd_malloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
+#else // ISVD_USE_MKL
+  #define isvd_malloc( num, type ) (type*)(malloc(num * sizeof(type)));
+#endif // ISVD_USE_MKL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
@@ -50,7 +55,11 @@ static inline double complex* isvd_zmalloc( const size_t num ) {
 ///
 //@{
 static inline void isvd_free( void *ptr ) {
+#if defined(ISVD_USE_MKL)
   mkl_free(ptr);
+#else // ISVD_USE_MKL
+  free(ptr);
+#endif // ISVD_USE_MKL
 }
 //@}
 

@@ -10,18 +10,41 @@
 
 #if defined(ISVD_USE_ILP64) && !defined(MKL_ILP64)
   #define MKL_ILP64
+#else  // ISVD_USE_ILP64
+  #undef MKL_ILP64
 #endif  // ISVD_USE_ILP64
+
+#if defined(_OPENMP)
+  #define ISVD_USE_OMP
+#else  // _OPENMP
+  #undef ISVD_USE_OMP
+#endif  // _OPENMP
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <mpi.h>
+
+#if defined(ISVD_USE_OMP)
+  #include <omp.h>
+#endif  // ISVD_USE_OMP
+
+#if defined(ISVD_USE_GTEST)
+  #include <gtest/gtest.h>
+#endif  // ISVD_USE_GTEST
+
 #include <complex.h>
 #include <math.h>
-#include <mpi.h>
 #include <isvd/config.h>
 
 #define ISVD_UNUSED( x ) (void)(x)
+
+#if !defined(__cplusplus)
+#define ISVD_UNKNOWN
+#else  // __cplusplus
+#define ISVD_UNKNOWN ...
+#endif  // __cplusplus
 
 /// @ingroup  core_module
 /// The type of index.
@@ -42,15 +65,19 @@ typedef int mpi_int_t;
 typedef int omp_int_t;
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-#ifdef ISVD_USE_MKL
-#define MKL_INT  isvd_int_t
-#define MKL_UINT isvd_uint_t
+#if defined(ISVD_USE_MKL)
+#define MKL_INT       isvd_int_t
+#define MKL_UINT      isvd_uint_t
 #define MKL_Complex8  float complex
 #define MKL_Complex16 double complex
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-/// @ingroup  core_module
+#if defined(ISVD_USE_MKL)
+  #include <mkl.h>
+#endif // ISVD_USE_MKL
+
+/// @ingroup  util_module
 //@{
 #if !defined(ISVD_USE_GTEST)
 
@@ -92,17 +119,17 @@ typedef int omp_int_t;
 #define isvd_assert_code( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_ne(code, 0); }
 //@}
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_vdisp( format, len, vector, inc ) printf(#vector ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
     printf(format "\t", (vector)[_isvd_i_ * inc]); \
   } \
   printf("\n");
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_mcdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
@@ -111,7 +138,7 @@ typedef int omp_int_t;
     printf("\n"); \
   }
 
-/// @ingroup  core_module
+/// @ingroup  util_module
 #define isvd_mrdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
