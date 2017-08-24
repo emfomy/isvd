@@ -9,37 +9,37 @@
 
 #if !defined(ISVD_USE_MKL)
 
-#define isvd_xsqrt( n, a, y ) \
+#define isvd_xSqrt( n, a, y ) \
   for ( isvd_int_t i = 0; i < n; ++i ) { \
     y[i] = sqrt(a[i]) \
   } \
 
-void isvd_ssqrt(
+void isvd_sSqrt(
     const isvd_int_t n,
     const float *a,
           float *y_t ldb
 ) {
-  isvd_xsqrt(n, a, y);
+  isvd_xSqrt(n, a, y);
 }
-void isvd_dsqrt(
+void isvd_dSqrt(
     const isvd_int_t n,
     const double *a,
           double *yt ldb
 ) {
-  isvd_xsqrt(n, a, y);
+  isvd_xSqrt(n, a, y);
 }
-void isvd_csqrt(
+void isvd_cSqrt(
     const isvd_int_t n,
     const float complex *a,
           float complex *y
 ) {
-  isvd_xsqrt(n, a, y);
+  isvd_xSqrt(n, a, y);
 }
-void isvd_zsqrt(
+void isvd_zSqrt(
     const isvd_int_t n,
     const double complex *a,
           double complex *y
 ) {
-  isvd_xsqrt(n, a, y);
+  isvd_xSqrt(n, a, y);
 }
 #endif  // ISVD_USE_MKL

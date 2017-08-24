@@ -122,6 +122,7 @@ static void test( char dista, char ordera ) {
   isvd_int_t ldyst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_DOUBLE, yst_, mb*ldyst, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
 
+  #if defined(ISVD_USE_MKL)
   // Check results
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
@@ -130,6 +131,7 @@ static void test( char dista, char ordera ) {
       }
     }
   }
+  #endif /// ISVD_USE_MKL
 }
 
 TEST(GaussianProjectionSketching, BlockCol_ColMajor) {

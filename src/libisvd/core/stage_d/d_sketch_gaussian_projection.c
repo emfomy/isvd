@@ -74,12 +74,12 @@ static void sketchBlockCol(
       len = nj * Nl - start;
     }
 
-    VSLStreamStatePtr stream;
-    vslNewStream(&stream, VSL_BRNG_SFMT19937, seed_);
-    vslSkipAheadStream(stream, (nb * Nl * param.mpi_rank + start) * 2);
-    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omegat + start, 0.0, 1.0);
+    isvd_VSLStreamStatePtr stream;
+    isvd_vslNewStream(&stream, seed_);
+    isvd_vslSkipAheadStream(stream, (nb * Nl * param.mpi_rank + start) * 2);
+    isvd_vdRngGaussian(stream, len, omegat + start, 0.0, 1.0);
 
-    vslDeleteStream(&stream);
+    isvd_vslDeleteStream(&stream);
   }
 
   // ====================================================================================================================== //
@@ -138,7 +138,7 @@ static void sketchBlockRow(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
+  MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
 
 #if defined(_OPENMP)
   #pragma omp parallel
@@ -153,12 +153,12 @@ static void sketchBlockRow(
       len = n * Nl - start;
     }
 
-    VSLStreamStatePtr stream;
-    vslNewStream(&stream, VSL_BRNG_SFMT19937, seed_);
-    vslSkipAheadStream(stream, start * 2);
-    vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, len, omegat + start, 0.0, 1.0);
+    isvd_VSLStreamStatePtr stream;
+    isvd_vslNewStream(&stream, seed_);
+    isvd_vslSkipAheadStream(stream, start * 2);
+    isvd_vdRngGaussian(stream, len, omegat + start, 0.0, 1.0);
 
-    vslDeleteStream(&stream);
+    isvd_vslDeleteStream(&stream);
   }
 
   // ====================================================================================================================== //

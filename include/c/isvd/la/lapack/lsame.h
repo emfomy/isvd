@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/ksame.h
-/// @brief   The LAPACK auxiliary header.
+/// @file    include/c/isvd/la/lapack/lsame.h
+/// @brief   The LAPACK LSAME header.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///

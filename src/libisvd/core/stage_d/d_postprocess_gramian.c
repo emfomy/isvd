@@ -302,7 +302,7 @@ void isvd_dPostprocessGramian(
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
   isvd_dgesvd(jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1);
-  isvd_vdsqrt(l, s, s);
+  isvd_vdSqrt(l, s, s);
 
   // ====================================================================================================================== //
   // Compute singular vectors

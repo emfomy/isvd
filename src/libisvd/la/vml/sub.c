@@ -9,41 +9,41 @@
 
 #if !defined(ISVD_USE_MKL)
 
-#define isvd_xsub( n, a, b, y ) \
+#define isvd_xSub( n, a, y ) \
   for ( isvd_int_t i = 0; i < n; ++i ) { \
     y[i] = a[i] - b[i] \
   } \
 
-void isvd_ssub(
+void isvd_sSub(
     const isvd_int_t n,
     const float *a,
     const float *b,
           float *y_t ldb
 ) {
-  isvd_xsub(n, a, y);
+  isvd_xSub(n, a, y);
 }
-void isvd_dsub(
+void isvd_dSub(
     const isvd_int_t n,
     const double *a,
     const double *b,
           double *yt ldb
 ) {
-  isvd_xsub(n, a, y);
+  isvd_xSub(n, a, y);
 }
-void isvd_csub(
+void isvd_cSub(
     const isvd_int_t n,
     const float complex *a,
     const float complex *b,
           float complex *y
 ) {
-  isvd_xsub(n, a, y);
+  isvd_xSub(n, a, y);
 }
-void isvd_zsub(
+void isvd_zSub(
     const isvd_int_t n,
     const double complex *a,
     const double complex *b,
           double complex *y
 ) {
-  isvd_xsub(n, a, y);
+  isvd_xSub(n, a, y);
 }
 #endif  // ISVD_USE_MKL

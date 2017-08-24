@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/vml/bml.h
+/// @file    include/c/isvd/la/vml/vml.h
 /// @brief   The VML routines.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_LA_VML_SQRT_H_
-#define _ISVD_LA_VML_SQRT_H_
+#ifndef _ISVD_LA_VML_VML_H_
+#define _ISVD_LA_VML_VML_H_
 
 #include <isvd/def.h>
 
@@ -22,29 +22,29 @@
 /// Subtracts vector elements.
 //@{
 #if defined(ISVD_USE_MKL)
-static inline void isvd_vssub(
+static inline void isvd_vsSub(
     const INT n, const REAL4 *a, const REAL4 *b, REAL4 *y
-) { vssub_(&n, a, b, y); }
-static inline void isvd_vdsub(
+) { vsSub(n, a, b, y); }
+static inline void isvd_vdSub(
     const INT n, const REAL8 *a, const REAL8 *b, REAL8 *y
-) { vdsub_(&n, a, b, y); }
-static inline void isvd_vcsub(
+) { vdSub(n, a, b, y); }
+static inline void isvd_vcSub(
     const INT n, const COMP4 *a, const COMP4 *b, COMP4 *y
-) { vcsub_(&n, a, b, y); }
-static inline void isvd_vzsub(
+) { vcSub(n, a, b, y); }
+static inline void isvd_vzSub(
     const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y
-) { vzsub_(&n, a, b, y); }
+) { vzSub(n, a, b, y); }
 #else  // ISVD_USE_MKL
-void isvd_vssub(
+void isvd_vsSub(
     const INT n, const REAL4 *a, const REAL4 *b, REAL4 *y
 );
-void isvd_vdsub(
+void isvd_vdSub(
     const INT n, const REAL8 *a, const REAL8 *b, REAL8 *y
 );
-void isvd_vcsub(
+void isvd_vcSub(
     const INT n, const COMP4 *a, const COMP4 *b, COMP4 *y
 );
-void isvd_vzsub(
+void isvd_vzSub(
     const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y
 );
 #endif  // ISVD_USE_MKL
@@ -55,29 +55,29 @@ void isvd_vzsub(
 /// Computes the square root of vector elements.
 //@{
 #if defined(ISVD_USE_MKL)
-static inline void isvd_vssqrt(
+static inline void isvd_vsSqrt(
     const INT n, const REAL4 *a, REAL4 *y
-) { vssqrt_(&n, a, y); }
-static inline void isvd_vdsqrt(
+) { vsSqrt(n, a, y); }
+static inline void isvd_vdSqrt(
     const INT n, const REAL8 *a, REAL8 *y
-) { vdsqrt_(&n, a, y); }
-static inline void isvd_vcsqrt(
+) { vdSqrt(n, a, y); }
+static inline void isvd_vcSqrt(
     const INT n, const COMP4 *a, COMP4 *y
-) { vcsqrt_(&n, a, y); }
-static inline void isvd_vzsqrt(
+) { vcSqrt(n, a, y); }
+static inline void isvd_vzSqrt(
     const INT n, const COMP8 *a, COMP8 *y
-) { vzsqrt_(&n, a, y); }
+) { vzSqrt(n, a, y); }
 #else  // ISVD_USE_MKL
-void isvd_vssqrt(
+void isvd_vsSqrt(
     const INT n, const REAL4 *a, REAL4 *y
 );
-void isvd_vdsqrt(
+void isvd_vdSqrt(
     const INT n, const REAL8 *a, REAL8 *y
 );
-void isvd_vcsqrt(
+void isvd_vcSqrt(
     const INT n, const COMP4 *a, COMP4 *y
 );
-void isvd_vzsqrt(
+void isvd_vzSqrt(
     const INT n, const COMP8 *a, COMP8 *y
 );
 #endif  // ISVD_USE_MKL
@@ -90,4 +90,4 @@ void isvd_vzsqrt(
 #undef COMP4
 #undef COMP8
 
-#endif  // _ISVD_LA_VML_SQRT_H_
+#endif  // _ISVD_LA_VML_VML_H_

@@ -294,8 +294,8 @@ void isvd_dIntegrateWenYin(
     isvd_dgemm('T', 'N', l, mj, l, -1.0, dc, lddc, qpt, ldqpt, 1.0, xpt, ldxpt);
 
     // Delta1 [in Qc] := Qc - Q+; Delta2 [in Xc] := Xc - X+
-    isvd_vdsub(mj*ldqct, qct, qpt, qct);
-    isvd_vdsub(mj*ldxct, xct, xpt, xct);
+    isvd_vdSub(mj*ldqct, qct, qpt, qct);
+    isvd_vdSub(mj*ldxct, xct, xpt, xct);
 
     // Update taug
     isvd_val_t t[2];

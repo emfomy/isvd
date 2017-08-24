@@ -175,7 +175,7 @@ void isvd_dIntegrateKolmogorovNagumo(
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
       s[ii] = sqrt(0.5 + sqrt(0.25 - s[ii]));
     }
-    isvd_vdsqrt(l, s, ss);
+    isvd_vdSqrt(l, s, ss);
     isvd_dmemcpy(cinv, z, l*l);
 
     // Compute Z * sqrt(S)
