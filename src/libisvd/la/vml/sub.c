@@ -5,7 +5,7 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/la/vml/sub.h>
+#include <isvd/la/vml.h>
 
 #if !defined(ISVD_USE_MKL)
 
@@ -20,7 +20,7 @@ void isvd_ssub(
     const float *b,
           float *y_t ldb
 ) {
-  isvd_xsub(n, a, b, y);
+  isvd_xsub(n, a, y);
 }
 void isvd_dsub(
     const isvd_int_t n,
@@ -28,7 +28,7 @@ void isvd_dsub(
     const double *b,
           double *yt ldb
 ) {
-  isvd_xsub(n, a, b, y);
+  isvd_xsub(n, a, y);
 }
 void isvd_csub(
     const isvd_int_t n,
@@ -36,7 +36,7 @@ void isvd_csub(
     const float complex *b,
           float complex *y
 ) {
-  isvd_xsub(n, a, b, y);
+  isvd_xsub(n, a, y);
 }
 void isvd_zsub(
     const isvd_int_t n,
@@ -44,6 +44,6 @@ void isvd_zsub(
     const double complex *b,
           double complex *y
 ) {
-  isvd_xsub(n, a, b, y);
+  isvd_xsub(n, a, y);
 }
 #endif  // ISVD_USE_MKL

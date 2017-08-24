@@ -26,15 +26,15 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void sgetrf();
-extern void dgetrf();
-extern void cgetrf();
-extern void zgetrf();
+extern void sgetrf(ISVD_UNKNOWN);
+extern void dgetrf(ISVD_UNKNOWN);
+extern void cgetrf(ISVD_UNKNOWN);
+extern void zgetrf(ISVD_UNKNOWN);
 
-extern void sgetri();
-extern void dgetri();
-extern void cgetri();
-extern void zgetri();
+extern void sgetri(ISVD_UNKNOWN);
+extern void dgetri(ISVD_UNKNOWN);
+extern void cgetri(ISVD_UNKNOWN);
+extern void zgetri(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 

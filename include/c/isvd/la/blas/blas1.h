@@ -25,25 +25,25 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern REAL4 sdot();
-extern REAL8 ddot();
+extern REAL4 sdot(ISVD_UNKNOWN);
+extern REAL8 ddot(ISVD_UNKNOWN);
 
-extern REAL4 snrm2();
-extern REAL8 dnrm2();
-extern REAL4 scnrm2();
-extern REAL8 dznrm2();
+extern REAL4 snrm2(ISVD_UNKNOWN);
+extern REAL8 dnrm2(ISVD_UNKNOWN);
+extern REAL4 scnrm2(ISVD_UNKNOWN);
+extern REAL8 dznrm2(ISVD_UNKNOWN);
 
-extern REAL4 sasum();
-extern REAL8 dasum();
-extern REAL4 scasum();
-extern REAL8 dzasum();
+extern REAL4 sasum(ISVD_UNKNOWN);
+extern REAL8 dasum(ISVD_UNKNOWN);
+extern REAL4 scasum(ISVD_UNKNOWN);
+extern REAL8 dzasum(ISVD_UNKNOWN);
 
-extern void sscal();
-extern void dscal();
-extern void cscal();
-extern void zscal();
-extern void csscal();
-extern void zdscal();
+extern void sscal(ISVD_UNKNOWN);
+extern void dscal(ISVD_UNKNOWN);
+extern void cscal(ISVD_UNKNOWN);
+extern void zscal(ISVD_UNKNOWN);
+extern void csscal(ISVD_UNKNOWN);
+extern void zdscal(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 

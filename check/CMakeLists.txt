@@ -31,7 +31,28 @@ include_directories(
   "${PROJECT_SOURCE_DIR}/ext"
 )
 
+# Add library
+unset(srcfiles)
+file(
+  GLOB_RECURSE srcfiles
+  RELATIVE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/*.c"
+                                       "${PROJECT_SOURCE_DIR}/src/*.c.*"
+)
+foreach(srcfile ${srcfiles})
+  string(REGEX REPLACE "\\.c(.|$)" ".cxx\\1" file ${srcfile})
+  configure_file(
+    "${PROJECT_SOURCE_DIR}/src/${srcfile}"
+    "${CMAKE_CURRENT_BINARY_DIR}/src/${file}"
+    COPYONLY
+  )
+endforeach()
+file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/src/libisvd/*"
+                        "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/*")
+add_library(checkisvd EXCLUDE_FROM_ALL ${files})
+isvd_set_target(checkisvd ".a")
+
 # Set libraries
+list(APPEND LIBS checkisvd)
 list(APPEND LIBS extmmio)
 
 # Set definitions

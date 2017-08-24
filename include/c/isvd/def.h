@@ -28,6 +28,12 @@
 
 #define ISVD_UNUSED( x ) (void)(x)
 
+#if !defined(__cplusplus)
+#define ISVD_UNKNOWN
+#else  // __cplusplus
+#define ISVD_UNKNOWN ...
+#endif  // __cplusplus
+
 /// @ingroup  core_module
 /// The type of index.
 #if !defined(ISVD_USE_ILP64)

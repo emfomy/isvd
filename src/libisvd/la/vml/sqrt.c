@@ -5,7 +5,7 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/la/vml/sqrt.h>
+#include <isvd/la/vml.h>
 
 #if !defined(ISVD_USE_MKL)
 

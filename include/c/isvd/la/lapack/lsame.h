@@ -23,7 +23,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-extern INT lsame_();
+extern INT lsame_(ISVD_UNKNOWN);
 
 #if defined(__cplusplus)
 }

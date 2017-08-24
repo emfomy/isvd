@@ -25,20 +25,20 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void sgemm();
-extern void dgemm();
-extern void cgemm();
-extern void zgemm();
+extern void sgemm(ISVD_UNKNOWN);
+extern void dgemm(ISVD_UNKNOWN);
+extern void cgemm(ISVD_UNKNOWN);
+extern void zgemm(ISVD_UNKNOWN);
 
-extern void ssymm();
-extern void dsymm();
-extern void chemm();
-extern void zhemm();
+extern void ssymm(ISVD_UNKNOWN);
+extern void dsymm(ISVD_UNKNOWN);
+extern void chemm(ISVD_UNKNOWN);
+extern void zhemm(ISVD_UNKNOWN);
 
-extern void ssyrk();
-extern void dsyrk();
-extern void cherk();
-extern void zherk();
+extern void ssyrk(ISVD_UNKNOWN);
+extern void dsyrk(ISVD_UNKNOWN);
+extern void cherk(ISVD_UNKNOWN);
+extern void zherk(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 

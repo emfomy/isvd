@@ -14,7 +14,7 @@ endif()
 
 # Set install prefix
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix." FORCE)
+  set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix.")
 endif()
 
 # Set options

@@ -27,10 +27,10 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void sgesvd();
-extern void dgesvd();
-extern void cgesvd();
-extern void zgesvd();
+extern void sgesvd(ISVD_UNKNOWN);
+extern void dgesvd(ISVD_UNKNOWN);
+extern void cgesvd(ISVD_UNKNOWN);
+extern void zgesvd(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 

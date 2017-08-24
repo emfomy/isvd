@@ -25,10 +25,10 @@ extern "C" {
 
 #if defined(ISVD_USE_MKL)
 
-extern void mkl_somatcopy_();
-extern void mkl_domatcopy_();
-extern void mkl_comatcopy_();
-extern void mkl_zomatcopy_();
+extern void mkl_somatcopy_(ISVD_UNKNOWN);
+extern void mkl_domatcopy_(ISVD_UNKNOWN);
+extern void mkl_comatcopy_(ISVD_UNKNOWN);
+extern void mkl_zomatcopy_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 

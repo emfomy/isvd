@@ -26,10 +26,10 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void ssyev();
-extern void dsyev();
-extern void cheev();
-extern void zheev();
+extern void ssyev(ISVD_UNKNOWN);
+extern void dsyev(ISVD_UNKNOWN);
+extern void cheev(ISVD_UNKNOWN);
+extern void zheev(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 

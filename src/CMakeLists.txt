@@ -18,5 +18,6 @@ include_directories(
 )
 
 # libisvd
-file(GLOB_RECURSE files ${CMAKE_CURRENT_SOURCE_DIR}/libisvd/*)
+file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/libisvd/*"
+                        "${CMAKE_CURRENT_BINARY_DIR}/libisvd/*")
 set_target(isvd "${files}")
