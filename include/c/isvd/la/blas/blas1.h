@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas1.h
+/// @file    include/c/isvd/la/blas/blas1.h
 /// @brief   The BLAS level 1 header.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_LA_BLAS1_H_
-#define _ISVD_LA_BLAS1_H_
+#ifndef _ISVD_LA_BLAS_BLAS1_H_
+#define _ISVD_LA_BLAS_BLAS1_H_
 
 #include <isvd/def.h>
 
@@ -132,4 +132,4 @@ static inline void isvd_zdscal(
 #undef COMP4
 #undef COMP8
 
-#endif  // _ISVD_LA_BLAS1_H_
+#endif  // _ISVD_LA_BLAS_BLAS1_H_

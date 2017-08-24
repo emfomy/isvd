@@ -11,6 +11,7 @@
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
 #include <isvd/core/stage_d.h>
+#include <isvd/util/arg.h>
 
 // General iSVD driver
 void isvd_dIsvd(

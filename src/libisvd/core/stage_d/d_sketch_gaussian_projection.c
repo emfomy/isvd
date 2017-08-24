@@ -7,6 +7,7 @@
 
 #include <isvd/core/stage_d.h>
 #include <isvd/la.h>
+#include <isvd/util/arg.h>
 #include <isvd/util/memory.h>
 #include <isvd/util/omp.h>
 
@@ -224,8 +225,8 @@ void isvd_dSketchGaussianProjection(
   // ====================================================================================================================== //
   // Check arguments
 
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR");
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR");
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   if ( !dista_ || !ordera_ ) return;
 
   // ====================================================================================================================== //

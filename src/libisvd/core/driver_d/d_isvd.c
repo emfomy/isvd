@@ -7,6 +7,7 @@
 
 #include <isvd/core/driver_d.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/arg.h>
 
 typedef double isvd_val_t;
 
@@ -97,10 +98,10 @@ void isvd_dIsvd(
   // ====================================================================================================================== //
   // Check arguments
 
-  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP");
-  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR");
-  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR");
-  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGR");
+  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP",     NULL);
+  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR",   NULL);
+  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR", NULL);
+  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGR",   NULL);
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
   isvd_fun_t funs = isvd_arg2algs(algs_);

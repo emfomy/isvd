@@ -132,7 +132,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   // Initializing
 
   // Qc := Q0
-  mkl_domatcopy('R', 'N', mj, l, 1.0, qst, ldqst, qct, ldqct);
+  isvd_domatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
   isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
@@ -233,7 +233,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   tmp = qct; qct = qpt; qpt = tmp;
 
   // Copy Qbar
-  mkl_domatcopy('C', 'N', l, mj, 1.0, qct, ldqct, qt, ldqt);
+  isvd_domatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

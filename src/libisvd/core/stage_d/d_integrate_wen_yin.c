@@ -164,7 +164,7 @@ void isvd_dIntegrateWenYin(
   // Initializing
 
   // Qc := Q0
-  mkl_domatcopy('R', 'N', mj, l, 1.0, qst, ldqst, qct, ldqct);
+  isvd_domatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
   isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
@@ -211,9 +211,9 @@ void isvd_dIntegrateWenYin(
       // C := [ Dc/2 - I/tau , I/2          ;
       //       -Dgc/2,        -Dc/2 - I/tau ]
       isvd_dmemset0(c, ldc*l2);
-      mkl_domatcopy('C', 'N', l, l,  0.5, dc,  lddc,  c11, ldc);
-      mkl_domatcopy('C', 'N', l, l, -0.5, dgc, lddgc, c21, ldc);
-      mkl_domatcopy('C', 'N', l, l, -0.5, dc,  lddc,  c22, ldc);
+      isvd_domatcopy('N', l, l,  0.5, dc,  lddc,  c11, ldc);
+      isvd_domatcopy('N', l, l, -0.5, dgc, lddgc, c21, ldc);
+      isvd_domatcopy('N', l, l, -0.5, dc,  lddc,  c22, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c11[ii+ldc*ii] -= 1.0/tau;
       }
@@ -325,7 +325,7 @@ void isvd_dIntegrateWenYin(
   tmp = qct; qct = qpt; qpt = tmp;
 
   // Copy Qbar
-  mkl_domatcopy('C', 'N', l, mj, 1.0, qct, ldqct, qt, ldqt);
+  isvd_domatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas2.h
-/// @brief   The BLAS level 2 header.
+/// @file    include/c/isvd/la/ksame.h
+/// @brief   The LAPACK auxiliary header.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_LA_BLAS2_H_
-#define _ISVD_LA_BLAS2_H_
+#ifndef _ISVD_LA_LAPACK_LSAME_H_
+#define _ISVD_LA_LAPACK_LSAME_H_
 
 #include <isvd/def.h>
 
@@ -23,15 +23,22 @@
 extern "C" {
 #endif  // __cplusplus
 
-#if !defined(ISVD_USE_MKL)
-
-#endif  // ISVD_USE_MKL
+extern INT lsame_();
 
 #if defined(__cplusplus)
 }
-#endif  // __cplusplus)
+#endif  // __cplusplus
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @ingroup  la_lapack_module
+/// Tests two characters for equality regardless of the case.
+//@{
+static inline INT isvd_lsame(
+    const CHAR1 ca, const CHAR1 cb
+) { return lsame_(&ca, &cb); }
+//@}
 
 #undef CHAR1
 #undef INT
@@ -40,4 +47,4 @@ extern "C" {
 #undef COMP4
 #undef COMP8
 
-#endif  // _ISVD_LA_BLAS2_H_
+#endif  // _ISVD_LA_LAPACK_LSAME_H_

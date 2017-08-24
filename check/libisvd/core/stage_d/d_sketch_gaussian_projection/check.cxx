@@ -21,8 +21,8 @@ static void test( char dista, char ordera ) {
   MM_typecode matcode;
 
   // Check arguments
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR");
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR");
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');
 

@@ -10,6 +10,7 @@
 
 #include <isvd/def.h>
 #include <stdlib.h>
+#include <string.h>
 
 #if defined(ISVD_USE_MKL)
   #define isvd_malloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));

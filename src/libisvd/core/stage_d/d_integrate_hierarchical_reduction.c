@@ -105,7 +105,7 @@ void isvd_dIntegrateHierarchicalReduction(
       isvd_dgesvd('O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt);
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
-      mkl_domatcopy('C', 'N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
+      isvd_domatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
       isvd_dgemm('T', 'N', l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
       isvd_dgemm('N', 'N', l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
 
@@ -117,7 +117,7 @@ void isvd_dIntegrateHierarchicalReduction(
   }
 
   // Qbar := Q(i)
-  mkl_domatcopy('C', 'N', l, mj, 1.0, qst, ldqst, qt, ldqt);
+  isvd_domatcopy('N', l, mj, 1.0, qst, ldqst, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

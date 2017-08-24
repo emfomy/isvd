@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/lapack_le.h
-/// @brief   The LAPACK linear equation header.
+/// @file    include/c/isvd/la/geinv.h
+/// @brief   The LAPACK GETRF+GETRI routine.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_LA_LAPACK_LE_H_
-#define _ISVD_LA_LAPACK_LE_H_
+#ifndef _ISVD_LA_LAPACK_GEINV_H_
+#define _ISVD_LA_LAPACK_GEINV_H_
 
 #include <isvd/def.h>
 #include <isvd/util/memory.h>
@@ -101,4 +101,4 @@ static inline void isvd_zgeinv(
 #undef COMP4
 #undef COMP8
 
-#endif  // _ISVD_LA_LAPACK_LE_H_
+#endif  // _ISVD_LA_LAPACK_GEINV_H_

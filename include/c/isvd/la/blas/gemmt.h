@@ -1,17 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas_like.h
-/// @brief   The BLAS-like header.
+/// @file    include/c/isvd/la/blas/gemmt.h
+/// @brief   The BLAS-like GEMMT routine.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_LA_BLAS_LIKE_H_
-#define _ISVD_LA_BLAS_LIKE_H_
+#ifndef _ISVD_LA_BLAS_GEMMT_H_
+#define _ISVD_LA_BLAS_GEMMT_H_
 
 #include <isvd/def.h>
-#include <isvd/la/blas1.h>
-#include <isvd/la/blas2.h>
-#include <isvd/la/blas3.h>
+#include <isvd/la/blas/blas3.h>
 
 #define CHAR1 char
 #define INT   isvd_int_t
@@ -69,4 +67,4 @@ static inline void isvd_zgemmt(
 #undef COMP4
 #undef COMP8
 
-#endif  // _ISVD_LA_BLAS_LIKE_H_
+#endif  // _ISVD_LA_BLAS_GEMMT_H_
