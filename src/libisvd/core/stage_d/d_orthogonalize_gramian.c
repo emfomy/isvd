@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_orthogonalize_gramian.c
+/// @file    src/libisvd/core/stage_d/d_orthogonalize_gramian.c
 /// @brief   The Gramian Orthogonalization (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

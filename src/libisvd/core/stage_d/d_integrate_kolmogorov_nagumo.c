@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_integrate_kolmogorov_nagumo.c
+/// @file    src/libisvd/core/stage_d/d_integrate_kolmogorov_nagumo.c
 /// @brief   The Kolmogorov-Nagumo Integration (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

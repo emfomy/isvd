@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_postprocess_symmetric.c
+/// @file    src/libisvd/core/stage_d/d_postprocess_symmetric.c
 /// @brief   The Symmetric Postprocessing (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

@@ -9,7 +9,6 @@
 #define _ISVD_LA_LAPACK_LE_H_
 
 #include <isvd/def.h>
-
 #include <isvd/util/memory.h>
 
 #define CHAR1 char

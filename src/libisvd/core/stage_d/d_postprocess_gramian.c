@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_postprocess_gramian.c
+/// @file    src/libisvd/core/stage_d/d_postprocess_gramian.c
 /// @brief   The Gramian Postprocessing (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

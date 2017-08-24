@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_postprocess_tall_skinny_qr.c
+/// @file    src/libisvd/core/stage_d/d_postprocess_tall_skinny_qr.c
 /// @brief   The Tall-Skinny QR Postprocessing (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

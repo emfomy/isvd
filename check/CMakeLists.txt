@@ -45,19 +45,19 @@ set(DEFS_TMP "${DEFS}")
 list(REMOVE_ITEM DEFS "ISVD_USE_GPU")
 
 # Sketching
-add_mpi_check(libisvd/core/stage_d/isvd_d_sketch_gaussian_projection "Gaussian Projection Sketching check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_sketch_gaussian_projection "Gaussian Projection Sketching check" "1;2;3;4;6;12")
 
 # Orthogonalization
-add_mpi_check(libisvd/core/stage_d/isvd_d_orthogonalize_gramian "Gramian Orthogonalization check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_orthogonalize_gramian "Gramian Orthogonalization check" "1;2;3;4;6;12")
 
 # Integration
-add_mpi_check(libisvd/core/stage_d/isvd_d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
-add_mpi_check(libisvd/core/stage_d/isvd_d_integrate_wen_yin "Wen Yin Integration check" "1;2;3;4;6;12")
-add_mpi_check(libisvd/core/stage_d/isvd_d_integrate_hierarchical_reduction "Hierarchical Reduction Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_integrate_kolmogorov_nagumo "Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_integrate_wen_yin "Wen Yin Integration check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_integrate_hierarchical_reduction "Hierarchical Reduction Integration check" "1;2;3;4;6;12")
 
 # Postprocessing
-add_mpi_check(libisvd/core/stage_d/isvd_d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")
-add_mpi_check(libisvd/core/stage_d/isvd_d_postprocess_symmetric "Symmetric Postprocessing check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_postprocess_gramian "Gramian Postprocessing check" "1;2;3;4;6;12")
+add_mpi_check(libisvd/core/stage_d/d_postprocess_symmetric "Symmetric Postprocessing check" "1;2;3;4;6;12")
 
 set(DEFS "${DEFS_TMP}")
 unset(DEFS_TMP)

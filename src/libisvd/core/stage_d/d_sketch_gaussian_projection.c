@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_sketch_gaussian_projection.c
+/// @file    src/libisvd/core/stage_d/d_sketch_gaussian_projection.c
 /// @brief   The Gaussian Projection Sketching (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
@@ -58,7 +58,7 @@ static void sketchBlockCol(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
+  MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm);
 
 #if defined(_OPENMP)
   #pragma omp parallel

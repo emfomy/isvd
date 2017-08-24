@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_integrate_hierarchical_reduction.c
+/// @file    src/libisvd/core/stage_d/d_integrate_hierarchical_reduction.c
 /// @brief   The Hierarchical Reduction Integration (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

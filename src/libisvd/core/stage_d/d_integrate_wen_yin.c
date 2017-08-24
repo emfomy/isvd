@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/isvd_d_integrate_wen_yin.c
+/// @file    src/libisvd/core/stage_d/d_integrate_wen_yin.c
 /// @brief   The Wen-Yin Integration (double precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

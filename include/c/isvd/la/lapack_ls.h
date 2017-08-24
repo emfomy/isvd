@@ -9,8 +9,8 @@
 #define _ISVD_LA_LAPACK_LS_H_
 
 #include <isvd/def.h>
-
 #include <isvd/util/memory.h>
+#include <isvd/util/function.h>
 
 #define CHAR1 char
 #define INT   isvd_int_t
@@ -121,7 +121,7 @@ static inline void isvd_cgesvd(
   cgesvd(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
   COMP4 *work  = isvd_cmalloc(lwork);
-  REAL4 *rwork = isvd_smalloc(5*fmin(m, n));
+  REAL4 *rwork = isvd_smalloc(5*min(m, n));
   cgesvd(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
 static inline void isvd_zgesvd(
@@ -132,7 +132,7 @@ static inline void isvd_zgesvd(
   zgesvd(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   COMP8 *work  = isvd_zmalloc(lwork);
-  REAL8 *rwork = isvd_dmalloc(5*fmin(m, n));
+  REAL8 *rwork = isvd_dmalloc(5*min(m, n));
   zgesvd(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
 //@}
