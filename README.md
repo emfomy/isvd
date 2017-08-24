@@ -43,30 +43,35 @@ Use the following command to set options
 ccmake <path-to-source>
 ```
 
-* Set `ISVD_BLAS`         to select BLAS/LAPACK library. \[`BLAS/MKL`\]
-* Set `ISVD_BUILD_DEMO`   to build demo codes.
-* Set `ISVD_BUILD_DOC`    to build documentation.
-* Set `ISVD_BUILD_LIB`    to build libraries.
-* Set `ISVD_BUILD_TEST`   to build unit tests.
-* Set `ISVD_INDEX_TYPE`   to select index type. \[`32/64`\]
-* Set `ISVD_OMP`          to select OpenMP library. \[`OFF/GOMP/IOMP`\] (Require `ISVD_BLAS = MKL`)
-<!-- * Set `ISVD_USE_GPU`      to enable GPU support. -->
+The following table are the main options
 
-* Set `GTEST_ROOT`        for the root path of Google Test. (Require `ISVD_BUILD_TEST`)
-* Set `INTEL_ROOT`        for the root path of Intel libraries. (Require `ISVD_BLAS = MKL`)
-* Set `MKL_ROOT`          for the root path of Intel MKL. (Require `ISVD_BLAS = MKL`)
-* Set `MPI_PROCS`         to set the number of MPI processes used in demo codes.
-* Set `OMP_THRDS`         to set the number of OpenMP threads used in demo/check codes.
+| Option                 | Detail                             | Note                           |
+|------------------------|------------------------------------|--------------------------------|
+| `ISVD_BLAS`            | the selection BLAS/LAPACK library. | Options: `BLAS/MKL`            |
+| `ISVD_BUILD_DEMO`      | build demo codes.                  |                                |
+| `ISVD_BUILD_DOC`       | build documentation.               |                                |
+| `ISVD_BUILD_LIB`       | build libraries.                   |                                |
+| `ISVD_BUILD_TEST`      | build unit tests.                  |                                |
+| `ISVD_INDEX_TYPE`      | the selection index type.          | Options: `32/64`               |
+| `ISVD_OMP`             | the selection OpenMP library.      | Options: `OFF/GOMP/IOMP`       |
+| `GTEST_ROOT`           | the root path of Google Test.      | Require `ISVD_BUILD_TEST`      |
+| `INTEL_ROOT`           | the root path of Intel libraries.  | Require `ISVD_BLAS = MKL`      |
+| `MKL_ROOT`             | the root path of Intel MKL.        | Require `ISVD_BLAS = MKL`      |
+| `MPI_PROCS`            | the number of MPI processes.       | Only used in demo codes.       |
+| `OMP_THRDS`            | the number of OpenMP threads.      | Only used in demo/check codes. |
+<!-- | `ISVD_USE_GPU`         | enable GPU support.                |                                | -->
 
 ### Makefile
 
-| Command        | Detail                   |
-|----------------|--------------------------|
-| `make all`     | build all binaries       |
-| `make install` | install package          |
-| `make check`   | build and run unit tests |
-| `make doc`     | build documentation      |
-| `make help`    | display make-rules       |
+The following table are the main make rules
+
+| Command        | Detail                         |
+|----------------|--------------------------------|
+| `make all`     | build all binaries             |
+| `make install` | install package                |
+| `make check`   | build and run unit tests       |
+| `make doc`     | build documentation            |
+| `make help`    | display make-rules             |
 
 ### Definitions
 
