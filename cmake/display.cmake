@@ -1,3 +1,13 @@
+function(DISP item var)
+  if(var STREQUAL "ON")
+    message(STATUS "${item}${Esc}[1;32m${var}${Esc}[0m")
+  elseif(var STREQUAL "OFF")
+    message(STATUS "${item}${Esc}[1;31m${var}${Esc}[0m")
+  else()
+    message(STATUS "${item}${var}")
+  endif()
+endfunction()
+
 # Display message
 message(STATUS "")
 message(STATUS "================================================================================")
@@ -25,72 +35,72 @@ message(STATUS "================================================================
 message(STATUS "")
 
 # Display options
-message(STATUS "Build libraries:                ${ISVD_BUILD_LIB}")
-message(STATUS "Build demo codes:               ${ISVD_BUILD_DEMO}")
-message(STATUS "Build unit tests:               ${ISVD_BUILD_TEST}")
-message(STATUS "Build documentation:            ${ISVD_BUILD_DOC}")
+disp("Build libraries:                " "${ISVD_BUILD_LIB}")
+disp("Build demo codes:               " "${ISVD_BUILD_DEMO}")
+disp("Build unit tests:               " "${ISVD_BUILD_TEST}")
+disp("Build documentation:            " "${ISVD_BUILD_DOC}")
 
 message(STATUS "")
 
 # Display compilers
-message(STATUS "Use C   Compiler:               ${CMAKE_C_COMPILER}")
-message(STATUS "Use C++ Compiler:               ${CMAKE_CXX_COMPILER}")
+disp("Use C   Compiler:               " "${CMAKE_C_COMPILER}")
+disp("Use C++ Compiler:               " "${CMAKE_CXX_COMPILER}")
 
 message(STATUS "")
 
 # Display libraries
 if(ISVD_OMP)
-  message(STATUS "Use OpenMP:                     ${OpenMP_C_FLAGS} ${OpenMP_LIBRARIES}")
+  disp("Use OpenMP:                     " "${OpenMP_C_FLAGS} ${OpenMP_LIBRARIES}")
 else()
-  message(STATUS "Use OpenMP:                     OFF")
+  disp("Use OpenMP:                     " "OFF")
 endif()
 
 if(ISVD_BUILD_BIN)
-  message(STATUS "Use MPI:                        ${MPI_LIBRARIES}")
+  disp("Use MPI:                        " "${MPI_LIBRARIES}")
 else()
-  message(STATUS "Use MPI:                        OFF")
+  disp("Use MPI:                        " "OFF")
 endif()
 
 if(ISVD_BUILD_BIN)
   if(NOT ISVD_USE_MKL)
     set(LAPACK_LIBS ${LAPACK_LIBRARIES})
     list(REMOVE_DUPLICATES LAPACK_LIBS)
-    message(STATUS "Use BLAS:                       ${LAPACK_LIBS}")
+    disp("Use BLAS:                       " "${LAPACK_LIBS}")
   else()
-    message(STATUS "Use BLAS: (Intel MKL)           ${MKL_LIBS}")
+    disp("Use BLAS: (Intel MKL)           " "${MKL_LIBS}")
   endif()
 endif()
 
 # if(ISVD_BUILD_BIN AND ISVD_USE_GPU)
-#   message(STATUS "Use GPU:                        ${CUDA_TOOLKIT_ROOT_DIR}")
-#   message(STATUS "Use MAGMA:                      ${MAGMA_LIBRARIES}")
+#   disp("Use GPU:                        " "${CUDA_TOOLKIT_ROOT_DIR}")
+#   disp("Use MAGMA:                      " "${MAGMA_LIBRARIES}")
 # else()
-#   message(STATUS "Use GPU:                        OFF")
+#   disp("Use GPU:                        " "OFF")
 # endif()
 
 if(ISVD_BUILD_TEST)
-  message(STATUS "Use Google Test:                ${GTEST_BOTH_LIBRARIES}")
+  disp("Use Google Test:                " "${GTEST_BOTH_LIBRARIES}")
 else()
-  message(STATUS "Use Google Test:                OFF")
+  disp("Use Google Test:                " "OFF")
 endif()
 
 if(ISVD_BUILD_DOC)
-  message(STATUS "Use Doxygen:                    ${DOXYGEN_EXECUTABLE}")
+  disp("Use Doxygen:                    " "${DOXYGEN_EXECUTABLE}")
 else()
-  message(STATUS "Use Doxygen:                    OFF")
+  disp("Use Doxygen:                    " "OFF")
 endif()
 
 message(STATUS "")
 
 if(NOT ISVD_USE_ILP64)
-  message(STATUS "Integer type:                   32bit integer (LP64)")
+  disp("Integer type:                   " "32bit integer (LP64)")
 else()
-  message(STATUS "Integer type:                   64bit integer (ILP64)")
+  disp("Integer type:                   " "64bit integer (ILP64)")
 endif()
 
 if(ISVD_BUILD_BIN)
-  message(STATUS "MPI processes (demo only):      ${MPI_PROCS}")
-  message(STATUS "OpenMP threads (demo only):     ${OMP_THRDS}")
+  disp("MPI processes (demo only):      " "${MPI_PROCS}")
+  disp("OpenMP threads (demo only):     " "${OMP_THRDS}")
 endif()
 
 message(STATUS "")
@@ -98,12 +108,20 @@ message(STATUS "================================================================
 message(STATUS "")
 
 # Display flags
-message(STATUS "C   Compiler & flags:           ${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
-message(STATUS "C++ Compiler & flags:           ${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
-message(STATUS "Link flags:                     ${ISVD_LNKFLGS}")
-message(STATUS "Include pathes:                 ${ISVD_INCS}")
-message(STATUS "Libraries:                      ${ISVD_LIBS}")
+disp("C   Compiler & flags:           " "${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
+disp("C++ Compiler & flags:           " "${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
+disp("Link flags:                     " "${ISVD_LNKFLGS}")
+disp("Include pathes:                 " "${ISVD_INCS}")
+disp("Libraries:                      " "${ISVD_LIBS}")
 
 message(STATUS "")
 message(STATUS "================================================================================")
 message(STATUS "")
+
+if(NOT ISVD_BLAS STREQUAL "MKL")
+  message(DEPRECATION "${Esc}[1;33mIntel MKL is not enabled. Recommended to use it for better performance.${Esc}[0m")
+endif()
+
+if(NOT ISVD_OMP)
+  message(DEPRECATION "${Esc}[1;33mOpenMP is not enabled. Recommended to use it for better performance.${Esc}[0m")
+endif()

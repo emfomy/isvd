@@ -15,15 +15,15 @@ Integrated Singular Value Decomposition (iSVD)
 ## Requirements
 * [CMake](https://cmake.org) 2.8+ (CMake 3+ recommended).
 * C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.5+ recommended).
-* [BLAS](http://www.netlib.org/blas) & [LAPACK](http://www.netlib.org/lapack) library.
-* [OpenMP](http://openmp.org) Library.
+* [BLAS](http://www.netlib.org/blas) & [LAPACK](http://www.netlib.org/lapack) library (Used for multi-core parallelization).
 * MPI Library v2.2+ ([MPICH](http://www.mpich.org) or [OpenMPI](https://www.open-mpi.org)).
 
 ### Optional
 * [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (**Recommended** for better performance, used for BLAS & LAPACK).
 <!-- * [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support). -->
-* [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
+* [OpenMP](http://openmp.org) Library (**Recommended** for better performance, used for multi-thread parallelization).
 * [Google Test Library](https://github.com/google/googletest) (Used for code testing).
+* [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
 
 ## Installation
 
@@ -43,20 +43,20 @@ Use the following command to set options
 ccmake <path-to-source>
 ```
 
-* Set 'ISVD_BLAS'         to select BLAS/LAPACK library. \[BLAS/MKL\]
-* Set 'ISVD_BUILD_DEMO'   to build demo codes.
-* Set 'ISVD_BUILD_DOC'    to build documentation.
-* Set 'ISVD_BUILD_LIB'    to build libraries.
-* Set 'ISVD_BUILD_TEST'   to build unit tests.
-* Set 'ISVD_INDEX_TYPE'   to select index type. \[32/64\]
-* Set 'ISVD_OMP'          to select OpenMP library. \[OFF/GOMP/IOMP\] (Require 'ISVD_BLAS = MKL')
-<!-- * Set 'ISVD_USE_GPU'      to enable GPU support. -->
+* Set `ISVD_BLAS`         to select BLAS/LAPACK library. \[`BLAS/MKL`\]
+* Set `ISVD_BUILD_DEMO`   to build demo codes.
+* Set `ISVD_BUILD_DOC`    to build documentation.
+* Set `ISVD_BUILD_LIB`    to build libraries.
+* Set `ISVD_BUILD_TEST`   to build unit tests.
+* Set `ISVD_INDEX_TYPE`   to select index type. \[`32/64`\]
+* Set `ISVD_OMP`          to select OpenMP library. \[`OFF/GOMP/IOMP`\] (Require `ISVD_BLAS = MKL`)
+<!-- * Set `ISVD_USE_GPU`      to enable GPU support. -->
 
-* Set 'GTEST_ROOT'        for the root path of Google Test.         (Require 'ISVD_BUILD_TEST')
-* Set 'INTEL_ROOT'        for the root path of Intel libraries.     (Require 'ISVD_BLAS = MKL')
-* Set 'MKL_ROOT'          for the root path of Intel MKL.           (Require 'ISVD_BLAS = MKL')
-* Set 'MPI_PROCS'         to set the number of MPI processes used in demo codes.
-* Set 'OMP_THRDS'         to set the number of OpenMP threads used in demo/check codes.
+* Set `GTEST_ROOT`        for the root path of Google Test. (Require `ISVD_BUILD_TEST`)
+* Set `INTEL_ROOT`        for the root path of Intel libraries. (Require `ISVD_BLAS = MKL`)
+* Set `MKL_ROOT`          for the root path of Intel MKL. (Require `ISVD_BLAS = MKL`)
+* Set `MPI_PROCS`         to set the number of MPI processes used in demo codes.
+* Set `OMP_THRDS`         to set the number of OpenMP threads used in demo/check codes.
 
 ### Makefile
 
