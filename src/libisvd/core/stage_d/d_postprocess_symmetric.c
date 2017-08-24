@@ -238,7 +238,7 @@ void isvd_dPostprocessSymmetric(
   isvd_assert_eq(mj, nj);
   isvd_assert_eq(mb, nb);
 
-  if ( ut_root ≥  0 ) {
+  if ( ut_root >= 0 ) {
     isvd_assert_eq(ldut, l);
   } else if ( ut_root == -1 ) {
     isvd_assert_ge(ldut, l);
@@ -285,7 +285,7 @@ void isvd_dPostprocessSymmetric(
   if ( ut_root >= -1 ) {
     isvd_dgemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
-    if ( ut_root ≥  0 ) {
+    if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
       } else {

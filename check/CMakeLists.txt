@@ -22,11 +22,9 @@ endif()
 
 # Set include paths
 include_directories(
-  SYSTEM
   "${PROJECT_BINARY_DIR}/include/c"
   "${PROJECT_SOURCE_DIR}/include/c"
-  "${PROJECT_BINARY_DIR}/src"
-  "${PROJECT_SOURCE_DIR}/src"
+  SYSTEM
   "${PROJECT_BINARY_DIR}/ext"
   "${PROJECT_SOURCE_DIR}/ext"
 )

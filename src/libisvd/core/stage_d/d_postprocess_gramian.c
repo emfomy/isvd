@@ -257,13 +257,13 @@ void isvd_dPostprocessGramian(
   const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   if ( !dista_ || !ordera_ ) return;
 
-  if ( ut_root ≥  0 ) {
+  if ( ut_root >= 0 ) {
     isvd_assert_eq(ldut, l);
   } else if ( ut_root == -1 ) {
     isvd_assert_ge(ldut, l);
   }
 
-  if ( vt_root ≥  0 ) {
+  if ( vt_root >= 0 ) {
     isvd_assert_eq(ldvt, l);
   } else if ( vt_root == -1 ) {
     isvd_assert_ge(ldvt, l);
@@ -311,7 +311,7 @@ void isvd_dPostprocessGramian(
   if ( ut_root >= -1 ) {
     isvd_dgemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
-    if ( ut_root ≥  0 ) {
+    if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
       } else {
@@ -327,7 +327,7 @@ void isvd_dPostprocessGramian(
     }
     isvd_dgemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
-    if ( vt_root ≥  0 ) {
+    if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
         MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, vt_root, param.mpi_comm);
       } else {
