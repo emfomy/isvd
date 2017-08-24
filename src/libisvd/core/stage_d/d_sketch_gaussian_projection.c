@@ -188,11 +188,11 @@ static void sketchBlockRow(
 ///                          `'C'`: column-major ordering. <br>
 ///                          `'R'`: row-major ordering.
 /// @param[in]   a, lda      The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                          `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                          `dista='R'`: the size must be @f$m_j \times n@f$.
+///                          @b dista = `'C'`: the size must be @f$m \times n_j@f$. <br>
+///                          @b dista = `'R'`:the size must be @f$m_j \times n@f$.
 /// @param[in]   yst, ldyst  The row-block 𝖄 (@f$m_b \times Nl@f$, row-major) and its leading dimension. <br>
-///                          `dista='C'`: @p ldyst must be @f$Nl@f$. <br>
-///                          `dista='R'`: no condition.
+///                          @b dista = `'C'`: @b ldyst must be @f$Nl@f$. <br>
+///                          @b dista = `'R'`:no condition.
 /// @param[in]   seed        The random seed (significant only at root MPI process).
 /// @param[in]   mpi_root    The root MPI process ID.
 /// <hr>

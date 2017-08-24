@@ -27,16 +27,16 @@ typedef double isvd_val_t;
 ///
 /// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   argv, argc  The arguments and its length. <br>
-///                          `argv[0]`: The maximum number of iteration. (optional, default as @ref kMaxit) <br>
-///                          `argv[1]`: The tolerance of convergence condition. (optional, default as @ref kTol)
+///                          @b argv[0]: The maximum number of iteration. (optional, default as @ref kMaxit) <br>
+///                          @b argv[1]: The tolerance of convergence condition. (optional, default as @ref kTol)
 /// @param[in]   retv, retc  The return values and its length.
 /// <hr>
 /// @param[in]   yst, ldyst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
 /// @param[in]   qt, ldqt    The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
 /// <hr>
 /// @param[out]  retv        Replaced by return values.
-///                          `retv[0]`: The number of iteration.
-///                          `retv[1]`: The error.
+///                          @b retv[0]: The number of iteration.
+///                          @b retv[1]: The error.
 /// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
 void isvd_dIntegrateWenYin(

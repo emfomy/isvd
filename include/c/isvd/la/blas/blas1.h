@@ -25,6 +25,10 @@ extern "C" {
 
 extern REAL4 sdot_(ISVD_UNKNOWN);
 extern REAL8 ddot_(ISVD_UNKNOWN);
+extern COMP4 cdotc_(ISVD_UNKNOWN);
+extern COMP8 zdotc_(ISVD_UNKNOWN);
+extern COMP4 cdotu_(ISVD_UNKNOWN);
+extern COMP8 zdotu_(ISVD_UNKNOWN);
 
 extern REAL4 snrm2_(ISVD_UNKNOWN);
 extern REAL8 dnrm2_(ISVD_UNKNOWN);
@@ -59,6 +63,18 @@ static inline REAL4 isvd_sdot(
 static inline REAL8 isvd_ddot(
     const INT n, const REAL8 *x, const INT incx, REAL8 *y, const INT incy
 ) { return ddot_(&n, x, &incx, y, &incy); }
+static inline COMP4 isvd_cdotc(
+    const INT n, const COMP4 *x, const INT incx, COMP4 *y, const INT incy
+) { return cdotc_(&n, x, &incx, y, &incy); }
+static inline COMP8 isvd_zdotc(
+    const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
+) { return zdotc_(&n, x, &incx, y, &incy); }
+static inline COMP4 isvd_cdotu(
+    const INT n, const COMP4 *x, const INT incx, COMP4 *y, const INT incy
+) { return cdotu_(&n, x, &incx, y, &incy); }
+static inline COMP8 isvd_zdotu(
+    const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
+) { return zdotu_(&n, x, &incx, y, &incy); }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

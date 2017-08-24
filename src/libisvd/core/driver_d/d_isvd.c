@@ -41,27 +41,27 @@ typedef double isvd_val_t;
 ///                            `'C'`: column-major ordering. <br>
 ///                            `'R'`: row-major ordering.
 /// @param[in]   a, lda        The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                            `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                            `dista='R'`: the size must be @f$m_j \times n@f$.
+///                            @b dista = `'C'`: the size must be @f$m \times n_j@f$. <br>
+///                            @b dista = `'R'`:the size must be @f$m_j \times n@f$.
 /// @param[in]   s             The vector 𝝈 (@f$k \times 1@f$).
 /// @param[in]   ut, ldut      The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                            `ut_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
-///                            `ut_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$. <br>
-///                            `ut_root < -1`: not referenced.
+///                            @b ut_root ≥  0: the size must be @f$Pm_b \times k@f$, and @b ldut must be @f$l@f$. <br>
+///                            @b ut_root = -1: the size must be @f$m_b \times k@f$, and @b ldut must be at least @f$l@f$. <br>
+///                            @b ut_root < -1: not referenced.
 /// @param[in]   vt, ldvt      The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                            `vt_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
-///                            `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
-///                            `vt_root < -1`: not referenced.
+///                            @b vt_root ≥  0: the size must be @f$Pn_b \times k@f$, and @b ldvt must be @f$l@f$. <br>
+///                            @b vt_root = -1: the size must be @f$n_b \times k@f$, and @b ldvt must be at least @f$l@f$. <br>
+///                            @b vt_root < -1: not referenced.
 /// <hr>
-/// @param[in]   seed          The random seed (significant only at MPI process of ID `mpi_root`).
+/// @param[in]   seed          The random seed (significant only at MPI process of ID @b mpi_root).
 /// @param[in]   ut_root       The option for computing 𝑼. <br>
-///                            `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
-///                            `ut_root = -1`: compute row-block 𝑼. <br>
-///                            `ut_root < -1`: does not compute 𝑼.
+///                            @b ut_root ≥  0: gather 𝑼 to the MPI process of ID @b ut_root. <br>
+///                            @b ut_root = -1: compute row-block 𝑼. <br>
+///                            @b ut_root < -1: does not compute 𝑼.
 /// @param[in]   vt_root       The option for computing 𝑽. <br>
-///                            `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
-///                            `vt_root = -1`: compute row-block 𝑽. <br>
-///                            `vt_root < -1`: does not compute 𝑽.
+///                            @b vt_root ≥  0: gather 𝑽 to the MPI process of ID @b vt_root. <br>
+///                            @b vt_root = -1: compute row-block 𝑽. <br>
+///                            @b vt_root < -1: does not compute 𝑽.
 /// @param[in]   mpi_root       The MPI process ID containing the parameters and random seed.
 /// @param[in]   mpi_comm      The MPI communicator.
 /// <hr>

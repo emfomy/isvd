@@ -24,7 +24,7 @@ typedef double isvd_val_t;
 /// <hr>
 /// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
-/// @attention  @p yst will be destroyed!
+/// @attention  @b yst will be destroyed!
 ///
 void isvd_dIntegrateHierarchicalReduction(
     const isvd_Param param,

@@ -189,26 +189,26 @@ static void projectBlockRow(
 ///                          `'C'`: column-major ordering. <br>
 ///                          `'R'`: row-major ordering.
 /// @param[in]   a, lda      The column/row-block 𝑨 (@f$m \times n_j@f$) and its leading dimension. <br>
-///                          `dista='C'`: the size must be @f$m \times n_j@f$. <br>
-///                          `dista='R'`: the size must be @f$m_j \times n@f$.
+///                          @b dista = `'C'`: the size must be @f$m \times n_j@f$. <br>
+///                          @b dista = `'R'`:the size must be @f$m_j \times n@f$.
 /// @param[in]   qt, ldqt    The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
 /// @param[in]   s           The vector 𝝈 (@f$k \times 1@f$).
 /// @param[in]   ut, ldut    The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                          `ut_root >= 0`: the size must be @f$Pm_b \times k@f$, and @p ldut must be @f$l@f$. <br>
-///                          `ut_root = -1`: the size must be @f$m_b \times k@f$, and @p ldut must be at least @f$l@f$. <br>
-///                          `ut_root < -1`: not referenced.
+///                          @b ut_root ≥  0: the size must be @f$Pm_b \times k@f$, and @b ldut must be @f$l@f$. <br>
+///                          @b ut_root = -1: the size must be @f$m_b \times k@f$, and @b ldut must be at least @f$l@f$. <br>
+///                          @b ut_root < -1: not referenced.
 /// @param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                          `vt_root >= 0`: the size must be @f$Pn_b \times k@f$, and @p ldvt must be @f$l@f$. <br>
-///                          `vt_root = -1`: the size must be @f$n_b \times k@f$, and @p ldvt must be at least @f$l@f$. <br>
-///                          `vt_root < -1`: not referenced.
+///                          @b vt_root ≥  0: the size must be @f$Pn_b \times k@f$, and @b ldvt must be @f$l@f$. <br>
+///                          @b vt_root = -1: the size must be @f$n_b \times k@f$, and @b ldvt must be at least @f$l@f$. <br>
+///                          @b vt_root < -1: not referenced.
 /// @param[in]   ut_root     The option for computing 𝑼. <br>
-///                          `ut_root >= 0`: gather 𝑼 to the MPI process of ID `ut_root`. <br>
-///                          `ut_root = -1`: compute row-block 𝑼. <br>
-///                          `ut_root < -1`: does not compute 𝑼.
+///                          @b ut_root ≥  0: gather 𝑼 to the MPI process of ID @b ut_root. <br>
+///                          @b ut_root = -1: compute row-block 𝑼. <br>
+///                          @b ut_root < -1: does not compute 𝑼.
 /// @param[in]   vt_root     The option for computing 𝑽. <br>
-///                          `vt_root >= 0`: gather 𝑽 to the MPI process of ID `vt_root`. <br>
-///                          `vt_root = -1`: compute row-block 𝑽. <br>
-///                          `vt_root < -1`: does not compute 𝑽.
+///                          @b vt_root ≥  0: gather 𝑽 to the MPI process of ID @b vt_root. <br>
+///                          @b vt_root = -1: compute row-block 𝑽. <br>
+///                          @b vt_root < -1: does not compute 𝑽.
 /// <hr>
 /// @param[out]  s           Replaced by the singular values 𝝈.
 /// @param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
@@ -257,13 +257,13 @@ void isvd_dPostprocessGramian(
   const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   if ( !dista_ || !ordera_ ) return;
 
-  if ( ut_root >= 0 ) {
+  if ( ut_root ≥  0 ) {
     isvd_assert_eq(ldut, l);
   } else if ( ut_root == -1 ) {
     isvd_assert_ge(ldut, l);
   }
 
-  if ( vt_root >= 0 ) {
+  if ( vt_root ≥  0 ) {
     isvd_assert_eq(ldvt, l);
   } else if ( vt_root == -1 ) {
     isvd_assert_ge(ldvt, l);
@@ -311,7 +311,7 @@ void isvd_dPostprocessGramian(
   if ( ut_root >= -1 ) {
     isvd_dgemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
-    if ( ut_root >= 0 ) {
+    if ( ut_root ≥  0 ) {
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
       } else {
@@ -327,7 +327,7 @@ void isvd_dPostprocessGramian(
     }
     isvd_dgemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
-    if ( vt_root >= 0 ) {
+    if ( vt_root ≥  0 ) {
       if ( param.mpi_rank == vt_root ) {
         MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, vt_root, param.mpi_comm);
       } else {
