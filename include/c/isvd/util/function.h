@@ -9,6 +9,7 @@
 #define _ISVD_UTIL_FUNCTION_H_
 
 #include <isvd/def.h>
+#include <stdlib.h>
 
 static inline int max( int a, int b ) {
   return (a > b) ? a : b;

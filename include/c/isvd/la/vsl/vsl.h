@@ -22,7 +22,7 @@
 #if defined(ISVD_USE_MKL)
 typedef VSLStreamStatePtr isvd_VSLStreamStatePtr;
 #else  // ISVD_USE_MKL
-typedef isvd_int_t[4] isvd_VSLStreamStatePtr;
+typedef isvd_int_t* isvd_VSLStreamStatePtr;
 #endif  // ISVD_USE_MKL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,16 +31,17 @@ typedef isvd_int_t[4] isvd_VSLStreamStatePtr;
 //@{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vslNewStream(
-    isvd_VSLStreamStatePtr *stream, const INT seed
-) { isvd_assert_pass(vslNewStream(stream, VSL_BRNG_SFMT19937, seed)); }
+    isvd_VSLStreamStatePtr *streamp, const INT seed
+) { isvd_assert_pass(vslNewStream(streamp, VSL_BRNG_SFMT19937, seed)); }
 #else  // ISVD_USE_MKL
 static inline void isvd_vslNewStream(
-    isvd_VSLStreamStatePtr *stream, const INT seed
+    isvd_VSLStreamStatePtr *streamp, const INT seed
 ) {
-  *stream[0] = (seed % 256) + 1;
-  *stream[1] = ((seed >>  8) % 256);
-  *stream[2] = ((seed >> 16) % 256);
-  *stream[3] = ((seed >> 24) % 256);
+  *streamp = isvd_imalloc(4);
+  (*streamp)[0] = (seed & 0xff) + 1;
+  (*streamp)[1] = ((seed >>  8) & 0xff);
+  (*streamp)[2] = ((seed >> 16) & 0xff);
+  (*streamp)[3] = ((seed >> 24) & 0xff);
 }
 #endif  // ISVD_USE_MKL
 //@}
@@ -51,12 +52,13 @@ static inline void isvd_vslNewStream(
 //@{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vslDeleteStream(
-    isvd_VSLStreamStatePtr *stream
-) { isvd_assert_pass(vslDeleteStream(stream)); }
+    isvd_VSLStreamStatePtr *streamp
+) { isvd_assert_pass(vslDeleteStream(streamp)); }
 #else  // ISVD_USE_MKL
 static inline void isvd_vslDeleteStream(
-    isvd_VSLStreamStatePtr *stream
-) { ISVD_UNUSED(stream); }
+    isvd_VSLStreamStatePtr *streamp
+) {
+  isvd_free(*streamp); }
 #endif  // ISVD_USE_MKL
 //@}
 
@@ -72,7 +74,7 @@ static inline void isvd_vslSkipAheadStream(
 static inline void isvd_vslSkipAheadStream(
     isvd_VSLStreamStatePtr stream, const INT nskip
 ) {
-  INT seed = nskip;
+  unsigned int seed = nskip;
   stream[0] ^= rand_r(&seed) % 2048 + 1;
   stream[1] ^= rand_r(&seed) % 4096;
   stream[2] ^= rand_r(&seed) % 4096;

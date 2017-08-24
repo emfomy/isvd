@@ -10,20 +10,32 @@
 
 #if defined(ISVD_USE_ILP64) && !defined(MKL_ILP64)
   #define MKL_ILP64
+#else  // ISVD_USE_ILP64
+  #undef MKL_ILP64
 #endif  // ISVD_USE_ILP64
+
+#if defined(_OPENMP)
+  #define ISVD_USE_OMP
+#else  // _OPENMP
+  #undef ISVD_USE_OMP
+#endif  // _OPENMP
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <complex.h>
-#include <math.h>
 #include <mpi.h>
 
-#if defined(_OPENMP)
+#if defined(ISVD_USE_OMP)
   #include <omp.h>
-#endif  // _OPENMP
+#endif  // ISVD_USE_OMP
 
+#if defined(ISVD_USE_GTEST)
+  #include <gtest/gtest.h>
+#endif  // ISVD_USE_GTEST
+
+#include <complex.h>
+#include <math.h>
 #include <isvd/config.h>
 
 #define ISVD_UNUSED( x ) (void)(x)

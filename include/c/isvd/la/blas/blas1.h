@@ -23,29 +23,25 @@
 extern "C" {
 #endif  // __cplusplus
 
-#if !defined(ISVD_USE_MKL)
+extern REAL4 sdot_(ISVD_UNKNOWN);
+extern REAL8 ddot_(ISVD_UNKNOWN);
 
-extern REAL4 sdot(ISVD_UNKNOWN);
-extern REAL8 ddot(ISVD_UNKNOWN);
+extern REAL4 snrm2_(ISVD_UNKNOWN);
+extern REAL8 dnrm2_(ISVD_UNKNOWN);
+extern REAL4 scnrm2_(ISVD_UNKNOWN);
+extern REAL8 dznrm2_(ISVD_UNKNOWN);
 
-extern REAL4 snrm2(ISVD_UNKNOWN);
-extern REAL8 dnrm2(ISVD_UNKNOWN);
-extern REAL4 scnrm2(ISVD_UNKNOWN);
-extern REAL8 dznrm2(ISVD_UNKNOWN);
+extern REAL4 sasum_(ISVD_UNKNOWN);
+extern REAL8 dasum_(ISVD_UNKNOWN);
+extern REAL4 scasum_(ISVD_UNKNOWN);
+extern REAL8 dzasum_(ISVD_UNKNOWN);
 
-extern REAL4 sasum(ISVD_UNKNOWN);
-extern REAL8 dasum(ISVD_UNKNOWN);
-extern REAL4 scasum(ISVD_UNKNOWN);
-extern REAL8 dzasum(ISVD_UNKNOWN);
-
-extern void sscal(ISVD_UNKNOWN);
-extern void dscal(ISVD_UNKNOWN);
-extern void cscal(ISVD_UNKNOWN);
-extern void zscal(ISVD_UNKNOWN);
-extern void csscal(ISVD_UNKNOWN);
-extern void zdscal(ISVD_UNKNOWN);
-
-#endif  // ISVD_USE_MKL
+extern void sscal_(ISVD_UNKNOWN);
+extern void dscal_(ISVD_UNKNOWN);
+extern void cscal_(ISVD_UNKNOWN);
+extern void zscal_(ISVD_UNKNOWN);
+extern void csscal_(ISVD_UNKNOWN);
+extern void zdscal_(ISVD_UNKNOWN);
 
 #if defined(__cplusplus)
 }
@@ -59,10 +55,10 @@ extern void zdscal(ISVD_UNKNOWN);
 //@{
 static inline REAL4 isvd_sdot(
     const INT n, const REAL4 *x, const INT incx, REAL4 *y, const INT incy
-) { return sdot(&n, x, &incx, y, &incy); }
+) { return sdot_(&n, x, &incx, y, &incy); }
 static inline REAL8 isvd_ddot(
     const INT n, const REAL8 *x, const INT incx, REAL8 *y, const INT incy
-) { return ddot(&n, x, &incx, y, &incy); }
+) { return ddot_(&n, x, &incx, y, &incy); }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,16 +67,16 @@ static inline REAL8 isvd_ddot(
 //@{
 static inline REAL4 isvd_snrm2(
     const INT n, const REAL4 *x, const INT incx
-) { return snrm2(&n, x, &incx); }
+) { return snrm2_(&n, x, &incx); }
 static inline REAL8 isvd_dnrm2(
     const INT n, const REAL8 *x, const INT incx
-) { return dnrm2(&n, x, &incx); }
+) { return dnrm2_(&n, x, &incx); }
 static inline REAL4 isvd_scnrm2(
     const INT n, const COMP4 *x, const INT incx
-) { return scnrm2(&n, x, &incx); }
+) { return scnrm2_(&n, x, &incx); }
 static inline REAL8 isvd_dznrm2(
     const INT n, const COMP8 *x, const INT incx
-) { return dznrm2(&n, x, &incx); }
+) { return dznrm2_(&n, x, &incx); }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,16 +85,16 @@ static inline REAL8 isvd_dznrm2(
 //@{
 static inline REAL4 isvd_sasum(
     const INT n, const REAL4 *x, const INT incx
-) { return  sasum(&n, x, &incx); }
+) { return  sasum_(&n, x, &incx); }
 static inline REAL8 isvd_dasum(
     const INT n, const REAL8 *x, const INT incx
-) { return  dasum(&n, x, &incx); }
+) { return  dasum_(&n, x, &incx); }
 static inline REAL4 isvd_scasum(
     const INT n, const COMP4 *x, const INT incx
-) { return scasum(&n, x, &incx); }
+) { return scasum_(&n, x, &incx); }
 static inline REAL8 isvd_dzasum(
     const INT n, const COMP8 *x, const INT incx
-) { return dzasum(&n, x, &incx); }
+) { return dzasum_(&n, x, &incx); }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,22 +103,22 @@ static inline REAL8 isvd_dzasum(
 //@{
 static inline void isvd_sscal(
     const INT n, const REAL4 alpha, REAL4 *x, const INT incx
-) { sscal(&n, &alpha, x, &incx); }
+) { sscal_(&n, &alpha, x, &incx); }
 static inline void isvd_dscal(
     const INT n, const REAL8 alpha, REAL8 *x, const INT incx
-) { dscal(&n, &alpha, x, &incx); }
+) { dscal_(&n, &alpha, x, &incx); }
 static inline void isvd_cscal(
     const INT n, const COMP4 alpha, COMP4 *x, const INT incx
-) { cscal(&n, &alpha, x, &incx); }
+) { cscal_(&n, &alpha, x, &incx); }
 static inline void isvd_zscal(
     const INT n, const COMP8 alpha, COMP8 *x, const INT incx
-) { zscal(&n, &alpha, x, &incx); }
+) { zscal_(&n, &alpha, x, &incx); }
 static inline void isvd_csscal(
     const INT n, const REAL4 alpha, COMP4 *x, const INT incx
-) { csscal(&n, &alpha, x, &incx); }
+) { csscal_(&n, &alpha, x, &incx); }
 static inline void isvd_zdscal(
     const INT n, const REAL8 alpha, COMP8 *x, const INT incx
-) { zdscal(&n, &alpha, x, &incx); }
+) { zdscal_(&n, &alpha, x, &incx); }
 //@}
 
 #undef CHAR1

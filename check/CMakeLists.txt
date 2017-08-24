@@ -18,6 +18,7 @@ endif()
 if(GTEST_FOUND)
   list(APPEND INCS "${GTEST_INCLUDE_DIRS}")
   list(APPEND LIBS "${GTEST_BOTH_LIBRARIES}")
+  list(APPEND DEFS "ISVD_USE_GTEST")
 endif()
 
 # Set include paths

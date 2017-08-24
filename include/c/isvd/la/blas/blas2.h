@@ -23,10 +23,6 @@
 extern "C" {
 #endif  // __cplusplus
 
-#if !defined(ISVD_USE_MKL)
-
-#endif  // ISVD_USE_MKL
-
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus)

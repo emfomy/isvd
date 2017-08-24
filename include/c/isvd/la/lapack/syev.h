@@ -26,10 +26,10 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void ssyev(ISVD_UNKNOWN);
-extern void dsyev(ISVD_UNKNOWN);
-extern void cheev(ISVD_UNKNOWN);
-extern void zheev(ISVD_UNKNOWN);
+extern void ssyev_(ISVD_UNKNOWN);
+extern void dsyev_(ISVD_UNKNOWN);
+extern void cheev_(ISVD_UNKNOWN);
+extern void zheev_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 
@@ -47,39 +47,39 @@ static inline void isvd_ssyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL4 *a, const INT lda, REAL4 *w
 ) {
   REAL4 qwork; INT lwork = -1, info;
-  ssyev(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, &info); isvd_assert_pass(info);
+  ssyev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
   REAL4 *work = isvd_smalloc(lwork);
-  ssyev(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
+  ssyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
 }
 static inline void isvd_dsyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL8 *a, const INT lda, REAL8 *w
 ) {
   REAL8 qwork; INT lwork = -1, info;
-  dsyev(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, &info); isvd_assert_pass(info);
+  dsyev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
   REAL8 *work = isvd_dmalloc(lwork);
-  dsyev(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
+  dsyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
 }
 static inline void isvd_cheev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w
 ) {
   COMP4 qwork; INT lwork = -1, info;
-  cheev(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
+  cheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   COMP4 *work  = isvd_cmalloc(lwork);
   REAL4 *rwork = isvd_smalloc(5*n-2);
-  cheev(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
+  cheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
 static inline void isvd_zheev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w
 ) {
   COMP8 qwork; INT lwork = -1, info;
-  zheev(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
+  zheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   COMP8 *work  = isvd_zmalloc(lwork);
   REAL8 *rwork = isvd_dmalloc(5*n-2);
-  zheev(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
+  zheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
 //@}
 

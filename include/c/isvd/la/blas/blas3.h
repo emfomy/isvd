@@ -23,24 +23,20 @@
 extern "C" {
 #endif  // __cplusplus
 
-#if !defined(ISVD_USE_MKL)
+extern void sgemm_(ISVD_UNKNOWN);
+extern void dgemm_(ISVD_UNKNOWN);
+extern void cgemm_(ISVD_UNKNOWN);
+extern void zgemm_(ISVD_UNKNOWN);
 
-extern void sgemm(ISVD_UNKNOWN);
-extern void dgemm(ISVD_UNKNOWN);
-extern void cgemm(ISVD_UNKNOWN);
-extern void zgemm(ISVD_UNKNOWN);
+extern void ssymm_(ISVD_UNKNOWN);
+extern void dsymm_(ISVD_UNKNOWN);
+extern void chemm_(ISVD_UNKNOWN);
+extern void zhemm_(ISVD_UNKNOWN);
 
-extern void ssymm(ISVD_UNKNOWN);
-extern void dsymm(ISVD_UNKNOWN);
-extern void chemm(ISVD_UNKNOWN);
-extern void zhemm(ISVD_UNKNOWN);
-
-extern void ssyrk(ISVD_UNKNOWN);
-extern void dsyrk(ISVD_UNKNOWN);
-extern void cherk(ISVD_UNKNOWN);
-extern void zherk(ISVD_UNKNOWN);
-
-#endif  // ISVD_USE_MKL
+extern void ssyrk_(ISVD_UNKNOWN);
+extern void dsyrk_(ISVD_UNKNOWN);
+extern void cherk_(ISVD_UNKNOWN);
+extern void zherk_(ISVD_UNKNOWN);
 
 #if defined(__cplusplus)
 }
@@ -55,19 +51,19 @@ extern void zherk(ISVD_UNKNOWN);
 static inline void isvd_sgemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const REAL4 alpha, const REAL4 *a,
     const INT lda, const REAL4 *b, const INT ldb, const REAL4 beta, REAL4 *c, const INT ldc
-) { sgemm(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { sgemm_(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_dgemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const REAL8 alpha, const REAL8 *a,
     const INT lda, const REAL8 *b, const INT ldb, const REAL8 beta, REAL8 *c, const INT ldc
-) { dgemm(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { dgemm_(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_cgemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const COMP4 alpha, const COMP4 *a,
     const INT lda, const COMP4 *b, const INT ldb, const COMP4 beta, COMP4 *c, const INT ldc
-) { cgemm(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { cgemm_(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_zgemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const COMP8 alpha, const COMP8 *a,
     const INT lda, const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
-) { zgemm(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { zgemm_(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,19 +73,19 @@ static inline void isvd_zgemm(
 static inline void isvd_ssymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda,
     const REAL4 *b, const INT ldb, const REAL4 beta, REAL4 *c, const INT ldc
-) { ssymm(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { ssymm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_dsymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, const INT lda,
     const REAL8 *b, const INT ldb, const REAL8 beta, REAL8 *c, const INT ldc
-) { dsymm(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { dsymm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_chemm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, const INT lda,
     const COMP4 *b, const INT ldb, const COMP4 beta, COMP4 *c, const INT ldc
-) { chemm(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { chemm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_zhemm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda,
     const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
-) { zhemm(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { zhemm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,19 +95,19 @@ static inline void isvd_zhemm(
 static inline void isvd_ssyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL4 alpha, const REAL4 *a, const INT lda,
     const REAL4 beta, REAL4 *c, const INT ldc
-) { ssyrk(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
+) { ssyrk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
 static inline void isvd_dsyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL8 alpha, const REAL8 *a, const INT lda,
     const REAL8 beta, REAL8 *c, const INT ldc
-) { dsyrk(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
+) { dsyrk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
 static inline void isvd_cherk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL4 alpha, const COMP4 *a, const INT lda,
     const REAL4 beta, COMP4 *c, const INT ldc
-) { cherk(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
+) { cherk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
 static inline void isvd_zherk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL8 alpha, const COMP8 *a, const INT lda,
     const REAL8 beta, COMP8 *c, const INT ldc
-) { zherk(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
+) { zherk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
 //@}
 
 #undef CHAR1

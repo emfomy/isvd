@@ -26,15 +26,15 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void sgetrf(ISVD_UNKNOWN);
-extern void dgetrf(ISVD_UNKNOWN);
-extern void cgetrf(ISVD_UNKNOWN);
-extern void zgetrf(ISVD_UNKNOWN);
+extern void sgetrf_(ISVD_UNKNOWN);
+extern void dgetrf_(ISVD_UNKNOWN);
+extern void cgetrf_(ISVD_UNKNOWN);
+extern void zgetrf_(ISVD_UNKNOWN);
 
-extern void sgetri(ISVD_UNKNOWN);
-extern void dgetri(ISVD_UNKNOWN);
-extern void cgetri(ISVD_UNKNOWN);
-extern void zgetri(ISVD_UNKNOWN);
+extern void sgetri_(ISVD_UNKNOWN);
+extern void dgetri_(ISVD_UNKNOWN);
+extern void cgetri_(ISVD_UNKNOWN);
+extern void zgetri_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 
@@ -52,45 +52,45 @@ static inline void isvd_sgeinv(
     const INT n, REAL4 *a, const INT lda
 ) {
   REAL4 qwork; INT lwork = -1, info;
-  sgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  sgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
   INT *ipiv = isvd_imalloc(n);
   REAL4 *work = isvd_smalloc(lwork);
-  sgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  sgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  sgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
 static inline void isvd_dgeinv(
     const INT n, REAL8 *a, const INT lda
 ) {
   REAL8 qwork; INT lwork = -1, info;
-  dgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  dgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
   INT *ipiv = isvd_imalloc(n);
   REAL8 *work = isvd_dmalloc(lwork);
-  dgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  dgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  dgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
 static inline void isvd_cgeinv(
     const INT n, COMP4 *a, const INT lda
 ) {
   COMP4 qwork; INT lwork = -1, info;
-  cgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  cgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   INT *ipiv = isvd_imalloc(n);
   COMP4 *work  = isvd_cmalloc(lwork);
-  cgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  cgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  cgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
 static inline void isvd_zgeinv(
     const INT n, COMP8 *a, const INT lda
 ) {
   COMP8 qwork; INT lwork = -1, info;
-  zgetri(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  zgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   INT *ipiv = isvd_imalloc(n);
   COMP8 *work  = isvd_zmalloc(lwork);
-  zgetrf(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  zgetri(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  zgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
+  zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
 //@}
 

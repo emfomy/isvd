@@ -10,6 +10,12 @@
 
 #include <isvd/def.h>
 
+#if defined(ISVD_USE_OMP)
+#define ISVD_OMP_PARALLEL _Pragma("omp parallel")
+#else  // ISVD_USE_OMP
+#define ISVD_OMP_PARALLEL
+#endif  // ISVD_USE_OMP
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  util_module
 /// @brief  Returns the number of threads in the current team.
@@ -17,11 +23,11 @@
 /// @return  The number of threads in the current team.
 ///
 static inline omp_int_t isvd_getOmpSize( void ) {
-#if defined(_OPENMP)
+#if defined(ISVD_USE_OMP)
   return omp_get_max_threads();
-#else  // _OPENMP
+#else  // ISVD_USE_OMP
   return 1;
-#endif  // _OPENMP
+#endif  // ISVD_USE_OMP
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,11 +37,11 @@ static inline omp_int_t isvd_getOmpSize( void ) {
 /// @return  The thread identification number within the current team.
 ///
 static inline omp_int_t isvd_getOmpRank( void ) {
-#if defined(_OPENMP)
+#if defined(ISVD_USE_OMP)
   return omp_get_thread_num();
-#else  // _OPENMP
+#else  // ISVD_USE_OMP
   return 0;
-#endif  // _OPENMP
+#endif  // ISVD_USE_OMP
 }
 
 #endif  // _ISVD_UTIL_OMP_H_

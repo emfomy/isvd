@@ -18,6 +18,15 @@
 #define COMP4 float complex
 #define COMP8 double complex
 
+#if defined(ISVD_USE_MKL)
+
+extern void sgemmt_(ISVD_UNKNOWN);
+extern void dgemmt_(ISVD_UNKNOWN);
+extern void cgemmt_(ISVD_UNKNOWN);
+extern void zgemmt_(ISVD_UNKNOWN);
+
+#endif  // ISVD_USE_MKL
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  la_blas_module
 /// Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
@@ -44,19 +53,19 @@ static inline void isvd_zgemmt(
 static inline void isvd_sgemmt(
     const CHAR1 uplo, const CHAR1 transa, const CHAR1 transb, const INT n, const INT k, const REAL4 alpha, const REAL4 *a,
     const INT lda, const REAL4 *b, const INT ldb, const REAL4 beta, REAL4 *c, const INT ldc
-) { ISVD_UNUSED(uplo); sgemm(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { ISVD_UNUSED(uplo); sgemm_(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_dgemmt(
     const CHAR1 uplo, const CHAR1 transa, const CHAR1 transb, const INT n, const INT k, const REAL8 alpha, const REAL8 *a,
     const INT lda, const REAL8 *b, const INT ldb, const REAL8 beta, REAL8 *c, const INT ldc
-) { ISVD_UNUSED(uplo); dgemm(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { ISVD_UNUSED(uplo); dgemm_(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_cgemmt(
     const CHAR1 uplo, const CHAR1 transa, const CHAR1 transb, const INT n, const INT k, const COMP4 alpha, const COMP4 *a,
     const INT lda, const COMP4 *b, const INT ldb, const COMP4 beta, COMP4 *c, const INT ldc
-) { ISVD_UNUSED(uplo); cgemm(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { ISVD_UNUSED(uplo); cgemm_(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 static inline void isvd_zgemmt(
     const CHAR1 uplo, const CHAR1 transa, const CHAR1 transb, const INT n, const INT k, const COMP8 alpha, const COMP8 *a,
     const INT lda, const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
-) { ISVD_UNUSED(uplo); zgemm(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
+) { ISVD_UNUSED(uplo); zgemm_(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 #endif  // ISVD_USE_MKL
 //@}
 

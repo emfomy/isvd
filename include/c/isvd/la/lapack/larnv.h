@@ -25,10 +25,10 @@ extern "C" {
 
 #if !defined(ISVD_USE_MKL)
 
-extern void slarnv(ISVD_UNKNOWN);
-extern void dlarnv(ISVD_UNKNOWN);
-extern void clarnv(ISVD_UNKNOWN);
-extern void zlarnv(ISVD_UNKNOWN);
+extern void slarnv_(ISVD_UNKNOWN);
+extern void dlarnv_(ISVD_UNKNOWN);
+extern void clarnv_(ISVD_UNKNOWN);
+extern void zlarnv_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 
@@ -44,16 +44,16 @@ extern void zlarnv(ISVD_UNKNOWN);
 //@{
 static inline void isvd_slarnv(
     const INT idist, INT *iseed, const INT n, REAL4 *x
-) { slarnv(&idist, iseed, &n, x); }
+) { slarnv_(&idist, iseed, &n, x); }
 static inline void isvd_dlarnv(
     const INT idist, INT *iseed, const INT n, REAL8 *x
-) { dlarnv(&idist, iseed, &n, x); }
+) { dlarnv_(&idist, iseed, &n, x); }
 static inline void isvd_clarnv(
     const INT idist, INT *iseed, const INT n, COMP4 *x
-) { clarnv(&idist, iseed, &n, x); }
+) { clarnv_(&idist, iseed, &n, x); }
 static inline void isvd_zlarnv(
     const INT idist, INT *iseed, const INT n, COMP8 *x
-) { zlarnv(&idist, iseed, &n, x); }
+) { zlarnv_(&idist, iseed, &n, x); }
 //@}
 
 #undef CHAR1

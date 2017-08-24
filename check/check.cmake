@@ -48,7 +48,7 @@ macro(_ADD_MPI_CHECK checktype listprocs)
   foreach(procs ${listprocs})
     add_custom_target(
       check_${checkname}_${procs}
-      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_ENV} OMP_NUM_THREADS=4 $<TARGET_FILE:${checktarget}>
+      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_ENV} OMP_NUM_THREADS=${OMP_THRDS} $<TARGET_FILE:${checktarget}>
       DEPENDS ${checktarget}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Run check ${checkpath}"
@@ -59,12 +59,10 @@ endmacro()
 ################################################################################
 
 function(ADD_CHECK checkpath checkcomment)
-  list(APPEND DEFS "ISVD_USE_GTEST")
   _add_check("")
 endfunction()
 
 function(ADD_CHECK_TEST checkpath checkcomment)
-  list(APPEND DEFS "ISVD_USE_GTEST")
   _add_check("test")
 endfunction()
 
@@ -76,6 +74,5 @@ endfunction()
 ################################################################################
 
 function(ADD_MPI_CHECK checkpath checkcomment listprocs)
-  list(APPEND DEFS "ISVD_USE_GTEST")
   _add_mpi_check("" "${listprocs}")
 endfunction()

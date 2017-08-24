@@ -117,12 +117,12 @@ static void test( char dista, char ordera ) {
   // Run stage
   isvd_dSketchGaussianProjection(param, NULL, 0, NULL, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
 
+#if defined(ISVD_USE_MKL)
   // Gather results
   isvd_val_t *yst_ = isvd_dmalloc(Pmb * Nl);
   isvd_int_t ldyst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_DOUBLE, yst_, mb*ldyst, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
 
-  #if defined(ISVD_USE_MKL)
   // Check results
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
@@ -131,7 +131,10 @@ static void test( char dista, char ordera ) {
       }
     }
   }
-  #endif /// ISVD_USE_MKL
+#else
+  ISVD_UNUSED(mpi_rank);
+  ISVD_UNUSED(Pmb);
+#endif /// ISVD_USE_MKL
 }
 
 TEST(GaussianProjectionSketching, BlockCol_ColMajor) {

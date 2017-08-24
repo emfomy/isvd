@@ -61,9 +61,8 @@ static void sketchBlockCol(
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm);
 
-#if defined(_OPENMP)
-  #pragma omp parallel
-#endif  // _OPENMP
+
+  ISVD_OMP_PARALLEL
   {
     omp_int_t omp_size = isvd_getOmpSize();
     omp_int_t omp_rank = isvd_getOmpRank();
@@ -140,9 +139,7 @@ static void sketchBlockRow(
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
 
-#if defined(_OPENMP)
-  #pragma omp parallel
-#endif  // _OPENMP
+  ISVD_OMP_PARALLEL
   {
     omp_int_t omp_size = isvd_getOmpSize();
     omp_int_t omp_rank = isvd_getOmpRank();
