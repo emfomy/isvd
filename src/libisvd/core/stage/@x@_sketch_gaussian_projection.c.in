@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage@x@_sketch_gaussian_projection.c
+/// @file    src/libisvd/core/stage/@x@_sketch_gaussian_projection.c
 /// @brief   The Gaussian Projection Sketching (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>

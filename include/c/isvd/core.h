@@ -16,15 +16,27 @@
 #include <isvd/core/stage_d.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_driver_@x@_module  Driver Module (Double Precision)
+/// @defgroup  core_driver_s_module  Driver Module (Real Single Precision)
 /// @ingroup   core_module
-/// @brief     The Driver Module (Double Precision)
+/// @brief     The Driver Module (Real Single Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_stage_module  Stage Module (Double Precision)
+/// @defgroup  core_driver_d_module  Driver Module (Real Double Precision)
 /// @ingroup   core_module
-/// @brief     The Stage Module (Double Precision)
+/// @brief     The Driver Module (Real Double Precision)
+///
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @defgroup  core_stage_s_module  Stage Module (Real Single Precision)
+/// @ingroup   core_module
+/// @brief     The Stage Module (Real Single Precision)
+///
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @defgroup  core_stage_d_module  Stage Module (Real Double Precision)
+/// @ingroup   core_module
+/// @brief     The Stage Module (Real Double Precision)
 ///
 
 #endif  // _ISVD_CORE_H_

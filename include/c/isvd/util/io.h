@@ -18,7 +18,8 @@ extern "C" {
 /// @ingroup  utility_module
 /// Get a variable from stream.
 ///
-/// @param   stream  Pointer to a FILE object that identifies an input stream.
+/// @param  stream  Pointer to a FILE object that identifies an input stream.
+/// @param  varp    Pointer to the variable.
 ///
 //@{
 static inline void isvd_ifget( FILE *stream, isvd_int_t *varp ) {
