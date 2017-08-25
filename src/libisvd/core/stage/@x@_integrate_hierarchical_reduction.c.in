@@ -25,15 +25,15 @@
 /// @attention  @b yst will be destroyed!
 ///
 void isvd_@x@IntegrateHierarchicalReduction(
-    const isvd_Param param,
-    const @xtype@ *argv,
-    const isvd_int_t argc,
-          @xtype@ *retv,
-    const isvd_int_t retc,
-          @xtype@ *yst,
-    const isvd_int_t ldyst,
-          @xtype@ *qt,
-    const isvd_int_t ldqt
+    const isvd_Param  param,
+    const @xtype@    *argv,
+    const isvd_int_t  argc,
+          @xtype@    *retv,
+    const isvd_int_t  retc,
+          @xtype@    *yst,
+    const isvd_int_t  ldyst,
+          @xtype@    *qt,
+    const isvd_int_t  ldqt
 ) {
 
   ISVD_UNUSED(argv);

@@ -5,8 +5,8 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_CORE_DRIVER_D_H_
-#define _ISVD_CORE_DRIVER_D_H_
+#ifndef _ISVD_CORE_DRIVER_@X@_H_
+#define _ISVD_CORE_DRIVER_@X@_H_
 
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
@@ -39,7 +39,7 @@ void isvd_@x@Ieig(
 
 typedef void (*isvd_fun_t)(isvd_Param, ...);
 
-static inline isvd_fun_t isvd_arg2algs( const int16_t arg ) {
+static inline isvd_fun_t isvd_@x@arg2algs( const int16_t arg ) {
   switch ( arg ) {
     case isvd_char2('G', 'P'): return (isvd_fun_t) isvd_@x@SketchGaussianProjection;
     default: fprintf(stderr, "Unknown sketching abbreviation \"%c%c\"!\n", (arg & 0xff), ((arg >> 8) & 0xff));
@@ -47,7 +47,7 @@ static inline isvd_fun_t isvd_arg2algs( const int16_t arg ) {
   return NULL;
 }
 
-static inline isvd_fun_t isvd_arg2algo( const int16_t arg ) {
+static inline isvd_fun_t isvd_@x@arg2algo( const int16_t arg ) {
   switch ( arg ) {
     case isvd_char2('T', 'S'): return (isvd_fun_t) isvd_@x@OrthogonalizeTallSkinnyQr;
     case isvd_char2('G', 'R'): return (isvd_fun_t) isvd_@x@OrthogonalizeGramian;
@@ -56,7 +56,7 @@ static inline isvd_fun_t isvd_arg2algo( const int16_t arg ) {
   return NULL;
 }
 
-static inline isvd_fun_t isvd_arg2algi( const int16_t arg ) {
+static inline isvd_fun_t isvd_@x@arg2algi( const int16_t arg ) {
   switch ( arg ) {
     case isvd_char2('K', 'N'): return (isvd_fun_t) isvd_@x@IntegrateKolmogorovNagumo;
     case isvd_char2('W', 'Y'): return (isvd_fun_t) isvd_@x@IntegrateWenYin;
@@ -66,7 +66,7 @@ static inline isvd_fun_t isvd_arg2algi( const int16_t arg ) {
   return NULL;
 }
 
-static inline isvd_fun_t isvd_arg2algp( const int16_t arg ) {
+static inline isvd_fun_t isvd_@x@arg2algp( const int16_t arg ) {
   switch ( arg ) {
     case isvd_char2('T', 'S'): return (isvd_fun_t) isvd_@x@PostprocessTallSkinnyQr;
     case isvd_char2('G', 'R'): return (isvd_fun_t) isvd_@x@PostprocessGramian;
@@ -80,4 +80,4 @@ static inline isvd_fun_t isvd_arg2algp( const int16_t arg ) {
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_DRIVER_D_H_
+#endif  // _ISVD_CORE_DRIVER_@X@_H_

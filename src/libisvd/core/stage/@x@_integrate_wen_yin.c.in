@@ -38,15 +38,15 @@
 /// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
 void isvd_@x@IntegrateWenYin(
-    const isvd_Param param,
-    const @xtype@ *argv,
-    const isvd_int_t argc,
-          @xtype@ *retv,
-    const isvd_int_t retc,
-    const @xtype@ *yst,
-    const isvd_int_t ldyst,
-          @xtype@ *qt,
-    const isvd_int_t ldqt
+    const isvd_Param  param,
+    const @xtype@    *argv,
+    const isvd_int_t  argc,
+          @xtype@    *retv,
+    const isvd_int_t  retc,
+    const @xtype@    *yst,
+    const isvd_int_t  ldyst,
+          @xtype@    *qt,
+    const isvd_int_t  ldqt
 ) {
 
   // ====================================================================================================================== //
@@ -54,14 +54,14 @@ void isvd_@x@IntegrateWenYin(
 
   isvd_int_t argi = -1;
   const isvd_int_t maxit    = ( argc > ++argi ) ? argv[argi] : kMaxit;
-  const @xtype@ tol      = ( argc > ++argi ) ? argv[argi] : kTol;
-  const @xtype@ tau0     = ( argc > ++argi ) ? argv[argi] : kTau0;
-  const @xtype@ taumax   = ( argc > ++argi ) ? argv[argi] : kTaumax;
-  const @xtype@ taumin   = ( argc > ++argi ) ? argv[argi] : kTaumin;
+  const @xtype@ tol         = ( argc > ++argi ) ? argv[argi] : kTol;
+  const @xtype@ tau0        = ( argc > ++argi ) ? argv[argi] : kTau0;
+  const @xtype@ taumax      = ( argc > ++argi ) ? argv[argi] : kTaumax;
+  const @xtype@ taumin      = ( argc > ++argi ) ? argv[argi] : kTaumin;
   const isvd_int_t taumaxit = ( argc > ++argi ) ? argv[argi] : kTauMaxit;
-  const @xtype@ beta     = ( argc > ++argi ) ? argv[argi] : kBeta;
-  const @xtype@ sigma    = ( argc > ++argi ) ? argv[argi] : kSigma;
-  const @xtype@ eta      = ( argc > ++argi ) ? argv[argi] : kEta;
+  const @xtype@ beta        = ( argc > ++argi ) ? argv[argi] : kBeta;
+  const @xtype@ sigma       = ( argc > ++argi ) ? argv[argi] : kSigma;
+  const @xtype@ eta         = ( argc > ++argi ) ? argv[argi] : kEta;
 
   // ====================================================================================================================== //
   // Get parameters
