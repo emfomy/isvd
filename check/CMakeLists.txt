@@ -32,8 +32,7 @@ include_directories(
 # Add library
 file(
   GLOB_RECURSE srcfiles
-  RELATIVE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/*.c"
-                                       "${PROJECT_SOURCE_DIR}/src/*.c.*"
+  RELATIVE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/*"
 )
 foreach(srcfile ${srcfiles})
   string(REGEX REPLACE "\\.c(.|$)" ".cxx\\1" file ${srcfile})

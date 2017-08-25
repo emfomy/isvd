@@ -27,8 +27,8 @@ typedef double isvd_val_t;
 /// @param[in]   yst, ldyst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
 /// @param[in]   qt, ldqt    The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
 /// <hr>
-/// @param[out]  retv        Replaced by return values.
-///                          @b retv[0]: The number of iteration.
+/// @param[out]  retv        Replaced by return values. <br>
+///                          @b retv[0]: The number of iteration. <br>
 ///                          @b retv[1]: The error.
 /// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
