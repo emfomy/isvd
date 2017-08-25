@@ -1,37 +1,46 @@
 # Create configure files
-function(ISVD_CONFIGURE_FN)
+function(ISVD_CONFIGURE_X_FN cfgdir outdir xtypes)
+  isvd_set_types(${xtypes})
+
   string(REPLACE ";" " " DEFS_STR "${DEFS}")
   file(
     GLOB_RECURSE cfgfiles
-    RELATIVE "${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/*.in"
+    RELATIVE "${cfgdir}" "${cfgdir}/*\@x\@*.in"
   )
   foreach(cfgfile ${cfgfiles})
-    string(REGEX REPLACE "\\.in$" "" file ${cfgfile})
+    string(REGEX REPLACE "\@x\@" "${x}" outfile ${cfgfile})
+    string(REGEX REPLACE "\\.in$" "" outfile ${outfile})
     configure_file(
-      "${PROJECT_SOURCE_DIR}/${cfgfile}"
-      "${PROJECT_BINARY_DIR}/${file}"
-      @ONLY
-    )
-  endforeach()
-  file(
-    GLOB_RECURSE cfgfiles
-    RELATIVE "${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}/*.in"
-  )
-  foreach(cfgfile ${cfgfiles})
-    string(REGEX REPLACE "\\.in$" "" file ${cfgfile})
-    configure_file(
-      "${PROJECT_BINARY_DIR}/${cfgfile}"
-      "${PROJECT_BINARY_DIR}/${file}"
+      "${cfgdir}/${cfgfile}"
+      "${outdir}/${outfile}"
       @ONLY
     )
   endforeach()
 endfunction()
 
-isvd_configure_fn()
-unset(isvd_configure_fn)
+function(ISVD_CONFIGURE_IN_FN cfgdir outdir)
+  string(REPLACE ";" " " DEFS_STR "${DEFS}")
+  file(
+    GLOB_RECURSE cfgfiles
+    RELATIVE "${cfgdir}" "${cfgdir}/*.in"
+  )
+  foreach(cfgfile ${cfgfiles})
+    if(NOT cfgfile MATCHES "\@")
+      string(REGEX REPLACE "\\.in$" "" outfile ${cfgfile})
+      configure_file(
+        "${cfgdir}/${cfgfile}"
+        "${outdir}/${outfile}"
+        @ONLY
+      )
+    endif()
+  endforeach()
+endfunction()
 
-# Set install rule
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" DESTINATION include PATTERN "*.in" EXCLUDE)
-install(DIRECTORY "${PROJECT_BINARY_DIR}/include/" DESTINATION include PATTERN "*.in" EXCLUDE)
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/share/"   DESTINATION share   PATTERN "*.in" EXCLUDE)
-install(DIRECTORY "${PROJECT_BINARY_DIR}/share/"   DESTINATION share   PATTERN "*.in" EXCLUDE)
+isvd_configure_x_fn("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_S_TYPES}")
+isvd_configure_x_fn("${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_S_TYPES}")
+isvd_configure_x_fn("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_D_TYPES}")
+isvd_configure_x_fn("${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_D_TYPES}")
+isvd_configure_in_fn("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+isvd_configure_in_fn("${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}")
+unset(isvd_configure_x_fn)
+unset(isvd_configure_in_fn)

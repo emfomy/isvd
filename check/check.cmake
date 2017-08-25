@@ -11,7 +11,10 @@ macro(_ADD_CHECK_PREDO checktype)
   # Set target
   file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/${checkpath}.*"
                           "${CMAKE_CURRENT_SOURCE_DIR}/${checkpath}/${checktype}.*"
-                          "${CMAKE_CURRENT_SOURCE_DIR}/${checkpath}/${checktype}/*.*")
+                          "${CMAKE_CURRENT_SOURCE_DIR}/${checkpath}/${checktype}/*.*"
+                          "${CMAKE_CURRENT_BINARY_DIR}/${checkpath}.*"
+                          "${CMAKE_CURRENT_BINARY_DIR}/${checkpath}/${checktype}.*"
+                          "${CMAKE_CURRENT_BINARY_DIR}/${checkpath}/${checktype}/*.*")
   list(SORT files)
   list(REVERSE files)
   add_executable(${checktarget} EXCLUDE_FROM_ALL ${checkmain} ${files})

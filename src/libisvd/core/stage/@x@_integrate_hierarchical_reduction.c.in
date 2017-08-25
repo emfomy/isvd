@@ -1,19 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/d_integrate_hierarchical_reduction.c
-/// @brief   The Hierarchical Reduction Integration (double precision)
+/// @file    src/libisvd/core/stage/d_integrate_hierarchical_reduction.c
+/// @brief   The Hierarchical Reduction Integration (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_d.h>
+#include <isvd/core/stage_@x@.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
 
-typedef double isvd_val_t;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_d_module
-/// Hierarchical Reduction Integration (double precision)
+/// @ingroup  core_stage_module
+/// Hierarchical Reduction Integration (@xname@ precision)
 ///
 /// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   argv, argc  The arguments and its length. (not using)
@@ -26,15 +24,15 @@ typedef double isvd_val_t;
 ///
 /// @attention  @b yst will be destroyed!
 ///
-void isvd_dIntegrateHierarchicalReduction(
+void isvd_@x@IntegrateHierarchicalReduction(
     const isvd_Param param,
-    const isvd_val_t *argv,
+    const @xtype@ *argv,
     const isvd_int_t argc,
-          isvd_val_t *retv,
+          @xtype@ *retv,
     const isvd_int_t retc,
-          isvd_val_t *yst,
+          @xtype@ *yst,
     const isvd_int_t ldyst,
-          isvd_val_t *qt,
+          @xtype@ *qt,
     const isvd_int_t ldqt
 ) {
 
@@ -59,21 +57,21 @@ void isvd_dIntegrateHierarchicalReduction(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *qst = yst;
+  @xtype@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
   // matrix B
-  isvd_val_t *bs = isvd_dmalloc(l * l * (N+1)/2);
+  @xtype@ *bs = isvd_@x@malloc(l * l * (N+1)/2);
   isvd_int_t ldbs = l;
 
   // matrix T
-  isvd_val_t *tt = isvd_dmalloc(l * l);
+  @xtype@ *tt = isvd_@x@malloc(l * l);
   isvd_int_t ldtt = l;
 
   // vector s
-  isvd_val_t *s = isvd_dmalloc(l);
+  @xtype@ *s = isvd_@x@malloc(l);
 
-  isvd_val_t *tmpt = qt;
+  @xtype@ *tmpt = qt;
   isvd_int_t ldtmpt = ldqt;
 
   // ====================================================================================================================== //
@@ -83,41 +81,41 @@ void isvd_dIntegrateHierarchicalReduction(
 
     // B(i) := Q(i)' * Q(i+h)
     for ( isvd_int_t i = 0; i < h; ++i ) {
-      isvd_dgemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
+      isvd_@x@gemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
-    MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+    MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
     for ( isvd_int_t i = 0; i < h; ++i ) {
 
       // matrix W
-      isvd_val_t *w = bs + i*ldbs*l;
+      @xtype@ *w = bs + i*ldbs*l;
       isvd_int_t ldw = ldbs;
 
       // matrix Q(i)
-      isvd_val_t *qit = qst + i*l;
+      @xtype@ *qit = qst + i*l;
       isvd_int_t ldqit = ldqst;
 
       // matrix Q(i+h)
-      isvd_val_t *qiht = qst + (i+h)*l;
+      @xtype@ *qiht = qst + (i+h)*l;
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'
-      isvd_dgesvd('O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt);
+      isvd_@x@gesvd('O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt);
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
-      isvd_domatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
-      isvd_dgemm('T', 'N', l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
-      isvd_dgemm('N', 'N', l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
+      isvd_@x@omatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
+      isvd_@x@gemm('T', 'N', l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
+      isvd_@x@gemm('N', 'N', l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
 
       // Q(i) /= sqrt(2(I+S))
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-        isvd_dscal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
+        isvd_@x@scal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
       }
     }
   }
 
   // Qbar := Q(i)
-  isvd_domatcopy('N', l, mj, 1.0, qst, ldqst, qt, ldqt);
+  isvd_@x@omatcopy('N', l, mj, 1.0, qst, ldqst, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

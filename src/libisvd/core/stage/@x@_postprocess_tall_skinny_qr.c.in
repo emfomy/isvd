@@ -1,38 +1,36 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/d_postprocess_tall_skinny_qr.c
-/// @brief   The Tall-Skinny QR Postprocessing (double precision)
+/// @file    src/libisvd/core/stage/d_postprocess_tall_skinny_qr.c
+/// @brief   The Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_d.h>
+#include <isvd/core/stage_@x@.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
 
-typedef double isvd_val_t;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_d_module
-/// Tall-Skinny QR Postprocessing (double precision)
+/// @ingroup  core_stage_module
+/// Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
 /// @attention  Not implemented!
 ///
-void isvd_dPostprocessTallSkinnyQr(
+void isvd_@x@PostprocessTallSkinnyQr(
     const isvd_Param param,
-    const isvd_val_t *argv,
+    const @xtype@ *argv,
     const isvd_int_t argc,
-          isvd_val_t *retv,
+          @xtype@ *retv,
     const isvd_int_t retc,
     const char dista,
     const char ordera,
-    const isvd_val_t *a,
+    const @xtype@ *a,
     const isvd_int_t lda,
-    const isvd_val_t *qt,
+    const @xtype@ *qt,
     const isvd_int_t ldqt,
-          isvd_val_t *s,
-          isvd_val_t *ut,
+          @xtype@ *s,
+          @xtype@ *ut,
     const isvd_int_t ldut,
-          isvd_val_t *vt,
+          @xtype@ *vt,
     const isvd_int_t ldvt,
     const mpi_int_t  ut_root,
     const mpi_int_t  vt_root

@@ -10,17 +10,19 @@
 
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
+#include <isvd/core/driver_s.h>
 #include <isvd/core/driver_d.h>
+#include <isvd/core/stage_s.h>
 #include <isvd/core/stage_d.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_driver_d_module  Driver Module (Double Precision)
+/// @defgroup  core_driver_@x@_module  Driver Module (Double Precision)
 /// @ingroup   core_module
 /// @brief     The Driver Module (Double Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_stage_d_module  Stage Module (Double Precision)
+/// @defgroup  core_stage_module  Stage Module (Double Precision)
 /// @ingroup   core_module
 /// @brief     The Stage Module (Double Precision)
 ///

@@ -22,10 +22,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # Include functions
 include(cmake/functions.cmake)
 
-# Sets the options
+# Set the options
 include(cmake/options.cmake)
 
-# Sets the packages
+# Set the packages
 include(cmake/packages.cmake)
 
 # Create configure files
@@ -38,11 +38,14 @@ add_subdirectory(demo)
 add_subdirectory(check)
 add_subdirectory(doxygen)
 
-# Sets the flags
+# Set the flags
 include(cmake/flags.cmake)
 
 # Recreate configure files
 include(cmake/configure.cmake)
+
+# Set install rules
+include(cmake/install.cmake)
 
 # Display message
 include(cmake/display.cmake)

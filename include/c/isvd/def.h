@@ -68,8 +68,8 @@ typedef int omp_int_t;
 #if defined(ISVD_USE_MKL)
 #define MKL_INT       isvd_int_t
 #define MKL_UINT      isvd_uint_t
-#define MKL_Complex8  float complex
-#define MKL_Complex16 double complex
+#define MKL_Complex8  complex float
+#define MKL_Complex16 complex double
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 

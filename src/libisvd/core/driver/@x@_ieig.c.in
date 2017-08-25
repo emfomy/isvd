@@ -1,31 +1,29 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/driver_d/d_ieig.c
-/// @brief   The iEig driver (double precision).
+/// @file    src/libisvd/core/driver/d_ieig.c
+/// @brief   The iEig driver (@xname@ precision).
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/driver_d.h>
+#include <isvd/core/driver_@x@.h>
 #include <isvd/util/memory.h>
 #include <isvd/util/arg.h>
 
-typedef double isvd_val_t;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_driver_d_module
-/// iEig driver (double precision).
+/// @ingroup  core_driver_@x@_module
+/// iEig driver (@xname@ precision).
 ///
 /// @param[in]   algs          The selection of sketching algorithm. <br>
-///                            `"GP"`: @ref isvd_dSketchGaussianProjection "Gaussian Projection sketching".
+///                            `"GP"`: @ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching".
 /// @param[in]   algo          The selection of orthogonalization algorithm. <br>
-///                            `"TS"`: @ref isvd_dOrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
-///                            `"GR"`: @ref isvd_dOrthogonalizeGramian "GRamian orthogonalization".
+///                            `"TS"`: @ref isvd_@x@OrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
+///                            `"GR"`: @ref isvd_@x@OrthogonalizeGramian "GRamian orthogonalization".
 /// @param[in]   algi          The selection of integration algorithm. <br>
-///                            `"KN"`: @ref isvd_dIntegrateKolmogorovNagumo "Kolmogorov-Nagumo integration". <br>
-///                            `"WY"`: @ref isvd_dIntegrateWenYin "Wen-Yin integration". <br>
-///                            `"HR"`: @ref isvd_dIntegrateHierarchicalReduction "Hierarchical Reduction integration".
+///                            `"KN"`: @ref isvd_@x@IntegrateKolmogorovNagumo "Kolmogorov-Nagumo integration". <br>
+///                            `"WY"`: @ref isvd_@x@IntegrateWenYin "Wen-Yin integration". <br>
+///                            `"HR"`: @ref isvd_@x@IntegrateHierarchicalReduction "Hierarchical Reduction integration".
 /// @param[in]   algp          The selection of postprocessing algorithm. <br>
-///                            `"SY"`: @ref isvd_dPostprocessSymmetric "SYmmetric postprocessing".
+///                            `"SY"`: @ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing".
 /// <hr>
 /// @param[in]   m             The number of size of the symmetric matrix 𝑨.
 /// @param[in]   k             The desired rank of approximate SVD.
@@ -58,7 +56,7 @@ typedef double isvd_val_t;
 /// @param[out]  s             Replaced by the eigenvalues 𝝈.
 /// @param[out]  ut            Replaced by the left eigenvectors 𝑼 (row-major).
 ///
-void isvd_dIeig(
+void isvd_@x@Ieig(
     const char *algs,
     const char *algo,
     const char *algi,
@@ -69,10 +67,10 @@ void isvd_dIeig(
     const isvd_int_t N,
     const char dista,
     const char ordera,
-    const isvd_val_t *a,
+    const @xtype@ *a,
     const isvd_int_t lda,
-          isvd_val_t *s,
-          isvd_val_t *ut,
+          @xtype@ *s,
+          @xtype@ *ut,
     const isvd_int_t ldut,
     const isvd_int_t seed,
     const mpi_int_t ut_root,
@@ -107,10 +105,10 @@ void isvd_dIeig(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *yst = isvd_dmalloc(mb * Nl);
+  @xtype@ *yst = isvd_@x@malloc(mb * Nl);
   isvd_int_t ldyst = Nl;
 
-  isvd_val_t *qt = isvd_dmalloc(mb * l);
+  @xtype@ *qt = isvd_@x@malloc(mb * l);
   isvd_int_t ldqt = l;
 
   // ====================================================================================================================== //

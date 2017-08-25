@@ -20,8 +20,8 @@ extern "C" {
 #define INT   isvd_int_t
 #define REAL4 float
 #define REAL8 double
-#define COMP4 float complex
-#define COMP8 double complex
+#define COMP4 complex float
+#define COMP8 complex double
 
 #if defined(ISVD_USE_MKL)
 typedef VSLStreamStatePtr isvd_VSLStreamStatePtr;

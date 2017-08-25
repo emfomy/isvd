@@ -1,22 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/d_integrate_kolmogorov_nagumo.c
-/// @brief   The Kolmogorov-Nagumo Integration (double precision)
+/// @file    src/libisvd/core/stage/d_integrate_kolmogorov_nagumo.c
+/// @brief   The Kolmogorov-Nagumo Integration (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_d.h>
+#include <isvd/core/stage_@x@.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
-
-typedef double isvd_val_t;
 
 #define kMaxit 256
 #define kTol   1e-4
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_d_module
-/// Kolmogorov-Nagumo Integration (double precision)
+/// @ingroup  core_stage_module
+/// Kolmogorov-Nagumo Integration (@xname@ precision)
 ///
 /// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   argv, argc  The arguments and its length. <br>
@@ -32,15 +30,15 @@ typedef double isvd_val_t;
 ///                          @b retv[1]: The error.
 /// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
-void isvd_dIntegrateKolmogorovNagumo(
+void isvd_@x@IntegrateKolmogorovNagumo(
     const isvd_Param param,
-    const isvd_val_t *argv,
+    const @xtype@ *argv,
     const isvd_int_t argc,
-          isvd_val_t *retv,
+          @xtype@ *retv,
     const isvd_int_t retc,
-    const isvd_val_t *yst,
+    const @xtype@ *yst,
     const isvd_int_t ldyst,
-          isvd_val_t *qt,
+          @xtype@ *qt,
     const isvd_int_t ldqt
 ) {
 
@@ -49,7 +47,7 @@ void isvd_dIntegrateKolmogorovNagumo(
 
   isvd_int_t argi = -1;
   const isvd_int_t maxit = ( argc > ++argi ) ? argv[argi] : kMaxit;
-  const isvd_val_t tol   = ( argc > ++argi ) ? argv[argi] : kTol;
+  const @xtype@ tol   = ( argc > ++argi ) ? argv[argi] : kTol;
 
   // ====================================================================================================================== //
   // Get parameters
@@ -69,80 +67,80 @@ void isvd_dIntegrateKolmogorovNagumo(
   // ====================================================================================================================== //
   // Allocate memory
 
-  const isvd_val_t *qst = yst;
+  const @xtype@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  isvd_val_t *qct = isvd_dmalloc(mj * l);
+  @xtype@ *qct = isvd_@x@malloc(mj * l);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  isvd_val_t *qpt = isvd_dmalloc(mj * l);
+  @xtype@ *qpt = isvd_@x@malloc(mj * l);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  isvd_val_t *gct = isvd_dmalloc(mj * l);
+  @xtype@ *gct = isvd_@x@malloc(mj * l);
   isvd_int_t ldgct = l;
 
   // matrix Bc
-  isvd_val_t *bc = isvd_dmalloc(Nl * l);
+  @xtype@ *bc = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbc = Nl;
 
   // matrix B+
-  isvd_val_t *bp = isvd_dmalloc(Nl * l);
+  @xtype@ *bp = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbp = Nl;
 
   // matrix Bgc
-  isvd_val_t *bgc = isvd_dmalloc(Nl * l);
+  @xtype@ *bgc = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbgc = Nl;
 
   // matrix Dc
-  isvd_val_t *dc = isvd_dmalloc(l * l);
+  @xtype@ *dc = isvd_@x@malloc(l * l);
   isvd_int_t lddc = l;
 
   // matrix Z
-  isvd_val_t *z = isvd_dmalloc(l * l);
+  @xtype@ *z = isvd_@x@malloc(l * l);
   isvd_int_t ldz = l;
 
   // matrix C
-  isvd_val_t *c = isvd_dmalloc(l * l);
+  @xtype@ *c = isvd_@x@malloc(l * l);
   isvd_int_t ldc = l;
 
   // matrix inv(C)
-  isvd_val_t *cinv = isvd_dmalloc(l * l);
+  @xtype@ *cinv = isvd_@x@malloc(l * l);
   isvd_int_t ldcinv = l;
 
   // vector s
-  isvd_val_t *s = isvd_dmalloc(l * 2);
+  @xtype@ *s = isvd_@x@malloc(l * 2);
 
   // matrix Z * sqrt(S)
-  isvd_val_t *zs     = cinv;
+  @xtype@ *zs     = cinv;
   isvd_int_t ldzs    = ldcinv;
 
   // matrix Z / sqrt(S)
-  isvd_val_t *zinvs  = z;
+  @xtype@ *zinvs  = z;
   isvd_int_t ldzinvs = ldz;
 
   // matrix sqrt(S)
-  isvd_val_t *ss = s + l;
+  @xtype@ *ss = s + l;
 
-  isvd_val_t *tmp;
+  @xtype@ *tmp;
 
   // ====================================================================================================================== //
   // Initializing
 
   // Qc := Q0
-  isvd_domatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
+  isvd_@x@omatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
-  isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
-  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+  isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Iterating
 
   isvd_int_t iter;
-  isvd_val_t error = -1.0/0.0;
+  @xtype@ error = -1.0/0.0;
 
   for ( iter = 1; ; ++iter ) {
 
@@ -150,70 +148,70 @@ void isvd_dIntegrateKolmogorovNagumo(
     // Compute B, D, and G
 
     // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-    isvd_dgemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
+    isvd_@x@gemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
     // Bgc := Qs' * Gc
-    isvd_dgemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
-    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+    isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
     // Dc := 1/N * Bc' * Bc
-    isvd_dgemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
+    isvd_@x@gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
 
     // Dgc [in Z] := 1/N * Bc' * Bgc
-    isvd_dgemmt('U', 'T', 'N', l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, z, ldz);
+    isvd_@x@gemmt('U', 'T', 'N', l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, z, ldz);
 
     // ================================================================================================================== //
     // Compute C and inv(C)
 
     // Z := Dgc - Dc^2
-    isvd_dsyrk('U', 'T', l, l, -1.0, dc, lddc, 1.0, z, ldz);
+    isvd_@x@syrk('U', 'T', l, l, -1.0, dc, lddc, 1.0, z, ldz);
 
     // eig(Z) = Z * S * Z'
-    isvd_dsyev('V', 'U', l, z, ldz, s);
+    isvd_@x@syev('V', 'U', l, z, ldz, s);
 
     // S := sqrt( I/2 + sqrt( I/4 - S ) )
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
       s[ii] = sqrt(0.5 + sqrt(0.25 - s[ii]));
     }
-    isvd_vdSqrt(l, s, ss);
-    isvd_dmemcpy(cinv, z, l*l);
+    isvd_v@x@Sqrt(l, s, ss);
+    isvd_@x@memcpy(cinv, z, l*l);
 
     // Compute Z * sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_dscal(l, ss[ii], zs + ldzs*ii, 1);
+      isvd_@x@scal(l, ss[ii], zs + ldzs*ii, 1);
     }
 
     // Compute Z / sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_dscal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
+      isvd_@x@scal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
     }
 
     // C := Z * S * Z'
-    isvd_dgemm('N', 'T', l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
+    isvd_@x@gemm('N', 'T', l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
 
     // inv(C) := Z * inv(S) * Z'
-    isvd_dsyrk('U', 'N', l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
+    isvd_@x@syrk('U', 'N', l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
 
     // ================================================================================================================== //
     // Update for next iteration
 
     // Fc [in C] := C - Dc * inv(C)
-    isvd_dsymm('R', 'U', l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
+    isvd_@x@symm('R', 'U', l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
 
     // Q+ := Qc * Fc [in C] + Gc * inv(C) (Q+' := Fc' [in C] * Qc' + inv(C) * Gc')
-    isvd_dgemm('T', 'N', l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
-    isvd_dsymm('L', 'U', l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
+    isvd_@x@gemm('T', 'N', l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
+    isvd_@x@symm('L', 'U', l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
 
     // B+ := Bc * Fc [in C] + Bgc * inv(C)
-    isvd_dgemm('N', 'N', Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
-    isvd_dsymm('R', 'U', Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
+    isvd_@x@gemm('N', 'N', Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
+    isvd_@x@symm('R', 'U', Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
 
     // ================================================================================================================== //
     // Check convergence: || I - C ||_F < tol
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
       s[ii] -= 1.0;
     }
-    error = isvd_dnrm2(l, s, 1);
+    error = isvd_@x@nrm2(l, s, 1);
     if ( error <= tol ) {
       break;
     }
@@ -233,7 +231,7 @@ void isvd_dIntegrateKolmogorovNagumo(
   tmp = qct; qct = qpt; qpt = tmp;
 
   // Copy Qbar
-  isvd_domatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
+  isvd_@x@omatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

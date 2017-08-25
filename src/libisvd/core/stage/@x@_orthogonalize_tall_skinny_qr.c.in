@@ -1,29 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/d_orthogonalize_tall_skinny_qr.c
-/// @brief   The Tall-Skinny QR Orthogonalization (double precision)
+/// @file    src/libisvd/core/stage/d_orthogonalize_tall_skinny_qr.c
+/// @brief   The Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_d.h>
+#include <isvd/core/stage_@x@.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
 
-typedef double isvd_val_t;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_d_module
-/// Tall-Skinny QR Orthogonalization (double precision)
+/// @ingroup  core_stage_module
+/// Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
 /// @attention  Not implemented!
 ///
-void isvd_dOrthogonalizeTallSkinnyQr(
+void isvd_@x@OrthogonalizeTallSkinnyQr(
     const isvd_Param param,
-    const isvd_val_t *argv,
+    const @xtype@ *argv,
     const isvd_int_t argc,
-          isvd_val_t *retv,
+          @xtype@ *retv,
     const isvd_int_t retc,
-          isvd_val_t *yst,
+          @xtype@ *yst,
     const isvd_int_t ldyst
 ) {
 

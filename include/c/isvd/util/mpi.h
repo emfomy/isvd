@@ -38,6 +38,9 @@ static inline mpi_int_t isvd_getMpiRank( const MPI_Comm comm ) {
   mpi_int_t rank; isvd_assert_pass(MPI_Comm_rank(comm, &rank)); return rank;
 }
 
+#define MPI_COMPLEX_FLOAT  MPI_COMPLEX8
+#define MPI_COMPLEX_DOUBLE MPI_COMPLEX16
+
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus

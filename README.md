@@ -50,7 +50,6 @@ The following table are the main options
 | `ISVD_BLAS`            | the selection BLAS/LAPACK library. | Options: `BLAS/MKL`            |
 | `ISVD_BUILD_DEMO`      | build demo codes.                  |                                |
 | `ISVD_BUILD_DOC`       | build documentation.               |                                |
-| `ISVD_BUILD_LIB`       | build libraries.                   |                                |
 | `ISVD_BUILD_TEST`      | build unit tests.                  |                                |
 | `ISVD_INDEX_TYPE`      | the selection index type.          | Options: `32/64`               |
 | `ISVD_OMP`             | the selection OpenMP library.      | Options: `OFF/GOMP/IOMP`       |
