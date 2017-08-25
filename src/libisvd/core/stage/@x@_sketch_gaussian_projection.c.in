@@ -5,7 +5,7 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_@x@.h>
+#include <isvd/core/@x@_stage.h>
 #include <isvd/la.h>
 #include <isvd/util/arg.h>
 #include <isvd/util/memory.h>
@@ -172,7 +172,7 @@ static void sketchBlockRow(
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_@x@_module
+/// @ingroup  core_@x@_stage_module
 /// Gaussian Projection Sketching (@xname@ precision)
 ///
 /// @param[in]   param       The @ref isvd_Param "parameters".

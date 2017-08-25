@@ -5,7 +5,7 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_@x@.h>
+#include <isvd/core/@x@_stage.h>
 #include <isvd/la.h>
 #include <isvd/util/arg.h>
 #include <isvd/util/memory.h>

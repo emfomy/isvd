@@ -5,12 +5,12 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/driver_@x@.h>
+#include <isvd/core/@x@_driver.h>
 #include <isvd/util/memory.h>
 #include <isvd/util/arg.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_driver_@x@_module
+/// @ingroup  core_@x@_driver_module
 /// iEig driver (@xname@ precision).
 ///
 /// @param[in]   algs          The selection of sketching algorithm. <br>

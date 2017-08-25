@@ -1,16 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/core/driver_@x@.h
+/// @file    include/c/isvd/core/@x@_driver.h
 /// @brief   The @xtype@ precision drivers.
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#ifndef _ISVD_CORE_DRIVER_@X@_H_
-#define _ISVD_CORE_DRIVER_@X@_H_
+#ifndef _ISVD_CORE_@X@_DRIVER_H_
+#define _ISVD_CORE_@X@_DRIVER_H_
 
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
-#include <isvd/core/stage_@x@.h>
+#include <isvd/core/@x@_stage.h>
 #include <isvd/util/arg.h>
 
 #if defined(__cplusplus)
@@ -80,4 +80,4 @@ static inline isvd_fun_t isvd_@x@arg2algp( const int16_t arg ) {
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_DRIVER_@X@_H_
+#endif  // _ISVD_CORE_@X@_DRIVER_H_

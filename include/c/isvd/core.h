@@ -10,31 +10,31 @@
 
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
-#include <isvd/core/driver_s.h>
-#include <isvd/core/driver_d.h>
-#include <isvd/core/stage_s.h>
-#include <isvd/core/stage_d.h>
+#include <isvd/core/s_driver.h>
+#include <isvd/core/d_driver.h>
+#include <isvd/core/s_stage.h>
+#include <isvd/core/d_stage.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_driver_s_module  Driver Module (Real Single Precision)
+/// @defgroup  core_s_driver_module  Driver Module (Real Single Precision)
 /// @ingroup   core_module
 /// @brief     The Driver Module (Real Single Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_driver_d_module  Driver Module (Real Double Precision)
+/// @defgroup  core_d_driver_module  Driver Module (Real Double Precision)
 /// @ingroup   core_module
 /// @brief     The Driver Module (Real Double Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_stage_s_module  Stage Module (Real Single Precision)
+/// @defgroup  core_s_stage_module  Stage Module (Real Single Precision)
 /// @ingroup   core_module
 /// @brief     The Stage Module (Real Single Precision)
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_stage_d_module  Stage Module (Real Double Precision)
+/// @defgroup  core_d_stage_module  Stage Module (Real Double Precision)
 /// @ingroup   core_module
 /// @brief     The Stage Module (Real Double Precision)
 ///
