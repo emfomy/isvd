@@ -30,13 +30,13 @@
   #include <omp.h>
 #endif  // ISVD_USE_OMP
 
-#if defined(ISVD_USE_GTEST)
-  #include <gtest/gtest.h>
-#endif  // ISVD_USE_GTEST
-
 #include <complex.h>
 #include <math.h>
 #include <isvd/config.h>
+
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
 
 #define ISVD_UNUSED( x ) (void)(x)
 
@@ -79,24 +79,9 @@ typedef int omp_int_t;
 
 /// @ingroup  util_module
 //@{
-#if !defined(ISVD_USE_GTEST)
+#if !defined(ISVD_USE_GTEST) && defined(__cplusplus)
 
-#define isvd_assert_true( condition )   assert(condition);
-#define isvd_assert_false( condition )  assert(!(condition));
-
-#define isvd_assert_eq( val1, val2 )  assert(val1 == val2);
-#define isvd_assert_ne( val1, val2 )  assert(val1 != val2);
-#define isvd_assert_lt( val1, val2 )  assert(val1 <  val2);
-#define isvd_assert_le( val1, val2 )  assert(val1 <= val2);
-#define isvd_assert_gt( val1, val2 )  assert(val1 >  val2);
-#define isvd_assert_ge( val1, val2 )  assert(val1 >= val2);
-
-#define isvd_assert_gtlt( val, bound1, bound2 )  assert(val >  bound1 && val <  bound2);
-#define isvd_assert_gtle( val, bound1, bound2 )  assert(val >  bound1 && val <= bound2);
-#define isvd_assert_gelt( val, bound1, bound2 )  assert(val >= bound1 && val <  bound2);
-#define isvd_assert_gele( val, bound1, bound2 )  assert(val >= bound1 && val <= bound2);
-
-#else  // ISVD_USE_GTEST
+#include <gtest/gtest.h>
 
 #define isvd_assert_true( condition )   EXPECT_TRUE(condition);
 #define isvd_assert_false( condition )  EXPECT_FALSE(condition);
@@ -112,6 +97,23 @@ typedef int omp_int_t;
 #define isvd_assert_gtle( val, bound1, bound2 )  { EXPECT_GT(val, bound1); EXPECT_LE(val, bound2); }
 #define isvd_assert_gelt( val, bound1, bound2 )  { EXPECT_GE(val, bound1); EXPECT_LT(val, bound2); }
 #define isvd_assert_gele( val, bound1, bound2 )  { EXPECT_GE(val, bound1); EXPECT_LE(val, bound2); }
+
+#else  // ISVD_USE_GTEST
+
+#define isvd_assert_true( condition )   assert(condition);
+#define isvd_assert_false( condition )  assert(!(condition));
+
+#define isvd_assert_eq( val1, val2 )  assert(val1 == val2);
+#define isvd_assert_ne( val1, val2 )  assert(val1 != val2);
+#define isvd_assert_lt( val1, val2 )  assert(val1 <  val2);
+#define isvd_assert_le( val1, val2 )  assert(val1 <= val2);
+#define isvd_assert_gt( val1, val2 )  assert(val1 >  val2);
+#define isvd_assert_ge( val1, val2 )  assert(val1 >= val2);
+
+#define isvd_assert_gtlt( val, bound1, bound2 )  assert(val >  bound1 && val <  bound2);
+#define isvd_assert_gtle( val, bound1, bound2 )  assert(val >  bound1 && val <= bound2);
+#define isvd_assert_gelt( val, bound1, bound2 )  assert(val >= bound1 && val <  bound2);
+#define isvd_assert_gele( val, bound1, bound2 )  assert(val >= bound1 && val <= bound2);
 
 #endif  // ISVD_USE_GTEST
 
@@ -146,5 +148,9 @@ typedef int omp_int_t;
     } \
     printf("\n"); \
   }
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_DEF_H_

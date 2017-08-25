@@ -11,6 +11,10 @@
 #include <isvd/core/def.h>
 #include <isvd/core/param.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 // Sketching
 void isvd_dSketchGaussianProjection(
     const isvd_Param param, const double *argv, const isvd_int_t argc, double *retv, const isvd_int_t retc,
@@ -66,5 +70,9 @@ void isvd_dPostprocessSymmetric(
     double *s, double *ut, const isvd_int_t ldut,
     const mpi_int_t ut_root
 );
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_CORE_STAGE_D_H_

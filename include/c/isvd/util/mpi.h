@@ -10,6 +10,10 @@
 
 #include <isvd/def.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  util_module
 /// @brief  Returns the size of the group associated with a communicator.
@@ -33,5 +37,9 @@ static inline mpi_int_t isvd_getMpiSize( const MPI_Comm comm ) {
 static inline mpi_int_t isvd_getMpiRank( const MPI_Comm comm ) {
   mpi_int_t rank; isvd_assert_pass(MPI_Comm_rank(comm, &rank)); return rank;
 }
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_UTIL_MPI_H_

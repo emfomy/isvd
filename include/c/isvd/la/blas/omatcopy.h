@@ -10,6 +10,10 @@
 
 #include <isvd/def.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #define CHAR1 char
 #define INT   isvd_int_t
 #define REAL4 float
@@ -19,10 +23,6 @@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-#if defined(__cplusplus)
-extern "C" {
-#endif  // __cplusplus
-
 #if defined(ISVD_USE_MKL)
 
 extern void mkl_somatcopy_(ISVD_UNKNOWN);
@@ -31,10 +31,6 @@ extern void mkl_comatcopy_(ISVD_UNKNOWN);
 extern void mkl_zomatcopy_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -77,5 +73,9 @@ void isvd_zomatcopy(
 #undef REAL8
 #undef COMP4
 #undef COMP8
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_LA_BLAS_OMATCOPY_H_

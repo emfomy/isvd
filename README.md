@@ -14,7 +14,7 @@ Integrated Singular Value Decomposition (iSVD)
 
 ## Requirements
 * [CMake](https://cmake.org) 2.8+ (CMake 3+ recommended).
-* C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.5+ recommended).
+* C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.4+ recommended).
 * [BLAS](http://www.netlib.org/blas) & [LAPACK](http://www.netlib.org/lapack) library (Used for multi-core parallelization).
 * MPI Library v2.2+ ([MPICH](http://www.mpich.org) or [OpenMPI](https://www.open-mpi.org)).
 

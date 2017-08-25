@@ -10,6 +10,10 @@
 
 #include <isvd/def.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #if defined(ISVD_USE_OMP)
 #define ISVD_OMP_PARALLEL _Pragma("omp parallel")
 #else  // ISVD_USE_OMP
@@ -43,5 +47,9 @@ static inline omp_int_t isvd_getOmpRank( void ) {
   return 0;
 #endif  // ISVD_USE_OMP
 }
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_UTIL_OMP_H_

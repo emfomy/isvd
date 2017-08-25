@@ -13,6 +13,10 @@
 #include <isvd/core/stage_d.h>
 #include <isvd/util/arg.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 // General iSVD driver
 void isvd_dIsvd(
     const char *algs, const char *algo, const char *algi, const char *algp,
@@ -71,5 +75,9 @@ static inline isvd_fun_t isvd_arg2algp( const int16_t arg ) {
   }
   return NULL;
 }
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_CORE_DRIVER_D_H_

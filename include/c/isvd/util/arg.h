@@ -13,6 +13,10 @@
 #include <string.h>
 #include <isvd/la.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 static inline isvd_int_t isvd_arg2char(
     const char *name,
     const char arg,
@@ -68,5 +72,9 @@ static inline int16_t isvd_arg2char2(
   fprintf(stderr, ".\n");
   return 0;
 }
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_UTIL_ARG_H_

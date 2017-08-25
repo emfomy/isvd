@@ -10,6 +10,10 @@
 
 #include <isvd/def.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #define CHAR1 char
 #define INT   isvd_int_t
 #define REAL4 float
@@ -18,10 +22,6 @@
 #define COMP8 double complex
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-
-#if defined(__cplusplus)
-extern "C" {
-#endif  // __cplusplus
 
 extern void sgemm_(ISVD_UNKNOWN);
 extern void dgemm_(ISVD_UNKNOWN);
@@ -37,10 +37,6 @@ extern void ssyrk_(ISVD_UNKNOWN);
 extern void dsyrk_(ISVD_UNKNOWN);
 extern void cherk_(ISVD_UNKNOWN);
 extern void zherk_(ISVD_UNKNOWN);
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -116,5 +112,9 @@ static inline void isvd_zherk(
 #undef REAL8
 #undef COMP4
 #undef COMP8
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_LA_BLAS_BLAS3_H_

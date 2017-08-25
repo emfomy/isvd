@@ -10,6 +10,10 @@
 
 #include <isvd/def.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #define CHAR1 char
 #define INT   isvd_int_t
 #define REAL4 float
@@ -89,5 +93,9 @@ void isvd_vzSqrt(
 #undef REAL8
 #undef COMP4
 #undef COMP8
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_LA_VML_VML_H_

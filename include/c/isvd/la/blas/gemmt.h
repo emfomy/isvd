@@ -11,6 +11,10 @@
 #include <isvd/def.h>
 #include <isvd/la/blas/blas3.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #define CHAR1 char
 #define INT   isvd_int_t
 #define REAL4 float
@@ -75,5 +79,9 @@ static inline void isvd_zgemmt(
 #undef REAL8
 #undef COMP4
 #undef COMP8
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_LA_BLAS_GEMMT_H_

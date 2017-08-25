@@ -11,6 +11,10 @@
 #include <isvd/def.h>
 #include <isvd/util/memory.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #define CHAR1 char
 #define INT   isvd_int_t
 #define REAL4 float
@@ -20,10 +24,6 @@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-#if defined(__cplusplus)
-extern "C" {
-#endif  // __cplusplus
-
 #if !defined(ISVD_USE_MKL)
 
 extern void ssyev_(ISVD_UNKNOWN);
@@ -32,10 +32,6 @@ extern void cheev_(ISVD_UNKNOWN);
 extern void zheev_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -89,5 +85,9 @@ static inline void isvd_zheev(
 #undef REAL8
 #undef COMP4
 #undef COMP8
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_LA_LAPACK_SYEV_H_

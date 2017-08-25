@@ -12,6 +12,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #if defined(ISVD_USE_MKL)
   #define isvd_malloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
 #else // ISVD_USE_MKL
@@ -125,5 +129,9 @@ static inline void isvd_zmemcpy( double complex *dst, double complex *src, const
   isvd_memcpy(dst, src, num, double complex);
 }
 //@}
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_UTIL_MEMORY_H_

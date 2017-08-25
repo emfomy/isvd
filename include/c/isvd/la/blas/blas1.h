@@ -10,6 +10,10 @@
 
 #include <isvd/def.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
 #define CHAR1 char
 #define INT   isvd_int_t
 #define REAL4 float
@@ -18,10 +22,6 @@
 #define COMP8 double complex
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-
-#if defined(__cplusplus)
-extern "C" {
-#endif  // __cplusplus
 
 extern REAL4 sdot_(ISVD_UNKNOWN);
 extern REAL8 ddot_(ISVD_UNKNOWN);
@@ -46,10 +46,6 @@ extern void cscal_(ISVD_UNKNOWN);
 extern void zscal_(ISVD_UNKNOWN);
 extern void csscal_(ISVD_UNKNOWN);
 extern void zdscal_(ISVD_UNKNOWN);
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -143,5 +139,9 @@ static inline void isvd_zdscal(
 #undef REAL8
 #undef COMP4
 #undef COMP8
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_LA_BLAS_BLAS1_H_

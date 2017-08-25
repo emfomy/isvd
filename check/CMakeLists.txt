@@ -30,7 +30,6 @@ include_directories(
 )
 
 # Add library
-unset(srcfiles)
 file(
   GLOB_RECURSE srcfiles
   RELATIVE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/*.c"
@@ -44,6 +43,8 @@ foreach(srcfile ${srcfiles})
     COPYONLY
   )
 endforeach()
+file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/core/param.cxx"
+            "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/core/param.c")
 file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/src/libisvd/*"
                         "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/*")
 add_library(checkisvd EXCLUDE_FROM_ALL ${files})

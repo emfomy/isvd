@@ -1,7 +1,6 @@
 # Create configure files
 function(ISVD_CONFIGURE_FN)
   string(REPLACE ";" " " DEFS_STR "${DEFS}")
-  unset(cfgfiles)
   file(
     GLOB_RECURSE cfgfiles
     RELATIVE "${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/*.in"
@@ -14,7 +13,6 @@ function(ISVD_CONFIGURE_FN)
       @ONLY
     )
   endforeach()
-  unset(cfgfiles)
   file(
     GLOB_RECURSE cfgfiles
     RELATIVE "${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}/*.in"
