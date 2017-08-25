@@ -5,28 +5,28 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_@x@.h>
+#include <isvd/core/@x@_stage.h>
 #include <isvd/la.h>
 #include <isvd/util/arg.h>
 #include <isvd/util/memory.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol(
-    const isvd_Param param,
-    const char ordera,
-    const @xtype@ *a,
-    const isvd_int_t lda,
-    const @xtype@ *qt,
-    const isvd_int_t ldqt,
-          @xtype@ *zt,
-    const isvd_int_t ldzt,
-          @xtype@ *s,
-          @xtype@ *ut,
-    const isvd_int_t ldut,
-          @xtype@ *vt,
-    const isvd_int_t ldvt,
-    const mpi_int_t  ut_root,
-    const mpi_int_t  vt_root
+    const isvd_Param  param,
+    const char        ordera,
+    const @xtype@    *a,
+    const isvd_int_t  lda,
+    const @xtype@    *qt,
+    const isvd_int_t  ldqt,
+          @xtype@    *zt,
+    const isvd_int_t  ldzt,
+          @xtype@    *s,
+          @xtype@    *ut,
+    const isvd_int_t  ldut,
+          @xtype@    *vt,
+    const isvd_int_t  ldvt,
+    const mpi_int_t   ut_root,
+    const mpi_int_t   vt_root
 ) {
 
   ISVD_UNUSED(s);
@@ -92,21 +92,21 @@ static void projectBlockCol(
 }
 
 static void projectBlockRow(
-    const isvd_Param param,
-    const char ordera,
-    const @xtype@ *a,
-    const isvd_int_t lda,
-    const @xtype@ *qt,
-    const isvd_int_t ldqt,
-          @xtype@ *zt,
-    const isvd_int_t ldzt,
-          @xtype@ *s,
-          @xtype@ *ut,
-    const isvd_int_t ldut,
-          @xtype@ *vt,
-    const isvd_int_t ldvt,
-    const mpi_int_t  ut_root,
-    const mpi_int_t  vt_root
+    const isvd_Param  param,
+    const char        ordera,
+    const @xtype@    *a,
+    const isvd_int_t  lda,
+    const @xtype@    *qt,
+    const isvd_int_t  ldqt,
+          @xtype@    *zt,
+    const isvd_int_t  ldzt,
+          @xtype@    *s,
+          @xtype@    *ut,
+    const isvd_int_t  ldut,
+          @xtype@    *vt,
+    const isvd_int_t  ldvt,
+    const mpi_int_t   ut_root,
+    const mpi_int_t   vt_root
 ) {
 
   ISVD_UNUSED(s);
@@ -213,24 +213,24 @@ static void projectBlockRow(
 /// @param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
 void isvd_@x@PostprocessGramian(
-    const isvd_Param param,
-    const @xtype@ *argv,
-    const isvd_int_t argc,
-          @xtype@ *retv,
-    const isvd_int_t retc,
-    const char dista,
-    const char ordera,
-    const @xtype@ *a,
-    const isvd_int_t lda,
-    const @xtype@ *qt,
-    const isvd_int_t ldqt,
-          @xtype@ *s,
-          @xtype@ *ut,
-    const isvd_int_t ldut,
-          @xtype@ *vt,
-    const isvd_int_t ldvt,
-    const mpi_int_t  ut_root,
-    const mpi_int_t  vt_root
+    const isvd_Param  param,
+    const @xtype@    *argv,
+    const isvd_int_t  argc,
+          @xtype@    *retv,
+    const isvd_int_t  retc,
+    const char        dista,
+    const char        ordera,
+    const @xtype@    *a,
+    const isvd_int_t  lda,
+    const @xtype@    *qt,
+    const isvd_int_t  ldqt,
+          @xtype@    *s,
+          @xtype@    *ut,
+    const isvd_int_t  ldut,
+          @xtype@    *vt,
+    const isvd_int_t  ldvt,
+    const mpi_int_t   ut_root,
+    const mpi_int_t   vt_root
 ) {
 
   ISVD_UNUSED(argv);

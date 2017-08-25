@@ -5,7 +5,7 @@
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_@x@.h>
+#include <isvd/core/@x@_stage.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
 
@@ -31,15 +31,15 @@
 /// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
 void isvd_@x@IntegrateKolmogorovNagumo(
-    const isvd_Param param,
-    const @xtype@ *argv,
-    const isvd_int_t argc,
-          @xtype@ *retv,
-    const isvd_int_t retc,
-    const @xtype@ *yst,
-    const isvd_int_t ldyst,
-          @xtype@ *qt,
-    const isvd_int_t ldqt
+    const isvd_Param  param,
+    const @xtype@    *argv,
+    const isvd_int_t  argc,
+          @xtype@    *retv,
+    const isvd_int_t  retc,
+    const @xtype@    *yst,
+    const isvd_int_t  ldyst,
+          @xtype@    *qt,
+    const isvd_int_t  ldqt
 ) {
 
   // ====================================================================================================================== //
@@ -47,7 +47,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
   isvd_int_t argi = -1;
   const isvd_int_t maxit = ( argc > ++argi ) ? argv[argi] : kMaxit;
-  const @xtype@ tol   = ( argc > ++argi ) ? argv[argi] : kTol;
+  const @xtype@ tol      = ( argc > ++argi ) ? argv[argi] : kTol;
 
   // ====================================================================================================================== //
   // Get parameters
