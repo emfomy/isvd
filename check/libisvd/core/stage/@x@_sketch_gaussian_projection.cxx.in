@@ -6,6 +6,11 @@
 #define A_PATH  ISVD_DATA_PATH "/a.mtx"
 #define YS_PATH ISVD_DATA_PATH "/ys_gp.mtx"
 
+#define serr 1e-1
+#define derr 1e-6
+
+typedef @xtype@ isvd_val_t;
+
 static void test( char dista, char ordera ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
@@ -33,20 +38,20 @@ static void test( char dista, char ordera ) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &n), 0);
 
-  @xtype@ *a0 = isvd_@x@malloc(m * n);
+  isvd_val_t *a0 = isvd_@x@malloc(m * n);
   isvd_int_t lda0;
   if ( ordera_ == 'C' ) {
     lda0 = m;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        EXPECT_EQ(fscanf(file, "%lg", &a0[ir+ic*lda0]), 1);
+        isvd_@x@fget(file, &a0[ir+ic*lda0]);
       }
     }
   } else {
     lda0 = n;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        EXPECT_EQ(fscanf(file, "%lg", &a0[ir*lda0+ic]), 1);
+        isvd_@x@fget(file, &a0[ir*lda0+ic]);
       }
     }
   }
@@ -68,12 +73,12 @@ static void test( char dista, char ordera ) {
     ASSERT_EQ(m_, m);
   }
 
-  @xtype@ *yst0 = isvd_@x@malloc(m * Nl);
+  isvd_val_t *yst0 = isvd_@x@malloc(m * Nl);
   isvd_int_t ldyst0 = Nl;
 
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      EXPECT_EQ(fscanf(file, "%lg", &yst0[ir*ldyst0+ic]), 1);
+      isvd_@x@fget(file, &yst0[ir*ldyst0+ic]);
     }
   }
 
@@ -93,7 +98,7 @@ static void test( char dista, char ordera ) {
   const isvd_int_t seed = 0;
 
   // Create matrices
-  @xtype@ *a;
+  isvd_val_t *a;
   if ( dista_ == 'C' ) {
     if ( ordera_ == 'C' ) {
       a = a0 + param.colidxbegin * lda0;
@@ -109,7 +114,7 @@ static void test( char dista, char ordera ) {
   }
   isvd_int_t lda = lda0;
 
-  @xtype@ *yst = isvd_@x@malloc(mb * Nl);
+  isvd_val_t *yst = isvd_@x@malloc(mb * Nl);
   isvd_int_t ldyst = Nl;
 
   // Run stage
@@ -117,15 +122,15 @@ static void test( char dista, char ordera ) {
 
 #if defined(ISVD_USE_MKL)
   // Gather results
-  @xtype@ *yst_ = isvd_@x@malloc(Pmb * Nl);
+  isvd_val_t *yst_ = isvd_@x@malloc(Pmb * Nl);
   isvd_int_t ldyst_ = Nl;
-  MPI_Gather(yst, mb*ldyst, MPI_DOUBLE, yst_, mb*ldyst, MPI_DOUBLE, mpi_root, MPI_COMM_WORLD);
+  MPI_Gather(yst, mb*ldyst, MPI_@X_TYPE@, yst_, mb*ldyst, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
 
   // Check results
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
       for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
-        ASSERT_NEAR(yst_[ir*ldyst_+ic], yst0[ir*ldyst0+ic], 1e-8) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+        ASSERT_NEAR(yst_[ir*ldyst_+ic], yst0[ir*ldyst0+ic], @x@err) << "(ir, ic) =  (" << ir << ", " << ic << ")";
       }
     }
   }
@@ -135,18 +140,18 @@ static void test( char dista, char ordera ) {
 #endif /// ISVD_USE_MKL
 }
 
-TEST(GaussianProjectionSketching, BlockCol_ColMajor) {
+TEST(@XStr@GaussianProjectionSketching, BlockCol_ColMajor) {
   test('C', 'C');
 }
 
-TEST(GaussianProjectionSketching, BlockCol_RowMajor) {
+TEST(@XStr@GaussianProjectionSketching, BlockCol_RowMajor) {
   test('C', 'R');
 }
 
-TEST(GaussianProjectionSketching, BlockRow_ColMajor) {
+TEST(@XStr@GaussianProjectionSketching, BlockRow_ColMajor) {
   test('R', 'C');
 }
 
-TEST(GaussianProjectionSketching, BlockRow_RowMajor) {
+TEST(@XStr@GaussianProjectionSketching, BlockRow_RowMajor) {
   test('R', 'R');
 }

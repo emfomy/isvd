@@ -1,31 +1,29 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_d/d_postprocess_gramian.c
-/// @brief   The Gramian Postprocessing (double precision)
+/// @file    src/libisvd/core/stage/d_postprocess_gramian.c
+/// @brief   The Gramian Postprocessing (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
 
-#include <isvd/core/stage_d.h>
+#include <isvd/core/stage_@x@.h>
 #include <isvd/la.h>
 #include <isvd/util/arg.h>
 #include <isvd/util/memory.h>
-
-typedef double isvd_val_t;
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol(
     const isvd_Param param,
     const char ordera,
-    const isvd_val_t *a,
+    const @xtype@ *a,
     const isvd_int_t lda,
-    const isvd_val_t *qt,
+    const @xtype@ *qt,
     const isvd_int_t ldqt,
-          isvd_val_t *zt,
+          @xtype@ *zt,
     const isvd_int_t ldzt,
-          isvd_val_t *s,
-          isvd_val_t *ut,
+          @xtype@ *s,
+          @xtype@ *ut,
     const isvd_int_t ldut,
-          isvd_val_t *vt,
+          @xtype@ *vt,
     const isvd_int_t ldvt,
     const mpi_int_t  ut_root,
     const mpi_int_t  vt_root
@@ -64,25 +62,25 @@ static void projectBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *qt_;
+  @xtype@ *qt_;
   if ( use_ut ) {
     qt_ = ut;
   } else {
-    qt_ = isvd_dmalloc(Pmb * l);
+    qt_ = isvd_@x@malloc(Pmb * l);
   }
   isvd_int_t ldqt_ = l;
 
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Allgather(qt, mb*ldqt, MPI_DOUBLE, qt_, mb*ldqt, MPI_DOUBLE, param.mpi_comm);
+  MPI_Allgather(qt, mb*ldqt, MPI_@X_TYPE@, qt_, mb*ldqt, MPI_@X_TYPE@, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Project
 
   // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  isvd_dgemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
+  isvd_@x@gemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -96,16 +94,16 @@ static void projectBlockCol(
 static void projectBlockRow(
     const isvd_Param param,
     const char ordera,
-    const isvd_val_t *a,
+    const @xtype@ *a,
     const isvd_int_t lda,
-    const isvd_val_t *qt,
+    const @xtype@ *qt,
     const isvd_int_t ldqt,
-          isvd_val_t *zt,
+          @xtype@ *zt,
     const isvd_int_t ldzt,
-          isvd_val_t *s,
-          isvd_val_t *ut,
+          @xtype@ *s,
+          @xtype@ *ut,
     const isvd_int_t ldut,
-          isvd_val_t *vt,
+          @xtype@ *vt,
     const isvd_int_t ldvt,
     const mpi_int_t  ut_root,
     const mpi_int_t  vt_root
@@ -144,11 +142,11 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *zt_;
+  @xtype@ *zt_;
   if ( use_vt ) {
     zt_ = vt;
   } else {
-    zt_ = isvd_dmalloc(Pnb * l);
+    zt_ = isvd_@x@malloc(Pnb * l);
   }
   isvd_int_t ldzt_ = l;
 
@@ -157,12 +155,12 @@ static void projectBlockRow(
 
   // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  isvd_dgemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
+  isvd_@x@gemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
 
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -175,8 +173,8 @@ static void projectBlockRow(
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_d_module
-/// Gramian Postprocessing (double precision)
+/// @ingroup  core_stage_module
+/// Gramian Postprocessing (@xname@ precision)
 ///
 /// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   argv, argc  The arguments and its length. (not using)
@@ -214,22 +212,22 @@ static void projectBlockRow(
 /// @param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
 /// @param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
-void isvd_dPostprocessGramian(
+void isvd_@x@PostprocessGramian(
     const isvd_Param param,
-    const isvd_val_t *argv,
+    const @xtype@ *argv,
     const isvd_int_t argc,
-          isvd_val_t *retv,
+          @xtype@ *retv,
     const isvd_int_t retc,
     const char dista,
     const char ordera,
-    const isvd_val_t *a,
+    const @xtype@ *a,
     const isvd_int_t lda,
-    const isvd_val_t *qt,
+    const @xtype@ *qt,
     const isvd_int_t ldqt,
-          isvd_val_t *s,
-          isvd_val_t *ut,
+          @xtype@ *s,
+          @xtype@ *ut,
     const isvd_int_t ldut,
-          isvd_val_t *vt,
+          @xtype@ *vt,
     const isvd_int_t ldvt,
     const mpi_int_t  ut_root,
     const mpi_int_t  vt_root
@@ -272,10 +270,10 @@ void isvd_dPostprocessGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  isvd_val_t *zt = isvd_dmalloc(nb * l);
+  @xtype@ *zt = isvd_@x@malloc(nb * l);
   isvd_int_t ldzt = l;
 
-  isvd_val_t *w = isvd_dmalloc(l * l);
+  @xtype@ *w = isvd_@x@malloc(l * l);
   isvd_int_t ldw = l;
 
   // ====================================================================================================================== //
@@ -296,26 +294,26 @@ void isvd_dPostprocessGramian(
   // Compute eigen-decomposition
 
   // W := Z' * Z
-  isvd_dgemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+  isvd_@x@gemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
+  MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
-  isvd_dgesvd(jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1);
-  isvd_vdSqrt(l, s, s);
+  isvd_@x@gesvd(jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1);
+  isvd_v@x@Sqrt(l, s, s);
 
   // ====================================================================================================================== //
   // Compute singular vectors
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    isvd_dgemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_@x@gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_DOUBLE, ut, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
+        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@X_TYPE@, ut, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_DOUBLE, NULL, mb*ldut, MPI_DOUBLE, ut_root, param.mpi_comm);
+        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, NULL, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       }
     }
   }
@@ -323,15 +321,15 @@ void isvd_dPostprocessGramian(
   // V := Z * W / S (V' := (W / S)' * Z')
   if ( vt_root >= -1 ) {
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_dscal(l, 1.0/s[ii], w + ii*ldw, 1);
+      isvd_@x@scal(l, 1.0/s[ii], w + ii*ldw, 1);
     }
-    isvd_dgemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
+    isvd_@x@gemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
-        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_DOUBLE, vt, nb*ldvt, MPI_DOUBLE, vt_root, param.mpi_comm);
+        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@X_TYPE@, vt, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
       } else {
-        MPI_Gather(vt, nb*ldvt, MPI_DOUBLE, NULL, nb*ldvt, MPI_DOUBLE, vt_root, param.mpi_comm);
+        MPI_Gather(vt, nb*ldvt, MPI_@X_TYPE@, NULL, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
       }
     }
   }

@@ -30,15 +30,15 @@ void isvd_vdSqrt(
 }
 void isvd_vcSqrt(
     const isvd_int_t n,
-    const float complex *a,
-          float complex *y
+    const complex float *a,
+          complex float *y
 ) {
   isvd_xSqrt(n, a, y, csqrtf);
 }
 void isvd_vzSqrt(
     const isvd_int_t n,
-    const double complex *a,
-          double complex *y
+    const complex double *a,
+          complex double *y
 ) {
   isvd_xSqrt(n, a, y, csqrt);
 }

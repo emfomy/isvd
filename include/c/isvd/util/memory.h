@@ -24,7 +24,7 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
-/// @brief  Allocates an array with size @a num.
+/// Allocates an array with size @a num.
 ///
 /// @param   num  The number of objects.
 ///
@@ -43,18 +43,18 @@ static inline double* isvd_dmalloc( const size_t num ) {
   return isvd_xmalloc(num, double);
 }
 
-static inline float complex* isvd_cmalloc( const size_t num ) {
-  return isvd_xmalloc(num, float complex);
+static inline complex float* isvd_cmalloc( const size_t num ) {
+  return isvd_xmalloc(num, complex float);
 }
 
-static inline double complex* isvd_zmalloc( const size_t num ) {
-  return isvd_xmalloc(num, double complex);
+static inline complex double* isvd_zmalloc( const size_t num ) {
+  return isvd_xmalloc(num, complex double);
 }
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
-/// @brief  Deallocates @a ptr.
+/// Deallocates @a ptr.
 /// @param   ptr  The pointer to the array.
 ///
 //@{
@@ -71,7 +71,7 @@ static inline void isvd_free( void *ptr ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
-/// @brief  Sets the memory to zero.
+/// Sets the memory to zero.
 ///
 /// @param  ptr  The destination pointer to the array.
 /// @param  num  The number of objects.
@@ -89,12 +89,12 @@ static inline void isvd_dmemset0( double *ptr, const size_t num ) {
   isvd_xmemset0(ptr, num, double);
 }
 
-static inline void isvd_cmemset0( float complex *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, float complex);
+static inline void isvd_cmemset0( complex float *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, complex float);
 }
 
-static inline void isvd_zmemset0( double complex *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, double complex);
+static inline void isvd_zmemset0( complex double *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, complex double);
 }
 //@}
 
@@ -102,7 +102,7 @@ static inline void isvd_zmemset0( double complex *ptr, const size_t num ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  utility_module
-/// @brief  Copies the array.
+/// Copies the array.
 ///
 /// @param   dst  The destination pointer to the array.
 /// @param   src  The source pointer to the array.
@@ -121,12 +121,12 @@ static inline void isvd_dmemcpy( double *dst, double *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, double);
 }
 
-static inline void isvd_cmemcpy( float complex *dst, float complex *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, float complex);
+static inline void isvd_cmemcpy( complex float *dst, complex float *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, complex float);
 }
 
-static inline void isvd_zmemcpy( double complex *dst, double complex *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, double complex);
+static inline void isvd_zmemcpy( complex double *dst, complex double *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, complex double);
 }
 //@}
 

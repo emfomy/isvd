@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage_@x@/@x@_sketch_gaussian_projection.c
-/// @brief   The Gaussian Projection Sketching (@xtype@ precision)
+/// @file    src/libisvd/core/stage@x@_sketch_gaussian_projection.c
+/// @brief   The Gaussian Projection Sketching (@xname@ precision)
 ///
 /// @author  Mu Yang <<emfomy@gmail.com>>
 ///
@@ -74,7 +74,7 @@ static void sketchBlockCol(
     isvd_VSLStreamStatePtr stream;
     isvd_vslNewStream(&stream, seed_);
     isvd_vslSkipAheadStream(stream, (nb * Nl * param.mpi_rank + start) * 2);
-    isvd_vdRngGaussian(stream, len, omegat + start, 0.0, 1.0);
+    isvd_v@x@RngGaussian(stream, len, omegat + start, 0.0, 1.0);
 
     isvd_vslDeleteStream(&stream);
   }
@@ -89,7 +89,7 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_DOUBLE, MPI_SUM, param.mpi_comm);
+  MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -151,7 +151,7 @@ static void sketchBlockRow(
     isvd_VSLStreamStatePtr stream;
     isvd_vslNewStream(&stream, seed_);
     isvd_vslSkipAheadStream(stream, start * 2);
-    isvd_vdRngGaussian(stream, len, omegat + start, 0.0, 1.0);
+    isvd_v@x@RngGaussian(stream, len, omegat + start, 0.0, 1.0);
 
     isvd_vslDeleteStream(&stream);
   }
@@ -173,7 +173,7 @@ static void sketchBlockRow(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  core_stage_@x@_module
-/// Gaussian Projection Sketching (@xtype@ precision)
+/// Gaussian Projection Sketching (@xname@ precision)
 ///
 /// @param[in]   param       The @ref isvd_Param "parameters".
 /// @param[in]   argv, argc  The arguments and its length. (not using)

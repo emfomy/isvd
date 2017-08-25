@@ -79,10 +79,10 @@ void isvd_comatcopy(
     const char trans,
     const isvd_int_t m,
     const isvd_int_t n,
-    const float complex alpha,
-    const float complex *a,
+    const complex float alpha,
+    const complex float *a,
     const isvd_int_t lda,
-          float complex *b,
+          complex float *b,
     const isvd_int_t ldb
 ) {
   isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, conjf);
@@ -91,10 +91,10 @@ void isvd_zomatcopy(
     const char trans,
     const isvd_int_t m,
     const isvd_int_t n,
-    const double complex alpha,
-    const double complex *a,
+    const complex double alpha,
+    const complex double *a,
     const isvd_int_t lda,
-          double complex *b,
+          complex double *b,
     const isvd_int_t ldb
 ) {
   isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, conj);

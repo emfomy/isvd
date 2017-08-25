@@ -32,17 +32,17 @@ void isvd_vdSub(
 }
 void isvd_vcSub(
     const isvd_int_t n,
-    const float complex *a,
-    const float complex *b,
-          float complex *y
+    const complex float *a,
+    const complex float *b,
+          complex float *y
 ) {
   isvd_xSub(n, a, b, y);
 }
 void isvd_vzSub(
     const isvd_int_t n,
-    const double complex *a,
-    const double complex *b,
-          double complex *y
+    const complex double *a,
+    const complex double *b,
+          complex double *y
 ) {
   isvd_xSub(n, a, b, y);
 }
