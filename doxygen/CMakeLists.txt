@@ -2,6 +2,14 @@
 
 # Break
 if(NOT ISVD_BUILD_DOC)
+
+  # Add rule 'doc'
+  add_custom_target(
+    doc
+    COMMAND eval "exit 1"
+    COMMENT "${Esc}[1;33mWarning: Documentation are not enabled! Please set 'ISVD_BUILD_DOC' using ccmake${Esc}[0m."
+  )
+
   return()
 endif()
 

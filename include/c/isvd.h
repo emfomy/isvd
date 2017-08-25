@@ -10,9 +10,10 @@
 
 #include <isvd/def.h>
 #include <isvd/core.h>
+#include <isvd/la.h>
 #include <isvd/util.h>
 
-// #ifdef ISVD_USE_GPU
+// #if defined(ISVD_USE_GPU)
 //   #include <isvd/core_gpu.h>
 // #endif  // ISVD_USE_GPU
 
@@ -22,13 +23,13 @@
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  util_module  Utility Module
-/// @brief     The Utility Module
+/// @defgroup  la_module  Linear Algebra Module
+/// @brief     The Linear Algebra Module
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @defgroup  core_gpu_module  Core Module (GPU)
-/// @brief     The Core Module (GPU Support)
+/// @defgroup  util_module  Utility Module
+/// @brief     The Utility Module
 ///
 
 #endif  // _ISVD_H_

@@ -47,10 +47,10 @@ int main( int argc, char **argv ) {
 
   isvd_int_t seed = 0;
 
-  VSLStreamStatePtr stream;
-  vslNewStream(&stream, VSL_BRNG_SFMT19937, seed);
-  vdRngGaussian(VSL_RNG_METHOD_GAUSSIAN_BOXMULLER, stream, m * n, a, 0.0, 1.0);
-  vslDeleteStream(&stream);
+  isvd_VSLStreamStatePtr stream;
+  isvd_vslNewStream(&stream, seed);
+  isvd_vdRngGaussian(stream, m * n, a, 0.0, 1.0);
+  isvd_vslDeleteStream(&stream);
 
   isvd_dIsvd(
     "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',

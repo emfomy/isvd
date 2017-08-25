@@ -40,6 +40,12 @@ string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
 string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
 list(APPEND LIBS "-Wl,--no-as-needed")
 
+# Add library
+list(APPEND LIBS "m" "pthread")
+
+# Use POSIX
+list(APPEND DEFS "_POSIX_C_SOURCE")
+
 # MPI
 find_package(MPI ${findtype})
 if(MPI_FOUND)
@@ -77,6 +83,7 @@ if(ISVD_USE_GPU)
     endif()
   endif()
   set(CUDA_TOOLKIT_ROOT_DIR "${CUDA_TOOLKIT_ROOT_DIR}" CACHE PATH "The root path of CUDA toolkit." FORCE)
+  unset(CUDA_TOOLKIT_ROOT_DIR)
 
   find_package(CUDA ${findtype})
   find_package(MAGMA ${findtype})
@@ -102,7 +109,7 @@ if(ISVD_OMP)
 
   find_package(OpenMPLib ${findtype})
   if(OpenMPLib_FOUND)
-    list(APPEND LIBS "${OpenMP_LIBRARIES}" "pthread")
+    list(APPEND LIBS "${OpenMP_LIBRARIES}")
   endif()
 
   unset(OpenMP)
@@ -112,10 +119,9 @@ elseif(ISVD_USE_GPU)
   find_package(OpenMP ${findtype})
   find_package(OpenMPLib ${findtype})
   if(OpenMPLib_FOUND)
-    list(APPEND LIBS "${OpenMP_LIBRARIES}" "pthread")
+    list(APPEND LIBS "${OpenMP_LIBRARIES}")
   endif()
 
-  unset(OMP_LIBRARY)
   unset(OpenMP)
 endif()
 

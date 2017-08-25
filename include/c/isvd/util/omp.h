@@ -9,9 +9,16 @@
 #define _ISVD_UTIL_OMP_H_
 
 #include <isvd/def.h>
-#ifdef _OPENMP
-  #include <omp.h>
-#endif  // _OPENMP
+
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
+
+#if defined(ISVD_USE_OMP)
+#define ISVD_OMP_PARALLEL _Pragma("omp parallel")
+#else  // ISVD_USE_OMP
+#define ISVD_OMP_PARALLEL
+#endif  // ISVD_USE_OMP
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @ingroup  util_module
@@ -20,11 +27,11 @@
 /// @return  The number of threads in the current team.
 ///
 static inline omp_int_t isvd_getOmpSize( void ) {
-#ifdef _OPENMP
+#if defined(ISVD_USE_OMP)
   return omp_get_max_threads();
-#else  // _OPENMP
+#else  // ISVD_USE_OMP
   return 1;
-#endif  // _OPENMP
+#endif  // ISVD_USE_OMP
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,11 +41,15 @@ static inline omp_int_t isvd_getOmpSize( void ) {
 /// @return  The thread identification number within the current team.
 ///
 static inline omp_int_t isvd_getOmpRank( void ) {
-#ifdef _OPENMP
+#if defined(ISVD_USE_OMP)
   return omp_get_thread_num();
-#else  // _OPENMP
+#else  // ISVD_USE_OMP
   return 0;
-#endif  // _OPENMP
+#endif  // ISVD_USE_OMP
 }
+
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
 
 #endif  // _ISVD_UTIL_OMP_H_

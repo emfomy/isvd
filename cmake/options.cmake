@@ -1,9 +1,16 @@
 # Set default variables
-set(INCS "")
-set(LIBS "")
-set(DEFS "")
-set(COMFLGS "")
-set(LNKFLGS "")
+unset(INCS)
+unset(LIBS)
+unset(DEFS)
+unset(COMFLGS)
+unset(LNKFLGS)
+
+# Check Compiler
+if(CMAKE_C_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+  set(ISVD_USE_ICC "ON")
+else()
+  set(ISVD_USE_ICC "OFF")
+endif()
 
 # Set install prefix
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -11,9 +18,8 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 # Set options
-option(ISVD_BUILD_LIB     "Build libraries."      "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
-option(ISVD_BUILD_TEST    "Build test codes."     "OFF")
+option(ISVD_BUILD_TEST    "Build unit tests."     "OFF")
 option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
 # option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
 
@@ -23,27 +29,19 @@ if(NOT ISVD_INDEX_TYPE STREQUAL "32" AND NOT ISVD_INDEX_TYPE STREQUAL "64" )
   message(FATAL_ERROR "ISVD_INDEX_TYPE must be either 32 or 64")
 endif()
 
-# set(ISVD_BLAS "BLAS" CACHE STRING "Selected BLAS/LAPACK library. [BLAS/MKL]")
-# set_property(CACHE ISVD_BLAS PROPERTY STRINGS "BLAS;MKL")
-# if(NOT ISVD_BLAS STREQUAL "BLAS" AND NOT ISVD_BLAS STREQUAL "MKL" )
-#   message(FATAL_ERROR "BLAS must be either BLAS or MKL")
-# endif()
-set(ISVD_BLAS "MKL" CACHE STRING "Selected BLAS/LAPACK library. [BLAS/MKL]")
-set_property(CACHE ISVD_BLAS PROPERTY STRINGS "MKL")
-if(NOT ISVD_BLAS STREQUAL "MKL" )
-  message(FATAL_ERROR "BLAS must be MKL")
+set(ISVD_BLAS "BLAS" CACHE STRING "Selected BLAS/LAPACK library. [BLAS/MKL]")
+set_property(CACHE ISVD_BLAS PROPERTY STRINGS "BLAS;MKL")
+if(NOT ISVD_BLAS STREQUAL "BLAS" AND NOT ISVD_BLAS STREQUAL "MKL" )
+  message(FATAL_ERROR "BLAS must be either BLAS or MKL")
 endif()
 
-set(ISVD_OMP "GOMP" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP] (Require 'ISVD_BLAS = MKL')")
+set(ISVD_OMP "OFF" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP]")
+unset(ISVD_OMP)
 set_property(CACHE ISVD_OMP PROPERTY STRINGS "OFF;GOMP;IOMP")
 if(NOT ISVD_OMP STREQUAL "OFF" AND NOT ISVD_OMP STREQUAL "GOMP" AND NOT ISVD_OMP STREQUAL "IOMP" )
   message(FATAL_ERROR "ISVD_OMP must be either OFF, GOMP, or IOMP")
 endif()
-
-if(ISVD_OMP STREQUAL "GOMP" AND CMAKE_C_COMPILER_ID STREQUAL "Intel")
-  message(FATAL_ERROR "Intel ICC is not compatible with GNU OpenMP")
-endif()
-if(ISVD_OMP STREQUAL "GOMP" AND CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+if(ISVD_USE_ICC AND ISVD_OMP STREQUAL "GOMP")
   message(FATAL_ERROR "Intel ICC is not compatible with GNU OpenMP")
 endif()
 
@@ -51,7 +49,7 @@ set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
 set(OMP_THRDS 4 CACHE STRING "The number of OpenMP threads used in demo/check codes.")
 
 # Set variables
-if(ISVD_BUILD_DEMO OR ISVD_BUILD_LIB OR ISVD_BUILD_TEST)
+if(ISVD_BUILD_DEMO OR ISVD_BUILD_TEST)
   set(ISVD_BUILD_BIN "ON")
 endif()
 
