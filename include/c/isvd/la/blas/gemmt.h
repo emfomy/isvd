@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas/gemmt.h
-/// @brief   The BLAS-like GEMMT routine.
+/// \file    include/c/isvd/la/blas/gemmt.h
+/// \brief   The BLAS-like GEMMT routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_BLAS_GEMMT_H_
@@ -32,10 +32,10 @@ extern void zgemmt_(ISVD_UNKNOWN);
 #endif  // ISVD_USE_MKL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
 /// matrix.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_sgemmt(
     const CHAR1 uplo, const CHAR1 transa, const CHAR1 transb, const INT n, const INT k, const REAL4 alpha, const REAL4 *a,
@@ -71,7 +71,7 @@ static inline void isvd_zgemmt(
     const INT lda, const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
 ) { ISVD_UNUSED(uplo); zgemm_(&transa, &transb, &n, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

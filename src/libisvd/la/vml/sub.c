@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/la/vml/sub.c
-/// @brief   The VML SUB routine.
+/// \file    src/libisvd/la/vml/sub.c
+/// \brief   The VML SUB routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <isvd/la/vml.h>

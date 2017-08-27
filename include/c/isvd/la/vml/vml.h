@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/vml/vml.h
-/// @brief   The VML routines.
+/// \file    include/c/isvd/la/vml/vml.h
+/// \brief   The VML routines.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_VML_VML_H_
@@ -22,9 +22,9 @@ extern "C" {
 #define COMP8 complex double
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_vml_module
+/// \ingroup  la_vml_module
 /// Subtracts vector elements.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vsSub(
     const INT n, const REAL4 *a, const REAL4 *b, REAL4 *y
@@ -52,12 +52,12 @@ void isvd_vzSub(
     const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y
 );
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_vml_module
+/// \ingroup  la_vml_module
 /// Computes the square root of vector elements.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vsSqrt(
     const INT n, const REAL4 *a, REAL4 *y
@@ -85,7 +85,7 @@ void isvd_vzSqrt(
     const INT n, const COMP8 *a, COMP8 *y
 );
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

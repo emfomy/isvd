@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    demo/ctest.c
-/// @brief   The C test code
+/// \file    demo/ctest.c
+/// \brief   The C test code
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <stdio.h>

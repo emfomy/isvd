@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas/blas1.h
-/// @brief   The BLAS level 1 header.
+/// \file    include/c/isvd/la/blas/blas1.h
+/// \brief   The BLAS level 1 header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_BLAS_BLAS1_H_
@@ -50,9 +50,9 @@ extern void zdscal_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes a vector-vector dot product.
-//@{
+//\{
 static inline REAL4 isvd_sdot(
     const INT n, const REAL4 *x, const INT incx, REAL4 *y, const INT incy
 ) { return sdot_(&n, x, &incx, y, &incy); }
@@ -71,12 +71,12 @@ static inline COMP4 isvd_cdotu(
 static inline COMP8 isvd_zdotu(
     const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
 ) { return zdotu_(&n, x, &incx, y, &incy); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes the Euclidean norm of a vector.
-//@{
+//\{
 static inline REAL4 isvd_snrm2(
     const INT n, const REAL4 *x, const INT incx
 ) { return snrm2_(&n, x, &incx); }
@@ -89,12 +89,12 @@ static inline REAL4 isvd_scnrm2(
 static inline REAL8 isvd_dznrm2(
     const INT n, const COMP8 *x, const INT incx
 ) { return dznrm2_(&n, x, &incx); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes the sum of magnitudes of the vector elements.
-//@{
+//\{
 static inline REAL4 isvd_sasum(
     const INT n, const REAL4 *x, const INT incx
 ) { return  sasum_(&n, x, &incx); }
@@ -107,12 +107,12 @@ static inline REAL4 isvd_scasum(
 static inline REAL8 isvd_dzasum(
     const INT n, const COMP8 *x, const INT incx
 ) { return dzasum_(&n, x, &incx); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes the product of a vector by a scalar.
-//@{
+//\{
 static inline void isvd_sscal(
     const INT n, const REAL4 alpha, REAL4 *x, const INT incx
 ) { sscal_(&n, &alpha, x, &incx); }
@@ -131,7 +131,7 @@ static inline void isvd_csscal(
 static inline void isvd_zdscal(
     const INT n, const REAL8 alpha, COMP8 *x, const INT incx
 ) { zdscal_(&n, &alpha, x, &incx); }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

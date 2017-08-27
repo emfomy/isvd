@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage/d_integrate_hierarchical_reduction.c
-/// @brief   The Hierarchical Reduction Integration (@xname@ precision)
+/// \file    src/libisvd/core/stage/@x@_integrate_hierarchical_reduction.c
+/// \brief   The Hierarchical Reduction Integration (@xname@ precision)
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -10,19 +10,19 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_module
+/// \ingroup  core_@x@_stage_module
 /// Hierarchical Reduction Integration (@xname@ precision)
 ///
-/// @param[in]   param       The @ref isvd_Param "parameters".
-/// @param[in]   argv, argc  The arguments and its length. (not using)
-/// @param[in]   retv, retc  The return values and its length. (not using)
+/// \param[in]   param       The \ref isvd_Param "parameters".
+/// \param[in]   argv, argc  The arguments and its length. (not using)
+/// \param[in]   retv, retc  The return values and its length. (not using)
 /// <hr>
-/// @param[in]   yst, ldyst  The row-block 𝕼 (@f$ m_b \times Nl @f$, row-major) and its leading dimension.
-/// @param[in]   qt, ldqt    The row-block 𝑸 (@f$ m_b \times l @f$, row-major) and its leading dimension.
+/// \param[in]   yst, ldyst  The row-block 𝕼 (\f$ m_b \times Nl \f$, row-major) and its leading dimension.
+/// \param[in]   qt, ldqt    The row-block 𝑸 (\f$ m_b \times l \f$, row-major) and its leading dimension.
 /// <hr>
-/// @param[out]  qt          Replaced by the row-block 𝑸 (row-major).
+/// \param[out]  qt          Replaced by the row-block 𝑸 (row-major).
 ///
-/// @attention  @b yst will be destroyed!
+/// \attention  \b yst will be destroyed!
 ///
 void isvd_@x@IntegrateHierarchicalReduction(
     const isvd_Param  param,

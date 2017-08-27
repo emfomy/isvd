@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas/omatcopy.h
-/// @brief   The BLAS-like OMATCOPY routine.
+/// \file    include/c/isvd/la/blas/omatcopy.h
+/// \brief   The BLAS-like OMATCOPY routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_BLAS_OMATCOPY_H_
@@ -35,9 +35,9 @@ extern void mkl_zomatcopy_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Performs scaling and out-place transposition/copying of matrices.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_somatcopy(
     const CHAR1 trans, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda, REAL4 *b, const INT ldb
@@ -65,7 +65,7 @@ void isvd_zomatcopy(
     const CHAR1 trans, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda, COMP8 *b, const INT ldb
 );
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

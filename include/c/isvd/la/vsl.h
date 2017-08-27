@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/vsl.h
-/// @brief   The vector statistics library header.
+/// \file    include/c/isvd/la/vsl.h
+/// \brief   The vector statistics library header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_VSL_H_

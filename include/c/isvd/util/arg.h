@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/util/arg.h
-/// @brief   The argument utilities.
+/// \file    include/c/isvd/util/arg.h
+/// \brief   The argument utilities.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_UTIL_ARG_H_

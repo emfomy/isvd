@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/def.h
-/// @brief   The iSVD definitions.
+/// \file    include/c/isvd/def.h
+/// \brief   The iSVD definitions.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_DEF_H_
@@ -46,7 +46,7 @@ extern "C" {
 #define ISVD_UNKNOWN ...
 #endif  // __cplusplus
 
-/// @ingroup  core_module
+/// \ingroup  core_module
 /// The type of index.
 #if !defined(ISVD_USE_ILP64)
 typedef int32_t  isvd_int_t;
@@ -56,11 +56,11 @@ typedef int64_t  isvd_int_t;
 typedef uint64_t isvd_uint_t;
 #endif  // ISVD_USE_ILP64
 
-/// @ingroup  core_module
+/// \ingroup  core_module
 /// The type of MPI index.
 typedef int mpi_int_t;
 
-/// @ingroup  core_module
+/// \ingroup  core_module
 /// The type of OpenMP index.
 typedef int omp_int_t;
 
@@ -77,8 +77,8 @@ typedef int omp_int_t;
   #include <mkl.h>
 #endif // ISVD_USE_MKL
 
-/// @ingroup  util_module
-//@{
+/// \ingroup  util_module
+//\{
 #if !defined(ISVD_USE_GTEST) && defined(__cplusplus)
 
 #include <gtest/gtest.h>
@@ -119,19 +119,19 @@ typedef int omp_int_t;
 
 #define isvd_assert_pass( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_eq(code, 0); }
 #define isvd_assert_code( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_ne(code, 0); }
-//@}
+//\}
 
-/// @ingroup  util_module
+/// \ingroup  util_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
-/// @ingroup  util_module
+/// \ingroup  util_module
 #define isvd_vdisp( format, len, vector, inc ) printf(#vector ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
     printf(format "\t", (vector)[_isvd_i_ * inc]); \
   } \
   printf("\n");
 
-/// @ingroup  util_module
+/// \ingroup  util_module
 #define isvd_mcdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
@@ -140,7 +140,7 @@ typedef int omp_int_t;
     printf("\n"); \
   }
 
-/// @ingroup  util_module
+/// \ingroup  util_module
 #define isvd_mrdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \

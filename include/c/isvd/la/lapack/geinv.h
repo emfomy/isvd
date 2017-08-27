@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/lapack/geinv.h
-/// @brief   The LAPACK GETRF+GETRI routine.
+/// \file    include/c/isvd/la/lapack/geinv.h
+/// \brief   The LAPACK GETRF+GETRI routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_LAPACK_GEINV_H_
@@ -41,9 +41,9 @@ extern void zgetri_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_lapack_module
+/// \ingroup  la_lapack_module
 /// Computes the inverse of a square matrix using LU factorization.
-//@{
+//\{
 static inline void isvd_sgeinv(
     const INT n, REAL4 *a, const INT lda
 ) {
@@ -88,7 +88,7 @@ static inline void isvd_zgeinv(
   zgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

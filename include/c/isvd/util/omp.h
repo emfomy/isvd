@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/util/omp.h
-/// @brief   The OpenMP utilities.
+/// \file    include/c/isvd/util/omp.h
+/// \brief   The OpenMP utilities.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_UTIL_OMP_H_
@@ -21,10 +21,10 @@ extern "C" {
 #endif  // ISVD_USE_OMP
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  util_module
-/// @brief  Returns the number of threads in the current team.
+/// \ingroup  util_module
+/// \brief  Returns the number of threads in the current team.
 ///
-/// @return  The number of threads in the current team.
+/// \return  The number of threads in the current team.
 ///
 static inline omp_int_t isvd_getOmpSize( void ) {
 #if defined(ISVD_USE_OMP)
@@ -35,10 +35,10 @@ static inline omp_int_t isvd_getOmpSize( void ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  util_module
-/// @brief  Returns a unique thread identification number within the current team.
+/// \ingroup  util_module
+/// \brief  Returns a unique thread identification number within the current team.
 ///
-/// @return  The thread identification number within the current team.
+/// \return  The thread identification number within the current team.
 ///
 static inline omp_int_t isvd_getOmpRank( void ) {
 #if defined(ISVD_USE_OMP)

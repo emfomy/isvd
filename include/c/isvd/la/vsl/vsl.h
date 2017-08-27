@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/vsl/vsl.h
-/// @brief   The VSL definitions.
+/// \file    include/c/isvd/la/vsl/vsl.h
+/// \brief   The VSL definitions.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_VSL_VSL_H_
@@ -30,9 +30,9 @@ typedef isvd_int_t* isvd_VSLStreamStatePtr;
 #endif  // ISVD_USE_MKL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_vsl_module
+/// \ingroup  la_vsl_module
 /// Creates and initializes a random stream.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vslNewStream(
     isvd_VSLStreamStatePtr *streamp, const INT seed
@@ -48,12 +48,12 @@ static inline void isvd_vslNewStream(
   (*streamp)[3] = ((seed >> 24) & 0xff);
 }
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_vsl_module
+/// \ingroup  la_vsl_module
 /// Creates and initializes a random stream.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vslDeleteStream(
     isvd_VSLStreamStatePtr *streamp
@@ -64,12 +64,12 @@ static inline void isvd_vslDeleteStream(
 ) {
   isvd_free(*streamp); }
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_vsl_module
+/// \ingroup  la_vsl_module
 /// Creates and initializes a random stream.
-//@{
+//\{
 #if defined(ISVD_USE_MKL)
 static inline void isvd_vslSkipAheadStream(
     isvd_VSLStreamStatePtr stream, const INT nskip
@@ -85,7 +85,7 @@ static inline void isvd_vslSkipAheadStream(
   stream[3] ^= rand_r(&seed) % 4096;
 }
 #endif  // ISVD_USE_MKL
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

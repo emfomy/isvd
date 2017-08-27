@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/util/io.h
-/// @brief   The I/O utilities.
+/// \file    include/c/isvd/util/io.h
+/// \brief   The I/O utilities.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_UTIL_IO_H_
@@ -15,13 +15,13 @@ extern "C" {
 #endif  // __cplusplus
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  utility_module
+/// \ingroup  utility_module
 /// Get a variable from stream.
 ///
-/// @param  stream  Pointer to a FILE object that identifies an input stream.
-/// @param  varp    Pointer to the variable.
+/// \param  stream  Pointer to a FILE object that identifies an input stream.
+/// \param  varp    Pointer to the variable.
 ///
-//@{
+//\{
 static inline void isvd_ifget( FILE *stream, isvd_int_t *varp ) {
 #if !defined(ISVD_USE_ILP64)
   isvd_int_t info = fscanf(stream, "%d",  varp);
@@ -43,7 +43,7 @@ static inline void isvd_dfget( FILE *stream, double *varp ) {
   ISVD_UNUSED(info);
   isvd_assert_eq(info, 1);
 }
-//@}
+//\}
 
 #if defined(__cplusplus)
 }

@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/util/function.h
-/// @brief   Some useful functions.
+/// \file    include/c/isvd/util/function.h
+/// \brief   Some useful functions.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_UTIL_FUNCTION_H_

@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/lapack/larnv.h
-/// @brief   The LAPACK LARNV header.
+/// \file    include/c/isvd/la/lapack/larnv.h
+/// \brief   The LAPACK LARNV header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_LAPACK_LARNV_H_
@@ -35,9 +35,9 @@ extern void zlarnv_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_lapack_module
+/// \ingroup  la_lapack_module
 /// Returns a vector of random numbers from a uniform or normal distribution.
-//@{
+//\{
 static inline void isvd_slarnv(
     const INT idist, INT *iseed, const INT n, REAL4 *x
 ) { slarnv_(&idist, iseed, &n, x); }
@@ -50,7 +50,7 @@ static inline void isvd_clarnv(
 static inline void isvd_zlarnv(
     const INT idist, INT *iseed, const INT n, COMP8 *x
 ) { zlarnv_(&idist, iseed, &n, x); }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

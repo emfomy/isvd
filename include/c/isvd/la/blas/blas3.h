@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas/blas3.h
-/// @brief   The BLAS level 3 header.
+/// \file    include/c/isvd/la/blas/blas3.h
+/// \brief   The BLAS level 3 header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_BLAS_BLAS3_H_
@@ -41,9 +41,9 @@ extern void zherk_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes a matrix-matrix product with general matrices.
-//@{
+//\{
 static inline void isvd_sgemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const REAL4 alpha, const REAL4 *a,
     const INT lda, const REAL4 *b, const INT ldb, const REAL4 beta, REAL4 *c, const INT ldc
@@ -60,12 +60,12 @@ static inline void isvd_zgemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const COMP8 alpha, const COMP8 *a,
     const INT lda, const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
 ) { zgemm_(&transa, &transb, &m, &n, &k, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Computes a matrix-matrix product where one input matrix is symmetric/Hermitian.
-//@{
+//\{
 static inline void isvd_ssymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda,
     const REAL4 *b, const INT ldb, const REAL4 beta, REAL4 *c, const INT ldc
@@ -82,12 +82,12 @@ static inline void isvd_zhemm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda,
     const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
 ) { zhemm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  la_blas_module
 /// Performs a symmetric/Hermitian rank-k update.
-//@{
+//\{
 static inline void isvd_ssyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL4 alpha, const REAL4 *a, const INT lda,
     const REAL4 beta, REAL4 *c, const INT ldc
@@ -104,7 +104,7 @@ static inline void isvd_zherk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL8 alpha, const COMP8 *a, const INT lda,
     const REAL8 beta, COMP8 *c, const INT ldc
 ) { zherk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

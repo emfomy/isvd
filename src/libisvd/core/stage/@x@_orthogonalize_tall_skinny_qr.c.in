@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/stage/d_orthogonalize_tall_skinny_qr.c
-/// @brief   The Tall-Skinny QR Orthogonalization (@xname@ precision)
+/// \file    src/libisvd/core/stage/@x@_orthogonalize_tall_skinny_qr.c
+/// \brief   The Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -10,10 +10,10 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_stage_module
+/// \ingroup  core_@x@_stage_module
 /// Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
-/// @attention  Not implemented!
+/// \attention  Not implemented!
 ///
 void isvd_@x@OrthogonalizeTallSkinnyQr(
     const isvd_Param  param,

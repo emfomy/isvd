@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/lapack/syev.h
-/// @brief   The LAPACK SYEV routine.
+/// \file    include/c/isvd/la/lapack/syev.h
+/// \brief   The LAPACK SYEV routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_LAPACK_SYEV_H_
@@ -36,9 +36,9 @@ extern void zheev_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_lapack_module
+/// \ingroup  la_lapack_module
 /// Computes all eigenvalues and, optionally, eigenvectors of a real symmetric matrix.
-//@{
+//\{
 static inline void isvd_ssyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL4 *a, const INT lda, REAL4 *w
 ) {
@@ -77,7 +77,7 @@ static inline void isvd_zheev(
   REAL8 *rwork = isvd_dmalloc(5*n-2);
   zheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

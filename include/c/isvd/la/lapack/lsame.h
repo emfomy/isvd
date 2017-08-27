@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/lapack/lsame.h
-/// @brief   The LAPACK LSAME header.
+/// \file    include/c/isvd/la/lapack/lsame.h
+/// \brief   The LAPACK LSAME header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_LAPACK_LSAME_H_
@@ -28,13 +28,13 @@ extern INT lsame_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_lapack_module
+/// \ingroup  la_lapack_module
 /// Tests two characters for equality regardless of the case.
-//@{
+//\{
 static inline INT isvd_lsame(
     const CHAR1 ca, const CHAR1 cb
 ) { return lsame_(&ca, &cb); }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

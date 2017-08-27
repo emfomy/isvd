@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/lapack/gesvd.h
-/// @brief   The LAPACK GESVD routine.
+/// \file    include/c/isvd/la/lapack/gesvd.h
+/// \brief   The LAPACK GESVD routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #ifndef _ISVD_LA_LAPACK_GESVD_H_
@@ -37,9 +37,9 @@ extern void zgesvd_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_lapack_module
+/// \ingroup  la_lapack_module
 /// Computes the singular value decomposition of a general rectangular matrix.
-//@{
+//\{
 static inline void isvd_sgesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL4 *a, const INT lda, REAL4 *s, REAL4 *u, const INT ldu,
     REAL4 *v, const INT ldvt
@@ -82,7 +82,7 @@ static inline void isvd_zgesvd(
   REAL8 *rwork = isvd_dmalloc(5*min(m, n));
   zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-//@}
+//\}
 
 #undef CHAR1
 #undef INT

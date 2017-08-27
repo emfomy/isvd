@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/la/blas/omatcopy.c
-/// @brief   The BLAS-like OMATCOPY routine.
+/// \file    src/libisvd/la/blas/omatcopy.c
+/// \brief   The BLAS-like OMATCOPY routine.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author  Mu Yang <<emfomy@gmail.com>>
 ///
 
 #include <isvd/la/blas/omatcopy.h>
