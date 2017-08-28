@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    demo/ctest.c
-/// \brief   The C test code
+/// \file       demo/ctest.c
+/// \brief      The C test code
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <stdio.h>
@@ -54,12 +55,12 @@ int main( int argc, char **argv ) {
 
   isvd_dIsvd(
     "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',
-    a + mb * mpi_rank, lda, s, NULL, 0, NULL, 0, seed, -2, -2, mpi_root, MPI_COMM_WORLD
+    a + mb * mpi_rank, lda, s, nullptr, 0, nullptr, 0, seed, -2, -2, mpi_root, MPI_COMM_WORLD
   );
 
   isvd_dIeig(
     "GP", "GR", "KN", "SY", m, k, p, N, 'R', 'C',
-    a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, mpi_root, MPI_COMM_WORLD
+    a + mb * mpi_rank, lda, s, nullptr, 0, seed, -2, mpi_root, MPI_COMM_WORLD
   );
 
   isvd_free(a);

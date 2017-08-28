@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_postprocess_tall_skinny_qr.c
-/// \brief   The Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_postprocess_tall_skinny_qr.c
+/// \brief      The Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>

@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/lapack/lsame.h
-/// \brief   The LAPACK LSAME header.
+/// \file       include/c/isvd/la/lapack/lsame.h
+/// \brief      The LAPACK LSAME header.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_LAPACK_LSAME_H_

@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/lapack/syev.h
-/// \brief   The LAPACK SYEV routine.
+/// \file       include/c/isvd/la/lapack/syev.h
+/// \brief      The LAPACK SYEV routine.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_LAPACK_SYEV_H_
@@ -61,7 +62,7 @@ static inline void isvd_cheev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w
 ) {
   COMP4 qwork; INT lwork = -1, info;
-  cheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
+  cheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, nullptr, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   COMP4 *work  = isvd_cmalloc(lwork);
   REAL4 *rwork = isvd_smalloc(5*n-2);
@@ -71,7 +72,7 @@ static inline void isvd_zheev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w
 ) {
   COMP8 qwork; INT lwork = -1, info;
-  zheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
+  zheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, nullptr, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   COMP8 *work  = isvd_zmalloc(lwork);
   REAL8 *rwork = isvd_dmalloc(5*n-2);

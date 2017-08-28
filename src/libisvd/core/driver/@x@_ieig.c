@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/driver/@x@_ieig.c
-/// \brief   The iEig driver (@xname@ precision).
+/// \file       src/libisvd/core/driver/@x@_ieig.c
+/// \brief      The iEig driver (@xname@ precision).
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_driver.h>
@@ -81,10 +82,10 @@ void isvd_@x@Ieig(
   // ====================================================================================================================== //
   // Check arguments
 
-  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP",     NULL);
-  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR",   NULL);
-  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR", NULL);
-  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "SY",     NULL);
+  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP",     nullptr);
+  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR",   nullptr);
+  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR", nullptr);
+  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "SY",     nullptr);
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
   isvd_fun_t funs = isvd_arg2@x@algs(algs_);
@@ -114,9 +115,9 @@ void isvd_@x@Ieig(
   // ====================================================================================================================== //
   // Run
 
-  funs(param, NULL, 0, NULL, 0, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
-  funo(param, NULL, 0, NULL, 0, yst, ldyst);
-  funi(param, NULL, 0, NULL, 0, yst, ldyst, qt, ldqt);
-  funp(param, NULL, 0, NULL, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, ut_root);
+  funs(param, nullptr, 0, nullptr, 0, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
+  funo(param, nullptr, 0, nullptr, 0, yst, ldyst);
+  funi(param, nullptr, 0, nullptr, 0, yst, ldyst, qt, ldqt);
+  funp(param, nullptr, 0, nullptr, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, ut_root);
 
 }

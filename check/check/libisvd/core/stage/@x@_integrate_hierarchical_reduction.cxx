@@ -25,7 +25,7 @@ TEST(@XStr@HierarchicalReductionIntegration, Test) {
 
   // Read Qs
   file = fopen(QS_PATH, "r");
-  ASSERT_NE(file, (void*)(NULL));
+  ASSERT_NE(file, (void*)(nullptr));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -46,7 +46,7 @@ TEST(@XStr@HierarchicalReductionIntegration, Test) {
 
   // Read Qbar
   file = fopen(Q_PATH, "r");
-  ASSERT_NE(file, (void*)(NULL));
+  ASSERT_NE(file, (void*)(nullptr));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -89,7 +89,7 @@ TEST(@XStr@HierarchicalReductionIntegration, Test) {
   isvd_int_t ldqt = l;
 
   // Run stage
-  isvd_@x@IntegrateHierarchicalReduction(param, NULL, 0, NULL, 0, qst, ldqst, qt, ldqt);
+  isvd_@x@IntegrateHierarchicalReduction(param, nullptr, 0, nullptr, 0, qst, ldqst, qt, ldqt);
 
   // Gather results
   isvd_val_t *qt_ = isvd_@x@malloc(Pmb * l);

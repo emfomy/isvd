@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/config.h
-/// \brief   The configured options and settings.
+/// \file       include/c/isvd/config.h
+/// \brief      The configured options and settings.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_CONFIG_H_

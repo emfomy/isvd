@@ -24,14 +24,14 @@ static void test( char dista, char ordera ) {
   MM_typecode matcode;
 
   // Check arguments
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');
 
   // Read A
   file = fopen(A_PATH, "r");
-  ASSERT_NE(file, (void*)(NULL));
+  ASSERT_NE(file, (void*)(nullptr));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -62,7 +62,7 @@ static void test( char dista, char ordera ) {
 
   // Read Ys
   file = fopen(YS_PATH, "r");
-  ASSERT_NE(file, (void*)(NULL));
+  ASSERT_NE(file, (void*)(nullptr));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -118,7 +118,7 @@ static void test( char dista, char ordera ) {
   isvd_int_t ldyst = Nl;
 
   // Run stage
-  isvd_@x@SketchGaussianProjection(param, NULL, 0, NULL, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
+  isvd_@x@SketchGaussianProjection(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
 
 #if defined(ISVD_USE_MKL)
   // Gather results

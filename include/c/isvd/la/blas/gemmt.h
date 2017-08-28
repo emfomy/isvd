@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/blas/gemmt.h
-/// \brief   The BLAS-like GEMMT routine.
+/// \file       include/c/isvd/la/blas/gemmt.h
+/// \brief      The BLAS-like GEMMT routine.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_BLAS_GEMMT_H_

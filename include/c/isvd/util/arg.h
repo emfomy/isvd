@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/util/arg.h
-/// \brief   The argument utilities.
+/// \file       include/c/isvd/util/arg.h
+/// \brief      The argument utilities.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_UTIL_ARG_H_
@@ -23,7 +24,7 @@ static inline isvd_int_t isvd_arg2char(
     const char *opts,
     const char *rets
 ) {
-  if ( rets == NULL ) {
+  if ( rets == nullptr ) {
     rets = opts;
   }
 
@@ -52,7 +53,7 @@ static inline int16_t isvd_arg2char2(
     const char *opts,
     const char *rets
 ) {
-  if ( rets == NULL ) {
+  if ( rets == nullptr ) {
     rets = opts;
   }
 

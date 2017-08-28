@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/lapack/larnv.h
-/// \brief   The LAPACK LARNV header.
+/// \file       include/c/isvd/la/lapack/larnv.h
+/// \brief      The LAPACK LARNV header.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_LAPACK_LARNV_H_

@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/blas/blas2.h
-/// \brief   The BLAS level 2 header.
+/// \file       include/c/isvd/la/blas/blas2.h
+/// \brief      The BLAS level 2 header.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_BLAS_BLAS2_H_

@@ -24,7 +24,7 @@ TEST(@XStr@GramianOrthogonalization, Test) {
 
   // Read Ys
   file = fopen(YS_PATH, "r");
-  ASSERT_NE(file, (void*)(NULL));
+  ASSERT_NE(file, (void*)(nullptr));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -45,7 +45,7 @@ TEST(@XStr@GramianOrthogonalization, Test) {
 
   // Read Qs
   file = fopen(QS_PATH, "r");
-  ASSERT_NE(file, (void*)(NULL));
+  ASSERT_NE(file, (void*)(nullptr));
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -87,7 +87,7 @@ TEST(@XStr@GramianOrthogonalization, Test) {
   isvd_int_t ldyst = ldyst0;
 
   // Run
-  isvd_@x@OrthogonalizeGramian(param, NULL, 0, NULL, 0, yst, ldyst);
+  isvd_@x@OrthogonalizeGramian(param, nullptr, 0, nullptr, 0, yst, ldyst);
 
   // Gather results
   isvd_val_t *qst_ = isvd_@x@malloc(Pmb * Nl);

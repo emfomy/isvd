@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/core/@x@_driver.h
-/// \brief   The @xtype@ precision drivers.
+/// \file       include/c/isvd/core/@x@_driver.h
+/// \brief      The @xtype@ precision drivers.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_CORE_@X@_DRIVER_H_
@@ -42,7 +43,7 @@ static inline isvd_fun_t isvd_arg2@x@algs( const int16_t arg ) {
     case isvd_char2('G', 'P'): return (isvd_fun_t) isvd_@x@SketchGaussianProjection;
     default: fprintf(stderr, "Unknown sketching abbreviation \"%c%c\"!\n", (arg & 0xff), ((arg >> 8) & 0xff));
   }
-  return NULL;
+  return nullptr;
 }
 
 static inline isvd_fun_t isvd_arg2@x@algo( const int16_t arg ) {
@@ -51,7 +52,7 @@ static inline isvd_fun_t isvd_arg2@x@algo( const int16_t arg ) {
     case isvd_char2('G', 'R'): return (isvd_fun_t) isvd_@x@OrthogonalizeGramian;
     default: fprintf(stderr, "Unknown orthogonalization abbreviation \"%c%c\"!\n", (arg & 0xff), ((arg >> 8) & 0xff));
   }
-  return NULL;
+  return nullptr;
 }
 
 static inline isvd_fun_t isvd_arg2@x@algi( const int16_t arg ) {
@@ -61,7 +62,7 @@ static inline isvd_fun_t isvd_arg2@x@algi( const int16_t arg ) {
     case isvd_char2('H', 'R'): return (isvd_fun_t) isvd_@x@IntegrateHierarchicalReduction;
     default: fprintf(stderr, "Unknown integration abbreviation \"%c%c\"!\n", (arg & 0xff), ((arg >> 8) & 0xff));
   }
-  return NULL;
+  return nullptr;
 }
 
 static inline isvd_fun_t isvd_arg2@x@algp( const int16_t arg ) {
@@ -71,7 +72,7 @@ static inline isvd_fun_t isvd_arg2@x@algp( const int16_t arg ) {
     case isvd_char2('S', 'Y'): return (isvd_fun_t) isvd_@x@PostprocessSymmetric;
     default: fprintf(stderr, "Unknown postprocess abbreviation \"%c%c\"!\n", (arg & 0xff), ((arg >> 8) & 0xff));
   }
-  return NULL;
+  return nullptr;
 }
 
 #if defined(__cplusplus)

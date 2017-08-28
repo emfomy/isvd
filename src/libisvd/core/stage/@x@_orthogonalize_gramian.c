@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_orthogonalize_gramian.c
-/// \brief   The Gramian Orthogonalization (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_orthogonalize_gramian.c
+/// \brief      The Gramian Orthogonalization (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -72,7 +73,7 @@ void isvd_@x@OrthogonalizeGramian(
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@gesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1);
+    isvd_@x@gesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, nullptr, 1, nullptr, 1);
   }
   isvd_v@x@Sqrt(lds*N, s, s);
 

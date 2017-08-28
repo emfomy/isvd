@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/blas/blas3.h
-/// \brief   The BLAS level 3 header.
+/// \file       include/c/isvd/la/blas/blas3.h
+/// \brief      The BLAS level 3 header.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_BLAS_BLAS3_H_

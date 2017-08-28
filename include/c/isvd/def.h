@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/def.h
-/// \brief   The iSVD definitions.
+/// \file       include/c/isvd/def.h
+/// \brief      The iSVD definitions.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_DEF_H_
@@ -24,6 +25,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <inttypes.h>
 #include <mpi.h>
 
 #if defined(ISVD_USE_OMP)
@@ -48,6 +50,7 @@ extern "C" {
 
 /// \ingroup  core_module
 /// The type of index.
+//\{
 #if !defined(ISVD_USE_ILP64)
 typedef int32_t  isvd_int_t;
 typedef uint32_t isvd_uint_t;
@@ -55,6 +58,7 @@ typedef uint32_t isvd_uint_t;
 typedef int64_t  isvd_int_t;
 typedef uint64_t isvd_uint_t;
 #endif  // ISVD_USE_ILP64
+//\}
 
 /// \ingroup  core_module
 /// The type of MPI index.
@@ -72,6 +76,10 @@ typedef int omp_int_t;
 #define MKL_Complex16 complex double
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
+
+#if !defined(__cplusplus) || (__cplusplus < 201103L)
+#define nullptr NULL
+#endif
 
 #if defined(ISVD_USE_MKL)
   #include <mkl.h>

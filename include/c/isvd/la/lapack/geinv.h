@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/lapack/geinv.h
-/// \brief   The LAPACK GETRF+GETRI routine.
+/// \file       include/c/isvd/la/lapack/geinv.h
+/// \brief      The LAPACK GETRF+GETRI routine.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_LAPACK_GEINV_H_
@@ -48,7 +49,7 @@ static inline void isvd_sgeinv(
     const INT n, REAL4 *a, const INT lda
 ) {
   REAL4 qwork; INT lwork = -1, info;
-  sgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  sgetri_(&n, a, &lda, nullptr, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
   INT *ipiv = isvd_imalloc(n);
   REAL4 *work = isvd_smalloc(lwork);
@@ -59,7 +60,7 @@ static inline void isvd_dgeinv(
     const INT n, REAL8 *a, const INT lda
 ) {
   REAL8 qwork; INT lwork = -1, info;
-  dgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  dgetri_(&n, a, &lda, nullptr, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
   INT *ipiv = isvd_imalloc(n);
   REAL8 *work = isvd_dmalloc(lwork);
@@ -70,7 +71,7 @@ static inline void isvd_cgeinv(
     const INT n, COMP4 *a, const INT lda
 ) {
   COMP4 qwork; INT lwork = -1, info;
-  cgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  cgetri_(&n, a, &lda, nullptr, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   INT *ipiv = isvd_imalloc(n);
   COMP4 *work  = isvd_cmalloc(lwork);
@@ -81,7 +82,7 @@ static inline void isvd_zgeinv(
     const INT n, COMP8 *a, const INT lda
 ) {
   COMP8 qwork; INT lwork = -1, info;
-  zgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
+  zgetri_(&n, a, &lda, nullptr, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   INT *ipiv = isvd_imalloc(n);
   COMP8 *work  = isvd_zmalloc(lwork);

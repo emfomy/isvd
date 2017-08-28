@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_integrate_wen_yin.c
-/// \brief   The Wen-Yin Integration (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_integrate_wen_yin.c
+/// \brief      The Wen-Yin Integration (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>

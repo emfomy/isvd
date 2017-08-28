@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/vsl/vsl.h
-/// \brief   The VSL definitions.
+/// \file       include/c/isvd/la/vsl/vsl.h
+/// \brief      The VSL definitions.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_VSL_VSL_H_

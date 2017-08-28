@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_integrate_kolmogorov_nagumo.c
-/// \brief   The Kolmogorov-Nagumo Integration (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_integrate_kolmogorov_nagumo.c
+/// \brief      The Kolmogorov-Nagumo Integration (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>

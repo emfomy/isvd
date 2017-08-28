@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_postprocess_gramian.c
-/// \brief   The Gramian Postprocessing (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_postprocess_gramian.c
+/// \brief      The Gramian Postprocessing (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -251,8 +252,8 @@ void isvd_@x@PostprocessGramian(
   // ====================================================================================================================== //
   // Check arguments
 
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
   if ( !dista_ || !ordera_ ) return;
 
   if ( ut_root >= 0 ) {
@@ -299,7 +300,7 @@ void isvd_@x@PostprocessGramian(
 
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
-  isvd_@x@gesvd(jobw_, 'N', l, l, w, ldw, s, NULL, 1, NULL, 1);
+  isvd_@x@gesvd(jobw_, 'N', l, l, w, ldw, s, nullptr, 1, nullptr, 1);
   isvd_v@x@Sqrt(l, s, s);
 
   // ====================================================================================================================== //
@@ -313,7 +314,7 @@ void isvd_@x@PostprocessGramian(
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@X_TYPE@, ut, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, NULL, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
+        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, nullptr, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       }
     }
   }
@@ -329,7 +330,7 @@ void isvd_@x@PostprocessGramian(
       if ( param.mpi_rank == vt_root ) {
         MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@X_TYPE@, vt, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
       } else {
-        MPI_Gather(vt, nb*ldvt, MPI_@X_TYPE@, NULL, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
+        MPI_Gather(vt, nb*ldvt, MPI_@X_TYPE@, nullptr, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
       }
     }
   }

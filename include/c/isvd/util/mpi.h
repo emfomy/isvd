@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/util/mpi.h
-/// \brief   The MPI utilities.
+/// \file       include/c/isvd/util/mpi.h
+/// \brief      The MPI utilities.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_UTIL_MPI_H_

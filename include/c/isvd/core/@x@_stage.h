@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/core/@x@_stage.h
-/// \brief   The iSVD stages.
+/// \file       include/c/isvd/core/@x@_stage.h
+/// \brief      The iSVD stages.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_CORE_@X@_STAGE_H_

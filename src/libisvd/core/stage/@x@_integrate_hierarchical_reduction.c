@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_integrate_hierarchical_reduction.c
-/// \brief   The Hierarchical Reduction Integration (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_integrate_hierarchical_reduction.c
+/// \brief      The Hierarchical Reduction Integration (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -100,7 +101,7 @@ void isvd_@x@IntegrateHierarchicalReduction(
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'
-      isvd_@x@gesvd('O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt);
+      isvd_@x@gesvd('O', 'S', l, l, w, ldw, s, nullptr, 1, tt, ldtt);
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
       isvd_@x@omatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);

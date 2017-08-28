@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/la/blas/omatcopy.c
-/// \brief   The BLAS-like OMATCOPY routine.
+/// \file       src/libisvd/la/blas/omatcopy.c
+/// \brief      The BLAS-like OMATCOPY routine.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/la/blas/omatcopy.h>
@@ -14,7 +15,7 @@ static inline float  rconjf( const float  z ) { return z; }
 static inline double rconj(  const double z ) { return z; }
 
 #define isvd_xomatcopy( trans, m, n, alpha, a, lda, b, ldb, conj ) \
-  const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", NULL); \
+  const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", nullptr); \
   if ( !trans_ ) return; \
   switch ( trans_ ) { \
     case 'N': { \

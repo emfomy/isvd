@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    include/c/isvd/la/vsl/rng_gaussian.h
-/// \brief   The VSL RNGGAUSSIAN routine.
+/// \file       include/c/isvd/la/vsl/rng_gaussian.h
+/// \brief      The VSL RNGGAUSSIAN routine.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_VSL_RNG_GAUSSION_H_

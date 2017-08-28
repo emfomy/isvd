@@ -27,7 +27,7 @@ install(DIRECTORY "${ISVD_DOCS_DIR}" DESTINATION docs)
 # Add rule
 add_custom_target(
   doc
-  COMMAND doxygen "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+  COMMAND doxygen "${CMAKE_CURRENT_CONFIG_DIR}/Doxyfile"
   COMMENT "Generating documentation with Doxygen"
 )
 

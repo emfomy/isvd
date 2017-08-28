@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_postprocess_symmetric.c
-/// \brief   The Symmetric Postprocessing (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_postprocess_symmetric.c
+/// \brief      The Symmetric Postprocessing (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -229,8 +230,8 @@ void isvd_@x@PostprocessSymmetric(
   // ====================================================================================================================== //
   // Check arguments
 
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
   if ( !dista_ || !ordera_ ) return;
 
   isvd_assert_eq(mj, nj);
@@ -287,7 +288,7 @@ void isvd_@x@PostprocessSymmetric(
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@X_TYPE@, ut, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, NULL, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
+        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, nullptr, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       }
     }
   }

@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/la/vml/sqrt.c
-/// \brief   The VML SQRT routine.
+/// \file       src/libisvd/la/vml/sqrt.c
+/// \brief      The VML SQRT routine.
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/la/vml.h>

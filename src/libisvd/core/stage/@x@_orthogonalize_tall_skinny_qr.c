@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_orthogonalize_tall_skinny_qr.c
-/// \brief   The Tall-Skinny QR Orthogonalization (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_orthogonalize_tall_skinny_qr.c
+/// \brief      The Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>

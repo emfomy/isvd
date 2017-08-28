@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file    src/libisvd/core/stage/@x@_sketch_gaussian_projection.c
-/// \brief   The Gaussian Projection Sketching (@xname@ precision)
+/// \file       src/libisvd/core/stage/@x@_sketch_gaussian_projection.c
+/// \brief      The Gaussian Projection Sketching (@xname@ precision)
 ///
-/// \author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -220,8 +221,8 @@ void isvd_@x@SketchGaussianProjection(
   // ====================================================================================================================== //
   // Check arguments
 
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
   if ( !dista_ || !ordera_ ) return;
 
   // ====================================================================================================================== //
