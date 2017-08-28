@@ -19,8 +19,8 @@ set(CMAKE_COLOR_MAKEFILE ON)
 # Set module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-# Include functions
-include(cmake/functions.cmake)
+# Include utilities
+include(cmake/utilities.cmake)
 
 # Set the options
 include(cmake/options.cmake)
@@ -33,19 +33,18 @@ include(cmake/configure.cmake)
 
 # Add subdirectories
 add_subdirectory(ext)
+add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(demo)
+add_subdirectory(share)
 add_subdirectory(check)
 add_subdirectory(doxygen)
 
-# Set the flags
+# Set flags
 include(cmake/flags.cmake)
-
-# Recreate configure files
-include(cmake/configure.cmake)
-
-# Set install rules
-include(cmake/install.cmake)
 
 # Display message
 include(cmake/display.cmake)
+
+# .
+add_custom_target(_)

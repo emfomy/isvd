@@ -106,8 +106,9 @@ message(STATUS "================================================================
 message(STATUS "")
 
 # Display flags
-disp("C   Compiler & flags:           " "${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
-disp("C++ Compiler & flags:           " "${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
+isvd_flags_fn()
+disp("C   compiler & flags:           " "${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
+disp("C++ compiler & flags:           " "${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
 disp("Link flags:                     " "${ISVD_LNKFLGS}")
 disp("Include pathes:                 " "${ISVD_INCS}")
 disp("Libraries:                      " "${ISVD_LIBS}")

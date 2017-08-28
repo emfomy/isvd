@@ -48,6 +48,3 @@ function(ISVD_FLAGS_FN)
   set(ISVD_CXX_FLAGS "${cxxflgs}" PARENT_SCOPE)
   set(ISVD_LNKFLGS "${lnkflgs}" PARENT_SCOPE)
 endfunction()
-
-isvd_flags_fn()
-unset(isvd_flags_fn)

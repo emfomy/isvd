@@ -23,13 +23,7 @@ macro(SET_TARGET target files)
 endmacro()
 
 # Set include paths
-include_directories(
-  "${PROJECT_BINARY_DIR}/include/c"
-  "${PROJECT_SOURCE_DIR}/include/c"
-)
-
-# Set link directory
-link_directories("${PROJECT_BINARY_DIR}/src")
+include_directories("${PROJECT_CONFIG_DIR}/include/c")
 
 # Set target
 set_target(ctest ctest.c)
