@@ -92,6 +92,8 @@ isvd_Param isvd_createParam(
     const isvd_int_t num_sketch, const mpi_int_t mpi_root, const MPI_Comm mpi_comm
 );
 
+typedef void (*isvd_fun_t)(isvd_Param, ...);
+
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
