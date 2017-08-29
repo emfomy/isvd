@@ -42,10 +42,21 @@ endif()
 # Set complier flags
 string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
 string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
-list(APPEND LIBS "-Wl,--no-as-needed")
+set(LNKFLGS "${LNKFLGS} -Wl,--no-as-needed")
 
 # Add library
-list(APPEND LIBS "m" "pthread")
+find_library(
+  M_LIBRARY
+  NAMES m
+  DOC "libm"
+)
+find_library(
+  PTHREAD_LIBRARY
+  NAMES pthread
+  DOC "libpthread"
+)
+mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
+list(APPEND LIBS "${M_LIBRARY}" "${PTHREAD_LIBRARY}")
 
 # Use POSIX
 list(APPEND DEFS "_POSIX_C_SOURCE")

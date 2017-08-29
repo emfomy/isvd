@@ -1,7 +1,8 @@
 # The CMake setting of 'check/src'
 
-# Configure files
 isvd_set_config_var()
+
+# Configure files
 file(COPY "${PROJECT_CONFIG_DIR}/src/" DESTINATION "${CMAKE_CURRENT_CONFIG_DIR}")
 file(GLOB_RECURSE cfiles "${CMAKE_CURRENT_CONFIG_DIR}/*.c")
 foreach(cfile ${cfiles})

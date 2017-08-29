@@ -10,7 +10,6 @@
 #define _ISVD_CORE_PARAM_H_
 
 #include <isvd/core/def.h>
-#include <isvd/util/mpi.h>
 
 #if defined(__cplusplus)
 extern "C" {

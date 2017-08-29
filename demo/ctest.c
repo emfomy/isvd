@@ -27,7 +27,8 @@ int main( int argc, char **argv ) {
 
   if ( mpi_rank == mpi_root ) {
     printf("iSVD " ISVD_VERSION " C test\n");
-    printf("%d nodes, %d threads per node\n\n", mpi_size, omp_size);
+    printf("%d nodes, %d threads per node\n", mpi_size, omp_size);
+    printf("%lu-bit integer\n\n", sizeof(isvd_int_t) * 8);
   }
 
   const isvd_int_t mb = 100;

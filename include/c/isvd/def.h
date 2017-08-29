@@ -21,6 +21,10 @@
   #undef ISVD_USE_OMP
 #endif  // _OPENMP
 
+#if defined(ISVD_USE_GTEST) && defined(__cplusplus)
+#include <gtest/gtest.h>
+#endif  // ISVD_USE_GTEST
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -87,9 +91,7 @@ typedef int omp_int_t;
 
 /// \ingroup  util_module
 //\{
-#if !defined(ISVD_USE_GTEST) && defined(__cplusplus)
-
-#include <gtest/gtest.h>
+#if defined(ISVD_USE_GTEST) && defined(__cplusplus)
 
 #define isvd_assert_true( condition )   EXPECT_TRUE(condition);
 #define isvd_assert_false( condition )  EXPECT_FALSE(condition);

@@ -1,5 +1,7 @@
 # The CMake setting of 'check/'
 
+isvd_set_config_var()
+
 # Break
 if(NOT ISVD_BUILD_TEST)
 
@@ -38,7 +40,6 @@ list(APPEND LIBS extmmio)
 list(APPEND DEFS "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
 
 # Configure files
-isvd_set_config_var()
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_S_TYPES}")
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_D_TYPES}")
 isvd_configure_in_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check")

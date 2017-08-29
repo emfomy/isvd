@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       include/c/isvd/core/@x@_driver.h
-/// \brief      The @xtype@ precision drivers.
+/// \brief      The @xname@ precision drivers.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
