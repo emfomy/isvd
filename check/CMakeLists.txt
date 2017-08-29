@@ -23,11 +23,9 @@ if(GTEST_FOUND)
 endif()
 
 # Set include paths
-include_directories(
-  "${PROJECT_CONFIG_DIR}/include/c"
-  SYSTEM
-  "${PROJECT_SOURCE_DIR}/ext"
-)
+include_directories("${PROJECT_CONFIG_DIR}/include/c"
+                    "${CMAKE_CURRENT_CONFIG_DIR}/src"
+             SYSTEM "${PROJECT_SOURCE_DIR}/ext")
 
 # Add subdirectories
 add_subdirectory(src)

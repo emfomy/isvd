@@ -7,9 +7,10 @@
 ///
 
 #include <isvd/core/@x@_stage.h>
-#include <isvd/la.h>
-#include <isvd/util/arg.h>
-#include <isvd/util/memory.h>
+#include <libisvd/def.h>
+#include <libisvd/la.h>
+#include <libisvd/util/arg.h>
+#include <libisvd/util/memory.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol(

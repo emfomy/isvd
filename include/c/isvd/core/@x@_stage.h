@@ -9,7 +9,7 @@
 #ifndef _ISVD_CORE_@X@_STAGE_H_
 #define _ISVD_CORE_@X@_STAGE_H_
 
-#include <isvd/core/def.h>
+#include <isvd/def.h>
 #include <isvd/core/param.h>
 
 #if defined(__cplusplus)

@@ -2,6 +2,7 @@
 #include <mpi.h>
 #include <mmio/mmio.h>
 #include <isvd.h>
+#include <libisvd.h>
 
 #define A_PATH  ISVD_DATA_PATH "/a.mtx"
 #define YS_PATH ISVD_DATA_PATH "/ys_gp.mtx"

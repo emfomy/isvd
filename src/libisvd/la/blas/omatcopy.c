@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#include <isvd/la/blas/omatcopy.h>
-#include <isvd/util/arg.h>
+#include <libisvd/la/blas/omatcopy.h>
+#include <libisvd/util/arg.h>
 
 #if !defined(ISVD_USE_MKL)
 

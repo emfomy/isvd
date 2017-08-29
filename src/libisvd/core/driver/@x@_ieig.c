@@ -7,8 +7,9 @@
 ///
 
 #include <isvd/core/@x@_driver.h>
-#include <isvd/util/arg.h>
-#include <isvd/util/memory.h>
+#include <libisvd/def.h>
+#include <libisvd/core/@x@_arg.h>
+#include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  core_@x@_driver_module

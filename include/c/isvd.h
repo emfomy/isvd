@@ -11,8 +11,6 @@
 
 #include <isvd/def.h>
 #include <isvd/core.h>
-#include <isvd/la.h>
-#include <isvd/util.h>
 
 // #if defined(ISVD_USE_GPU)
 //   #include <isvd/core_gpu.h>

@@ -6,7 +6,7 @@
 /// \copyright  MIT License
 ///
 
-#include <isvd/la/vml.h>
+#include <libisvd/la/vml.h>
 
 #if !defined(ISVD_USE_MKL)
 

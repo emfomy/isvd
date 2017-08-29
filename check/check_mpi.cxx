@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
 #include <isvd.h>
+#include <libisvd.h>
 
 int main( int argc, char **argv ) {
 

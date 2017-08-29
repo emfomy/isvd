@@ -7,8 +7,9 @@
 ///
 
 #include <isvd/core/@x@_stage.h>
-#include <isvd/la.h>
-#include <isvd/util/memory.h>
+#include <libisvd/def.h>
+#include <libisvd/la.h>
+#include <libisvd/util/memory.h>
 
 #define kMaxit 256
 #define kTol   1e-4

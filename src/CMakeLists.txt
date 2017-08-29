@@ -5,17 +5,17 @@ isvd_set_config_var()
 # Macro
 macro(SET_TARGET target files)
   # Set library
-  add_library(${target} STATIC ${files})
-  isvd_set_target(${target} ".a")
-  install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
+  add_library(${target} SHARED ${files})
+  isvd_set_target(${target} ".so")
+  # install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
 endmacro()
 
 # Disable asserts
 # list(APPEND DEFS "NDEBUG")
 
 # Set include paths
-include_directories("${PROJECT_CONFIG_DIR}/include/c")
-include_directories("${CMAKE_CURRENT_CONFIG_DIR}")
+include_directories("${PROJECT_CONFIG_DIR}/include/c"
+                    "${CMAKE_CURRENT_CONFIG_DIR}")
 
 # Configure files
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_S_TYPES}")
