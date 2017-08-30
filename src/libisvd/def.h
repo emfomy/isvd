@@ -35,10 +35,6 @@
   #include <gtest/gtest.h>
 #endif  // ISVD_USE_GTEST
 
-#if defined(__cplusplus)
-extern "C" {
-#endif  // __cplusplus
-
 #define ISVD_UNUSED( x ) (void)(x)
 
 #if !defined(__cplusplus)
@@ -46,6 +42,10 @@ extern "C" {
 #else  // __cplusplus
   #define ISVD_UNKNOWN ...
 #endif  // __cplusplus
+
+#if !defined(__cplusplus) || (__cplusplus < 201103L)
+  #define nullptr NULL
+#endif
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 #if defined(ISVD_USE_MKL)
@@ -56,13 +56,13 @@ extern "C" {
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#if !defined(__cplusplus) || (__cplusplus < 201103L)
-  #define nullptr NULL
-#endif
-
 #if defined(ISVD_USE_MKL)
   #include <mkl.h>
 #endif // ISVD_USE_MKL
+
+#if defined(__cplusplus)
+extern "C" {
+#endif  // __cplusplus
 
 /// \ingroup  src_util_module
 //\{

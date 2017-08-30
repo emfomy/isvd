@@ -58,7 +58,7 @@ static inline void isvd_dsyev(
   REAL8 *work = isvd_dmalloc(lwork);
   dsyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_cheev(
+static inline void isvd_csyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w
 ) {
   COMP4 qwork; INT lwork = -1, info;
@@ -68,7 +68,7 @@ static inline void isvd_cheev(
   REAL4 *rwork = isvd_smalloc(5*n-2);
   cheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_zheev(
+static inline void isvd_zsyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w
 ) {
   COMP8 qwork; INT lwork = -1, info;

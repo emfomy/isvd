@@ -75,11 +75,11 @@ static inline void isvd_dsymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, const INT lda,
     const REAL8 *b, const INT ldb, const REAL8 beta, REAL8 *c, const INT ldc
 ) { dsymm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
-static inline void isvd_chemm(
+static inline void isvd_csymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, const INT lda,
     const COMP4 *b, const INT ldb, const COMP4 beta, COMP4 *c, const INT ldc
 ) { chemm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
-static inline void isvd_zhemm(
+static inline void isvd_zsymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda,
     const COMP8 *b, const INT ldb, const COMP8 beta, COMP8 *c, const INT ldc
 ) { zhemm_(&side, &uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); }
@@ -97,11 +97,11 @@ static inline void isvd_dsyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL8 alpha, const REAL8 *a, const INT lda,
     const REAL8 beta, REAL8 *c, const INT ldc
 ) { dsyrk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
-static inline void isvd_cherk(
+static inline void isvd_csyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL4 alpha, const COMP4 *a, const INT lda,
     const REAL4 beta, COMP4 *c, const INT ldc
 ) { cherk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
-static inline void isvd_zherk(
+static inline void isvd_zsyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL8 alpha, const COMP8 *a, const INT lda,
     const REAL8 beta, COMP8 *c, const INT ldc
 ) { zherk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
