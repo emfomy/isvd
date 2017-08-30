@@ -12,7 +12,7 @@
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_stage_module
+/// \ingroup  c_core_@x@_stage_module
 /// Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
 /// \attention  Not implemented!

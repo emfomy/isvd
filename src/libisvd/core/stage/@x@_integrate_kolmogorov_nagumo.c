@@ -15,7 +15,7 @@
 #define kTol   1e-4
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_stage_module
+/// \ingroup  c_core_@x@_stage_module
 /// Kolmogorov-Nagumo Integration (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".

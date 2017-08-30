@@ -24,7 +24,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-/// \ingroup  core_module
+/// \ingroup  c_core_module
 /// The type of index.
 //\{
 #if !defined(ISVD_USE_ILP64)
@@ -36,17 +36,13 @@ typedef uint64_t isvd_uint_t;
 #endif  // ISVD_USE_ILP64
 //\}
 
-/// \ingroup  core_module
+/// \ingroup  c_core_module
 /// The type of MPI index.
 typedef int mpi_int_t;
 
-/// \ingroup  core_module
+/// \ingroup  c_core_module
 /// The type of OpenMP index.
 typedef int omp_int_t;
-
-typedef int MPI_Comm;
-
-void isvd_printEnvironment( const MPI_Comm comm, const mpi_int_t mpi_root );
 
 #if defined(__cplusplus)
 }

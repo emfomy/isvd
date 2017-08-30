@@ -15,7 +15,7 @@
 #define MPI_COMPLEX_DOUBLE MPI_COMPLEX16
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  util_module
+/// \ingroup  src_util_module
 /// \brief  Returns the size of the group associated with a communicator.
 ///
 /// \param  comm  The communicator.
@@ -27,7 +27,7 @@ static inline mpi_int_t isvd_getMpiSize( const MPI_Comm comm ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  util_module
+/// \ingroup  src_util_module
 /// \brief  Determines the rank of the calling process in the communicator.
 ///
 /// \param  comm  The communicator.

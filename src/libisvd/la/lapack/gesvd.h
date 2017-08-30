@@ -38,7 +38,7 @@ extern void zgesvd_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_lapack_module
+/// \ingroup  src_la_lapack_module
 /// Computes the singular value decomposition of a general rectangular matrix.
 //\{
 static inline void isvd_sgesvd(

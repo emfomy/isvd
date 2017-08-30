@@ -230,7 +230,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       isvd_int_t ldvt = l;
 
       // Run stage
-      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
+      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                 a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
 
       // Gather results
       MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, ut_, mb*ldut, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
@@ -239,12 +240,17 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       break;
     }
 
-    default: {
+    case NoUV: {
 
       // Run stage
-      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
+      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                 a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
 
       break;
+    }
+
+    default: {
+      FAIL() << "Unexpected default case!";
     }
   }
 

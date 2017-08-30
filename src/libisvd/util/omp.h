@@ -12,7 +12,7 @@
 #include <libisvd/def.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  util_module
+/// \ingroup  src_util_module
 /// \brief  Returns the number of threads in the current team.
 ///
 /// \return  The number of threads in the current team.
@@ -26,7 +26,7 @@ static inline omp_int_t isvd_getOmpSize( void ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  util_module
+/// \ingroup  src_util_module
 /// \brief  Returns a unique thread identification number within the current team.
 ///
 /// \return  The thread identification number within the current team.

@@ -1,19 +1,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/def.c
-/// \brief      The information of iSVD.
+/// \file       src/libisvd/print_environment.c
+/// \brief      Display the iSVD environment.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#include <isvd/def.h>
+#include <isvd/core/print_environment.h>
 #include <libisvd/def.h>
 #include <libisvd/util/mpi.h>
 #include <libisvd/util/omp.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_module
-/// Display the information.
+/// \ingroup  c_core_module
+/// Display the iSVD environment.
 ///
 void isvd_printEnvironment(
     const MPI_Comm  mpi_comm,

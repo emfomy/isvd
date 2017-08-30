@@ -204,12 +204,16 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       break;
     }
 
-    default: {
+    case NoUV: {
 
       // Run stage
       isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, nullptr, 0, -2);
 
       break;
+    }
+
+    default: {
+      FAIL() << "Unexpected default case!";
     }
   }
 

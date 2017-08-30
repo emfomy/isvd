@@ -7,7 +7,8 @@ macro(SET_TARGET target files)
   # Set library
   add_library(${target} SHARED ${files})
   isvd_set_target(${target} ".so")
-  # install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
+  set_target_properties(${target} PROPERTIES VERSION ${ISVD_VERSION})
+  install(TARGETS ${target} LIBRARY DESTINATION ${LIB_FOLDER})
 endmacro()
 
 # Disable asserts

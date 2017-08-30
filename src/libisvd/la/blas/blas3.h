@@ -42,7 +42,7 @@ extern void zherk_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_blas_module
+/// \ingroup  src_la_blas_module
 /// Computes a matrix-matrix product with general matrices.
 //\{
 static inline void isvd_sgemm(
@@ -64,7 +64,7 @@ static inline void isvd_zgemm(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_blas_module
+/// \ingroup  src_la_blas_module
 /// Computes a matrix-matrix product where one input matrix is symmetric/Hermitian.
 //\{
 static inline void isvd_ssymm(
@@ -86,7 +86,7 @@ static inline void isvd_zhemm(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_blas_module
+/// \ingroup  src_la_blas_module
 /// Performs a symmetric/Hermitian rank-k update.
 //\{
 static inline void isvd_ssyrk(

@@ -36,7 +36,7 @@ extern void zlarnv_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_lapack_module
+/// \ingroup  src_la_lapack_module
 /// Returns a vector of random numbers from a uniform or normal distribution.
 //\{
 static inline void isvd_slarnv(

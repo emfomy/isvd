@@ -29,7 +29,7 @@ extern INT lsame_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_lapack_module
+/// \ingroup  src_la_lapack_module
 /// Tests two characters for equality regardless of the case.
 //\{
 static inline INT isvd_lsame(

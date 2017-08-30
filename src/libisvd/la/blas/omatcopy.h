@@ -36,7 +36,7 @@ extern void mkl_zomatcopy_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_blas_module
+/// \ingroup  src_la_blas_module
 /// Performs scaling and out-place transposition/copying of matrices.
 //\{
 #if defined(ISVD_USE_MKL)

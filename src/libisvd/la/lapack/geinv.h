@@ -42,7 +42,7 @@ extern void zgetri_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_lapack_module
+/// \ingroup  src_la_lapack_module
 /// Computes the inverse of a square matrix using LU factorization.
 //\{
 static inline void isvd_sgeinv(

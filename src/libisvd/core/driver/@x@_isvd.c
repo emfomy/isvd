@@ -12,7 +12,7 @@
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_driver_module
+/// \ingroup  c_core_@x@_driver_module
 /// General iSVD driver (@xname@ precision).
 ///
 /// \param[in]   algs          The selection of sketching algorithm. <br>

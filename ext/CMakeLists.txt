@@ -4,7 +4,6 @@
 macro(SET_TARGET target files)
   # Set library
   add_library(${target} EXCLUDE_FROM_ALL ${files})
-  set_target_properties(${target} PROPERTIES SUFFIX "${BIN_SUFFIX}.a")
   target_compile_definitions(${target} PUBLIC "NDEBUG")
   set_target_properties(${target} PROPERTIES COMPILE_FLAGS "-w")
 endmacro()

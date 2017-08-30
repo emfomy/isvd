@@ -54,6 +54,7 @@ static void projectBlockCol(
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, m);  break;
     case 'R': isvd_assert_ge(lda, nj); break;
+    default:  isvd_assert_fail();
   }
   isvd_assert_eq(ldqt, l);
   isvd_assert_ge(ldzt, l);
@@ -134,6 +135,7 @@ static void projectBlockRow(
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, mj); break;
     case 'R': isvd_assert_ge(lda, n);  break;
+    default:  isvd_assert_fail();
   }
   isvd_assert_ge(ldqt, l);
   isvd_assert_eq(ldzt, l);
@@ -175,7 +177,7 @@ static void projectBlockRow(
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_stage_module
+/// \ingroup  c_core_@x@_stage_module
 /// Gramian Postprocessing (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -282,14 +284,9 @@ void isvd_@x@PostprocessGramian(
   // Projection
 
   switch ( dista_ ) {
-    case 'C': {
-      projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
-      break;
-    }
-    case 'R': {
-      projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
-      break;
-    }
+    case 'C': projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, ut_root, vt_root); break;
+    case 'R': projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, vt, ldvt, ut_root, vt_root); break;
+    default:  isvd_assert_fail();
   }
 
   // ====================================================================================================================== //

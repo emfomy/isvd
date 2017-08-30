@@ -43,6 +43,7 @@ static void sketchBlockCol(
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, m);  break;
     case 'R': isvd_assert_ge(lda, nj); break;
+    default:  isvd_assert_fail();
   }
   isvd_assert_eq(ldyst, Nl);
 
@@ -124,6 +125,7 @@ static void sketchBlockRow(
   switch ( ordera ) {
     case 'C': isvd_assert_ge(lda, mj); break;
     case 'R': isvd_assert_ge(lda, n);  break;
+    default:  isvd_assert_fail();
   }
   isvd_assert_ge(ldyst, Nl);
 
@@ -174,7 +176,7 @@ static void sketchBlockRow(
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_stage_module
+/// \ingroup  c_core_@x@_stage_module
 /// Gaussian Projection Sketching (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -232,5 +234,6 @@ void isvd_@x@SketchGaussianProjection(
   switch ( dista_ ) {
     case 'C': sketchBlockCol(param, ordera_, a, lda, yst, ldyst, seed, mpi_root); break;
     case 'R': sketchBlockRow(param, ordera_, a, lda, yst, ldyst, seed, mpi_root); break;
+    default:  isvd_assert_fail();
   }
 }

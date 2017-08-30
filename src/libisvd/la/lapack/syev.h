@@ -37,7 +37,7 @@ extern void zheev_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_lapack_module
+/// \ingroup  src_la_lapack_module
 /// Computes all eigenvalues and, optionally, eigenvectors of a real symmetric matrix.
 //\{
 static inline void isvd_ssyev(

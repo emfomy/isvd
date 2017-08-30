@@ -50,6 +50,9 @@ static inline double rconj(  const double z ) { return z; }
       } \
       break; \
     } \
+    default: { \
+      isvd_assert_fail(); \
+    } \
   }
 
 void isvd_somatcopy(

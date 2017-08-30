@@ -9,7 +9,7 @@ function(ISVD_FLAGS_FN)
   string(REGEX REPLACE "  +" " " incs "${incs}")
   string(REGEX REPLACE "^ " "" incs "${incs}")
 
-  set(libs "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}/libisvd${BIN_SUFFIX}.a")
+  set(libs "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}/libisvd${BIN_SUFFIX}.so")
   foreach(l ${LIBS})
     string(REGEX REPLACE "^ " "" l "${l}")
     set(libs "${libs} ${l}")

@@ -12,7 +12,7 @@
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_stage_module
+/// \ingroup  c_core_@x@_stage_module
 /// Hierarchical Reduction Integration (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".

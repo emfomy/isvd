@@ -22,7 +22,7 @@
 #define kEta      0.85
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  core_@x@_stage_module
+/// \ingroup  c_core_@x@_stage_module
 /// Wen-Yin Integration (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".

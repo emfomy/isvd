@@ -33,7 +33,7 @@ extern void zgemmt_(ISVD_UNKNOWN);
 #endif  // ISVD_USE_MKL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  la_blas_module
+/// \ingroup  src_la_blas_module
 /// Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
 /// matrix.
 //\{
