@@ -10,8 +10,6 @@
 #define _LIBISVD_LA_VSL_VSL_H_
 
 #include <libisvd/def.h>
-#include <stdlib.h>
-#include <libisvd/la/lapack/larnv.h>
 
 #if defined(__cplusplus)
 extern "C" {
@@ -39,15 +37,9 @@ static inline void isvd_vslNewStream(
     isvd_VSLStreamStatePtr *streamp, const INT seed
 ) { isvd_assert_pass(vslNewStream(streamp, VSL_BRNG_SFMT19937, seed)); }
 #else  // ISVD_USE_MKL
-static inline void isvd_vslNewStream(
+void isvd_vslNewStream(
     isvd_VSLStreamStatePtr *streamp, const INT seed
-) {
-  *streamp = isvd_imalloc(4);
-  (*streamp)[0] = (seed & 0xff) + 1;
-  (*streamp)[1] = ((seed >>  8) & 0xff);
-  (*streamp)[2] = ((seed >> 16) & 0xff);
-  (*streamp)[3] = ((seed >> 24) & 0xff);
-}
+);
 #endif  // ISVD_USE_MKL
 //\}
 
@@ -60,10 +52,9 @@ static inline void isvd_vslDeleteStream(
     isvd_VSLStreamStatePtr *streamp
 ) { isvd_assert_pass(vslDeleteStream(streamp)); }
 #else  // ISVD_USE_MKL
-static inline void isvd_vslDeleteStream(
+void isvd_vslDeleteStream(
     isvd_VSLStreamStatePtr *streamp
-) {
-  isvd_free(*streamp); }
+);
 #endif  // ISVD_USE_MKL
 //\}
 
@@ -76,15 +67,9 @@ static inline void isvd_vslSkipAheadStream(
     isvd_VSLStreamStatePtr stream, const INT nskip
 ) { isvd_assert_pass(vslSkipAheadStream(stream, nskip)); }
 #else  // ISVD_USE_MKL
-static inline void isvd_vslSkipAheadStream(
+void isvd_vslSkipAheadStream(
     isvd_VSLStreamStatePtr stream, const INT nskip
-) {
-  unsigned int seed = nskip;
-  stream[0] ^= rand_r(&seed) % 2048 + 1;
-  stream[1] ^= rand_r(&seed) % 4096;
-  stream[2] ^= rand_r(&seed) % 4096;
-  stream[3] ^= rand_r(&seed) % 4096;
-}
+);
 #endif  // ISVD_USE_MKL
 //\}
 

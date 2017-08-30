@@ -15,7 +15,7 @@ if(OpenMP STREQUAL "GOMP")
   )
 
   if(NOT GOMP_LIBRARY)
-    set(GOMP_LIBRARY "-lgomp" CACHE STRING "The GNU thread library.")
+    set(GOMP_LIBRARY "-lgomp" CACHE STRING "The GNU thread library." FORCE)
   endif()
 
   include(FindPackageHandleStandardArgs)

@@ -11,6 +11,7 @@
 
 #include <libisvd/def.h>
 #include <libisvd/la/vsl/vsl.h>
+#include <libisvd/la/lapack/larnv.h>
 
 #if defined(__cplusplus)
 extern "C" {

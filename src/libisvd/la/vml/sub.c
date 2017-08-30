@@ -47,4 +47,5 @@ void isvd_vzSub(
 ) {
   isvd_xSub(n, a, b, y);
 }
+
 #endif  // ISVD_USE_MKL

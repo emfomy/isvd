@@ -103,4 +103,5 @@ void isvd_zomatcopy(
 ) {
   isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, conj);
 }
+
 #endif  // ISVD_USE_MKL

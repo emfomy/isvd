@@ -43,4 +43,5 @@ void isvd_vzSqrt(
 ) {
   isvd_xSqrt(n, a, y, csqrt);
 }
+
 #endif  // ISVD_USE_MKL
