@@ -87,7 +87,7 @@ static void sketchBlockCol(
 
   // Yi := A * Omegai (Yi' := Omegai' * A')
   char transa_ = (ordera == 'C') ? 'T' : 'N';
-  isvd_@x@gemm('N', transa_, Nl, m, nj, 1.0, omegat, ldomegat, a, lda, 0.0, yst_, ldyst_);
+  isvd_@x@Gemm('N', transa_, Nl, m, nj, 1.0, omegat, ldomegat, a, lda, 0.0, yst_, ldyst_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -165,7 +165,7 @@ static void sketchBlockRow(
 
   // Yi := A * Omegai (Yi' := Omegai' * A')
   char transa_ = (ordera == 'C') ? 'T' : 'N';
-  isvd_@x@gemm('N', transa_, Nl, mj, n, 1.0, omegat, ldomegat, a, lda, 0.0, yst, ldyst);
+  isvd_@x@Gemm('N', transa_, Nl, mj, n, 1.0, omegat, ldomegat, a, lda, 0.0, yst, ldyst);
 
   // ====================================================================================================================== //
   // Deallocate memory

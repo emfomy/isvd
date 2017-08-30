@@ -40,29 +40,29 @@ extern void mkl_zomatcopy_(ISVD_UNKNOWN);
 /// Performs scaling and out-place transposition/copying of matrices.
 //\{
 #if defined(ISVD_USE_MKL)
-static inline void isvd_somatcopy(
+static inline void isvd_sOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda, REAL4 *b, const INT ldb
 ) { mkl_somatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
-static inline void isvd_domatcopy(
+static inline void isvd_dOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, const INT lda, REAL8 *b, const INT ldb
 ) { mkl_domatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
-static inline void isvd_comatcopy(
+static inline void isvd_cOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, const INT lda, COMP4 *b, const INT ldb
 ) { mkl_comatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
-static inline void isvd_zomatcopy(
+static inline void isvd_zOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda, COMP8 *b, const INT ldb
 ) { mkl_zomatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
 #else  // ISVD_USE_MKL
-void isvd_somatcopy(
+void isvd_sOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda, REAL4 *b, const INT ldb
 );
-void isvd_domatcopy(
+void isvd_dOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, const INT lda, REAL8 *b, const INT ldb
 );
-void isvd_comatcopy(
+void isvd_cOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, const INT lda, COMP4 *b, const INT ldb
 );
-void isvd_zomatcopy(
+void isvd_zOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda, COMP8 *b, const INT ldb
 );
 #endif  // ISVD_USE_MKL

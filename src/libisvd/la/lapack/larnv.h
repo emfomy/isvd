@@ -39,16 +39,16 @@ extern void zlarnv_(ISVD_UNKNOWN);
 /// \ingroup  src_la_lapack_module
 /// Returns a vector of random numbers from a uniform or normal distribution.
 //\{
-static inline void isvd_slarnv(
+static inline void isvd_sLarnv(
     const INT idist, INT *iseed, const INT n, REAL4 *x
 ) { slarnv_(&idist, iseed, &n, x); }
-static inline void isvd_dlarnv(
+static inline void isvd_dLarnv(
     const INT idist, INT *iseed, const INT n, REAL8 *x
 ) { dlarnv_(&idist, iseed, &n, x); }
-static inline void isvd_clarnv(
+static inline void isvd_cLarnv(
     const INT idist, INT *iseed, const INT n, COMP4 *x
 ) { clarnv_(&idist, iseed, &n, x); }
-static inline void isvd_zlarnv(
+static inline void isvd_zLarnv(
     const INT idist, INT *iseed, const INT n, COMP8 *x
 ) { zlarnv_(&idist, iseed, &n, x); }
 //\}

@@ -83,7 +83,7 @@ static void projectBlockCol(
 
   // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  isvd_@x@gemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
+  isvd_@x@Gemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -159,7 +159,7 @@ static void projectBlockRow(
 
   // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  isvd_@x@gemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
+  isvd_@x@Gemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -293,12 +293,12 @@ void isvd_@x@PostprocessGramian(
   // Compute eigen-decomposition
 
   // W := Z' * Z
-  isvd_@x@gemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
+  isvd_@x@Gemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
-  isvd_@x@gesvd(jobw_, 'N', l, l, w, ldw, s, nullptr, 1, nullptr, 1);
+  isvd_@x@Gesvd(jobw_, 'N', l, l, w, ldw, s, nullptr, 1, nullptr, 1);
   isvd_v@x@Sqrt(l, s, s);
 
   // ====================================================================================================================== //
@@ -306,7 +306,7 @@ void isvd_@x@PostprocessGramian(
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    isvd_@x@gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_@x@Gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
@@ -320,9 +320,9 @@ void isvd_@x@PostprocessGramian(
   // V := Z * W / S (V' := (W / S)' * Z')
   if ( vt_root >= -1 ) {
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@scal(l, 1.0/s[ii], w + ii*ldw, 1);
+      isvd_@x@Scal(l, 1.0/s[ii], w + ii*ldw, 1);
     }
-    isvd_@x@gemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
+    isvd_@x@Gemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {

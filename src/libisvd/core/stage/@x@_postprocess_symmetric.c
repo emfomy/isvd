@@ -77,7 +77,7 @@ static void projectBlockCol(
 
   // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  isvd_@x@gemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
+  isvd_@x@Gemm('N', transa_, l, nj, m, 1.0, qt_, ldqt_, a, lda, 0.0, zt, ldzt);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -149,7 +149,7 @@ static void projectBlockRow(
 
   // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  isvd_@x@gemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
+  isvd_@x@Gemm('N', transa_, l, n, mj, 1.0, qt, ldqt, a, lda, 0.0, zt_, ldzt_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -268,19 +268,19 @@ void isvd_@x@PostprocessSymmetric(
   // Compute eigen-decomposition
 
   // W := Z' * Q
-  isvd_@x@gemmt('U', 'N', 'T', l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
+  isvd_@x@Gemmt('U', 'N', 'T', l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S * W'
   const char jobw_ = (ut_root >= -1) ? 'V' : 'N';
-  isvd_@x@syev(jobw_, 'U', l, w, ldw, s);
+  isvd_@x@Syev(jobw_, 'U', l, w, ldw, s);
 
   // ====================================================================================================================== //
   // Compute singular vectors
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    isvd_@x@gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_@x@Gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {

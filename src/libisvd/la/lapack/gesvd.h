@@ -41,7 +41,7 @@ extern void zgesvd_(ISVD_UNKNOWN);
 /// \ingroup  src_la_lapack_module
 /// Computes the singular value decomposition of a general rectangular matrix.
 //\{
-static inline void isvd_sgesvd(
+static inline void isvd_sGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL4 *a, const INT lda, REAL4 *s, REAL4 *u, const INT ldu,
     REAL4 *v, const INT ldvt
 ) {
@@ -51,7 +51,7 @@ static inline void isvd_sgesvd(
   REAL4 *work = isvd_smalloc(lwork);
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_dgesvd(
+static inline void isvd_dGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL8 *a, const INT lda, REAL8 *s, REAL8 *u, const INT ldu,
     REAL8 *v, const INT ldvt
 ) {
@@ -61,7 +61,7 @@ static inline void isvd_dgesvd(
   REAL8 *work = isvd_dmalloc(lwork);
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_cgesvd(
+static inline void isvd_cGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP4 *a, const INT lda, REAL4 *s, COMP4 *u, const INT ldu,
     COMP4 *v, const INT ldvt
 ) {
@@ -72,7 +72,7 @@ static inline void isvd_cgesvd(
   REAL4 *rwork = isvd_smalloc(5*min(m, n));
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_zgesvd(
+static inline void isvd_zGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP8 *a, const INT lda, REAL8 *s, COMP8 *u, const INT ldu,
     COMP8 *v, const INT ldvt
 ) {

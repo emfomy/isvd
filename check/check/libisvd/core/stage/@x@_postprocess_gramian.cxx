@@ -264,10 +264,10 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     isvd_int_t ldvvt_ = n;
     isvd_val_t *vvt0 = isvd_@x@malloc(n * n);
     isvd_int_t ldvvt0 = n;
-    isvd_@x@syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
-    isvd_@x@syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
-    isvd_@x@syrk('U', 'T', n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
-    isvd_@x@syrk('U', 'T', n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
+    isvd_@x@Syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
+    isvd_@x@Syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+    isvd_@x@Syrk('U', 'T', n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
+    isvd_@x@Syrk('U', 'T', n, k, 1.0, vt0, ldvt0, 0.0, vvt0, ldvvt0);
 
     // Check results
     if ( mpi_rank == mpi_root ) {

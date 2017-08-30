@@ -45,7 +45,7 @@ extern void zgetri_(ISVD_UNKNOWN);
 /// \ingroup  src_la_lapack_module
 /// Computes the inverse of a square matrix using LU factorization.
 //\{
-static inline void isvd_sgeinv(
+static inline void isvd_sGeinv(
     const INT n, REAL4 *a, const INT lda
 ) {
   REAL4 qwork; INT lwork = -1, info;
@@ -56,7 +56,7 @@ static inline void isvd_sgeinv(
   sgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_dgeinv(
+static inline void isvd_dGeinv(
     const INT n, REAL8 *a, const INT lda
 ) {
   REAL8 qwork; INT lwork = -1, info;
@@ -67,7 +67,7 @@ static inline void isvd_dgeinv(
   dgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_cgeinv(
+static inline void isvd_cGeinv(
     const INT n, COMP4 *a, const INT lda
 ) {
   COMP4 qwork; INT lwork = -1, info;
@@ -78,7 +78,7 @@ static inline void isvd_cgeinv(
   cgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_zgeinv(
+static inline void isvd_zGeinv(
     const INT n, COMP8 *a, const INT lda
 ) {
   COMP8 qwork; INT lwork = -1, info;

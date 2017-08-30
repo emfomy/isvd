@@ -100,8 +100,8 @@ TEST(@XStr@GramianOrthogonalization, Test) {
   isvd_int_t ldqqt_ = m;
   isvd_val_t *qqt0 = isvd_@x@malloc(m * m);
   isvd_int_t ldqqt0 = m;
-  isvd_@x@syrk('U', 'T', m, Nl, 1.0, qst_, ldqst_, 0.0, qqt_, ldqqt_);
-  isvd_@x@syrk('U', 'T', m, Nl, 1.0, qst0, ldqst0, 0.0, qqt0, ldqqt0);
+  isvd_@x@Syrk('U', 'T', m, Nl, 1.0, qst_, ldqst_, 0.0, qqt_, ldqqt_);
+  isvd_@x@Syrk('U', 'T', m, Nl, 1.0, qst0, ldqst0, 0.0, qqt0, ldqqt0);
 
   // Check results
   if ( mpi_rank == mpi_root ) {

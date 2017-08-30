@@ -83,7 +83,7 @@ void isvd_@x@IntegrateHierarchicalReduction(
 
     // B(i) := Q(i)' * Q(i+h)
     for ( isvd_int_t i = 0; i < h; ++i ) {
-      isvd_@x@gemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
+      isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
     MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
@@ -102,22 +102,22 @@ void isvd_@x@IntegrateHierarchicalReduction(
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'
-      isvd_@x@gesvd('O', 'S', l, l, w, ldw, s, nullptr, 1, tt, ldtt);
+      isvd_@x@Gesvd('O', 'S', l, l, w, ldw, s, nullptr, 1, tt, ldtt);
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
-      isvd_@x@omatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
-      isvd_@x@gemm('T', 'N', l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
-      isvd_@x@gemm('N', 'N', l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
+      isvd_@x@Omatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);
+      isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, w, ldw, tmpt, ldtmpt, 0.0, qit, ldqit);
+      isvd_@x@Gemm('N', 'N', l, mj, l, 1.0, tt, ldtt, qiht, ldqiht, 1.0, qit, ldqit);
 
       // Q(i) /= sqrt(2(I+S))
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-        isvd_@x@scal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
+        isvd_@x@Scal(mj, 1.0/sqrt(2.0*(1.0+s[ii])), qit + ii, ldqit);
       }
     }
   }
 
   // Qbar := Q(i)
-  isvd_@x@omatcopy('N', l, mj, 1.0, qst, ldqst, qt, ldqt);
+  isvd_@x@Omatcopy('N', l, mj, 1.0, qst, ldqst, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

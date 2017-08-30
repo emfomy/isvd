@@ -223,8 +223,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     isvd_int_t lduut_ = m;
     isvd_val_t *uut0 = isvd_@x@malloc(m * m);
     isvd_int_t lduut0 = m;
-    isvd_@x@syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
-    isvd_@x@syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+    isvd_@x@Syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
+    isvd_@x@Syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
 
     // Check results
     if ( mpi_rank == mpi_root ) {

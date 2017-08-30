@@ -132,10 +132,10 @@ void isvd_@x@IntegrateKolmogorovNagumo(
   // Initializing
 
   // Qc := Q0
-  isvd_@x@omatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
+  isvd_@x@Omatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
-  isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+  isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
   MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
@@ -150,26 +150,26 @@ void isvd_@x@IntegrateKolmogorovNagumo(
     // Compute B, D, and G
 
     // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-    isvd_@x@gemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
+    isvd_@x@Gemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
     // Bgc := Qs' * Gc
-    isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+    isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
     MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
     // Dc := 1/N * Bc' * Bc
-    isvd_@x@gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
+    isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
 
     // Dgc [in Z] := 1/N * Bc' * Bgc
-    isvd_@x@gemmt('U', 'T', 'N', l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, z, ldz);
+    isvd_@x@Gemmt('U', 'T', 'N', l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, z, ldz);
 
     // ================================================================================================================== //
     // Compute C and inv(C)
 
     // Z := Dgc - Dc^2
-    isvd_@x@syrk('U', 'T', l, l, -1.0, dc, lddc, 1.0, z, ldz);
+    isvd_@x@Syrk('U', 'T', l, l, -1.0, dc, lddc, 1.0, z, ldz);
 
     // eig(Z) = Z * S * Z'
-    isvd_@x@syev('V', 'U', l, z, ldz, s);
+    isvd_@x@Syev('V', 'U', l, z, ldz, s);
 
     // S := sqrt( I/2 + sqrt( I/4 - S ) )
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
@@ -180,40 +180,40 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
     // Compute Z * sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@scal(l, ss[ii], zs + ldzs*ii, 1);
+      isvd_@x@Scal(l, ss[ii], zs + ldzs*ii, 1);
     }
 
     // Compute Z / sqrt(S)
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@scal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
+      isvd_@x@Scal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
     }
 
     // C := Z * S * Z'
-    isvd_@x@gemm('N', 'T', l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
+    isvd_@x@Gemm('N', 'T', l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);
 
     // inv(C) := Z * inv(S) * Z'
-    isvd_@x@syrk('U', 'N', l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
+    isvd_@x@Syrk('U', 'N', l, l, 1.0, zinvs, ldzinvs, 0.0, cinv, ldcinv);
 
     // ================================================================================================================== //
     // Update for next iteration
 
     // Fc [in C] := C - Dc * inv(C)
-    isvd_@x@symm('R', 'U', l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
+    isvd_@x@Symm('R', 'U', l, l, -1.0, cinv, ldcinv, dc, lddc, 1.0, c, ldc);
 
     // Q+ := Qc * Fc [in C] + Gc * inv(C) (Q+' := Fc' [in C] * Qc' + inv(C) * Gc')
-    isvd_@x@gemm('T', 'N', l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
-    isvd_@x@symm('L', 'U', l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
+    isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, c, ldc, qct, ldqct, 0.0, qpt, ldqpt);
+    isvd_@x@Symm('L', 'U', l, mj, 1.0, cinv, ldcinv, gct, ldgct, 1.0, qpt, ldqpt);
 
     // B+ := Bc * Fc [in C] + Bgc * inv(C)
-    isvd_@x@gemm('N', 'N', Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
-    isvd_@x@symm('R', 'U', Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
+    isvd_@x@Gemm('N', 'N', Nl, l, l, 1.0, bc, ldbc, c, ldc, 0.0, bp, ldbp);
+    isvd_@x@Symm('R', 'U', Nl, l, 1.0, cinv, ldcinv, bgc, ldbgc, 1.0, bp, ldbp);
 
     // ================================================================================================================== //
     // Check convergence: || I - C ||_F < tol
     for ( isvd_int_t ii = 0; ii < l; ++ii ) {
       s[ii] -= 1.0;
     }
-    error = isvd_@x@nrm2(l, s, 1);
+    error = isvd_@x@Nrm2(l, s, 1);
     if ( error <= tol ) {
       break;
     }
@@ -233,7 +233,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
   tmp = qct; qct = qpt; qpt = tmp;
 
   // Copy Qbar
-  isvd_@x@omatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
+  isvd_@x@Omatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

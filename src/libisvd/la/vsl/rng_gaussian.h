@@ -39,13 +39,13 @@ static inline void isvd_vdRngGaussian(
 static inline void isvd_vsRngGaussian(
     isvd_VSLStreamStatePtr stream, const INT n, REAL4 *r, const REAL4 a, const REAL4 sigma
 ) {
-  isvd_slarnv(3, stream, n, r);
+  isvd_sLarnv(3, stream, n, r);
   for ( INT i = 0; i < n; ++i ) r[i] = sigma * r[i] + a;
 }
 static inline void isvd_vdRngGaussian(
     isvd_VSLStreamStatePtr stream, const INT n, REAL8 *r, const REAL8 a, const REAL8 sigma
 ) {
-  isvd_dlarnv(3, stream, n, r);
+  isvd_dLarnv(3, stream, n, r);
   for ( INT i = 0; i < n; ++i ) r[i] = sigma * r[i] + a;
 }
 #endif  // ISVD_USE_MKL

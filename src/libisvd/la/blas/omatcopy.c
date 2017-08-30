@@ -14,7 +14,7 @@
 static inline float  rconjf( const float  z ) { return z; }
 static inline double rconj(  const double z ) { return z; }
 
-#define isvd_xomatcopy( trans, m, n, alpha, a, lda, b, ldb, conj ) \
+#define isvd_xOmatcopy( trans, m, n, alpha, a, lda, b, ldb, conj ) \
   const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", nullptr); \
   if ( !trans_ ) return; \
   switch ( trans_ ) { \
@@ -55,7 +55,7 @@ static inline double rconj(  const double z ) { return z; }
     } \
   }
 
-void isvd_somatcopy(
+void isvd_sOmatcopy(
     const char trans,
     const isvd_int_t m,
     const isvd_int_t n,
@@ -65,9 +65,9 @@ void isvd_somatcopy(
           float *b,
     const isvd_int_t ldb
 ) {
-  isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, rconjf);
+  isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, rconjf);
 }
-void isvd_domatcopy(
+void isvd_dOmatcopy(
     const char trans,
     const isvd_int_t m,
     const isvd_int_t n,
@@ -77,9 +77,9 @@ void isvd_domatcopy(
           double *b,
     const isvd_int_t ldb
 ) {
-  isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, rconj);
+  isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, rconj);
 }
-void isvd_comatcopy(
+void isvd_cOmatcopy(
     const char trans,
     const isvd_int_t m,
     const isvd_int_t n,
@@ -89,9 +89,9 @@ void isvd_comatcopy(
           complex float *b,
     const isvd_int_t ldb
 ) {
-  isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, conjf);
+  isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, conjf);
 }
-void isvd_zomatcopy(
+void isvd_zOmatcopy(
     const char trans,
     const isvd_int_t m,
     const isvd_int_t n,
@@ -101,7 +101,7 @@ void isvd_zomatcopy(
           complex double *b,
     const isvd_int_t ldb
 ) {
-  isvd_xomatcopy(trans, m, n, alpha, a, lda, b, ldb, conj);
+  isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, conj);
 }
 
 #endif  // ISVD_USE_MKL

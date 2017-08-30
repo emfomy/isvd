@@ -102,8 +102,8 @@ TEST(@XStr@HierarchicalReductionIntegration, Test) {
   isvd_int_t ldqqt_ = m;
   isvd_val_t *qqt0 = isvd_@x@malloc(m * m);
   isvd_int_t ldqqt0 = m;
-  isvd_@x@syrk('U', 'T', m, l, 1.0, qt_, ldqt_, 0.0, qqt_, ldqqt_);
-  isvd_@x@syrk('U', 'T', m, l, 1.0, qt0, ldqt0, 0.0, qqt0, ldqqt0);
+  isvd_@x@Syrk('U', 'T', m, l, 1.0, qt_, ldqt_, 0.0, qqt_, ldqqt_);
+  isvd_@x@Syrk('U', 'T', m, l, 1.0, qt0, ldqt0, 0.0, qqt0, ldqqt0);
 
   // Check results
   if ( mpi_rank == mpi_root ) {
