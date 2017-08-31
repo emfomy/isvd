@@ -1,23 +1,28 @@
 # The CMake setting of 'src/'
 
+isvd_set_config_var()
+
 # Macro
 macro(SET_TARGET target files)
   # Set library
-  add_library(${target} ${files})
-  isvd_set_target(${target} ".a")
-  install(TARGETS ${target} ARCHIVE DESTINATION ${LIB_FOLDER})
+  add_library(${target} SHARED ${files})
+  isvd_set_target(${target} ".so")
+  set_target_properties(${target} PROPERTIES VERSION ${ISVD_VERSION})
+  install(TARGETS ${target} LIBRARY DESTINATION ${LIB_FOLDER})
 endmacro()
 
 # Disable asserts
 # list(APPEND DEFS "NDEBUG")
 
 # Set include paths
-include_directories(
-  "${PROJECT_BINARY_DIR}/include/c"
-  "${PROJECT_SOURCE_DIR}/include/c"
-)
+include_directories("${PROJECT_CONFIG_DIR}/include/c"
+                    "${CMAKE_CURRENT_CONFIG_DIR}")
+
+# Configure files
+isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_S_TYPES}")
+isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_D_TYPES}")
+isvd_configure_in_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}")
 
 # libisvd
-file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/libisvd/*"
-                        "${CMAKE_CURRENT_BINARY_DIR}/libisvd/*")
+file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/*")
 set_target(isvd "${files}")

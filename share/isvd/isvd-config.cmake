@@ -1,0 +1,3 @@
+# Compute paths
+set(ISVD_INCLUDES  "@CMAKE_INSTALL_PREFIX@/include")
+set(ISVD_LIBRARIES "@CMAKE_INSTALL_PREFIX@/@LIB_FOLDER@/libisvd.so")

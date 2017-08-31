@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas/blas2.h
-/// @brief   The BLAS level 2 header.
+/// \file       include/c/isvd/la/blas/blas2.h
+/// \brief      The BLAS level 2 header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_BLAS_BLAS2_H_
@@ -14,23 +15,13 @@
 extern "C" {
 #endif  // __cplusplus
 
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
+@ISVD_LA_BLAS_TYPE_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
+@ISVD_LA_BLAS_TYPE_UNDEF@
 
 #if defined(__cplusplus)
 }

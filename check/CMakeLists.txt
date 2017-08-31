@@ -1,5 +1,7 @@
 # The CMake setting of 'check/'
 
+isvd_set_config_var()
+
 # Break
 if(NOT ISVD_BUILD_TEST)
 
@@ -21,33 +23,12 @@ if(GTEST_FOUND)
 endif()
 
 # Set include paths
-include_directories(
-  "${PROJECT_BINARY_DIR}/include/c"
-  "${PROJECT_SOURCE_DIR}/include/c"
-  SYSTEM
-  "${PROJECT_BINARY_DIR}/ext"
-  "${PROJECT_SOURCE_DIR}/ext"
-)
+include_directories("${PROJECT_CONFIG_DIR}/include/c"
+                    "${CMAKE_CURRENT_CONFIG_DIR}/src"
+             SYSTEM "${PROJECT_SOURCE_DIR}/ext")
 
-# Add library
-file(
-  GLOB_RECURSE srcfiles
-  RELATIVE "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/src/*"
-)
-foreach(srcfile ${srcfiles})
-  string(REGEX REPLACE "\\.c(.|$)" ".cxx\\1" file ${srcfile})
-  configure_file(
-    "${PROJECT_SOURCE_DIR}/src/${srcfile}"
-    "${CMAKE_CURRENT_BINARY_DIR}/src/${file}"
-    COPYONLY
-  )
-endforeach()
-file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/core/param.cxx"
-            "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/core/param.c")
-file(GLOB_RECURSE files "${CMAKE_CURRENT_SOURCE_DIR}/src/libisvd/*"
-                        "${CMAKE_CURRENT_BINARY_DIR}/src/libisvd/*")
-add_library(checkisvd EXCLUDE_FROM_ALL ${files})
-isvd_set_target(checkisvd ".a")
+# Add subdirectories
+add_subdirectory(src)
 
 # Set libraries
 list(APPEND LIBS checkisvd)
@@ -55,6 +36,11 @@ list(APPEND LIBS extmmio)
 
 # Set definitions
 list(APPEND DEFS "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
+
+# Configure files
+isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_S_TYPES}")
+isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_D_TYPES}")
+isvd_configure_in_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check")
 
 # Include macros
 include(check.cmake)

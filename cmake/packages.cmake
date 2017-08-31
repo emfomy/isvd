@@ -9,7 +9,9 @@ if(ISVD_BUILD_BIN)
   list(APPEND cflags "-std=c99" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
   include(CheckCCompilerFlag)
   foreach(cflag ${cflags})
-    string(REGEX REPLACE "=" "_" cflagname ${cflag})
+    string(TOUPPER ${cflag} cflagname)
+    string(REGEX REPLACE "=" "_" cflagname ${cflagname})
+    string(REGEX REPLACE "\\+" "X" cflagname ${cflagname})
     CHECK_C_COMPILER_FLAG(${cflag} C_SUPPORTS_${cflagname})
     if(NOT C_SUPPORTS_${cflagname})
       message(
@@ -23,7 +25,9 @@ if(ISVD_BUILD_BIN)
   list(APPEND cxxflags "-std=c++98" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
   include(CheckCXXCompilerFlag)
   foreach(cxxflag ${cxxflags})
-    string(REGEX REPLACE "=" "_" cxxflagname ${cxxflag})
+    string(TOUPPER ${cxxflag} cxxflagname)
+    string(REGEX REPLACE "=" "_" cxxflagname ${cxxflagname})
+    string(REGEX REPLACE "\\+" "X" cxxflagname ${cxxflagname})
     CHECK_CXX_COMPILER_FLAG(${cxxflag} CXX_SUPPORTS_${cxxflagname})
     if(NOT CXX_SUPPORTS_${cxxflagname})
       message(
@@ -38,13 +42,29 @@ endif()
 # Set complier flags
 string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
 string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
-list(APPEND LIBS "-Wl,--no-as-needed")
+set(LNKFLGS "${LNKFLGS} -Wl,--no-as-needed")
 
 # Add library
-list(APPEND LIBS "m" "pthread")
+find_library(
+  M_LIBRARY
+  NAMES m
+  DOC "libm"
+)
+if(NOT M_LIBRARY)
+  set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
+endif()
 
-# Use POSIX
-list(APPEND DEFS "_POSIX_C_SOURCE")
+find_library(
+  PTHREAD_LIBRARY
+  NAMES pthread
+  DOC "libpthread"
+)
+if(NOT PTHREAD_LIBRARY)
+  set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
+endif()
+
+mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
+list(APPEND LIBS "${M_LIBRARY}" "${PTHREAD_LIBRARY}")
 
 # MPI
 find_package(MPI ${findtype})

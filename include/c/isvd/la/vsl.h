@@ -1,15 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/vsl.h
-/// @brief   The vector statistics library header.
+/// \file       include/c/isvd/la/vsl.h
+/// \brief      The VSL header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_VSL_H_
 #define _ISVD_LA_VSL_H_
 
-#include <isvd/la/vsl/vsl.h>
+#include <isvd/la/vsl/service.h>
+#include <isvd/la/vsl/distribution.h>
 
-#include <isvd/la/vsl/rng_gaussian.h>
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \defgroup  c_la_vsl_service_module  Service Routines
+/// \ingroup   c_la_vsl_module
+/// \brief     The VSL Service Routines
+///
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \defgroup  c_la_vsl_distribution_module  Distribution Generators
+/// \ingroup   c_la_vsl_module
+/// \brief     The VSL Distribution Generators
+///
 
 #endif  // _ISVD_LA_VSL_H_

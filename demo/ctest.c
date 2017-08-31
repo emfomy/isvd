@@ -1,12 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    demo/ctest.c
-/// @brief   The C test code
+/// \file       demo/ctest.c
+/// \brief      The C test code
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <mpi.h>
 #include <isvd.h>
 
 typedef double isvd_val_t;
@@ -18,16 +20,13 @@ int main( int argc, char **argv ) {
 
   MPI_Init(&argc, &argv);
 
-  const mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
-  const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
-  const mpi_int_t mpi_root = 0;
+  mpi_int_t mpi_root = 0;
+  mpi_int_t mpi_rank;
+  mpi_int_t mpi_size;
+  MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
 
-  omp_int_t omp_size = isvd_getOmpSize();
-
-  if ( mpi_rank == mpi_root ) {
-    printf("iSVD " ISVD_VERSION " C test\n");
-    printf("%d nodes, %d threads per node\n\n", mpi_size, omp_size);
-  }
+  isvd_printEnvironment(MPI_COMM_WORLD, mpi_root);
 
   const isvd_int_t mb = 100;
   const isvd_int_t nb = 1000;
@@ -40,17 +39,18 @@ int main( int argc, char **argv ) {
   const isvd_int_t n  = nb * P;
   const isvd_int_t l  = k+p;
 
-  isvd_val_t *a = isvd_dmalloc(m * n);
+  isvd_val_t *a = malloc(m * n * sizeof(isvd_val_t));
   isvd_int_t lda = m;
 
-  isvd_val_t *s = isvd_dmalloc(l);
+  isvd_val_t *s = malloc(l * sizeof(isvd_val_t));
 
   isvd_int_t seed = 0;
 
-  isvd_VSLStreamStatePtr stream;
-  isvd_vslNewStream(&stream, seed);
-  isvd_vdRngGaussian(stream, m * n, a, 0.0, 1.0);
-  isvd_vslDeleteStream(&stream);
+  srand(0);
+  for ( isvd_int_t i = 0; i < m * n; ++i ) {
+    isvd_val_t v = (isvd_val_t) rand() / RAND_MAX;
+    a[i] = exp(-v * v) / 2.50662827463;
+  }
 
   isvd_dIsvd(
     "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',
@@ -62,8 +62,8 @@ int main( int argc, char **argv ) {
     a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, mpi_root, MPI_COMM_WORLD
   );
 
-  isvd_free(a);
-  isvd_free(s);
+  free(a);
+  free(s);
 
   MPI_Finalize();
 

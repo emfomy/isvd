@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    include/c/isvd/la/blas/blas1.h
-/// @brief   The BLAS level 1 header.
+/// \file       include/c/isvd/la/blas/blas1.h
+/// \brief      The BLAS level 1 header.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #ifndef _ISVD_LA_BLAS_BLAS1_H_
@@ -14,12 +15,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
+@ISVD_LA_BLAS_TYPE_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
@@ -50,95 +46,90 @@ extern void zdscal_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes a vector-vector dot product.
-//@{
-static inline REAL4 isvd_sdot(
+//\{
+static inline REAL4 isvd_sDot(
     const INT n, const REAL4 *x, const INT incx, REAL4 *y, const INT incy
 ) { return sdot_(&n, x, &incx, y, &incy); }
-static inline REAL8 isvd_ddot(
+static inline REAL8 isvd_dDot(
     const INT n, const REAL8 *x, const INT incx, REAL8 *y, const INT incy
 ) { return ddot_(&n, x, &incx, y, &incy); }
-static inline COMP4 isvd_cdotc(
+static inline COMP4 isvd_cDotc(
     const INT n, const COMP4 *x, const INT incx, COMP4 *y, const INT incy
 ) { return cdotc_(&n, x, &incx, y, &incy); }
-static inline COMP8 isvd_zdotc(
+static inline COMP8 isvd_zDotc(
     const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
 ) { return zdotc_(&n, x, &incx, y, &incy); }
-static inline COMP4 isvd_cdotu(
+static inline COMP4 isvd_cDotu(
     const INT n, const COMP4 *x, const INT incx, COMP4 *y, const INT incy
 ) { return cdotu_(&n, x, &incx, y, &incy); }
-static inline COMP8 isvd_zdotu(
+static inline COMP8 isvd_zDotu(
     const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
 ) { return zdotu_(&n, x, &incx, y, &incy); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes the Euclidean norm of a vector.
-//@{
-static inline REAL4 isvd_snrm2(
+//\{
+static inline REAL4 isvd_sNrm2(
     const INT n, const REAL4 *x, const INT incx
 ) { return snrm2_(&n, x, &incx); }
-static inline REAL8 isvd_dnrm2(
+static inline REAL8 isvd_dNrm2(
     const INT n, const REAL8 *x, const INT incx
 ) { return dnrm2_(&n, x, &incx); }
-static inline REAL4 isvd_scnrm2(
+static inline REAL4 isvd_scNrm2(
     const INT n, const COMP4 *x, const INT incx
 ) { return scnrm2_(&n, x, &incx); }
-static inline REAL8 isvd_dznrm2(
+static inline REAL8 isvd_dzNrm2(
     const INT n, const COMP8 *x, const INT incx
 ) { return dznrm2_(&n, x, &incx); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes the sum of magnitudes of the vector elements.
-//@{
-static inline REAL4 isvd_sasum(
+//\{
+static inline REAL4 isvd_sAsum(
     const INT n, const REAL4 *x, const INT incx
 ) { return  sasum_(&n, x, &incx); }
-static inline REAL8 isvd_dasum(
+static inline REAL8 isvd_dAsum(
     const INT n, const REAL8 *x, const INT incx
 ) { return  dasum_(&n, x, &incx); }
-static inline REAL4 isvd_scasum(
+static inline REAL4 isvd_scAsum(
     const INT n, const COMP4 *x, const INT incx
 ) { return scasum_(&n, x, &incx); }
-static inline REAL8 isvd_dzasum(
+static inline REAL8 isvd_dzAsum(
     const INT n, const COMP8 *x, const INT incx
 ) { return dzasum_(&n, x, &incx); }
-//@}
+//\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes the product of a vector by a scalar.
-//@{
-static inline void isvd_sscal(
+//\{
+static inline void isvd_sScal(
     const INT n, const REAL4 alpha, REAL4 *x, const INT incx
 ) { sscal_(&n, &alpha, x, &incx); }
-static inline void isvd_dscal(
+static inline void isvd_dScal(
     const INT n, const REAL8 alpha, REAL8 *x, const INT incx
 ) { dscal_(&n, &alpha, x, &incx); }
-static inline void isvd_cscal(
+static inline void isvd_cScal(
     const INT n, const COMP4 alpha, COMP4 *x, const INT incx
 ) { cscal_(&n, &alpha, x, &incx); }
-static inline void isvd_zscal(
+static inline void isvd_zScal(
     const INT n, const COMP8 alpha, COMP8 *x, const INT incx
 ) { zscal_(&n, &alpha, x, &incx); }
-static inline void isvd_csscal(
+static inline void isvd_csScal(
     const INT n, const REAL4 alpha, COMP4 *x, const INT incx
 ) { csscal_(&n, &alpha, x, &incx); }
-static inline void isvd_zdscal(
+static inline void isvd_zdScal(
     const INT n, const REAL8 alpha, COMP8 *x, const INT incx
 ) { zdscal_(&n, &alpha, x, &incx); }
-//@}
+//\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
+@ISVD_LA_BLAS_TYPE_UNDEF@
 
 #if defined(__cplusplus)
 }

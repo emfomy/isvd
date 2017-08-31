@@ -1,6 +1,7 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include <isvd.h>
+#include <libisvd.h>
 
 int main( int argc, char **argv ) {
 

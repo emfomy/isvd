@@ -1,16 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @file    src/libisvd/core/param.c
-/// @brief   The parameter structure.
+/// \file       src/libisvd/core/param.c
+/// \brief      The parameter structure.
 ///
-/// @author  Mu Yang <<emfomy@gmail.com>>
+/// \author     Mu Yang <<emfomy@gmail.com>>
+/// \copyright  MIT License
 ///
 
 #include <isvd/core/param.h>
+#include <libisvd/def.h>
+#include <libisvd/util/mpi.h>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// @ingroup  core_module
-/// Initialize the parameters.
-///
 isvd_Param isvd_createParam(
     const isvd_int_t nrow,
     const isvd_int_t ncol,

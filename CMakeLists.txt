@@ -9,7 +9,7 @@ set(ISVD_NAME "Integrated Singular Value Decomposition")
 # Set version number
 set(ISVD_MAJOR_VERSION 1)
 set(ISVD_MINOR_VERSION 1)
-set(ISVD_PATCH_VERSION 0)
+set(ISVD_PATCH_VERSION 1)
 set(ISVD_VERSION "${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}.${ISVD_PATCH_VERSION}")
 
 # Set Makefile
@@ -19,8 +19,8 @@ set(CMAKE_COLOR_MAKEFILE ON)
 # Set module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-# Include functions
-include(cmake/functions.cmake)
+# Include utilities
+include(cmake/utilities.cmake)
 
 # Set the options
 include(cmake/options.cmake)
@@ -31,21 +31,20 @@ include(cmake/packages.cmake)
 # Create configure files
 include(cmake/configure.cmake)
 
+# Set variables
+include(cmake/vars.cmake)
+
 # Add subdirectories
 add_subdirectory(ext)
+add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(demo)
+add_subdirectory(share)
 add_subdirectory(check)
 add_subdirectory(doxygen)
 
-# Set the flags
+# Set flags
 include(cmake/flags.cmake)
-
-# Recreate configure files
-include(cmake/configure.cmake)
-
-# Set install rules
-include(cmake/install.cmake)
 
 # Display message
 include(cmake/display.cmake)

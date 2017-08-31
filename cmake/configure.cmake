@@ -1,46 +1,54 @@
-# Create configure files
-function(ISVD_CONFIGURE_X_FN cfgdir outdir xtypes)
-  isvd_set_types(${xtypes})
-
+# Configure functions
+function(ISVD_CONFIGURE_IN_FN srcdir outdir)
+  message(STATUS "Configure files in ${srcdir}")
   string(REPLACE ";" " " DEFS_STR "${DEFS}")
   file(
     GLOB_RECURSE cfgfiles
-    RELATIVE "${cfgdir}" "${cfgdir}/*\@x\@*.in"
-  )
-  foreach(cfgfile ${cfgfiles})
-    string(REGEX REPLACE "\@x\@" "${x}" outfile ${cfgfile})
-    string(REGEX REPLACE "\\.in$" "" outfile ${outfile})
-    configure_file(
-      "${cfgdir}/${cfgfile}"
-      "${outdir}/${outfile}"
-      @ONLY
-    )
-  endforeach()
-endfunction()
-
-function(ISVD_CONFIGURE_IN_FN cfgdir outdir)
-  string(REPLACE ";" " " DEFS_STR "${DEFS}")
-  file(
-    GLOB_RECURSE cfgfiles
-    RELATIVE "${cfgdir}" "${cfgdir}/*.in"
+    RELATIVE "${srcdir}" "${srcdir}/*"
   )
   foreach(cfgfile ${cfgfiles})
     if(NOT cfgfile MATCHES "\@")
-      string(REGEX REPLACE "\\.in$" "" outfile ${cfgfile})
       configure_file(
-        "${cfgdir}/${cfgfile}"
-        "${outdir}/${outfile}"
+        "${srcdir}/${cfgfile}"
+        "${outdir}/${cfgfile}"
         @ONLY
       )
     endif()
   endforeach()
 endfunction()
 
-isvd_configure_x_fn("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_S_TYPES}")
-isvd_configure_x_fn("${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_S_TYPES}")
-isvd_configure_x_fn("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_D_TYPES}")
-isvd_configure_x_fn("${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}" "${ISVD_D_TYPES}")
-isvd_configure_in_fn("${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-isvd_configure_in_fn("${PROJECT_BINARY_DIR}" "${PROJECT_BINARY_DIR}")
-unset(isvd_configure_x_fn)
-unset(isvd_configure_in_fn)
+function(ISVD_CONFIGURE_X_FN srcdir outdir xtypes)
+  isvd_set_types(${xtypes})
+
+  message(STATUS "Configure files in ${srcdir} for ${xname} precision")
+
+  string(REPLACE ";" " " DEFS_STR "${DEFS}")
+  file(
+    GLOB_RECURSE cfgfiles
+    RELATIVE "${srcdir}" "${srcdir}/*\@x\@*"
+  )
+  foreach(cfgfile ${cfgfiles})
+    string(REGEX REPLACE "\@x\@" "${x}" outfile ${cfgfile})
+    configure_file(
+      "${srcdir}/${cfgfile}"
+      "${outdir}/${outfile}"
+      @ONLY
+    )
+  endforeach()
+endfunction()
+
+# Set configure variables
+set(CONFIG_DIR_NAME "tmp")
+set(PROJECT_CONFIG_DIR "${PROJECT_BINARY_DIR}/${CONFIG_DIR_NAME}")
+macro(ISVD_SET_CONFIG_VAR)
+  file(RELATIVE_PATH CMAKE_CURRENT_CONFIG_DIR ${PROJECT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+  set(CMAKE_CURRENT_CONFIG_DIR "${PROJECT_CONFIG_DIR}/${CMAKE_CURRENT_CONFIG_DIR}")
+endmacro()
+
+# Clean configure folder
+add_custom_target(
+  ${CONFIG_DIR_NAME}clean
+  COMMAND ${CMAKE_COMMAND} -E remove_directory "${PROJECT_CONFIG_DIR}"
+  COMMENT "Clean configure folder"
+)
+set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${PROJECT_CONFIG_DIR}")
