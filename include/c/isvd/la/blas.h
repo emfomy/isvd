@@ -1,41 +1,41 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la.h
-/// \brief      The linear algebra header.
+/// \file       include/c/isvd/la/blas.h
+/// \brief      The BLAS header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_H_
-#define _LIBISVD_LA_H_
+#ifndef _ISVD_LA_BLAS_H_
+#define _ISVD_LA_BLAS_H_
 
-#include <libisvd/la/blas.h>
-#include <libisvd/la/lapack.h>
-#include <libisvd/la/vml.h>
-#include <libisvd/la/vsl.h>
+#include <isvd/la/blas/blas1.h>
+#include <isvd/la/blas/blas2.h>
+#include <isvd/la/blas/blas3.h>
+#include <isvd/la/blas/blas_like.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_la_blas_module  Development BLAS Module
-/// \ingroup   src_la_module
-/// \brief     The BLAS Module
+/// \defgroup  c_la_blas_1_module  BLAS 1
+/// \ingroup   c_la_blas_module
+/// \brief     The BLAS Level 1 Routines
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_la_lapack_module  Development LAPACK Module
-/// \ingroup   src_la_module
-/// \brief     The LAPACK Module
+/// \defgroup  c_la_blas_2_module  BLAS 2
+/// \ingroup   c_la_blas_module
+/// \brief     The BLAS Level 2 Routines
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_la_vml_module  Development VML Module
-/// \ingroup   src_la_module
-/// \brief     The VML Module
+/// \defgroup  c_la_blas_3_module  BLAS 3
+/// \ingroup   c_la_blas_module
+/// \brief     The BLAS Level 3 Routines
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_la_vsl_module  Development VSL Module
-/// \ingroup   src_la_module
-/// \brief     The VSL Module
+/// \defgroup  c_la_blas_like_module  BLAS-Like
+/// \ingroup   c_la_blas_module
+/// \brief     The BLAS-Like Routines
 ///
 
-#endif  // _LIBISVD_LA_H_
+#endif  // _ISVD_LA_BLAS_H_

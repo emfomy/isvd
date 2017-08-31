@@ -1,29 +1,22 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/lapack/geinv.h
-/// \brief      The LAPACK GETRF+GETRI routine.
+/// \file       src/libisvd/la/lapack/geinv.c
+/// \brief      The LAPACK Getrf+Getri routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_LAPACK_GEINV_H_
-#define _LIBISVD_LA_LAPACK_GEINV_H_
-
+#include <isvd/la/lapack/linear_equation.h>
 #include <libisvd/def.h>
 #include <libisvd/util/memory.h>
+
+@ISVD_LA_BLAS_TYPE_DEFINE@
+
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
-
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
-
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if !defined(ISVD_USE_MKL)
 
@@ -39,13 +32,13 @@ extern void zgetri_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
+
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_lapack_module
-/// Computes the inverse of a square matrix using LU factorization.
-//\{
-static inline void isvd_sgeinv(
+void isvd_sGeinv(
     const INT n, REAL4 *a, const INT lda
 ) {
   REAL4 qwork; INT lwork = -1, info;
@@ -56,7 +49,7 @@ static inline void isvd_sgeinv(
   sgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_dgeinv(
+void isvd_dGeinv(
     const INT n, REAL8 *a, const INT lda
 ) {
   REAL8 qwork; INT lwork = -1, info;
@@ -67,7 +60,7 @@ static inline void isvd_dgeinv(
   dgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_cgeinv(
+void isvd_cGeinv(
     const INT n, COMP4 *a, const INT lda
 ) {
   COMP4 qwork; INT lwork = -1, info;
@@ -78,7 +71,7 @@ static inline void isvd_cgeinv(
   cgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_zgeinv(
+void isvd_zGeinv(
     const INT n, COMP8 *a, const INT lda
 ) {
   COMP8 qwork; INT lwork = -1, info;
@@ -89,17 +82,5 @@ static inline void isvd_zgeinv(
   zgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
 }
-//\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
-
-#endif  // _LIBISVD_LA_LAPACK_GEINV_H_
+@ISVD_LA_BLAS_TYPE_UNDEF@

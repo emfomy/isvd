@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       include/c/isvd/def.h
-/// \brief      The iSVD definitions.
+/// \brief      The definitions.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -19,6 +19,12 @@
 #include <isvd/config.h>
 
 #include <mpi.h>
+
+#if !defined(__cplusplus)
+  #define ISVD_UNKNOWN
+#else  // __cplusplus
+  #define ISVD_UNKNOWN ...
+#endif  // __cplusplus
 
 #if defined(__cplusplus)
 extern "C" {

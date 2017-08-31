@@ -1,30 +1,23 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/lapack/gesvd.h
-/// \brief      The LAPACK GESVD routine.
+/// \file       src/libisvd/la/lapack/gesvd.c
+/// \brief      The LAPACK Gesvd routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_LAPACK_GESVD_H_
-#define _LIBISVD_LA_LAPACK_GESVD_H_
-
+#include <isvd/la/lapack/least_square.h>
 #include <libisvd/def.h>
 #include <libisvd/util/memory.h>
 #include <libisvd/util/function.h>
 
+@ISVD_LA_BLAS_TYPE_DEFINE@
+
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
+
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
-
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
-
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if !defined(ISVD_USE_MKL)
 
@@ -35,13 +28,13 @@ extern void zgesvd_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
+
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_lapack_module
-/// Computes the singular value decomposition of a general rectangular matrix.
-//\{
-static inline void isvd_sgesvd(
+void isvd_sGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL4 *a, const INT lda, REAL4 *s, REAL4 *u, const INT ldu,
     REAL4 *v, const INT ldvt
 ) {
@@ -51,7 +44,7 @@ static inline void isvd_sgesvd(
   REAL4 *work = isvd_smalloc(lwork);
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_dgesvd(
+void isvd_dGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL8 *a, const INT lda, REAL8 *s, REAL8 *u, const INT ldu,
     REAL8 *v, const INT ldvt
 ) {
@@ -61,7 +54,7 @@ static inline void isvd_dgesvd(
   REAL8 *work = isvd_dmalloc(lwork);
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_cgesvd(
+void isvd_cGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP4 *a, const INT lda, REAL4 *s, COMP4 *u, const INT ldu,
     COMP4 *v, const INT ldvt
 ) {
@@ -72,7 +65,7 @@ static inline void isvd_cgesvd(
   REAL4 *rwork = isvd_smalloc(5*min(m, n));
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_zgesvd(
+void isvd_zGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP8 *a, const INT lda, REAL8 *s, COMP8 *u, const INT ldu,
     COMP8 *v, const INT ldvt
 ) {
@@ -85,15 +78,4 @@ static inline void isvd_zgesvd(
 }
 //\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
-
-#endif  // _LIBISVD_LA_LAPACK_GESVD_H_
+@ISVD_LA_BLAS_TYPE_UNDEF@

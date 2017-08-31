@@ -97,6 +97,9 @@ find_library(
   NAMES dl
   DOC "libdl"
 )
+if(NOT DL_LIBRARY)
+  set(DL_LIBRARY "-ldl" CACHE STRING "libdl" FORCE)
+endif()
 
 ################################################################################
 

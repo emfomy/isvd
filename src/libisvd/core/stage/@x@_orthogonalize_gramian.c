@@ -8,7 +8,7 @@
 
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
-#include <libisvd/la.h>
+#include <isvd/la.h>
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,23 +68,23 @@ void isvd_@x@OrthogonalizeGramian(
 
   // Wi := Yi' * Yi
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@gemm('N', 'T', l, l, mj, 1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
+    isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
   }
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@gesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, nullptr, 1, nullptr, 1);
+    isvd_@x@Gesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, nullptr, 1, nullptr, 1);
   }
   isvd_v@x@Sqrt(lds*N, s, s);
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
   for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
-    isvd_@x@scal(l, 1.0/s[ii], w + ii*ldw, 1);
+    isvd_@x@Scal(l, 1.0/s[ii], w + ii*ldw, 1);
   }
   isvd_@x@memcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@gemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
+    isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
   }
 
   // ====================================================================================================================== //

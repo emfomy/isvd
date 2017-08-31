@@ -50,16 +50,21 @@ find_library(
   NAMES m
   DOC "libm"
 )
+if(NOT M_LIBRARY)
+  set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
+endif()
+
 find_library(
   PTHREAD_LIBRARY
   NAMES pthread
   DOC "libpthread"
 )
+if(NOT PTHREAD_LIBRARY)
+  set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
+endif()
+
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
 list(APPEND LIBS "${M_LIBRARY}" "${PTHREAD_LIBRARY}")
-
-# Use POSIX
-list(APPEND DEFS "_POSIX_C_SOURCE")
 
 # MPI
 find_package(MPI ${findtype})

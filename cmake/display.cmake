@@ -1,3 +1,4 @@
+# Color output
 function(DISP item var)
   if(var STREQUAL "ON")
     message(STATUS "${item}${Esc}[32m✔${Esc}[0m")

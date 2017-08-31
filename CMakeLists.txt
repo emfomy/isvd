@@ -9,7 +9,7 @@ set(ISVD_NAME "Integrated Singular Value Decomposition")
 # Set version number
 set(ISVD_MAJOR_VERSION 1)
 set(ISVD_MINOR_VERSION 1)
-set(ISVD_PATCH_VERSION 0)
+set(ISVD_PATCH_VERSION 1)
 set(ISVD_VERSION "${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}.${ISVD_PATCH_VERSION}")
 
 # Set Makefile
@@ -31,6 +31,9 @@ include(cmake/packages.cmake)
 # Create configure files
 include(cmake/configure.cmake)
 
+# Set variables
+include(cmake/vars.cmake)
+
 # Add subdirectories
 add_subdirectory(ext)
 add_subdirectory(include)
@@ -45,6 +48,3 @@ include(cmake/flags.cmake)
 
 # Display message
 include(cmake/display.cmake)
-
-# .
-add_custom_target(_)

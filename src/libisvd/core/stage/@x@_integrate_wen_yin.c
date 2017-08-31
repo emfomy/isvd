@@ -8,7 +8,7 @@
 
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
-#include <libisvd/la.h>
+#include <isvd/la.h>
 #include <libisvd/util/memory.h>
 
 #define kMaxit    256
@@ -164,36 +164,36 @@ void isvd_@x@IntegrateWenYin(
   // Initializing
 
   // Qc := Q0
-  isvd_@x@omatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
+  isvd_@x@Omatcopy('N', l, mj, 1.0, qst, ldqst, qct, ldqct);
 
   // Bc := Qs' * Qc
-  isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
+  isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
   MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // Dc := 1/N * Bc' * Bc
-  isvd_@x@gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
+  isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
 
   // Gc := 1/N * Qs * Bc (Gc' := 1/N * Bc' * Qs')
-  isvd_@x@gemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
+  isvd_@x@Gemm('T', 'N', l, mj, Nl, 1.0/N, bc, ldbc, qst, ldqst, 0.0, gct, ldgct);
 
   // Bgc := Qs' * Gc
-  isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+  isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
   MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
   // Dgc := 1/N * Bc' * Bgc
-  isvd_@x@gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, dgc, lddgc);
+  isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, dgc, lddgc);
 
   // Xc := Gc - Qc * Dc (Xc' := Gc' - Dc' * Qc')
   isvd_@x@memcpy(xct, gct, mj * l);
-  isvd_@x@gemm('T', 'N', l, mj, l, -1.0, dc, lddc, qct, ldqct, 1.0, xct, ldxct);
+  isvd_@x@Gemm('T', 'N', l, mj, l, -1.0, dc, lddc, qct, ldqct, 1.0, xct, ldxct);
 
   // mu := tr( Dgc ) - norm( Dc )_F^2
-  mu = isvd_@x@asum(l, dgc, lddgc+1) - isvd_@x@dot(lddc*l, dc, 1, dc, 1);
+  mu = isvd_@x@Asum(l, dgc, lddgc+1) - isvd_@x@Dot(lddc*l, dc, 1, dc, 1);
 
   // taug := tau0; zeta := 1; phi := 1/2N * norm( Bc )_F^2
   taug = tau0;
   zeta = 1.0;
-  phi = 0.5/N * isvd_@x@dot(ldbc*l, bc, 1, bc, 1);
+  phi = 0.5/N * isvd_@x@Dot(ldbc*l, bc, 1, bc, 1);
 
   // ====================================================================================================================== //
   // Iterating
@@ -210,9 +210,9 @@ void isvd_@x@IntegrateWenYin(
       // C := [ Dc/2 - I/tau , I/2          ;
       //       -Dgc/2,        -Dc/2 - I/tau ]
       isvd_@x@memset0(c, ldc*l2);
-      isvd_@x@omatcopy('N', l, l,  0.5, dc,  lddc,  c11, ldc);
-      isvd_@x@omatcopy('N', l, l, -0.5, dgc, lddgc, c21, ldc);
-      isvd_@x@omatcopy('N', l, l, -0.5, dc,  lddc,  c22, ldc);
+      isvd_@x@Omatcopy('N', l, l,  0.5, dc,  lddc,  c11, ldc);
+      isvd_@x@Omatcopy('N', l, l, -0.5, dgc, lddgc, c21, ldc);
+      isvd_@x@Omatcopy('N', l, l, -0.5, dc,  lddc,  c22, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c11[ii+ldc*ii] -= 1.0/tau;
       }
@@ -224,21 +224,21 @@ void isvd_@x@IntegrateWenYin(
       }
 
       // Compute inv(C)
-      isvd_@x@geinv(l2, c, ldc);
+      isvd_@x@Geinv(l2, c, ldc);
 
       // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
       // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
-      isvd_@x@gemm('N', 'N', l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
+      isvd_@x@Gemm('N', 'N', l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c21[ii+ldc*ii] += 1.0;
       }
 
       // B+ := Bc * Fc + Bgc * Fgc
-      isvd_@x@gemm('N', 'N', Nl, l, l, 1.0, bc,  ldbc,  fc,  ldfc,  0.0, bp, ldbp);
-      isvd_@x@gemm('N', 'N', Nl, l, l, 1.0, bgc, ldbgc, fgc, ldfgc, 1.0, bp, ldbp);
+      isvd_@x@Gemm('N', 'N', Nl, l, l, 1.0, bc,  ldbc,  fc,  ldfc,  0.0, bp, ldbp);
+      isvd_@x@Gemm('N', 'N', Nl, l, l, 1.0, bgc, ldbgc, fgc, ldfgc, 1.0, bp, ldbp);
 
       // ~phi := 1/2N * norm( B+ )_F^2
-      phit = 0.5/N * isvd_@x@dot(ldbp*l, bp, 1, bp, 1);
+      phit = 0.5/N * isvd_@x@Dot(ldbp*l, bp, 1, bp, 1);
 
       // Check condition
       if ( phit >= phi + tau * sigma * mu ) {
@@ -254,24 +254,24 @@ void isvd_@x@IntegrateWenYin(
     zeta = eta * zeta + 1;
 
     // Q+ := Qc * Fc + Gc * Fgc (Q+' := Fc' * Qc' + Fgc' * Gc')
-    isvd_@x@gemm('T', 'N', l, mj, l, 1.0, fc,  ldfc,  qct, ldqct, 0.0, qpt, ldqpt);
-    isvd_@x@gemm('T', 'N', l, mj, l, 1.0, fgc, ldfgc, gct, ldgct, 1.0, qpt, ldqpt);
+    isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, fc,  ldfc,  qct, ldqct, 0.0, qpt, ldqpt);
+    isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, fgc, ldfgc, gct, ldgct, 1.0, qpt, ldqpt);
 
     // D+ [in Dc] := 1/N * B+' * B+
-    isvd_@x@gemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bp, ldbp, 0.0, dc, lddc);
+    isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bp, ldbp, 0.0, dc, lddc);
 
     // G+ [in Gc] := 1/N * Qs * B+ (G+'[in Gc'] := 1/N * B+' * Qs')
-    isvd_@x@gemm('T', 'N', l, mj, Nl, 1.0/N, bp, ldbp, qst, ldqst, 0.0, gct, ldgct);
+    isvd_@x@Gemm('T', 'N', l, mj, Nl, 1.0/N, bp, ldbp, qst, ldqst, 0.0, gct, ldgct);
 
     // Bg+ [in Bgc] := Qs' * G+ [in Gc]
-    isvd_@x@gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
+    isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
     MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
     // Dg+ [in Dgc] := 1/N * B+' * Bg+ [in Bgc]
-    isvd_@x@gemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bgc, ldbgc, 0.0, dgc, lddgc);
+    isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bgc, ldbgc, 0.0, dgc, lddgc);
 
     // mu := tr( Dg+ [in Dgc] ) - norm( D+ [in Dc] )_F^2
-    mu = isvd_@x@asum(l, dgc, lddgc+1) - isvd_@x@dot(lddc*l, dc, 1, dc, 1);
+    mu = isvd_@x@Asum(l, dgc, lddgc+1) - isvd_@x@Dot(lddc*l, dc, 1, dc, 1);
 
     // ================================================================================================================== //
     // Check convergence: mu < tol^2
@@ -290,7 +290,7 @@ void isvd_@x@IntegrateWenYin(
 
     // X+ := G+ [in Gc] - Q+ * D+ [in Dc]
     isvd_@x@memcpy(xpt, gct, mj * l);
-    isvd_@x@gemm('T', 'N', l, mj, l, -1.0, dc, lddc, qpt, ldqpt, 1.0, xpt, ldxpt);
+    isvd_@x@Gemm('T', 'N', l, mj, l, -1.0, dc, lddc, qpt, ldqpt, 1.0, xpt, ldxpt);
 
     // Delta1 [in Qc] := Qc - Q+; Delta2 [in Xc] := Xc - X+
     isvd_v@x@Sub(mj*ldqct, qct, qpt, qct);
@@ -300,11 +300,11 @@ void isvd_@x@IntegrateWenYin(
     @xtype@ t[2];
 
     if ( iter % 2 ) {
-      t[0] = isvd_@x@dot(mj*ldqct, qct, 1, qct, 1);
-      t[1] = isvd_@x@dot(mj*ldqct, qct, 1, xct, 1);
+      t[0] = isvd_@x@Dot(mj*ldqct, qct, 1, qct, 1);
+      t[1] = isvd_@x@Dot(mj*ldqct, qct, 1, xct, 1);
     } else {
-      t[0] = isvd_@x@dot(mj*ldxct, xct, 1, qct, 1);
-      t[1] = isvd_@x@dot(mj*ldxct, xct, 1, xct, 1);
+      t[0] = isvd_@x@Dot(mj*ldxct, xct, 1, qct, 1);
+      t[1] = isvd_@x@Dot(mj*ldxct, xct, 1, xct, 1);
     }
 
     MPI_Allreduce(MPI_IN_PLACE, t, 2, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
@@ -324,7 +324,7 @@ void isvd_@x@IntegrateWenYin(
   tmp = qct; qct = qpt; qpt = tmp;
 
   // Copy Qbar
-  isvd_@x@omatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
+  isvd_@x@Omatcopy('N', l, mj, 1.0, qct, ldqct, qt, ldqt);
 
   // ====================================================================================================================== //
   // Deallocate memory

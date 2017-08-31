@@ -12,7 +12,7 @@
 #include <libisvd/def.h>
 #include <stdio.h>
 #include <string.h>
-#include <libisvd/la.h>
+#include <isvd/la.h>
 
 #if defined(__cplusplus)
 extern "C" {

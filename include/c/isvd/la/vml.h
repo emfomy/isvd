@@ -1,22 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd.h
-/// \brief      The main library header.
+/// \file       include/c/isvd/la/vml.h
+/// \brief      The VML header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_H_
-#define _LIBISVD_H_
+#ifndef _ISVD_LA_VML_H_
+#define _ISVD_LA_VML_H_
 
-#include <libisvd/def.h>
-#include <libisvd/core.h>
-#include <libisvd/util.h>
+#include <isvd/la/vml/mathematical.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_util_module  Development Utility
-/// \ingroup   src_module
-/// \brief     The Development Utility
+/// \defgroup  c_la_vml_math_module  Mathematical Routines
+/// \ingroup   c_la_vml_module
+/// \brief     The VML Mathematical Routines
 ///
 
-#endif  // _LIBISVD_H_
+#endif  // _ISVD_LA_VML_H_
