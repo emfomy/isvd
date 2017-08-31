@@ -53,6 +53,7 @@ The following table are the main options
 | `ISVD_BUILD_TEST`      | build unit tests.                  |                                |
 | `ISVD_INDEX_TYPE`      | the selection index type.          | Options: `32/64`               |
 | `ISVD_OMP`             | the selection OpenMP library.      | Options: `OFF/GOMP/IOMP`       |
+| `ISVD_USE_FORTRAN`     | enable Fortran API.                |                                |
 | `GTEST_ROOT`           | the root path of Google Test.      | Require `ISVD_BUILD_TEST`      |
 | `INTEL_ROOT`           | the root path of Intel libraries.  | Require `ISVD_BLAS = MKL`      |
 | `MKL_ROOT`             | the root path of Intel MKL.        | Require `ISVD_BLAS = MKL`      |

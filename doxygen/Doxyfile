@@ -256,7 +256,7 @@ OPTIMIZE_OUTPUT_JAVA   = NO
 # sources. Doxygen will then generate output that is tailored for Fortran.
 # The default value is: NO.
 
-OPTIMIZE_FOR_FORTRAN   = NO
+OPTIMIZE_FOR_FORTRAN   = YES
 
 # Set the OPTIMIZE_OUTPUT_VHDL tag to YES if your project consists of VHDL
 # sources. Doxygen will then generate output that is tailored for VHDL.
@@ -284,7 +284,9 @@ OPTIMIZE_OUTPUT_VHDL   = NO
 EXTENSION_MAPPING      = c=C \
                          h=C \
                          cxx=C++ \
-                         hxx=C++
+                         hxx=C++ \
+                         f=Fortran \
+                         fi=Fortran
 
 # If the MARKDOWN_SUPPORT tag is enabled then doxygen pre-processes all comments
 # according to the Markdown format, which allows for more readable
@@ -815,6 +817,8 @@ FILE_PATTERNS          = *.c \
                          *.h \
                          *.cxx \
                          *.hxx \
+                         *.f \
+                         *.fi \
                          *.md \
                          *.dox
 

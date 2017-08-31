@@ -6,6 +6,10 @@ endif()
 
 # Check compiler support
 if(ISVD_BUILD_BIN)
+  unset(cflags)
+  unset(cxxflags)
+  unset(fflags)
+
   list(APPEND cflags "-std=c99" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
   include(CheckCCompilerFlag)
   foreach(cflag ${cflags})
@@ -37,11 +41,30 @@ if(ISVD_BUILD_BIN)
       )
     endif()
   endforeach()
+
+  if(ISVD_USE_FORTRAN)
+    list(APPEND fflags "-std=f95" "-O2" "-g" "-Wall" "-Wextra" "-pedantic" ${FILP64})
+    include(CheckFortranCompilerFlag)
+    foreach(fflag ${fflags})
+      string(TOUPPER ${fflag} fflagname)
+      string(REGEX REPLACE "=" "_" fflagname ${fflagname})
+      string(REGEX REPLACE "\\+" "X" fflagname ${fflagname})
+      CHECK_Fortran_COMPILER_FLAG(${fflag} Fortran_SUPPORTS_${fflagname})
+      if(NOT Fortran_SUPPORTS_${fflagname})
+        message(
+          FATAL_ERROR
+          "The compiler ${CMAKE_Fortran_COMPILER} does not support ${fflag}. "
+          "Please use a different Fortran compiler."
+        )
+      endif()
+    endforeach()
+  endif()
 endif()
 
 # Set complier flags
 string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
 string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
+string(REGEX REPLACE ";" " " CMAKE_Fortran_FLAGS "${fflags}")
 set(LNKFLGS "${LNKFLGS} -Wl,--no-as-needed")
 
 # Add library
@@ -124,7 +147,6 @@ if(ISVD_OMP)
   find_package(OpenMP ${findtype})
   if(OpenMP_FOUND)
     set(COMFLGS "${COMFLGS} ${OpenMP_C_FLAGS}")
-    set(LNKFLGS "${LNKFLGS} ${OpenMP_C_FLAGS}")
   endif()
 
   find_package(OpenMPLib ${findtype})

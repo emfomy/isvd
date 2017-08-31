@@ -43,8 +43,5 @@ add_subdirectory(share)
 add_subdirectory(check)
 add_subdirectory(doxygen)
 
-# Set flags
-include(cmake/flags.cmake)
-
 # Display message
 include(cmake/display.cmake)

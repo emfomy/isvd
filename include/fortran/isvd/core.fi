@@ -1,0 +1,38 @@
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!! \file       include/c/isvd/core.h
+!! \brief      The core header.
+!!
+!! \author     Mu Yang <<emfomy@gmail.com>>
+!! \copyright  MIT License
+!!
+
+! INCLUDE "isvd/core/print_environment.fi"
+! INCLUDE "isvd/core/param.fi"
+! INCLUDE "isvd/core/s_driver.fi"
+! INCLUDE "isvd/core/d_driver.fi"
+! INCLUDE "isvd/core/s_stage.fi"
+! INCLUDE "isvd/core/d_stage.fi"
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!! \defgroup  c_core_s_driver_module  Real Single Driver
+!! \ingroup   c_core_module
+!! \brief     The Driver Routines with Real Single Precision
+!!
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!! \defgroup  c_core_d_driver_module  Real Double Driver
+!! \ingroup   c_core_module
+!! \brief     The Driver Routines with Real Double Precision
+!!
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!! \defgroup  c_core_s_stage_module  Real Single Stage
+!! \ingroup   c_core_module
+!! \brief     The Stage Routines with Real Single Precision
+!!
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!! \defgroup  c_core_d_stage_module  Real Double Stage
+!! \ingroup   c_core_module
+!! \brief     The Stage Routines with Real Double Precision
+!!
