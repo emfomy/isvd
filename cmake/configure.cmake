@@ -1,5 +1,5 @@
 # Configure functions
-function(ISVD_CONFIGURE_IN_FN srcdir outdir)
+function(ISVD_CONFIGURE_FN srcdir outdir)
   message(STATUS "Configure files in ${srcdir}")
   string(REPLACE ";" " " DEFS_STR "${DEFS}")
   file(

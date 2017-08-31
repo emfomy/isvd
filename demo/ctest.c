@@ -28,8 +28,8 @@ int main( int argc, char **argv ) {
 
   isvd_printEnvironment(MPI_COMM_WORLD, mpi_root);
 
-  const isvd_int_t mb = 100;
-  const isvd_int_t nb = 1000;
+  const isvd_int_t mb = 1000;
+  const isvd_int_t nb = 10000;
   const isvd_int_t k  = 20;
   const isvd_int_t p  = 12;
   const isvd_int_t N  = 4;
@@ -46,11 +46,10 @@ int main( int argc, char **argv ) {
 
   isvd_int_t seed = 0;
 
-  srand(0);
-  for ( isvd_int_t i = 0; i < m * n; ++i ) {
-    isvd_val_t v = (isvd_val_t) rand() / RAND_MAX;
-    a[i] = exp(-v * v) / 2.50662827463;
-  }
+  isvd_VSLStreamStatePtr stream;
+  isvd_vslNewStream(&stream, seed);
+  isvd_vdRngGaussian(stream, m * n, a, 0.0, 1.0);
+  isvd_vslDeleteStream(&stream);
 
   isvd_dIsvd(
     "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',
