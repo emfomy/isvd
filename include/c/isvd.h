@@ -11,10 +11,7 @@
 
 #include <isvd/def.h>
 #include <isvd/core.h>
-
-// #if defined(ISVD_USE_GPU)
-//   #include <isvd/core_gpu.h>
-// #endif  // ISVD_USE_GPU
+#include <isvd/la.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \defgroup  c_core_module  C Core Module
@@ -23,9 +20,9 @@
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_module  C GPU Module
+/// \defgroup  c_la_module  C Linear Algebra Module
 /// \ingroup   c_module
-/// \brief     The C GPU Module
+/// \brief     The C Linear Algebra Module
 ///
 
 #endif  // _ISVD_H_

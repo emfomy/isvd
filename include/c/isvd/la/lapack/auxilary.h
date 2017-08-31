@@ -1,42 +1,35 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/lapack/larnv.h
-/// \brief      The LAPACK LARNV header.
+/// \file       include/c/isvd/la/lapack/auxilary.h
+/// \brief      The LAPACK auxilary header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_LAPACK_LARNV_H_
-#define _LIBISVD_LA_LAPACK_LARNV_H_
+#ifndef _ISVD_LA_LAPACK_AUXILARY_H_
+#define _ISVD_LA_LAPACK_AUXILARY_H_
 
-#include <libisvd/def.h>
+#include <isvd/def.h>
 
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
 
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
+@ISVD_LA_BLAS_TYPE_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-#if !defined(ISVD_USE_MKL)
+extern void slarnv_(const INT *idist, INT *iseed, const INT *n, REAL4 *x);
+extern void dlarnv_(const INT *idist, INT *iseed, const INT *n, REAL8 *x);
+extern void clarnv_(const INT *idist, INT *iseed, const INT *n, COMP4 *x);
+extern void zlarnv_(const INT *idist, INT *iseed, const INT *n, COMP8 *x);
 
-extern void slarnv_(ISVD_UNKNOWN);
-extern void dlarnv_(ISVD_UNKNOWN);
-extern void clarnv_(ISVD_UNKNOWN);
-extern void zlarnv_(ISVD_UNKNOWN);
-
-#endif  // ISVD_USE_MKL
+extern INT lsame_(ISVD_UNKNOWN);
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_lapack_module
+/// \ingroup  c_la_lapack_module
 /// Returns a vector of random numbers from a uniform or normal distribution.
 //\{
 static inline void isvd_sLarnv(
@@ -53,15 +46,19 @@ static inline void isvd_zLarnv(
 ) { zlarnv_(&idist, iseed, &n, x); }
 //\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_lapack_module
+/// Tests two characters for equality regardless of the case.
+//\{
+static inline INT isvd_lsame(
+    const CHAR1 ca, const CHAR1 cb
+) { return lsame_(&ca, &cb); }
+//\}
+
+@ISVD_LA_BLAS_TYPE_UNDEF@
 
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
 
-#endif  // _LIBISVD_LA_LAPACK_LARNV_H_
+#endif  // _ISVD_LA_LAPACK_AUXILARY_H_

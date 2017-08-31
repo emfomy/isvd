@@ -31,6 +31,9 @@ include(cmake/packages.cmake)
 # Create configure files
 include(cmake/configure.cmake)
 
+# Set variables
+include(cmake/vars.cmake)
+
 # Add subdirectories
 add_subdirectory(ext)
 add_subdirectory(include)
@@ -45,6 +48,3 @@ include(cmake/flags.cmake)
 
 # Display message
 include(cmake/display.cmake)
-
-# .
-add_custom_target(_)

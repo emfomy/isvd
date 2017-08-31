@@ -1,26 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/blas/blas1.h
+/// \file       include/c/isvd/la/blas/blas1.h
 /// \brief      The BLAS level 1 header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_BLAS_BLAS1_H_
-#define _LIBISVD_LA_BLAS_BLAS1_H_
+#ifndef _ISVD_LA_BLAS_BLAS1_H_
+#define _ISVD_LA_BLAS_BLAS1_H_
 
-#include <libisvd/def.h>
+#include <isvd/def.h>
 
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
 
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
+@ISVD_LA_BLAS_TYPE_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
@@ -51,7 +46,7 @@ extern void zdscal_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Computes a vector-vector dot product.
 //\{
 static inline REAL4 isvd_sDot(
@@ -75,7 +70,7 @@ static inline COMP8 isvd_zDotu(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Computes the Euclidean norm of a vector.
 //\{
 static inline REAL4 isvd_sNrm2(
@@ -93,7 +88,7 @@ static inline REAL8 isvd_dzNrm2(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Computes the sum of magnitudes of the vector elements.
 //\{
 static inline REAL4 isvd_sAsum(
@@ -111,7 +106,7 @@ static inline REAL8 isvd_dzAsum(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Computes the product of a vector by a scalar.
 //\{
 static inline void isvd_sScal(
@@ -134,15 +129,10 @@ static inline void isvd_zdScal(
 ) { zdscal_(&n, &alpha, x, &incx); }
 //\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
+@ISVD_LA_BLAS_TYPE_UNDEF@
 
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
 
-#endif  // _LIBISVD_LA_BLAS_BLAS1_H_
+#endif  // _ISVD_LA_BLAS_BLAS1_H_

@@ -8,7 +8,7 @@
 
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
-#include <libisvd/la.h>
+#include <isvd/la.h>
 #include <libisvd/util/arg.h>
 #include <libisvd/util/memory.h>
 

@@ -1,26 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/blas/blas3.h
+/// \file       include/c/isvd/la/blas/blas3.h
 /// \brief      The BLAS level 3 header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_BLAS_BLAS3_H_
-#define _LIBISVD_LA_BLAS_BLAS3_H_
+#ifndef _ISVD_LA_BLAS_BLAS3_H_
+#define _ISVD_LA_BLAS_BLAS3_H_
 
-#include <libisvd/def.h>
+#include <isvd/def.h>
 
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
 
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
+@ISVD_LA_BLAS_TYPE_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
@@ -42,7 +37,7 @@ extern void zherk_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Computes a matrix-matrix product with general matrices.
 //\{
 static inline void isvd_sGemm(
@@ -64,7 +59,7 @@ static inline void isvd_zGemm(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Computes a matrix-matrix product where one input matrix is symmetric/Hermitian.
 //\{
 static inline void isvd_sSymm(
@@ -86,7 +81,7 @@ static inline void isvd_zSymm(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_blas_module
+/// \ingroup  c_la_blas_module
 /// Performs a symmetric/Hermitian rank-k update.
 //\{
 static inline void isvd_sSyrk(
@@ -107,15 +102,10 @@ static inline void isvd_zSyrk(
 ) { zherk_(&uplo, &trans, &n, &k, &alpha, a, &lda, &beta, c, &ldc); }
 //\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
+@ISVD_LA_BLAS_TYPE_UNDEF@
 
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
 
-#endif  // _LIBISVD_LA_BLAS_BLAS3_H_
+#endif  // _ISVD_LA_BLAS_BLAS3_H_

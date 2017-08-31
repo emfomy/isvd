@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/print_environment.c
+/// \file       src/libisvd/core/print_environment.c
 /// \brief      Display the iSVD environment.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>

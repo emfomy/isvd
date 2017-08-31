@@ -35,14 +35,6 @@
   #include <gtest/gtest.h>
 #endif  // ISVD_USE_GTEST
 
-#define ISVD_UNUSED( x ) (void)(x)
-
-#if !defined(__cplusplus)
-  #define ISVD_UNKNOWN
-#else  // __cplusplus
-  #define ISVD_UNKNOWN ...
-#endif  // __cplusplus
-
 #if !defined(__cplusplus) || (__cplusplus < 201103L)
   #define nullptr NULL
 #endif

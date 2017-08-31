@@ -20,6 +20,14 @@
 
 #include <mpi.h>
 
+#define ISVD_UNUSED( x ) (void)(x)
+
+#if !defined(__cplusplus)
+  #define ISVD_UNKNOWN
+#else  // __cplusplus
+  #define ISVD_UNKNOWN ...
+#endif  // __cplusplus
+
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus

@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/vml.h
-/// \brief      The vector mathematical library header.
+/// \file       include/c/isvd/la/vml.h
+/// \brief      The VML header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_VML_H_
-#define _LIBISVD_LA_VML_H_
+#ifndef _ISVD_LA_VML_H_
+#define _ISVD_LA_VML_H_
 
-#include <libisvd/la/vml/vml.h>
+#include <isvd/la/vml/mathematical.h>
 
-#endif  // _LIBISVD_LA_VML_H_
+#endif  // _ISVD_LA_VML_H_

@@ -1,29 +1,22 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/lapack/syev.h
+/// \file       src/libisvd/la/lapack/syev.c
 /// \brief      The LAPACK SYEV routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_LA_LAPACK_SYEV_H_
-#define _LIBISVD_LA_LAPACK_SYEV_H_
-
+#include <isvd/la/lapack/least_square.h>
 #include <libisvd/def.h>
 #include <libisvd/util/memory.h>
+
+@ISVD_LA_BLAS_TYPE_DEFINE@
+
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if defined(__cplusplus)
 extern "C" {
 #endif  // __cplusplus
-
-#define CHAR1 char
-#define INT   isvd_int_t
-#define REAL4 float
-#define REAL8 double
-#define COMP4 complex float
-#define COMP8 complex double
-
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if !defined(ISVD_USE_MKL)
 
@@ -34,13 +27,13 @@ extern void zheev_(ISVD_UNKNOWN);
 
 #endif  // ISVD_USE_MKL
 
+#if defined(__cplusplus)
+}
+#endif  // __cplusplus
+
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_la_lapack_module
-/// Computes all eigenvalues and, optionally, eigenvectors of a real symmetric matrix.
-//\{
-static inline void isvd_sSyev(
+void isvd_sSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL4 *a, const INT lda, REAL4 *w
 ) {
   REAL4 qwork; INT lwork = -1, info;
@@ -49,7 +42,7 @@ static inline void isvd_sSyev(
   REAL4 *work = isvd_smalloc(lwork);
   ssyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_dSyev(
+void isvd_dSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL8 *a, const INT lda, REAL8 *w
 ) {
   REAL8 qwork; INT lwork = -1, info;
@@ -58,7 +51,7 @@ static inline void isvd_dSyev(
   REAL8 *work = isvd_dmalloc(lwork);
   dsyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
 }
-static inline void isvd_cSyev(
+void isvd_cSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w
 ) {
   COMP4 qwork; INT lwork = -1, info;
@@ -68,7 +61,7 @@ static inline void isvd_cSyev(
   REAL4 *rwork = isvd_smalloc(5*n-2);
   cheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-static inline void isvd_zSyev(
+void isvd_zSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w
 ) {
   COMP8 qwork; INT lwork = -1, info;
@@ -78,17 +71,5 @@ static inline void isvd_zSyev(
   REAL8 *rwork = isvd_dmalloc(5*n-2);
   zheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
 }
-//\}
 
-#undef CHAR1
-#undef INT
-#undef REAL4
-#undef REAL8
-#undef COMP4
-#undef COMP8
-
-#if defined(__cplusplus)
-}
-#endif  // __cplusplus
-
-#endif  // _LIBISVD_LA_LAPACK_SYEV_H_
+@ISVD_LA_BLAS_TYPE_UNDEF@
