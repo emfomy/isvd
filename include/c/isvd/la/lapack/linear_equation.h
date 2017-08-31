@@ -18,7 +18,7 @@ extern "C" {
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_lapack_module
+/// \ingroup  c_la_lapack_le_module
 /// Computes the inverse of a square matrix using LU factorization.
 //\{
 void isvd_sGeinv( const INT n, REAL4 *a, const INT lda );

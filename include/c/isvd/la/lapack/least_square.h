@@ -18,7 +18,7 @@ extern "C" {
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_lapack_module
+/// \ingroup  c_la_lapack_ls_module
 /// Computes all eigenvalues and, optionally, eigenvectors of a real symmetric matrix.
 //\{
 void isvd_sSyev( const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL4 *a, const INT lda, REAL4 *w );
@@ -28,7 +28,7 @@ void isvd_zSyev( const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, cons
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_lapack_module
+/// \ingroup  c_la_lapack_ls_module
 /// Computes the singular value decomposition of a general rectangular matrix.
 //\{
 void isvd_sGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL4 *a, const INT lda, REAL4 *s, REAL4 *u,

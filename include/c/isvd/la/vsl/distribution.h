@@ -19,7 +19,7 @@ extern "C" {
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_vsl_module
+/// \ingroup  c_la_vsl_distribution_module
 /// Generates normally distributed random numbers.
 //\{
 void isvd_vsRngGaussian( isvd_VSLStreamStatePtr stream, const INT n, REAL4 *r, const REAL4 a, const REAL4 sigma );

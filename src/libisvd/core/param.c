@@ -10,10 +10,6 @@
 #include <libisvd/def.h>
 #include <libisvd/util/mpi.h>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_module
-/// Initialize the parameters.
-///
 isvd_Param isvd_createParam(
     const isvd_int_t nrow,
     const isvd_int_t ncol,

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/la/blas/omatcopy.c
-/// \brief      The BLAS-like OMATCOPY routine.
+/// \brief      The BLAS-Like Omatcopy routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

@@ -46,7 +46,7 @@ extern void zdscal_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes a vector-vector dot product.
 //\{
 static inline REAL4 isvd_sDot(
@@ -70,7 +70,7 @@ static inline COMP8 isvd_zDotu(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes the Euclidean norm of a vector.
 //\{
 static inline REAL4 isvd_sNrm2(
@@ -88,7 +88,7 @@ static inline REAL8 isvd_dzNrm2(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes the sum of magnitudes of the vector elements.
 //\{
 static inline REAL4 isvd_sAsum(
@@ -106,7 +106,7 @@ static inline REAL8 isvd_dzAsum(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_blas_module
+/// \ingroup  c_la_blas_1_module
 /// Computes the product of a vector by a scalar.
 //\{
 static inline void isvd_sScal(

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/la/vsl/rng_gaussian.c
-/// \brief      The VSL RNGGAUSSIAN routine.
+/// \brief      The VSL RngGaussian routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -8,7 +8,7 @@
 
 #include <isvd/la/vsl/distribution.h>
 #include <libisvd/def.h>
-#include <isvd/la/lapack/auxilary.h>
+#include <isvd/la/lapack/auxiliary.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@
 

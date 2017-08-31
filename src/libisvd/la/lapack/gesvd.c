@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/la/lapack/gesvd.c
-/// \brief      The LAPACK GESVD routine.
+/// \brief      The LAPACK Gesvd routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

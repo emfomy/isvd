@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       include/c/isvd/la/blas/blas_like.h
-/// \brief      The BLAS-like header.
+/// \brief      The BLAS-Like header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -18,7 +18,7 @@ extern "C" {
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_blas_module
+/// \ingroup  c_la_blas_like_module
 /// Performs scaling and out-place transposition/copying of matrices.
 //\{
 void isvd_sOmatcopy(
@@ -36,7 +36,7 @@ void isvd_zOmatcopy(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_blas_module
+/// \ingroup  c_la_blas_like_module
 /// Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
 /// matrix.
 ///

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/la/blas/gemmt.c
-/// \brief      The BLAS-like GEMMT routine.
+/// \brief      The BLAS-Like Gemmt routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

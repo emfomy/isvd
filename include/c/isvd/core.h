@@ -17,27 +17,27 @@
 #include <isvd/core/d_stage.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_s_driver_module  C Driver Module (Real Single Precision)
+/// \defgroup  c_core_s_driver_module  Real Single Driver
 /// \ingroup   c_core_module
-/// \brief     The C Driver Module (Real Single Precision)
+/// \brief     The Driver Routines with Real Single Precision
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_d_driver_module  C Driver Module (Real Double Precision)
+/// \defgroup  c_core_d_driver_module  Real Double Driver
 /// \ingroup   c_core_module
-/// \brief     The C Driver Module (Real Double Precision)
+/// \brief     The Driver Routines with Real Double Precision
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_s_stage_module  C Stage Module (Real Single Precision)
+/// \defgroup  c_core_s_stage_module  Real Single Stage
 /// \ingroup   c_core_module
-/// \brief     The C Stage Module (Real Single Precision)
+/// \brief     The Stage Routines with Real Single Precision
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_d_stage_module  C Stage Module (Real Double Precision)
+/// \defgroup  c_core_d_stage_module  Real Double Stage
 /// \ingroup   c_core_module
-/// \brief     The C Stage Module (Real Double Precision)
+/// \brief     The Stage Routines with Real Double Precision
 ///
 
 #endif  // _ISVD_CORE_H_

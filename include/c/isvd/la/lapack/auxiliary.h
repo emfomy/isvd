@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       include/c/isvd/la/lapack/auxilary.h
-/// \brief      The LAPACK auxilary header.
+/// \file       include/c/isvd/la/lapack/auxiliary.h
+/// \brief      The LAPACK auxiliary header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -29,7 +29,7 @@ extern INT lsame_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_lapack_module
+/// \ingroup  c_la_lapack_aux_module
 /// Returns a vector of random numbers from a uniform or normal distribution.
 //\{
 static inline void isvd_sLarnv(
@@ -47,7 +47,7 @@ static inline void isvd_zLarnv(
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_lapack_module
+/// \ingroup  c_la_lapack_aux_module
 /// Tests two characters for equality regardless of the case.
 //\{
 static inline INT isvd_lsame(

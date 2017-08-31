@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       include/c/isvd.h
-/// \brief      The iSVD header.
+/// \brief      The main header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -14,15 +14,15 @@
 #include <isvd/la.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_module  C Core Module
+/// \defgroup  c_core_module  Core Routines
 /// \ingroup   c_module
-/// \brief     The C Core Module
+/// \brief     The Core Routines
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_la_module  C Linear Algebra Module
+/// \defgroup  c_la_module  Linear Algebra Wrappers
 /// \ingroup   c_module
-/// \brief     The C Linear Algebra Module
+/// \brief     The Linear Algebra Wrappers
 ///
 
 #endif  // _ISVD_H_

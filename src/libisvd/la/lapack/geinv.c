@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/la/lapack/geinv.c
-/// \brief      The LAPACK GETRF+GETRI routine.
+/// \brief      The LAPACK Getrf+Getri routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

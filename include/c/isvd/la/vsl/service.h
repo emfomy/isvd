@@ -20,17 +20,17 @@ extern "C" {
 typedef INT* isvd_VSLStreamStatePtr;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_vsl_module
+/// \ingroup  c_la_vsl_service_module
 /// Creates and initializes a random stream.
 void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const INT seed );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_vsl_module
+/// \ingroup  c_la_vsl_service_module
 /// Deletes previously created stream.
 void isvd_vslDeleteStream( isvd_VSLStreamStatePtr *streamp );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_vsl_module
+/// \ingroup  c_la_vsl_service_module
 /// Initializes the stream by the skip-ahead method.
 void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip );
 

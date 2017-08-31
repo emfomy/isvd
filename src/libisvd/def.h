@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/def.h
-/// \brief      The iSVD definitions.
+/// \brief      The definitions.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -35,6 +35,9 @@
   #include <gtest/gtest.h>
 #endif  // ISVD_USE_GTEST
 
+
+#define ISVD_UNUSED( x ) (void)(x)
+
 #if !defined(__cplusplus) || (__cplusplus < 201103L)
   #define nullptr NULL
 #endif
@@ -51,6 +54,7 @@
 #if defined(ISVD_USE_MKL)
   #include <mkl.h>
 #endif // ISVD_USE_MKL
+
 
 #if defined(__cplusplus)
 extern "C" {

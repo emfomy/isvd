@@ -11,4 +11,10 @@
 
 #include <isvd/la/vml/mathematical.h>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \defgroup  c_la_vml_math_module  Mathematical Routines
+/// \ingroup   c_la_vml_module
+/// \brief     The VML Mathematical Routines
+///
+
 #endif  // _ISVD_LA_VML_H_

@@ -18,7 +18,7 @@ extern "C" {
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_vml_module
+/// \ingroup  c_la_vml_math_module
 /// Subtracts vector elements.
 //\{
 void isvd_vsSub( const INT n, const REAL4 *a, const REAL4 *b, REAL4 *y );
@@ -28,7 +28,7 @@ void isvd_vzSub( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y );
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_la_vml_module
+/// \ingroup  c_la_vml_math_module
 /// Computes the square root of vector elements.
 //\{
 void isvd_vsSqrt( const INT n, const REAL4 *a, REAL4 *y );

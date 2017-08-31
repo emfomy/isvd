@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd.h
-/// \brief      The iSVD library header.
+/// \brief      The main library header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -14,9 +14,9 @@
 #include <libisvd/util.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_util_module  Development Utility Module
+/// \defgroup  src_util_module  Development Utility
 /// \ingroup   src_module
-/// \brief     The Development Utility Module
+/// \brief     The Development Utility
 ///
 
 #endif  // _LIBISVD_H_
