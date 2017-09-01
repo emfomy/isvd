@@ -10,6 +10,7 @@
 #define _ISVD_CORE_@X@_DRIVER_H_
 
 #include <isvd/def.h>
+#include <mpi.h>
 
 #if defined(__cplusplus)
 extern "C" {

@@ -21,7 +21,7 @@ endif()
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
 option(ISVD_BUILD_TEST    "Build unit tests."     "OFF")
 option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
-# option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
+option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
 
 set(ISVD_INDEX_TYPE "32" CACHE STRING "Index type. [32/64]")
 set_property(CACHE ISVD_INDEX_TYPE PROPERTY STRINGS "32;64")

@@ -30,6 +30,8 @@
   #define ISVD_OMP_PARALLEL
 #endif  // ISVD_USE_OMP
 
+#include <mpi.h>
+
 #if defined(ISVD_USE_GTEST) && defined(__cplusplus)
   #undef I
   #include <gtest/gtest.h>

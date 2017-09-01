@@ -2,6 +2,9 @@
 
 isvd_set_config_var()
 
+SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
+
 # Macro
 macro(SET_TARGET target files)
   # Set library
@@ -23,6 +26,11 @@ isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" 
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_D_TYPES}")
 isvd_configure_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}")
 
-# libisvd
-file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/*")
-set_target(isvd "${files}")
+# libisvd_la
+file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/la/*")
+set_target(isvd_la "${files}")
+
+# libisvd_core
+file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*")
+set_target(isvd_core "${files}")
+target_link_libraries(isvd_core isvd_la)

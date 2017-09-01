@@ -18,8 +18,6 @@
 #include <math.h>
 #include <isvd/config.h>
 
-#include <mpi.h>
-
 #if !defined(__cplusplus)
   #define ISVD_UNKNOWN
 #else  // __cplusplus

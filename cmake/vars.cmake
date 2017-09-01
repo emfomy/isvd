@@ -1,4 +1,4 @@
-# Set types
+# Types definitions
 macro(ISVD_SET_TYPES x_ xtype_ x_type_ XName_ XStr_)
   string(TOLOWER "${x_}" x)
   string(TOUPPER "${x_}" X)

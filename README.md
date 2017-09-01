@@ -20,7 +20,7 @@ Integrated Singular Value Decomposition (iSVD)
 
 ### Optional
 * [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (**Recommended** for better performance, used for BLAS & LAPACK).
-<!-- * [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support). -->
+* [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support).
 * [OpenMP](http://openmp.org) Library (**Recommended** for better performance, used for multi-thread parallelization).
 * [Google Test Library](https://github.com/google/googletest) (Used for code testing).
 * [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
@@ -53,12 +53,12 @@ The following table are the main options
 | `ISVD_BUILD_TEST`      | build unit tests.                  |                                |
 | `ISVD_INDEX_TYPE`      | the selection index type.          | Options: `32/64`               |
 | `ISVD_OMP`             | the selection OpenMP library.      | Options: `OFF/GOMP/IOMP`       |
+| `ISVD_USE_GPU`         | enable GPU support.                |                                |
 | `GTEST_ROOT`           | the root path of Google Test.      | Require `ISVD_BUILD_TEST`      |
 | `INTEL_ROOT`           | the root path of Intel libraries.  | Require `ISVD_BLAS = MKL`      |
 | `MKL_ROOT`             | the root path of Intel MKL.        | Require `ISVD_BLAS = MKL`      |
 | `MPI_PROCS`            | the number of MPI processes.       | Only used in demo codes.       |
 | `OMP_THRDS`            | the number of OpenMP threads.      | Only used in demo/check codes. |
-<!-- | `ISVD_USE_GPU`         | enable GPU support.                |                                | -->
 
 ### Makefile
 
