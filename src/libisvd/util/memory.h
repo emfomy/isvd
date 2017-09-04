@@ -44,12 +44,12 @@ static inline double* isvd_dmalloc( const size_t num ) {
   return isvd_xmalloc(num, double);
 }
 
-static inline complex float* isvd_cmalloc( const size_t num ) {
-  return isvd_xmalloc(num, complex float);
+static inline _Complex float* isvd_cmalloc( const size_t num ) {
+  return isvd_xmalloc(num, _Complex float);
 }
 
-static inline complex double* isvd_zmalloc( const size_t num ) {
-  return isvd_xmalloc(num, complex double);
+static inline _Complex double* isvd_zmalloc( const size_t num ) {
+  return isvd_xmalloc(num, _Complex double);
 }
 //\}
 
@@ -90,12 +90,12 @@ static inline void isvd_dmemset0( double *ptr, const size_t num ) {
   isvd_xmemset0(ptr, num, double);
 }
 
-static inline void isvd_cmemset0( complex float *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, complex float);
+static inline void isvd_cmemset0( _Complex float *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, _Complex float);
 }
 
-static inline void isvd_zmemset0( complex double *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, complex double);
+static inline void isvd_zmemset0( _Complex double *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, _Complex double);
 }
 //\}
 
@@ -122,12 +122,12 @@ static inline void isvd_dmemcpy( double *dst, double *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, double);
 }
 
-static inline void isvd_cmemcpy( complex float *dst, complex float *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, complex float);
+static inline void isvd_cmemcpy( _Complex float *dst, _Complex float *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, _Complex float);
 }
 
-static inline void isvd_zmemcpy( complex double *dst, complex double *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, complex double);
+static inline void isvd_zmemcpy( _Complex double *dst, _Complex double *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, _Complex double);
 }
 //\}
 

@@ -8,7 +8,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <mpi.h>
 #include <isvd.h>
 
 typedef double isvd_val_t;
@@ -18,7 +17,7 @@ typedef double isvd_val_t;
 ///
 int main( int argc, char **argv ) {
 
-  MPI_Init(&argc, &argv);
+  isvd_init(&argc, &argv, MPI_COMM_WORLD);
 
   mpi_int_t mpi_root = 0;
   mpi_int_t mpi_rank;
@@ -26,7 +25,10 @@ int main( int argc, char **argv ) {
   MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
 
-  isvd_printEnvironment(MPI_COMM_WORLD, mpi_root);
+  if ( mpi_rank == mpi_root ) {
+    printf("iSVD " ISVD_VERSION " C test\n\n");
+    isvd_printEnvironment(MPI_COMM_WORLD);
+  }
 
   const isvd_int_t mb = 1000;
   const isvd_int_t nb = 10000;
@@ -64,7 +66,7 @@ int main( int argc, char **argv ) {
   free(a);
   free(s);
 
-  MPI_Finalize();
+  isvd_finalize();
 
   return 0;
 }

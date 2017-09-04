@@ -27,4 +27,4 @@ include_directories("${PROJECT_CONFIG_DIR}/include/c")
 
 # Set target
 set_target(ctest ctest.c)
-target_link_libraries(isvd_ctest isvd_core isvd_la)
+target_link_libraries(isvd_ctest isvd)

@@ -26,11 +26,25 @@ isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" 
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_D_TYPES}")
 isvd_configure_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}")
 
+# libisvd
+set_target(isvd /dev/null)
+set_target_properties(isvd PROPERTIES LINKER_LANGUAGE C)
+
 # libisvd_la
 file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/la/*")
 set_target(isvd_la "${files}")
+target_link_libraries(isvd isvd_la)
 
 # libisvd_core
 file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*")
 set_target(isvd_core "${files}")
 target_link_libraries(isvd_core isvd_la)
+target_link_libraries(isvd isvd_core)
+
+# libisvd_gpu
+if(ISVD_USE_GPU)
+  file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/gpu/*")
+  set_target(isvd_gpu "${files}")
+  target_link_libraries(isvd_gpu isvd_core)
+  target_link_libraries(isvd isvd_gpu)
+endif(ISVD_USE_GPU)

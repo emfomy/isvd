@@ -10,7 +10,6 @@
 #define _ISVD_CORE_PARAM_H_
 
 #include <isvd/def.h>
-#include <mpi.h>
 
 #if defined(__cplusplus)
 extern "C" {
@@ -86,7 +85,7 @@ typedef struct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Initialize the parameters.
+/// Initializes the parameters.
 ///
 isvd_Param isvd_createParam(
     const isvd_int_t nrow, const isvd_int_t ncol, const isvd_int_t rank, const isvd_int_t over_rank,
