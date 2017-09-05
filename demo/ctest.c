@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <mpi.h>
 #include <isvd.h>
 
 typedef double isvd_val_t;
@@ -59,7 +60,7 @@ int main( int argc, char **argv ) {
   );
 
   isvd_dIeig(
-    "GP", "GR", "KN", "SY", m, k, p, N, 'R', 'C',
+    "GP_gpu", "GR", "KN", "SY", m, k, p, N, 'R', 'C',
     a + mb * mpi_rank, lda, s, NULL, 0, seed, -2, mpi_root, MPI_COMM_WORLD
   );
 

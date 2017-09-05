@@ -84,10 +84,10 @@ void isvd_@x@Ieig(
   // ====================================================================================================================== //
   // Check arguments
 
-  const char *optss[] = {"GP"};
+  const char *optss[] = {"GP", "GP_gpu"};
   const char *optso[] = {"TS", "GR"};
   const char *optsi[] = {"KN", "WY", "HR"};
-  const char *optsp[] = {"SY"};
+  const char *optsp[] = {"SY" , "SY_gpu"};
 
   const char *algs_ = isvd_arg2str("ALGS", algs, optss, nullptr, lenof(optss));
   const char *algo_ = isvd_arg2str("ALGO", algo, optso, nullptr, lenof(optso));

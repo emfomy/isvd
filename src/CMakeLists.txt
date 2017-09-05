@@ -44,6 +44,14 @@ isvd_set_target_blas(isvd_core)
 target_link_libraries(isvd_core isvd_la)
 target_link_libraries(isvd isvd_core)
 
+# libisvd_nogpu
+file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/nogpu/*")
+set_target(isvd_nogpu "${files}")
+isvd_set_target_omp(isvd_nogpu C)
+isvd_set_target_mpi(isvd_nogpu)
+isvd_set_target_blas(isvd_nogpu)
+target_link_libraries(isvd_nogpu isvd_core)
+
 # libisvd_gpu
 if(ISVD_USE_GPU)
   file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/gpu/*")
@@ -54,4 +62,6 @@ if(ISVD_USE_GPU)
   isvd_set_target_gpu(isvd_gpu)
   target_link_libraries(isvd_gpu isvd_core)
   target_link_libraries(isvd isvd_gpu)
+else()
+  target_link_libraries(isvd isvd_nogpu)
 endif(ISVD_USE_GPU)

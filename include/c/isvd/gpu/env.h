@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       include/c/isvd/gpu/env.h
-/// \brief      The iSVD environment routins with GPU support.
+/// \brief      The iSVD environment routines (GPU only).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

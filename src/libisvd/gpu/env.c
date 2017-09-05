@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/gpu/env.c
-/// \brief      The iSVD environment routines with GPU support.
+/// \brief      The iSVD environment routines (GPU only).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -12,7 +12,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_module
-/// Initializes the iSVD environment with GPU support.
+/// Initializes the iSVD environment (GPU only).
 ///
 /// \note  This routines initializes the MAGMA environment.
 ///
@@ -28,7 +28,7 @@ void isvd_init_gpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpi_module
-/// Finalizes the iSVD environment with GPU support.
+/// Finalizes the iSVD environment (GPU only).
 ///
 /// \note  This routines initializes the MAGMA environment.
 ///
@@ -38,7 +38,7 @@ void isvd_finalize_gpu( void ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_module
-/// Displays the iSVD environment with GPU support.
+/// Displays the iSVD environment (GPU only).
 ///
 /// \note  This routines displays the MAGMA environment.
 ///

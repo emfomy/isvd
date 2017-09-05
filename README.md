@@ -75,8 +75,7 @@ The following table are the main make rules
 ### Definitions
 
 * Define `ISVD_USE_ILP64` to use 64-bit integer.
-* Define `ISVD_USE_MKL`   to enable Intel MKL.
-<!-- * Define `ISVD_USE_GPU`   to enable GPU support. -->
+* Define `ISVD_USE_GPU`   to enable GPU support.
 
 ## Q&amp;A
 

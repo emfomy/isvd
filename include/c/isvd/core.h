@@ -10,6 +10,7 @@
 #define _ISVD_CORE_H_
 
 #include <isvd/core/env.h>
+#include <isvd/core/env.h>
 #include <isvd/core/param.h>
 #include <isvd/core/s_driver.h>
 #include <isvd/core/d_driver.h>

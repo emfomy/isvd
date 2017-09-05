@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/env.c
-/// \brief      The iSVD environment routines.
+/// \brief      The iSVD environment routines (CPU only).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -11,26 +11,9 @@
 #include <libisvd/util/mpi.h>
 #include <libisvd/util/omp.h>
 
-#if defined(ISVD_USE_GPU)
-#include <isvd/gpu/env.h>
-#endif  // ISVD_USE_GPU
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Initializes the iSVD environment.
-///
-/// \note  This routines initializes the MPI and MAGMA environments.
-///
-void isvd_init( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
-  isvd_init_cpu(argcp, argvp, mpi_comm);
-#if defined(ISVD_USE_GPU)
-  isvd_init_gpu(argcp, argvp, mpi_comm);
-#endif  // ISVD_USE_GPU
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_module
-/// Initializes the iSVD environment without GPU support.
+/// Initializes the iSVD environment (CPU only).
 ///
 /// \note  This routines initializes the MPI environment.
 ///
@@ -41,20 +24,7 @@ void isvd_init_cpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Finalizes the iSVD environment.
-///
-/// \note  This routines initializes the MPI and MAGMA environments.
-///
-void isvd_finalize() {
-  isvd_finalize_cpu();
-#if defined(ISVD_USE_GPU)
-  isvd_finalize_gpu();
-#endif  // ISVD_USE_GPU
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_module
-/// Finalizes the iSVD environment without GPU support.
+/// Finalizes the iSVD environment (CPU only).
 ///
 /// \note  This routines initializes the MPI environment.
 ///
@@ -64,20 +34,7 @@ void isvd_finalize_cpu( void ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Displays the iSVD environment.
-///
-/// \note  This routines displays the MPI and MAGMA environments.
-///
-void isvd_printEnvironment( const MPI_Comm mpi_comm ) {
-  isvd_printEnvironment_cpu(mpi_comm);
-#if defined(ISVD_USE_GPU)
-  isvd_printEnvironment_gpu(mpi_comm);
-#endif  // ISVD_USE_GPU
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_module
-/// Displays the iSVD environment without GPU support.
+/// Displays the iSVD environment (CPU only).
 ///
 /// \note  This routines displays the MPI environment.
 ///
