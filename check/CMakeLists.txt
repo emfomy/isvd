@@ -74,6 +74,13 @@ macro(ISVD_CHECK_FN xtypes)
 
   # GPU unit tests
   if(ISVD_USE_GPU)
+
+    # Sketching
+    add_mpi_check(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} GPU Precision Gaussian Projection Sketching check" "1;2;3;4;6;12")
+
+    # Postprocessing
+    add_mpi_check(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} GPU Precision Gramian Postprocessing check" "1;2;3;4;6;12")
+    add_mpi_check(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} GPU Precision Symmetric Postprocessing check" "1;2;3;4;6;12")
   endif()
 endmacro()
 

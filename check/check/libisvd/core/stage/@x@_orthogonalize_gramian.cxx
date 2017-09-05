@@ -12,7 +12,7 @@
 
 typedef @xtype@ isvd_val_t;
 
-TEST(@XStr@GramianOrthogonalization, Test) {
+TEST(@XStr@_GramianOrthogonalization, Test) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;

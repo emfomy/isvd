@@ -119,7 +119,7 @@ static void test( char dista, char ordera ) {
   isvd_int_t ldyst = Nl;
 
   // Run stage
-  isvd_@x@SketchGaussianProjection(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
+  isvd_@x@SketchGaussianProjection_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
 
 #if defined(ISVD_USE_MKL)
   // Gather results
@@ -141,18 +141,18 @@ static void test( char dista, char ordera ) {
 #endif /// ISVD_USE_MKL
 }
 
-TEST(@XStr@_GaussianProjectionSketching, BlockCol_ColMajor) {
+TEST(@XStr@_GaussianProjectionSketching_Gpu, BlockCol_ColMajor) {
   test('C', 'C');
 }
 
-TEST(@XStr@_GaussianProjectionSketching, BlockCol_RowMajor) {
+TEST(@XStr@_GaussianProjectionSketching_Gpu, BlockCol_RowMajor) {
   test('C', 'R');
 }
 
-TEST(@XStr@_GaussianProjectionSketching, BlockRow_ColMajor) {
+TEST(@XStr@_GaussianProjectionSketching_Gpu, BlockRow_ColMajor) {
   test('R', 'C');
 }
 
-TEST(@XStr@_GaussianProjectionSketching, BlockRow_RowMajor) {
+TEST(@XStr@_GaussianProjectionSketching_Gpu, BlockRow_RowMajor) {
   test('R', 'R');
 }

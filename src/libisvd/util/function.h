@@ -15,6 +15,8 @@
 extern "C" {
 #endif  // __cplusplus
 
+#define lenof( Array ) sizeof(Array) / sizeof(Array[0])
+
 static inline int max( int a, int b ) {
   return (a > b) ? a : b;
 }

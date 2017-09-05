@@ -9,6 +9,7 @@
 #include <isvd/core/@x@_driver.h>
 #include <libisvd/def.h>
 #include <libisvd/core/@x@_arg.h>
+#include <libisvd/util/function.h>
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +86,7 @@ void isvd_@x@Isvd(
     const isvd_int_t  lda,
           @xtype@    *s,
           @xtype@    *ut,
-    const isvd_int_t  ldut,
+    const isvd_int_t ldut,
           @xtype@    *vt,
     const isvd_int_t  ldvt,
     const isvd_int_t  seed,
@@ -98,10 +99,15 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Check arguments
 
-  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP",     nullptr);
-  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR",   nullptr);
-  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR", nullptr);
-  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGR",   nullptr);
+  const char *optss[] = {"GP"};
+  const char *optso[] = {"TS", "GR"};
+  const char *optsi[] = {"KN", "WY", "HR"};
+  const char *optsp[] = {"TS", "GR"};
+
+  const char *algs_ = isvd_arg2str("ALGS", algs, optss, nullptr, lenof(optss));
+  const char *algo_ = isvd_arg2str("ALGO", algo, optso, nullptr, lenof(optso));
+  const char *algi_ = isvd_arg2str("ALGI", algi, optsi, nullptr, lenof(optsi));
+  const char *algp_ = isvd_arg2str("ALGP", algp, optsp, nullptr, lenof(optsp));
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
   isvd_fun_t funs = isvd_arg2@x@algs(algs_);

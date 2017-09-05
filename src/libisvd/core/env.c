@@ -23,9 +23,9 @@
 ///
 void isvd_init( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
   isvd_init_cpu(argcp, argvp, mpi_comm);
-#if defined(MCNLA_USE_GPU)
+#if defined(ISVD_USE_GPU)
   isvd_init_gpu(argcp, argvp, mpi_comm);
-#endif  // MCNLA_USE_GPU
+#endif  // ISVD_USE_GPU
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,9 +47,9 @@ void isvd_init_cpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
 ///
 void isvd_finalize() {
   isvd_finalize_cpu();
-#if defined(MCNLA_USE_GPU)
+#if defined(ISVD_USE_GPU)
   isvd_finalize_gpu();
-#endif  // MCNLA_USE_GPU
+#endif  // ISVD_USE_GPU
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

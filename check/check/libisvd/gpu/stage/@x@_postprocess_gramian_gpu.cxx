@@ -214,7 +214,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case GatherUV: {
 
       // Run stage
-      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0,
+      isvd_@x@PostprocessGramian_gpu(param, nullptr, 0, nullptr, 0,
                                dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
 
       break;
@@ -230,7 +230,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       isvd_int_t ldvt = l;
 
       // Run stage
-      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+      isvd_@x@PostprocessGramian_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_,
                                  a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
 
       // Gather results
@@ -243,7 +243,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case NoUV: {
 
       // Run stage
-      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+      isvd_@x@PostprocessGramian_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_,
                                  a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
 
       break;
@@ -294,51 +294,51 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   }
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockCol_ColMajor_GatherUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockCol_ColMajor_GatherUV) {
   test('C', 'C', GatherUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockCol_RowMajor_GatherUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockCol_RowMajor_GatherUV) {
   test('C', 'R', GatherUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockRow_ColMajor_GatherUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockRow_ColMajor_GatherUV) {
   test('R', 'C', GatherUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockRow_RowMajor_GatherUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockRow_RowMajor_GatherUV) {
   test('R', 'R', GatherUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockCol_ColMajor_BlockUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockCol_ColMajor_BlockUV) {
   test('C', 'C', BlockUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockCol_RowMajor_BlockUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockCol_RowMajor_BlockUV) {
   test('C', 'R', BlockUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockRow_ColMajor_BlockUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockRow_ColMajor_BlockUV) {
   test('R', 'C', BlockUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockRow_RowMajor_BlockUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockRow_RowMajor_BlockUV) {
   test('R', 'R', BlockUV);
 }
 
 
-TEST(@XStr@_GramianPostprocessing, BlockCol_ColMajor_NoUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockCol_ColMajor_NoUV) {
   test('C', 'C', NoUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockCol_RowMajor_NoUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockCol_RowMajor_NoUV) {
   test('C', 'R', NoUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockRow_ColMajor_NoUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockRow_ColMajor_NoUV) {
   test('R', 'C', NoUV);
 }
 
-TEST(@XStr@_GramianPostprocessing, BlockRow_RowMajor_NoUV) {
+TEST(@XStr@_GramianPostprocessing_Gpu, BlockRow_RowMajor_NoUV) {
   test('R', 'R', NoUV);
 }

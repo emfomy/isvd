@@ -27,10 +27,10 @@ function(ISVD_FLAGS_FN)
       set(defs "${defs} -D${d}")
     endif()
   endforeach()
-  string(REGEX REPLACE "  +" " " cflgs "${CMAKE_C_FLAGS} -DNDEBUG ${COMFLGS} ${defs}")
+  string(REGEX REPLACE "  +" " " cflgs "${CMAKE_C_FLAGS} ${COMFLGS} ${defs}")
   string(REGEX REPLACE "^ " "" cflgs "${cflgs}")
 
-  string(REGEX REPLACE "  +" " " cxxflgs "${CMAKE_CXX_FLAGS} -DNDEBUG ${COMFLGS} ${defs}")
+  string(REGEX REPLACE "  +" " " cxxflgs "${CMAKE_CXX_FLAGS} ${COMFLGS} ${defs}")
   string(REGEX REPLACE "^ " "" cxxflgs "${cxxflgs}")
 
   string(REGEX REPLACE "  +" " " lnkflgs "${LNKFLGS}")

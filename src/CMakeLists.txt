@@ -14,9 +14,6 @@ macro(SET_TARGET target files)
   install(TARGETS ${target} LIBRARY DESTINATION ${LIB_FOLDER})
 endmacro()
 
-# Disable asserts
-# list(APPEND DEFS "NDEBUG")
-
 # Set include paths
 include_directories("${PROJECT_CONFIG_DIR}/include/c"
                     "${CMAKE_CURRENT_CONFIG_DIR}")
