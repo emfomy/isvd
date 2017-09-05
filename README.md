@@ -72,10 +72,20 @@ The following table are the main make rules
 | `make doc`     | build documentation            |
 | `make help`    | display make-rules             |
 
-### Definitions
+## Usage
 
-* Define `ISVD_USE_ILP64` to use 64-bit integer.
-* Define `ISVD_USE_GPU`   to enable GPU support.
+* Define `ISVD_USE_ILP64` before include `isvd.h` to use 64-bit integer.
+
+### Libraries
+
+Please link exact one library of each kind.
+
+| Name           | Kind           | Detail                         |
+|----------------|----------------|--------------------------------|
+| `isvd_core`    | Core           | Core routines                  |
+| `isvd_la`      | Linear Algebra | BLAS and LAPACK routines       |
+| `isvd_nogpu`   | Architecture   | Disable GPU support            |
+| `isvd_gpu`     | Architecture   | Enable GPU support             |
 
 ## Q&amp;A
 

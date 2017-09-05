@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       include/c/isvd/gpu/@x@_stage.c
+/// \file       src/libisvd/nogpu/@x@_stage.c
 /// \brief      The iSVD stages with NOGPU support.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>

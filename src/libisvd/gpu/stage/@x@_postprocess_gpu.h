@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/core/stage/@x@_postprocess_gpu.h
+/// \file       src/libisvd/gpu/stage/@x@_postprocess_gpu.h
 /// \brief      The GPU Postprocessing utilities (@xname@ precision)
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
