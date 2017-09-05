@@ -7,8 +7,9 @@
 ///
 
 #include <isvd/gpu/@x@_stage.h>
-#include <libisvd/def.h>
+#include <libisvd/gpu/def.h>
 #include <isvd/la.h>
+// #include <libisvd/gpu/stage/@x@_postprocess_gpu.h>
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

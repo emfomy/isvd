@@ -95,23 +95,23 @@ void isvd_@x@IntegrateWenYin(
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  @xtype@ *qct = isvd_@x@malloc(mj * l);
+  @xtype@ *qct = isvd_@x@malloc(l * mj);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype@ *qpt = isvd_@x@malloc(mj * l);
+  @xtype@ *qpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  @xtype@ *gct = isvd_@x@malloc(mj * l);
+  @xtype@ *gct = isvd_@x@malloc(l * mj);
   isvd_int_t ldgct = l;
 
   // matrix Xc'
-  @xtype@ *xct = isvd_@x@malloc(mj * l);
+  @xtype@ *xct = isvd_@x@malloc(l * mj);
   isvd_int_t ldxct = l;
 
   // matrix X+'
-  @xtype@ *xpt = isvd_@x@malloc(mj * l);
+  @xtype@ *xpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldxpt = l;
 
   // matrix Bc
