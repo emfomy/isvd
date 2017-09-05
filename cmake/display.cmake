@@ -47,8 +47,14 @@ disp("Use C++ Compiler:               " "${CMAKE_CXX_COMPILER}")
 
 message(STATUS "")
 
+disp("Use C   flags:                  " "${CMAKE_C_FLAGS}")
+disp("Use C++ flags:                  " "${CMAKE_CXX_FLAGS}")
+
+message(STATUS "")
+
 # Display libraries
-if(ISVD_OMP)
+
+if(ISVD_BUILD_BIN AND ISVD_OMP)
   disp("Use OpenMP:                     " "${OpenMP_C_FLAGS} ${OpenMP_LIBRARIES}")
 else()
   disp("Use OpenMP:                     " "OFF")
@@ -101,18 +107,6 @@ if(ISVD_BUILD_BIN)
   disp("MPI processes (demo only):      " "${MPI_PROCS}")
   disp("OpenMP threads (demo only):     " "${OMP_THRDS}")
 endif()
-
-message(STATUS "")
-message(STATUS "================================================================================")
-message(STATUS "")
-
-# Display flags
-isvd_flags_fn()
-disp("C   compiler & flags:           " "${CMAKE_C_COMPILER} ${ISVD_C_FLAGS}")
-disp("C++ compiler & flags:           " "${CMAKE_CXX_COMPILER} ${ISVD_CXX_FLAGS}")
-disp("Link flags:                     " "${ISVD_LNKFLGS}")
-disp("Include pathes:                 " "${ISVD_INCS}")
-disp("Libraries:                      " "${ISVD_LIBS}")
 
 message(STATUS "")
 message(STATUS "================================================================================")

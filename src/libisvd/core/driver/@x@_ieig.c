@@ -87,17 +87,12 @@ void isvd_@x@Ieig(
   const char *optss[] = {"GP"};
   const char *optso[] = {"TS", "GR"};
   const char *optsi[] = {"KN", "WY", "HR"};
-  const char *optsp[] = {"WY"};
+  const char *optsp[] = {"SY"};
 
   const char *algs_ = isvd_arg2str("ALGS", algs, optss, nullptr, lenof(optss));
   const char *algo_ = isvd_arg2str("ALGO", algo, optso, nullptr, lenof(optso));
   const char *algi_ = isvd_arg2str("ALGI", algi, optsi, nullptr, lenof(optsi));
-
-  isvd_disp("%p", algi_)
-
   const char *algp_ = isvd_arg2str("ALGP", algp, optsp, nullptr, lenof(optsp));
-
-  isvd_disp("%p", algp_)
 
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
