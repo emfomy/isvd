@@ -58,21 +58,24 @@ endmacro()
 
 ################################################################################
 
-function(ADD_CHECK checkpath checkcomment)
+function(ADD_CHECK_CPU checkpath checkcomment)
   _add_check("")
+  isvd_set_target_check_cpu(${checktarget})
 endfunction()
 
-function(ADD_CHECK_TEST checkpath checkcomment)
-  _add_check("test")
-endfunction()
-
-function(ADD_CHECK_DEATH checkpath checkcomment)
-  list(REMOVE_ITEM DEFS "ISVD_USE_GTEST")
-  _add_check("death_test")
+function(ADD_CHECK_GPU checkpath checkcomment)
+  _add_check("")
+  isvd_set_target_check_gpu(${checktarget})
 endfunction()
 
 ################################################################################
 
-function(ADD_MPI_CHECK checkpath checkcomment listprocs)
+function(ADD_MPI_CHECK_CPU checkpath checkcomment listprocs)
   _add_mpi_check("" "${listprocs}")
+  isvd_set_target_check_cpu(${checktarget})
+endfunction()
+
+function(ADD_MPI_CHECK_GPU checkpath checkcomment listprocs)
+  _add_mpi_check("" "${listprocs}")
+  isvd_set_target_check_gpu(${checktarget})
 endfunction()

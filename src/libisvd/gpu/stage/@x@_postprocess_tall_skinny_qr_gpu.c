@@ -1,25 +1,24 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/core/stage/@x@_postprocess_tall_skinny_qr.c
-/// \brief      The Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \file       src/libisvd/gpu/stage/@x@_postprocess_tall_skinny_qr_gpu.c
+/// \brief      The GPU Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#include <isvd/core/@x@_stage.h>
-#include <libisvd/def.h>
+#include <isvd/gpu/@x@_stage.h>
+#include <libisvd/gpu/def.h>
 #include <isvd/la.h>
-// #include <libisvd/core/stage/@x@_postprocess.h>
-#include <libisvd/util/arg.h>
+// #include <libisvd/gpu/stage/@x@_postprocess_gpu.h>
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
-/// Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \ingroup  c_gpu_@x@_stage_module
+/// GPU Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
 /// \attention  Not implemented!
 ///
-void isvd_@x@PostprocessTallSkinnyQr(
+void isvd_@x@PostprocessTallSkinnyQr_gpu(
     const isvd_Param  param,
     const @xtype@    *argv,
     const isvd_int_t  argc,

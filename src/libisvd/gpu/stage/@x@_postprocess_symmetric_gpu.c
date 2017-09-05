@@ -1,21 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/core/stage/@x@_postprocess_gramian.c
-/// \brief      The Gramian Postprocessing (@xname@ precision)
+/// \file       src/libisvd/gpu/stage/@x@_postprocess_symmetric_gpu.c
+/// \brief      The GPU Symmetric Postprocessing (@xname@ precision)
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#include <isvd/core/@x@_stage.h>
-#include <libisvd/def.h>
+#include <isvd/gpu/@x@_stage.h>
+#include <libisvd/gpu/def.h>
 #include <isvd/la.h>
-#include <libisvd/core/stage/@x@_postprocess.h>
+#include <libisvd/gpu/stage/@x@_postprocess_gpu.h>
 #include <libisvd/util/arg.h>
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
-/// Gramian Postprocessing (@xname@ precision)
+/// \ingroup  c_gpu_@x@_stage_module
+/// GPU Symmetric Postprocessing (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -36,24 +36,15 @@
 ///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
 ///                          \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                          \b ut_root < -1: not referenced.
-/// \param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
-///                          \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
-///                          \b vt_root < -1: not referenced.
 /// \param[in]   ut_root     The option for computing 𝑼. <br>
 ///                          \b ut_root ≥  0: gather 𝑼 to the MPI process of ID \b ut_root. <br>
 ///                          \b ut_root = -1: compute row-block 𝑼. <br>
 ///                          \b ut_root < -1: does not compute 𝑼.
-/// \param[in]   vt_root     The option for computing 𝑽. <br>
-///                          \b vt_root ≥  0: gather 𝑽 to the MPI process of ID \b vt_root. <br>
-///                          \b vt_root = -1: compute row-block 𝑽. <br>
-///                          \b vt_root < -1: does not compute 𝑽.
 /// <hr>
 /// \param[out]  s           Replaced by the singular values 𝝈.
 /// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
-/// \param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
-void isvd_@x@PostprocessGramian(
+void isvd_@x@PostprocessSymmetric_gpu(
     const isvd_Param  param,
     const @xtype@    *argv,
     const isvd_int_t  argc,
@@ -68,10 +59,7 @@ void isvd_@x@PostprocessGramian(
           @xtype@    *s,
           @xtype@    *ut,
     const isvd_int_t  ldut,
-          @xtype@    *vt,
-    const isvd_int_t  ldvt,
-    const mpi_int_t   ut_root,
-    const mpi_int_t   vt_root
+    const mpi_int_t   ut_root
 ) {
 
   ISVD_UNUSED(argv);
@@ -96,22 +84,19 @@ void isvd_@x@PostprocessGramian(
   const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
   if ( !dista_ || !ordera_ ) return;
 
+  isvd_assert_eq(mj, nj);
+  isvd_assert_eq(mb, nb);
+
   if ( ut_root >= 0 ) {
     isvd_assert_eq(ldut, l);
   } else if ( ut_root == -1 ) {
     isvd_assert_ge(ldut, l);
   }
 
-  if ( vt_root >= 0 ) {
-    isvd_assert_eq(ldvt, l);
-  } else if ( vt_root == -1 ) {
-    isvd_assert_ge(ldvt, l);
-  }
-
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *zt = isvd_@x@malloc(l * nb);
+  @xtype@ *zt = isvd_@x@malloc(nb * l);
   isvd_int_t ldzt = l;
 
   @xtype@ *w = isvd_@x@malloc(l * l);
@@ -121,22 +106,21 @@ void isvd_@x@PostprocessGramian(
   // Projection
 
   switch ( dista_ ) {
-    case 'C': projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
-    case 'R': projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, vt, ldvt, vt_root); break;
+    case 'C': projectBlockCol_gpu(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
+    case 'R': projectBlockRow_gpu(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
     default:  isvd_assert_fail();
   }
 
   // ====================================================================================================================== //
   // Compute eigen-decomposition
 
-  // W := Z' * Z
-  isvd_@x@Gemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
+  // W := Z' * Q
+  isvd_@x@Gemmt('U', 'N', 'T', l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
 
-  // eig(W) = W * S^2 * W'
-  const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
-  isvd_@x@Gesvd(jobw_, 'N', l, l, w, ldw, s, nullptr, 1, nullptr, 1);
-  isvd_v@x@Sqrt(l, s, s);
+  // eig(W) = W * S * W'
+  const char jobw_ = (ut_root >= -1) ? 'V' : 'N';
+  isvd_@x@Syev(jobw_, 'U', l, w, ldw, s);
 
   // ====================================================================================================================== //
   // Compute singular vectors
@@ -150,22 +134,6 @@ void isvd_@x@PostprocessGramian(
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@X_TYPE@, ut, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       } else {
         MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, nullptr, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
-      }
-    }
-  }
-
-  // V := Z * W / S (V' := (W / S)' * Z')
-  if ( vt_root >= -1 ) {
-    for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@Scal(l, 1.0/s[ii], w + ii*ldw, 1);
-    }
-    isvd_@x@Gemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
-
-    if ( vt_root >= 0 ) {
-      if ( param.mpi_rank == vt_root ) {
-        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@X_TYPE@, vt, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
-      } else {
-        MPI_Gather(vt, nb*ldvt, MPI_@X_TYPE@, nullptr, nb*ldvt, MPI_@X_TYPE@, vt_root, param.mpi_comm);
       }
     }
   }

@@ -18,7 +18,9 @@
 #include <math.h>
 #include <isvd/config.h>
 
-#include <mpi.h>
+#undef I
+#undef imaginary
+#undef complex
 
 #if !defined(__cplusplus)
   #define ISVD_UNKNOWN
@@ -49,6 +51,8 @@ typedef int mpi_int_t;
 /// \ingroup  c_core_module
 /// The type of OpenMP index.
 typedef int omp_int_t;
+
+typedef int MPI_Comm;
 
 #if defined(__cplusplus)
 }

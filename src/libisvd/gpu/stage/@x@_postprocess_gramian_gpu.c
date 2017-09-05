@@ -1,21 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/core/stage/@x@_postprocess_gramian.c
-/// \brief      The Gramian Postprocessing (@xname@ precision)
+/// \file       src/libisvd/gpu/stage/@x@_postprocess_gramian_gpu.c
+/// \brief      The GPU Gramian Postprocessing (@xname@ precision)
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#include <isvd/core/@x@_stage.h>
-#include <libisvd/def.h>
+#include <isvd/gpu/@x@_stage.h>
+#include <libisvd/gpu/def.h>
 #include <isvd/la.h>
-#include <libisvd/core/stage/@x@_postprocess.h>
+#include <libisvd/gpu/stage/@x@_postprocess_gpu.h>
 #include <libisvd/util/arg.h>
 #include <libisvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
-/// Gramian Postprocessing (@xname@ precision)
+/// \ingroup  c_gpu_@x@_stage_module
+/// GPU Gramian Postprocessing (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -53,7 +53,7 @@
 /// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
 /// \param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
-void isvd_@x@PostprocessGramian(
+void isvd_@x@PostprocessGramian_gpu(
     const isvd_Param  param,
     const @xtype@    *argv,
     const isvd_int_t  argc,
@@ -121,8 +121,8 @@ void isvd_@x@PostprocessGramian(
   // Projection
 
   switch ( dista_ ) {
-    case 'C': projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
-    case 'R': projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, vt, ldvt, vt_root); break;
+    case 'C': projectBlockCol_gpu(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
+    case 'R': projectBlockRow_gpu(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, vt, ldvt, vt_root); break;
     default:  isvd_assert_fail();
   }
 

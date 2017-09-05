@@ -17,7 +17,7 @@
 
 typedef @xtype@ isvd_val_t;
 
-TEST(@XStr@KolmogorovNagumoIntegration, Test) {
+TEST(@XStr@_KolmogorovNagumoIntegration, Test) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -84,7 +84,7 @@ TEST(@XStr@KolmogorovNagumoIntegration, Test) {
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
   const isvd_val_t argv[] = {256, tol};
-  const isvd_int_t argc = sizeof(argv) / sizeof(argv[0]);
+  const isvd_int_t argc = lenof(argv);
   const isvd_int_t retc = 1;
         isvd_val_t retv[retc];
 

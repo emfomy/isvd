@@ -6,7 +6,7 @@ endif()
 
 # Check compiler support
 if(ISVD_BUILD_BIN)
-  list(APPEND cflags "-std=c99" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
+  list(APPEND cflags "-std=c99" "-O2" "-g" "-Wall" "-Wextra" "-pedantic" ${CILP64})
   include(CheckCCompilerFlag)
   foreach(cflag ${cflags})
     string(TOUPPER ${cflag} cflagname)
@@ -22,7 +22,7 @@ if(ISVD_BUILD_BIN)
     endif()
   endforeach()
 
-  list(APPEND cxxflags "-std=c++98" "-O2" "-g" "-Wall" "-Wextra" "-pedantic")
+  list(APPEND cxxflags "-std=c++98" "-O2" "-g" "-Wall" "-Wextra" "-pedantic" ${CILP64})
   include(CheckCXXCompilerFlag)
   foreach(cxxflag ${cxxflags})
     string(TOUPPER ${cxxflag} cxxflagname)
@@ -42,9 +42,8 @@ endif()
 # Set complier flags
 string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
 string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
-set(LNKFLGS "${LNKFLGS} -Wl,--no-as-needed")
 
-# Add library
+# Set target
 find_library(
   M_LIBRARY
   NAMES m
@@ -53,7 +52,6 @@ find_library(
 if(NOT M_LIBRARY)
   set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
 endif()
-
 find_library(
   PTHREAD_LIBRARY
   NAMES pthread
@@ -62,35 +60,66 @@ find_library(
 if(NOT PTHREAD_LIBRARY)
   set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
 endif()
-
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
-list(APPEND LIBS "${M_LIBRARY}" "${PTHREAD_LIBRARY}")
+
+function(ISVD_SET_TARGET target ext)
+  set_property(TARGET ${target} PROPERTY SUFFIX "${BIN_SUFFIX}${ext}")
+  target_link_libraries(${target} ${M_LIBRARY} ${PTHREAD_LIBRARY})
+  set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--no-as-needed")
+endfunction()
+
+# OpenMP
+if(ISVD_OMP)
+  set(OpenMP ${ISVD_OMP})
+  find_package(OpenMP ${findtype})
+  find_package(OpenMPLib ${findtype})
+  unset(OpenMP)
+
+  function(ISVD_SET_TARGET_OMP target lang)
+    target_link_libraries(${target} ${OpenMP_LIBRARIES})
+    set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${OpenMP_${lang}_FLAGS}")
+    set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS    " ${OpenMP_${lang}_FLAGS}")
+  endfunction()
+elseif(ISVD_USE_GPU)
+  set(OpenMP "GOMP")
+  find_package(OpenMP ${findtype})
+  find_package(OpenMPLib ${findtype})
+  unset(OpenMP)
+
+  function(ISVD_SET_TARGET_OMP target lang)
+    target_link_libraries(${target} ${OpenMP_LIBRARIES})
+  endfunction()
+else()
+  function(ISVD_SET_TARGET_OMP target lang)
+  endfunction()
+endif()
 
 # MPI
 find_package(MPI ${findtype})
-if(MPI_FOUND)
-  list(APPEND INCS "${MPI_INCLUDE_PATH}")
-  list(APPEND LIBS "${MPI_LIBRARIES}")
-  set(COMFLGS "${COMFLGS} ${MPI_COMPILE_FLAGS}")
-  set(LNKFLGS "${LNKFLGS} ${MPI_LINK_FLAGS}")
-endif()
+function(ISVD_SET_TARGET_MPI target)
+  target_include_directories(${target} SYSTEM PUBLIC ${MPI_INCLUDE_PATH})
+  target_link_libraries(${target} ${MPI_LIBRARIES})
+  set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MPI_COMPILE_FLAGS}")
+  set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS    " ${MPI_LINK_FLAGS}")
+endfunction()
 
 # MKL
 if(ISVD_USE_MKL)
   find_package(MKL ${findtype})
-  if(MKL_FOUND)
-    list(APPEND INCS "${MKL_INCLUDES}")
-    list(APPEND LIBS "${MKL_LIBRARIES}")
-    set(COMFLGS "${COMFLGS} ${MKL_FLAGS}")
-  endif()
+  function(ISVD_SET_TARGET_BLAS target)
+    target_include_directories(${target} SYSTEM PUBLIC ${MKL_INCLUDES})
+    target_link_libraries(${target} ${MKL_LIBRARIES})
+    target_compile_definitions(${target} PUBLIC "ISVD_USE_MKL")
+    set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MKL_FLAGS}")
+  endfunction()
 endif()
 
 # LAPACK
 if(NOT ISVD_USE_MKL)
   find_package(LAPACK ${findtype})
-  if(LAPACK_FOUND)
-    list(APPEND LIBS "${LAPACK_LIBRARIES}")
-  endif()
+  function(ISVD_SET_TARGET_BLAS target)
+    target_link_libraries(${target} ${LAPACK_LIBRARIES})
+  endfunction()
 endif()
 
 # CUDA & MAGMA
@@ -107,47 +136,28 @@ if(ISVD_USE_GPU)
 
   find_package(CUDA ${findtype})
   find_package(MAGMA ${findtype})
-  if(MAGMA_FOUND)
-    list(APPEND INCS "${MAGMA_INCLUDES}")
-    list(APPEND LIBS "${MAGMA_SPARSE_LIBRARY}" "${MAGMA_LIBRARY}")
-  endif()
-  if(CUDA_FOUND)
-    list(APPEND INCS "${CUDA_INCLUDE_DIRS}")
-    list(APPEND LIBS "${CUDA_cusparse_LIBRARY}" "${CUDA_cublas_LIBRARY}" "${CUDA_CUDART_LIBRARY}")
-  endif()
-endif()
 
-# OpenMP
-if(ISVD_OMP)
-  set(OpenMP ${ISVD_OMP})
-
-  find_package(OpenMP ${findtype})
-  if(OpenMP_FOUND)
-    set(COMFLGS "${COMFLGS} ${OpenMP_C_FLAGS}")
-    set(LNKFLGS "${LNKFLGS} ${OpenMP_C_FLAGS}")
-  endif()
-
-  find_package(OpenMPLib ${findtype})
-  if(OpenMPLib_FOUND)
-    list(APPEND LIBS "${OpenMP_LIBRARIES}")
-  endif()
-
-  unset(OpenMP)
-elseif(ISVD_USE_GPU)
-  set(OpenMP "GOMP")
-
-  find_package(OpenMP ${findtype})
-  find_package(OpenMPLib ${findtype})
-  if(OpenMPLib_FOUND)
-    list(APPEND LIBS "${OpenMP_LIBRARIES}")
-  endif()
-
-  unset(OpenMP)
+  function(ISVD_SET_TARGET_GPU target)
+    target_include_directories(${target} SYSTEM PUBLIC ${MAGMA_INCLUDES} ${CUDA_INCLUDE_DIRS})
+    target_link_libraries(${target} ${MAGMA_SPARSE_LIBRARY} ${MAGMA_LIBRARY} ${CUDA_cusparse_LIBRARY} ${CUDA_cublas_LIBRARY} ${CUDA_CUDART_LIBRARY})
+    target_compile_definitions(${target} PUBLIC "ISVD_USE_GPU")
+  endfunction()
+else()
+  function(ISVD_SET_TARGET_GPU target)
+  endfunction()
 endif()
 
 # GTest
 if(ISVD_BUILD_TEST)
   find_package(GTest 1.8 REQUIRED)
+
+  function(ISVD_SET_TARGET_GTEST target)
+    target_include_directories(${target} SYSTEM PUBLIC ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(${target} ${GTEST_BOTH_LIBRARIES})
+    target_compile_definitions(${target} PUBLIC "ISVD_USE_GTEST")
+    set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MPI_COMPILE_FLAGS}")
+    set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS    " ${MPI_LINK_FLAGS}")
+  endfunction()
 endif()
 
 # DOxygen

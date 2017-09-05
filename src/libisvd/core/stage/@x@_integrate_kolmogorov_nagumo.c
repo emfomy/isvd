@@ -73,15 +73,15 @@ void isvd_@x@IntegrateKolmogorovNagumo(
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  @xtype@ *qct = isvd_@x@malloc(mj * l);
+  @xtype@ *qct = isvd_@x@malloc(l * mj);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype@ *qpt = isvd_@x@malloc(mj * l);
+  @xtype@ *qpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  @xtype@ *gct = isvd_@x@malloc(mj * l);
+  @xtype@ *gct = isvd_@x@malloc(l * mj);
   isvd_int_t ldgct = l;
 
   // matrix Bc

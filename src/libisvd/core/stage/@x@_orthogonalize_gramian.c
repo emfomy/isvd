@@ -54,7 +54,7 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *yst_ = isvd_@x@malloc(mj * ldyst);
+  @xtype@ *yst_ = isvd_@x@malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
   @xtype@ *w = isvd_@x@malloc(l * Nl);

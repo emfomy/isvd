@@ -28,17 +28,19 @@ static inline isvd_int_t isvd_arg2char(
     rets = opts;
   }
 
-  for ( size_t i = 0; i < strlen(opts); ++i ) {
-    if ( isvd_lsame(arg, opts[i]) ) {
+  const size_t nopts = strlen(opts);
+
+  for ( size_t i = 0; i < nopts; ++i ) {
+    if ( isvd_Lsame(arg, opts[i]) ) {
       return rets[i];
     }
   }
 
   fprintf(stderr, "%s ('%c') must be one of the following characters: ", name, arg);
-  if ( strlen(opts) > 0 ) {
+  if ( nopts > 0 ) {
     fprintf(stderr, "'%c'", opts[0]);
   }
-  for ( size_t i = 1; i < strlen(opts); ++i ) {
+  for ( size_t i = 1; i < nopts; ++i ) {
     fprintf(stderr, ", '%c'", opts[i]);
   }
   fprintf(stderr, ".\n");
@@ -47,28 +49,31 @@ static inline isvd_int_t isvd_arg2char(
 
 #define isvd_char2( str0, str1 ) (str0 + (str1 << 8))
 
-static inline int16_t isvd_arg2char2(
+static inline const char* isvd_arg2str(
     const char *name,
     const char *arg,
-    const char *opts,
-    const char *rets
+    const char *opts[],
+    const char *rets[],
+    const size_t nopts
 ) {
   if ( rets == nullptr ) {
     rets = opts;
   }
 
-  for ( size_t i = 0; i < strlen(opts); i += 2 ) {
-    if ( isvd_lsame(arg[0], opts[i]) && isvd_lsame(arg[1], opts[i+1]) ) {
-      return isvd_char2(rets[i], rets[i+1]);
+  const size_t larg = strlen(arg);
+
+  for ( size_t i = 0; i < nopts; ++i ) {
+    if ( larg == strlen(opts[i]) && isvd_Lsamen(larg, arg, opts[i]) ) {
+      return opts[i];
     }
   }
 
   fprintf(stderr, "%s ('%s') must be one of the following strings: ", name, arg);
-  if ( strlen(opts) > 0 ) {
-    fprintf(stderr, "\"%.2s\"", opts);
+  if ( nopts > 0 ) {
+    fprintf(stderr, "\"%.2s\"", opts[0]);
   }
-  for ( size_t i = 2; i < strlen(opts); i += 2 ) {
-    fprintf(stderr, ", \"%.2s\"", opts+i);
+  for ( size_t i = 1; i < nopts; ++i ) {
+    fprintf(stderr, ", \"%.2s\"", opts[i]);
   }
   fprintf(stderr, ".\n");
   return 0;

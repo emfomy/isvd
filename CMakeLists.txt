@@ -1,12 +1,10 @@
 # The main CMake setting
-
-# Set project
 project(ISVD)
 # cmake_minimum_required(VERSION 3.0)
 cmake_minimum_required(VERSION 2.8.12)
-set(ISVD_NAME "Integrated Singular Value Decomposition")
 
-# Set version number
+# Set project
+set(ISVD_NAME "Integrated Singular Value Decomposition")
 set(ISVD_MAJOR_VERSION 1)
 set(ISVD_MINOR_VERSION 1)
 set(ISVD_PATCH_VERSION 1)
@@ -19,8 +17,8 @@ set(CMAKE_COLOR_MAKEFILE ON)
 # Set module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-# Include utilities
-include(cmake/utilities.cmake)
+# Variables
+string(ASCII 27 Esc)
 
 # Set the options
 include(cmake/options.cmake)
@@ -42,9 +40,6 @@ add_subdirectory(demo)
 add_subdirectory(share)
 add_subdirectory(check)
 add_subdirectory(doxygen)
-
-# Set flags
-include(cmake/flags.cmake)
 
 # Display message
 include(cmake/display.cmake)

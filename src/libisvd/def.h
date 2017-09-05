@@ -9,7 +9,7 @@
 #ifndef _LIBISVD_DEF_H_
 #define _LIBISVD_DEF_H_
 
-#include <isvd.h>
+#include <isvd/def.h>
 
 #if defined(ISVD_USE_ILP64) && !defined(MKL_ILP64)
   #define MKL_ILP64
@@ -30,8 +30,9 @@
   #define ISVD_OMP_PARALLEL
 #endif  // ISVD_USE_OMP
 
+#include <mpi.h>
+
 #if defined(ISVD_USE_GTEST) && defined(__cplusplus)
-  #undef I
   #include <gtest/gtest.h>
 #endif  // ISVD_USE_GTEST
 
@@ -46,8 +47,8 @@
 #if defined(ISVD_USE_MKL)
   #define MKL_INT       isvd_int_t
   #define MKL_UINT      isvd_uint_t
-  #define MKL_Complex8  complex float
-  #define MKL_Complex16 complex double
+  #define MKL_Complex8  _Complex float
+  #define MKL_Complex16 _Complex double
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 

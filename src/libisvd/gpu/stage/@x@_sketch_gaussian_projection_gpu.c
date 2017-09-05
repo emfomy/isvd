@@ -1,20 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/core/stage/@x@_sketch_gaussian_projection.c
-/// \brief      The Gaussian Projection Sketching (@xname@ precision)
+/// \file       src/libisvd/gpu/stage/@x@_sketch_gaussian_projection_gpu.c
+/// \brief      The GPU Gaussian Projection Sketching (@xname@ precision)
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#include <isvd/core/@x@_stage.h>
-#include <libisvd/def.h>
+#include <isvd/gpu/@x@_stage.h>
+#include <libisvd/gpu/def.h>
 #include <isvd/la.h>
-#include <libisvd/core/stage/@x@_sketch.h>
+#include <libisvd/gpu/stage/@x@_sketch_gpu.h>
 #include <libisvd/util/arg.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
-/// Gaussian Projection Sketching (@xname@ precision)
+/// \ingroup  c_gpu_@x@_stage_module
+/// GPU Gaussian Projection Sketching (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -37,7 +37,7 @@
 /// <hr>
 /// \param[out]  yst         Replaced by the row-block 𝖄 (row-major).
 ///
-void isvd_@x@SketchGaussianProjection(
+void isvd_@x@SketchGaussianProjection_gpu(
     const isvd_Param  param,
     const @xtype@    *argv,
     const isvd_int_t  argc,
