@@ -12,6 +12,7 @@
 #include <isvd/gpu/@x@_stage.h>
 #include <libisvd/gpu/def.h>
 #include <isvd/la.h>
+#include <libisvd/util/function.h>
 #include <libisvd/util/memory.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
@@ -60,6 +61,21 @@ static void projectBlockCol_gpu(
   }
 
   // ====================================================================================================================== //
+  // Check memory
+
+  size_t free_byte, total_byte;
+  cudaMemGetInfo(&free_byte, &total_byte);
+  isvd_int_t melem = free_byte / sizeof(@xtype@);
+  isvd_int_t nelem_used = m * l;
+  if ( melem < nelem_used ) {
+    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+            nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
+    isvd_assert_fail();
+  }
+  const isvd_int_t n_gpu_ = (melem - nelem_used) / (m + l);
+  const isvd_int_t n_gpu = min((n_gpu_ / kBlockSizeGpu) * kBlockSizeGpu, nj);
+
+  // ====================================================================================================================== //
   // Allocate memory
 
   @xtype@ *qt_;
@@ -70,17 +86,17 @@ static void projectBlockCol_gpu(
   }
   isvd_int_t ldqt_ = l;
 
-  @xtype@ *da;
-  magma_@x@malloc(&da, m * nj);
-  isvd_int_t ldda = (ordera == 'C') ? m : nj;
+  @xtype@ *a_gpu;
+  magma_@x@malloc(&a_gpu, m * n_gpu);
+  isvd_int_t lda_gpu = (ordera == 'C') ? m : n_gpu;
 
-  @xtype@ *dqt_;
-  magma_@x@malloc(&dqt_, ldqt_ * m);
-  isvd_int_t lddqt_ = ldqt_;
+  @xtype@ *qt_gpu;
+  magma_@x@malloc(&qt_gpu, l * m);
+  isvd_int_t ldqt_gpu = l;
 
-  @xtype@ *dzt;
-  magma_@x@malloc(&dzt, ldzt * nj);
-  isvd_int_t lddzt = ldzt;
+  @xtype@ *zt_gpu;
+  magma_@x@malloc(&zt_gpu, l * n_gpu);
+  isvd_int_t ldzt_gpu = l;
 
   // ====================================================================================================================== //
   // Rearrange
@@ -90,24 +106,33 @@ static void projectBlockCol_gpu(
   // ====================================================================================================================== //
   // Send data
 
-  if ( ordera == 'C' ) {
-    magma_@x@setmatrix(m, nj, a, lda, da, ldda);
-  } else {
-    magma_@x@setmatrix(nj, m, a, lda, da, ldda);
-  }
-  magma_@x@setmatrix(ldqt_, m, qt_, ldqt_, dqt_, lddqt_);
+  magma_@x@setmatrix(l, m, qt_, ldqt_, qt_gpu, ldqt_gpu);
 
   // ====================================================================================================================== //
   // Project
 
-  // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), l, nj, m, 1.0, dqt_, lddqt_, da, ldda, 0.0, dzt, lddzt);
+  isvd_int_t idx;
 
-  // ====================================================================================================================== //
-  // Retrieve data
+  for ( idx = 0; idx < nj; idx += n_gpu ) {
+    const @xtype@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
+          @xtype@ *zt_tmp = zt + ldzt*idx;
+    const isvd_int_t n_tmp = min(n_gpu, nj-idx);
 
-  magma_@x@getmatrix(ldzt, nj, dzt, lddzt, zt, ldzt);
+    // Send A
+    if ( ordera == 'C' ) {
+      magma_@x@setmatrix(m, n_tmp, a_tmp, lda, a_gpu, lda_gpu);
+    } else {
+      magma_@x@setmatrix(n_tmp, m, a_tmp, lda, a_gpu, lda_gpu);
+    }
+
+    // Z := A' * Q (Z' := Q' * A)
+    magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), l, n_tmp, m,
+                  1.0, qt_gpu, ldqt_gpu, a_gpu, lda_gpu, 0.0, zt_gpu, ldzt_gpu);
+
+    // Retrieve Z
+    magma_@x@getmatrix(l, n_tmp, zt_gpu, ldzt_gpu, zt_tmp, ldzt);
+  }
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -115,6 +140,10 @@ static void projectBlockCol_gpu(
   if ( !use_ut ) {
     isvd_free(qt_);
   }
+
+  magma_free(a_gpu);
+  magma_free(qt_gpu);
+  magma_free(zt_gpu);
 
 }
 
@@ -163,6 +192,21 @@ static void projectBlockRow_gpu(
   }
 
   // ====================================================================================================================== //
+  // Check memory
+
+  size_t free_byte, total_byte;
+  cudaMemGetInfo(&free_byte, &total_byte);
+  isvd_int_t melem = free_byte / sizeof(@xtype@);
+  isvd_int_t nelem_used = mj * l;
+  if ( melem < nelem_used ) {
+    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+            nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
+    isvd_assert_fail();
+  }
+  const isvd_int_t n_gpu_ = (melem - nelem_used) / (mj + l);
+  const isvd_int_t n_gpu = min((n_gpu_ / kBlockSizeGpu) * kBlockSizeGpu, n);
+
+  // ====================================================================================================================== //
   // Allocate memory
 
   @xtype@ *zt_;
@@ -173,39 +217,48 @@ static void projectBlockRow_gpu(
   }
   isvd_int_t ldzt_ = l;
 
-  @xtype@ *da;
-  magma_@x@malloc(&da, mj * n);
-  isvd_int_t ldda = (ordera == 'C') ? mj : n;
+  @xtype@ *a_gpu;
+  magma_@x@malloc(&a_gpu, mj * n_gpu);
+  isvd_int_t lda_gpu = (ordera == 'C') ? mj : n_gpu;
 
-  @xtype@ *dqt;
-  magma_@x@malloc(&dqt, ldqt * mj);
-  isvd_int_t lddqt = ldqt;
+  @xtype@ *qt_gpu;
+  magma_@x@malloc(&qt_gpu, l * mj);
+  isvd_int_t ldqt_gpu = l;
 
-  @xtype@ *dzt_;
-  magma_@x@malloc(&dzt_, ldzt_ * n);
-  isvd_int_t lddzt_ = ldzt_;
+  @xtype@ *zt_gpu;
+  magma_@x@malloc(&zt_gpu, l * n_gpu);
+  isvd_int_t ldzt_gpu = l;
 
   // ====================================================================================================================== //
   // Send data
 
-  if ( ordera == 'C' ) {
-    magma_@x@setmatrix(mj, n, a, lda, da, ldda);
-  } else {
-    magma_@x@setmatrix(n, mj, a, lda, da, ldda);
-  }
-  magma_@x@setmatrix(ldqt, mj, qt, ldqt, dqt, lddqt);
+  magma_@x@setmatrix(l, mj, qt, ldqt, qt_gpu, ldqt_gpu);
 
   // ====================================================================================================================== //
   // Project
 
-  // Z := A' * Q (Z' := Q' * A)
   char transa_ = (ordera == 'C') ? 'N' : 'T';
-  magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), l, n, mj, 1.0, dqt, lddqt, da, ldda, 0.0, dzt_, lddzt_);
+  isvd_int_t idx;
 
-  // ====================================================================================================================== //
-  // Retrieve data
+  for ( idx = 0; idx < n; idx += n_gpu ) {
+    const @xtype@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
+          @xtype@ *zt_tmp = zt_ + ldzt*idx;
+    const isvd_int_t n_tmp = min(n_gpu, n-idx);
 
-  magma_@x@getmatrix(ldzt_, n, dzt_, lddzt_, zt_, ldzt_);
+    // Send A
+    if ( ordera == 'C' ) {
+      magma_@x@setmatrix(mj, n_tmp, a_tmp, lda, a_gpu, lda_gpu);
+    } else {
+      magma_@x@setmatrix(n_tmp, mj, a_tmp, lda, a_gpu, lda_gpu);
+    }
+
+    // Z := A' * Q (Z' := Q' * A)
+    magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), l, n_tmp, mj,
+                  1.0, qt_gpu, ldqt_gpu, a_gpu, lda_gpu, 0.0, zt_gpu, ldzt_gpu);
+
+    // Retrieve Z
+    magma_@x@getmatrix(l, n_tmp, zt_gpu, ldzt_gpu, zt_tmp, ldzt_);
+  }
 
   // ====================================================================================================================== //
   // Rearrange
@@ -218,6 +271,10 @@ static void projectBlockRow_gpu(
   if ( !use_vt ) {
     isvd_free(zt_);
   }
+
+  // magma_free(a_gpu);
+  // magma_free(qt_gpu);
+  // magma_free(zt_gpu);
 
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS

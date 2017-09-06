@@ -12,6 +12,7 @@
 #include <isvd/gpu/@x@_stage.h>
 #include <libisvd/gpu/def.h>
 #include <isvd/la.h>
+#include <libisvd/util/function.h>
 #include <libisvd/util/memory.h>
 #include <libisvd/util/omp.h>
 
@@ -50,6 +51,21 @@ static void sketchBlockCol(
   isvd_assert_eq(ldyst, Nl);
 
   // ====================================================================================================================== //
+  // Check memory
+
+  size_t free_byte, total_byte;
+  cudaMemGetInfo(&free_byte, &total_byte);
+  isvd_int_t melem = free_byte / sizeof(@xtype@);
+  isvd_int_t nelem_used = m * Nl;
+  if ( melem < nelem_used ) {
+    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+            nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
+    isvd_assert_fail();
+  }
+  const isvd_int_t n_gpu_ = (melem - nelem_used) / (m + Nl);
+  const isvd_int_t n_gpu = min((n_gpu_ / kBlockSizeGpu) * kBlockSizeGpu, nj);
+
+  // ====================================================================================================================== //
   // Allocate memory
 
   @xtype@ *omegat = isvd_@x@malloc(Nl * nj);
@@ -58,24 +74,23 @@ static void sketchBlockCol(
   @xtype@ *yst_ = isvd_@x@malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
 
-  @xtype@ *da;
-  magma_@x@malloc(&da, m * nj);
-  isvd_int_t ldda = (ordera == 'C') ? m : nj;
+  @xtype@ *a_gpu;
+  magma_@x@malloc(&a_gpu, m * n_gpu);
+  isvd_int_t lda_gpu = (ordera == 'C') ? m : n_gpu;
 
-  @xtype@ *domegat;
-  magma_@x@malloc(&domegat, ldomegat * nj);
-  isvd_int_t lddomegat = ldomegat;
+  @xtype@ *omegat_gpu;
+  magma_@x@malloc(&omegat_gpu, Nl * n_gpu);
+  isvd_int_t ldomegat_gpu = Nl;
 
-  @xtype@ *dyst_;
-  magma_@x@malloc(&dyst_, ldyst_ * m);
-  isvd_int_t lddyst_ = ldyst_;
+  @xtype@ *yst_gpu;
+  magma_@x@malloc(&yst_gpu, Nl * m);
+  isvd_int_t ldyst_gpu = Nl;
 
   // ====================================================================================================================== //
   // Random generate
 
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm);
-
 
   ISVD_OMP_PARALLEL
   {
@@ -97,26 +112,34 @@ static void sketchBlockCol(
   }
 
   // ====================================================================================================================== //
-  // Send data
-
-  if ( ordera == 'C' ) {
-    magma_@x@setmatrix(m, nj, a, lda, da, ldda);
-  } else {
-    magma_@x@setmatrix(nj, m, a, lda, da, ldda);
-  }
-  magma_@x@setmatrix(ldomegat, nj, omegat, ldomegat, domegat, lddomegat);
-
-  // ====================================================================================================================== //
   // Project
 
-  // Yi := A * Omegai (Yi' := Omegai' * A')
+  cudaMemset(yst_gpu, 0, ldyst_gpu * m * sizeof(@xtype@));
   char transa_ = (ordera == 'C') ? 'T' : 'N';
-  magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), Nl, m, nj, 1.0, domegat, lddomegat, da, ldda, 0.0, dyst_, lddyst_);
+  isvd_int_t idx;
+
+  for ( idx = 0; idx < nj; idx += n_gpu ) {
+    const @xtype@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
+    const @xtype@ *omegat_tmp = omegat + ldomegat*idx;
+    const isvd_int_t n_tmp = min(n_gpu, nj-idx);
+
+    // Send A and Omega
+    if ( ordera == 'C' ) {
+      magma_@x@setmatrix(m, n_tmp, a_tmp, lda, a_gpu, lda_gpu);
+    } else {
+      magma_@x@setmatrix(n_tmp, m, a_tmp, lda, a_gpu, lda_gpu);
+    }
+    magma_@x@setmatrix(Nl, n_tmp, omegat_tmp, ldomegat, omegat_gpu, ldomegat_gpu);
+
+    // Yi := A * Omegai (Yi' := Omegai' * A')
+    magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), Nl, m, n_tmp,
+                  1.0, omegat_gpu, ldomegat_gpu, a_gpu, lda_gpu, 1.0, yst_gpu, ldyst_gpu);
+  }
 
   // ====================================================================================================================== //
   // Retrieve data
 
-  magma_@x@getmatrix(ldyst_, m, dyst_, lddyst_, yst_, ldyst_);
+  magma_@x@getmatrix(Nl, m, yst_gpu, ldyst_gpu, yst_, ldyst_);
 
   // ====================================================================================================================== //
   // Rearrange
@@ -127,6 +150,9 @@ static void sketchBlockCol(
   // Deallocate memory
 
   isvd_free(omegat);
+  magma_free(a_gpu);
+  magma_free(omegat_gpu);
+  magma_free(yst_gpu);
 
 }
 
@@ -159,22 +185,37 @@ static void sketchBlockRow(
   isvd_assert_ge(ldyst, Nl);
 
   // ====================================================================================================================== //
+  // Check memory
+
+  size_t free_byte, total_byte;
+  cudaMemGetInfo(&free_byte, &total_byte);
+  isvd_int_t melem = free_byte / sizeof(@xtype@);
+  isvd_int_t nelem_used = mj * Nl;
+  if ( melem < nelem_used ) {
+    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+            nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
+    isvd_assert_fail();
+  }
+  const isvd_int_t n_gpu_ = (melem - nelem_used) / (mj + Nl);
+  const isvd_int_t n_gpu = min((n_gpu_ / kBlockSizeGpu) * kBlockSizeGpu, n);
+
+  // ====================================================================================================================== //
   // Allocate memory
 
   @xtype@ *omegat = isvd_@x@malloc(n * Nl);
   isvd_int_t ldomegat = Nl;
 
-  @xtype@ *da;
-  magma_@x@malloc(&da, mj * n);
-  isvd_int_t ldda = (ordera == 'C') ? mj : n;
+  @xtype@ *a_gpu;
+  magma_@x@malloc(&a_gpu, mj * n_gpu);
+  isvd_int_t lda_gpu = (ordera == 'C') ? mj : n_gpu;
 
-  @xtype@ *domegat;
-  magma_@x@malloc(&domegat, ldomegat * n);
-  isvd_int_t lddomegat = ldomegat;
+  @xtype@ *omegat_gpu;
+  magma_@x@malloc(&omegat_gpu, Nl * n_gpu);
+  isvd_int_t ldomegat_gpu = Nl;
 
-  @xtype@ *dyst;
-  magma_@x@malloc(&dyst, ldyst * mj);
-  isvd_int_t lddyst = ldyst;
+  @xtype@ *yst_gpu;
+  magma_@x@malloc(&yst_gpu, Nl * mj);
+  isvd_int_t ldyst_gpu = Nl;
 
   // ====================================================================================================================== //
   // Random generate
@@ -202,31 +243,42 @@ static void sketchBlockRow(
   }
 
   // ====================================================================================================================== //
-  // Send data
-
-  if ( ordera == 'C' ) {
-    magma_@x@setmatrix(mj, n, a, lda, da, ldda);
-  } else {
-    magma_@x@setmatrix(n, mj, a, lda, da, ldda);
-  }
-  magma_@x@setmatrix(Nl, n, omegat, ldomegat, domegat, lddomegat);
-
-  // ====================================================================================================================== //
   // Project
 
-  // Yi := A * Omegai (Yi' := Omegai' * A')
+  cudaMemset(yst_gpu, 0, ldyst_gpu * mj * sizeof(@xtype@));
   char transa_ = (ordera == 'C') ? 'T' : 'N';
-  magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), Nl, mj, n, 1.0, domegat, lddomegat, da, ldda, 0.0, dyst, lddyst);
+  isvd_int_t idx;
+
+  for ( idx = 0; idx < n; idx += n_gpu ) {
+    const @xtype@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
+    const @xtype@ *omegat_tmp = omegat + ldomegat*idx;
+    const isvd_int_t n_tmp = min(n_gpu, n-idx);
+
+    // Send A and Omega
+    if ( ordera == 'C' ) {
+      magma_@x@setmatrix(mj, n_tmp, a_tmp, lda, a_gpu, lda_gpu);
+    } else {
+      magma_@x@setmatrix(n_tmp, mj, a_tmp, lda, a_gpu, lda_gpu);
+    }
+    magma_@x@setmatrix(Nl, n_tmp, omegat_tmp, ldomegat, omegat_gpu, ldomegat_gpu);
+
+    // Yi := A * Omegai (Yi' := Omegai' * A')
+    magma_@x@gemm(MagmaNoTrans, magma_trans_const(transa_), Nl, mj, n_tmp,
+                  1.0, omegat_gpu, ldomegat_gpu, a_gpu, lda_gpu, 1.0, yst_gpu, ldyst_gpu);
+  }
 
   // ====================================================================================================================== //
   // Retrieve data
 
-  magma_@x@getmatrix(Nl, mj, dyst, lddyst, yst, ldyst);
+  magma_@x@getmatrix(Nl, mj, yst_gpu, ldyst_gpu, yst, ldyst);
 
   // ====================================================================================================================== //
   // Deallocate memory
 
   isvd_free(omegat);
+  magma_free(a_gpu);
+  magma_free(omegat_gpu);
+  magma_free(yst_gpu);
 
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS

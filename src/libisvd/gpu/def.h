@@ -23,4 +23,6 @@
 
 #include <magma.h>
 
+static size_t kBlockSizeGpu = 64;
+
 #endif  // _LIBISVD_GPU_DEF_H_
