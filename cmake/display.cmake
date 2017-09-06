@@ -44,6 +44,20 @@ disp("Build documentation:            " "${ISVD_BUILD_DOC}")
 
 message(STATUS "")
 
+disp("BLAS library:                   " "${ISVD_BLAS}")
+disp("OpenMP library:                 " "${ISVD_OMP}")
+disp("Enable GPU:                     " "${ISVD_USE_GPU}")
+if(NOT ISVD_USE_ILP64)
+  disp("Integer type:                   " "32bit integer (LP64)")
+else()
+  disp("Integer type:                   " "64bit integer (ILP64)")
+endif()
+disp("Verbose unit tests:             " "${ISVD_VERBOSE_TEST}")
+
+message(STATUS "")
+message(STATUS "================================================================================")
+message(STATUS "")
+
 # Display compilers
 disp("Use C   Compiler:               " "${CMAKE_C_COMPILER}")
 disp("Use C++ Compiler:               " "${CMAKE_CXX_COMPILER}")
@@ -100,12 +114,6 @@ endif()
 
 message(STATUS "")
 
-if(NOT ISVD_USE_ILP64)
-  disp("Integer type:                   " "32bit integer (LP64)")
-else()
-  disp("Integer type:                   " "64bit integer (ILP64)")
-endif()
-
 if(ISVD_BUILD_BIN)
   disp("MPI processes (demo only):      " "${MPI_PROCS}")
   disp("OpenMP threads (demo only):     " "${OMP_THRDS}")
@@ -116,11 +124,19 @@ message(STATUS "================================================================
 message(STATUS "")
 
 if(ISVD_BUILD_BIN)
+  if(ISVD_BLAS STREQUAL "BLAS" AND ISVD_OMP)
+    message(DEPRECATION "${Esc}[1;33mPlain BLAS library might not support OpenMP multithreading.${Esc}[0m")
+  endif()
+
+  if(ISVD_BLAS STREQUAL "BLAS" AND ISVD_USE_ILP64)
+    message(DEPRECATION "${Esc}[1;33mPlain BLAS library might not support 64bit integer.${Esc}[0m")
+  endif()
+
   if(NOT ISVD_BLAS STREQUAL "MKL")
     message(DEPRECATION "${Esc}[1;33mIntel MKL is not enabled. Recommended to use it for better performance.${Esc}[0m")
   endif()
 
-  if(NOT ISVD_OMP)
+  if(ISVD_BLAS STREQUAL "MKL" AND NOT ISVD_OMP)
     message(DEPRECATION "${Esc}[1;33mOpenMP is not enabled. Recommended to use it for better performance.${Esc}[0m")
   endif()
 endif()

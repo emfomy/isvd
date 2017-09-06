@@ -77,18 +77,30 @@ The following table are the main make rules
 ## Usage
 
 * Define `ISVD_USE_ILP64` before include `isvd.h` to use 64-bit integer.
-* All 64bit libraries and executables are named with suffix `_64`.
+* All 64bit libraries and executables are named with suffix "`_64`".
 
 ### Libraries
 
 Please link exact one library of each kind.
 
-| Name           | Kind           | Detail                         |
-|----------------|----------------|--------------------------------|
-| `isvd_core`    | Core           | Core routines                  |
-| `isvd_la`      | Linear Algebra | BLAS and LAPACK routines       |
-| `isvd_nogpu`   | Architecture   | Disable GPU support            |
-| `isvd_gpu`     | Architecture   | Enable GPU support             |
+* Correct
+  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core -lisvd_la_mkl_iomp -lisvd_gpu_magma`
+  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_none`
+* Wrong
+  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core`
+    * (Some kind of libraries are not linked)
+  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_magma -lisvd_gpu_none`
+    * (Some kind of libraries are linked multiple times)
+
+| Name                   | Kind           | Detail                                 |
+|------------------------|----------------|----------------------------------------|
+| `isvd_core`            | Core           | Core routines                          |
+| `isvd_la_blas`         | Linear Algebra | Sequential Plain BLAS                  |
+| `isvd_la_mkl`          | Linear Algebra | Sequential Intel MKL                   |
+| `isvd_la_mkl_gomp`     | Linear Algebra | Parallel Intel MKL using GNU OpenMP    |
+| `isvd_la_mkl_iomp`     | Linear Algebra | Parallel Intel MKL using Intel OpenMP  |
+| `isvd_gpu_none`        | GPU            | No GPU                                 |
+| `isvd_gpu_magma`       | GPU            | MAGMA GPU                              |
 
 ## Q&amp;A
 
@@ -107,11 +119,16 @@ Please link exact one library of each kind.
 
 * Set `GTEST_ROOT` to a folder containing `include` and `lib` of Google Test.
 
+### How to enable multithread support?
+
+* Set `ISVD_OMP` with `ccmake` before building libraries.
+* Make sure your LAPACK&amp;BLAS / Intel MKL uses supports multithreading.
+
 ### How to use 64-bit integer?
 
-* Set `ISVD_USE_ILP64` with `ccmake`.
-* If you want to compile directly, add `-DISVD_USE_ILP64` to compiler flag.
-* Make sure your LAPACK&amp;BLAS / Intel MKL uses 64bit integer. Make sure you uses the correct library and flags of Intel MKL.
+* Set `ISVD_USE_ILP64` with `ccmake` before building libraries.
+* Add `-DISVD_USE_ILP64` to compile flag.
+* Make sure your LAPACK&amp;BLAS / Intel MKL uses 64bit integer.
 
 ## Reference
 * [Ting-Li Chen, Dawei D. Chang, Su-Yun Huang, Hung Chen, Chienyao Lin, Weichung Wang, “Integrating Multiple Random Sketches for Singular Value Decomposition”](https://arxiv.org/abs/1608.08285)
