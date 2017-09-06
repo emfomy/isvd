@@ -13,7 +13,7 @@ int main( int argc, char **argv ) {
     std::fclose(stdout);
   }
 
-  printf("iSVD " ISVD_VERSION " " ISVD_CHECK_NAME " test\n\n");
+  printf("iSVD " ISVD_CHECK_NAME " unit test\n");
   isvd_printEnvironment(MPI_COMM_WORLD);
 
   testing::InitGoogleTest(&argc, argv);

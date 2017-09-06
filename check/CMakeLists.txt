@@ -57,29 +57,29 @@ macro(ISVD_CHECK_FN xtypes)
   isvd_set_types(${xtypes})
 
   # Sketching
-  add_mpi_check_cpu(libisvd/core/stage/${x}_sketch_gaussian_projection "${XName} Precision Gaussian Projection Sketching check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_sketch_gaussian_projection "${XName} Precision Gaussian Projection Sketching" "1;2;3;4;6;12")
 
   # Orthogonalization
-  add_mpi_check_cpu(libisvd/core/stage/${x}_orthogonalize_gramian "${XName} Precision Gramian Orthogonalization check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_orthogonalize_gramian "${XName} Precision Gramian Orthogonalization" "1;2;3;4;6;12")
 
   # Integration
-  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_kolmogorov_nagumo "${XName} Precision Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
-  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen Yin Integration check" "1;2;3;4;6;12")
-  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_hierarchical_reduction "${XName} Precision Hierarchical Reduction Integration check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_kolmogorov_nagumo "${XName} Precision Kolmogorov Nagumo Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen Yin Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_hierarchical_reduction "${XName} Precision Hierarchical Reduction Integration" "1;2;3;4;6;12")
 
   # Postprocessing
-  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_gramian "${XName} Precision Gramian Postprocessing check" "1;2;3;4;6;12")
-  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_symmetric "${XName} Precision Symmetric Postprocessing check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_gramian "${XName} Precision Gramian Postprocessing" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_symmetric "${XName} Precision Symmetric Postprocessing" "1;2;3;4;6;12")
 
   # GPU unit tests
   if(ISVD_USE_GPU)
 
     # Sketching
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} GPU Precision Gaussian Projection Sketching check" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} GPU Precision Gaussian Projection Sketching" "1;2")
 
     # Postprocessing
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} GPU Precision Gramian Postprocessing check" "1;2")
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} GPU Precision Symmetric Postprocessing check" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} GPU Precision Gramian Postprocessing" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} GPU Precision Symmetric Postprocessing" "1;2")
   endif()
 endmacro()
 

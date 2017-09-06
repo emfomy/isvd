@@ -27,7 +27,7 @@ int main( int argc, char **argv ) {
   MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
 
   if ( mpi_rank == mpi_root ) {
-    printf("iSVD " ISVD_VERSION " C test\n\n");
+    printf("iSVD C test\n");
     isvd_printEnvironment(MPI_COMM_WORLD);
   }
 

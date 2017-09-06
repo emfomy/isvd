@@ -19,7 +19,7 @@
 ///
 static inline omp_int_t isvd_getOmpSize( void ) {
 #if defined(ISVD_USE_OMP)
-  return omp_get_max_threads();
+  return omp_get_num_threads();
 #else  // ISVD_USE_OMP
   return 1;
 #endif  // ISVD_USE_OMP
