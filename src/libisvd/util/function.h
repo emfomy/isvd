@@ -25,6 +25,14 @@ static inline isvd_int_t min( isvd_int_t a, isvd_int_t b ) {
   return (a < b) ? a : b;
 }
 
+static inline size_t maxl( size_t a, size_t b ) {
+  return (a > b) ? a : b;
+}
+
+static inline size_t minl( size_t a, size_t b ) {
+  return (a < b) ? a : b;
+}
+
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
