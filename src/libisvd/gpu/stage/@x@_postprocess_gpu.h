@@ -11,6 +11,7 @@
 
 #include <isvd/gpu/@x@_stage.h>
 #include <libisvd/gpu/def.h>
+#include <isvd/gpu/env.h>
 #include <isvd/la.h>
 #include <libisvd/util/function.h>
 #include <libisvd/util/memory.h>
@@ -65,6 +66,7 @@ static void projectBlockCol_gpu(
 
   size_t free_byte, total_byte;
   cudaMemGetInfo(&free_byte, &total_byte);
+  if ( isvd_gpu_memory_limit > 0 ) free_byte = min(free_byte, isvd_gpu_memory_limit);
   isvd_int_t melem = free_byte / sizeof(@xtype@);
   isvd_int_t nelem_used = m * l;
   if ( melem < nelem_used ) {
@@ -72,8 +74,9 @@ static void projectBlockCol_gpu(
             nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
     isvd_assert_fail();
   }
-  const isvd_int_t n_gpu_ = (melem - nelem_used) / (m + l);
-  const isvd_int_t n_gpu = min((n_gpu_ / kBlockSizeGpu) * kBlockSizeGpu, nj);
+  isvd_int_t n_gpu = (melem - nelem_used) / (m + l);
+  if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
+  n_gpu = min(n_gpu, nj);
 
   // ====================================================================================================================== //
   // Allocate memory
@@ -203,8 +206,9 @@ static void projectBlockRow_gpu(
             nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
     isvd_assert_fail();
   }
-  const isvd_int_t n_gpu_ = (melem - nelem_used) / (mj + l);
-  const isvd_int_t n_gpu = min((n_gpu_ / kBlockSizeGpu) * kBlockSizeGpu, n);
+  isvd_int_t n_gpu = (melem - nelem_used) / (mj + l);
+  if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
+  n_gpu = min(n_gpu, n);
 
   // ====================================================================================================================== //
   // Allocate memory

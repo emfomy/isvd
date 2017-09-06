@@ -152,8 +152,10 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
 
+  const isvd_int_t mj  = param.nrow_proc;
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t nj  = param.ncol_proc;
 
   // Create matrices
   isvd_val_t *a;
@@ -180,11 +182,19 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   isvd_val_t *ut_ = isvd_@x@malloc(Pmb * l);
   isvd_int_t ldut_ = l;
 
+  // Limit GPU memory
+  if ( ordera_ == 'C' ) {
+    isvd_gpu_memory_limit = (m*l  + (m+l)*nj/3) * sizeof(isvd_val_t);
+  } else {
+    isvd_gpu_memory_limit = (mj*l + (mj+l)*n/3) * sizeof(isvd_val_t);
+  }
+
   switch ( jobuv ) {
     case GatherUV: {
 
       // Run stage
-      isvd_@x@PostprocessSymmetric_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, mpi_root);
+      isvd_@x@PostprocessSymmetric_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                       a, lda, qt, ldqt, s, ut_, ldut_, mpi_root);
 
       break;
     }

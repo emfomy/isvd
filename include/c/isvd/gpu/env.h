@@ -16,6 +16,8 @@
 extern "C" {
 #endif  // __cplusplus
 
+extern size_t isvd_gpu_memory_limit;
+
 void isvd_init_gpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm );
 
 void isvd_finalize_gpu( void );

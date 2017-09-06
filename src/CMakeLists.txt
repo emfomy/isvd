@@ -2,11 +2,6 @@
 
 isvd_set_config_var()
 
-# Break
-if(NOT ISVD_BUILD_LIB)
-  return()
-endif()
-
 # RPath
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
@@ -28,6 +23,11 @@ include_directories("${PROJECT_CONFIG_DIR}/include/c"
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_S_TYPES}")
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}" "${ISVD_D_TYPES}")
 isvd_configure_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}")
+
+# Break
+if(NOT ISVD_BUILD_LIB)
+  return()
+endif()
 
 # libisvd
 set_target(isvd /dev/null)

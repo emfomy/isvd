@@ -11,7 +11,7 @@
 
 #if !defined(ISVD_USE_GPU)
   #error ISVD_USE_GPU must be set to enable GPU support!
-#endif
+#endif  // ISVD_USE_GPU
 
 #include <libisvd/def.h>
 
@@ -23,6 +23,6 @@
 
 #include <magma.h>
 
-static size_t kBlockSizeGpu = 64;
+static const size_t isvd_kBlockSizeGpu = 64;
 
 #endif  // _LIBISVD_GPU_DEF_H_

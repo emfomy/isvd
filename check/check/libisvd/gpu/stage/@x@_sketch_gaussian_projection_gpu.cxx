@@ -94,8 +94,10 @@ static void test( char dista, char ordera ) {
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
 
+  const isvd_int_t mj  = param.nrow_proc;
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t nj  = param.ncol_proc;
   const isvd_int_t seed = 0;
 
   // Create matrices
@@ -117,6 +119,13 @@ static void test( char dista, char ordera ) {
 
   isvd_val_t *yst = isvd_@x@malloc(mb * Nl);
   isvd_int_t ldyst = Nl;
+
+  // Limit GPU memory
+  if ( ordera_ == 'C' ) {
+    isvd_gpu_memory_limit = (m*Nl  + (m+Nl)*nj/3) * sizeof(isvd_val_t);
+  } else {
+    isvd_gpu_memory_limit = (mj*Nl + (mj+Nl)*n/3) * sizeof(isvd_val_t);
+  }
 
   // Run stage
   isvd_@x@SketchGaussianProjection_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);

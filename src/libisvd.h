@@ -13,6 +13,10 @@
 #include <libisvd/core.h>
 #include <libisvd/util.h>
 
+#if defined(ISVD_USE_GPU)
+  #include <libisvd/gpu.h>
+#endif  // ISVD_USE_GPU
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \defgroup  src_util_module  Development Utility
 /// \ingroup   src_module

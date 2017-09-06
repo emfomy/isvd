@@ -11,8 +11,10 @@
 
 #include <libisvd/def.h>
 
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 #define MPI_COMPLEX_FLOAT  MPI_COMPLEX8
 #define MPI_COMPLEX_DOUBLE MPI_COMPLEX16
+#endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  src_util_module

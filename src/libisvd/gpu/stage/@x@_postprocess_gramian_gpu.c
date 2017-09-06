@@ -53,6 +53,8 @@
 /// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
 /// \param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
+/// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
+///
 void isvd_@x@PostprocessGramian_gpu(
     const isvd_Param  param,
     const @xtype@    *argv,

@@ -18,6 +18,8 @@
 ///
 /// \attention  Not implemented!
 ///
+/// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
+///
 void isvd_@x@PostprocessTallSkinnyQr_gpu(
     const isvd_Param  param,
     const @xtype@    *argv,

@@ -8,6 +8,7 @@
 
 #include <isvd/gpu/@x@_stage.h>
 #include <libisvd/gpu/def.h>
+#include <isvd/gpu/env.h>
 #include <isvd/la.h>
 #include <libisvd/gpu/stage/@x@_sketch_gpu.h>
 #include <libisvd/util/arg.h>
@@ -36,6 +37,8 @@
 /// \param[in]   mpi_root    The root MPI process ID.
 /// <hr>
 /// \param[out]  yst         Replaced by the row-block 𝖄 (row-major).
+///
+/// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
 ///
 void isvd_@x@SketchGaussianProjection_gpu(
     const isvd_Param  param,
