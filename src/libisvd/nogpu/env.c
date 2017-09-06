@@ -8,7 +8,7 @@
 
 #include <isvd/gpu/env.h>
 #include <libisvd/def.h>
-#include <libisvd/util/mpi.h>
+#include <isvd/util/mpi.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 

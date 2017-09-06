@@ -9,7 +9,7 @@
 #ifndef _ISVD_UTIL_OMP_H_
 #define _ISVD_UTIL_OMP_H_
 
-#include <libisvd/def.h>
+#include <isvd/def.h>
 
 #if defined(__cplusplus)
 extern "C" {

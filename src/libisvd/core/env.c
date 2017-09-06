@@ -8,8 +8,8 @@
 
 #include <isvd/core/env.h>
 #include <libisvd/def.h>
-#include <libisvd/util/mpi.h>
-#include <libisvd/util/omp.h>
+#include <isvd/util/mpi.h>
+#include <isvd/util/omp.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module

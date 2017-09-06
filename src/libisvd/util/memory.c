@@ -104,23 +104,23 @@ void isvd_zmemset0( _Complex double *ptr, const size_t num ) {
 /// \param  num  The number of objects.
 ///
 //\{
-void isvd_imemcpy( isvd_int_t *dst, isvd_int_t *src, const size_t num ) {
+void isvd_imemcpy( isvd_int_t *dst, const isvd_int_t *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, isvd_int_t);
 }
 
-void isvd_smemcpy( float *dst, float *src, const size_t num ) {
+void isvd_smemcpy( float *dst, const float *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, float);
 }
 
-void isvd_dmemcpy( double *dst, double *src, const size_t num ) {
+void isvd_dmemcpy( double *dst, const double *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, double);
 }
 
-void isvd_cmemcpy( _Complex float *dst, _Complex float *src, const size_t num ) {
+void isvd_cmemcpy( _Complex float *dst, const _Complex float *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, _Complex float);
 }
 
-void isvd_zmemcpy( _Complex double *dst, _Complex double *src, const size_t num ) {
+void isvd_zmemcpy( _Complex double *dst, const _Complex double *src, const size_t num ) {
   isvd_xmemcpy(dst, src, num, _Complex double);
 }
 //\}

@@ -12,8 +12,8 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-#include <libisvd/util/memory.h>
-#include <libisvd/util/omp.h>
+#include <isvd/util/memory.h>
+#include <isvd/util/omp.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void sketchBlockCol(

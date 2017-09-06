@@ -29,11 +29,11 @@ void isvd_dmemset0( double *ptr, const size_t num );
 void isvd_cmemset0( _Complex float *ptr, const size_t num );
 void isvd_zmemset0( _Complex double *ptr, const size_t num );
 
-void isvd_imemcpy( isvd_int_t *dst, isvd_int_t *src, const size_t num );
-void isvd_smemcpy( float *dst, float *src, const size_t num );
-void isvd_dmemcpy( double *dst, double *src, const size_t num );
-void isvd_cmemcpy( _Complex float *dst, _Complex float *src, const size_t num );
-void isvd_zmemcpy( _Complex double *dst, _Complex double *src, const size_t num );
+void isvd_imemcpy( isvd_int_t *dst, const isvd_int_t *src, const size_t num );
+void isvd_smemcpy( float *dst, const float *src, const size_t num );
+void isvd_dmemcpy( double *dst, const double *src, const size_t num );
+void isvd_cmemcpy( _Complex float *dst, const _Complex float *src, const size_t num );
+void isvd_zmemcpy( _Complex double *dst, const _Complex double *src, const size_t num );
 
 #if defined(__cplusplus)
 }

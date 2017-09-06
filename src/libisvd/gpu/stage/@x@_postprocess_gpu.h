@@ -14,7 +14,7 @@
 #include <isvd/gpu/env.h>
 #include <isvd/la.h>
 #include <libisvd/util/function.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol_gpu(

@@ -10,7 +10,7 @@
 #include <libisvd/def.h>
 #include <libisvd/core/@x@_arg.h>
 #include <libisvd/util/function.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_driver_module

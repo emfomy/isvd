@@ -10,7 +10,7 @@
 #include <libisvd/gpu/def.h>
 #include <isvd/la.h>
 // #include <libisvd/gpu/stage/@x@_postprocess_gpu.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_@x@_stage_module
