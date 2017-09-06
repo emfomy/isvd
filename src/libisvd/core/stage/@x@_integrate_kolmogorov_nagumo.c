@@ -179,14 +179,10 @@ void isvd_@x@IntegrateKolmogorovNagumo(
     isvd_@x@memcpy(cinv, z, l*l);
 
     // Compute Z * sqrt(S)
-    for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@Scal(l, ss[ii], zs + ldzs*ii, 1);
-    }
+    isvd_@x@Dimm('R', l, l, 1.0, ss, zs, ldzs);
 
     // Compute Z / sqrt(S)
-    for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@Scal(l, 1.0/ss[ii], zinvs + ldzinvs*ii, 1);
-    }
+    isvd_@x@Dism('R', l, l, 1.0, ss, zinvs, ldzinvs);
 
     // C := Z * S * Z'
     isvd_@x@Gemm('N', 'T', l, l, l, 1.0, zs, ldzs, zs, ldzs, 0.0, c, ldc);

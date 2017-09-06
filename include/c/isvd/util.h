@@ -1,42 +1,41 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       include/c/isvd.h
-/// \brief      The main header.
+/// \file       include/c/isvd/util.h
+/// \brief      The utility header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_H_
-#define _ISVD_H_
+#ifndef _ISVD_UTIL_H_
+#define _ISVD_UTIL_H_
 
-#include <isvd/def.h>
-#include <isvd/core.h>
-#include <isvd/gpu.h>
-#include <isvd/la.h>
-#include <isvd/util.h>
+#include <isvd/util/io.h>
+#include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
+#include <isvd/util/omp.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_module  Core Routines
-/// \ingroup   c_module
-/// \brief     The Core Routines
+/// \defgroup  c_util_io_module  I/O Utilities
+/// \ingroup   c_util_module
+/// \brief     The I/O Utilities
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_module  GPU Routines
-/// \ingroup   c_module
-/// \brief     The GPU Routines
+/// \defgroup  c_util_memory_module  Memory Utilities
+/// \ingroup   c_util_module
+/// \brief     The Memory Utilities
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_la_module  Linear Algebra Wrappers
-/// \ingroup   c_module
-/// \brief     The Linear Algebra Wrappers
+/// \defgroup  c_util_mpi_module  MPI Utilities
+/// \ingroup   c_util_module
+/// \brief     The MPI Utilities
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_util_module  Utilities
-/// \ingroup   c_module
-/// \brief     The Utilities
+/// \defgroup  c_util_omp_module  OpenMP Utilities
+/// \ingroup   c_util_module
+/// \brief     The OpenMP Utilities
 ///
 
-#endif  // _ISVD_H_
+#endif  // _ISVD_UTIL_H_

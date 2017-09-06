@@ -79,9 +79,7 @@ void isvd_@x@OrthogonalizeGramian(
   isvd_v@x@Sqrt(lds*N, s, s);
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
-  for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
-    isvd_@x@Scal(l, 1.0/s[ii], w + ii*ldw, 1);
-  }
+  isvd_@x@Dism('R', l, Nl, 1.0, s, w, ldw);
   isvd_@x@memcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);

@@ -37,6 +37,42 @@ void isvd_zOmatcopy(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_like_module
+/// Computes a matrix-matrix product where one input matrix is diagonal.
+//\{
+void isvd_sDimm(
+    const CHAR1 side, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, REAL4 *b, const INT ldb
+);
+void isvd_dDimm(
+    const CHAR1 side, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, REAL8 *b, const INT ldb
+);
+void isvd_cDimm(
+    const CHAR1 side, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, COMP4 *b, const INT ldb
+);
+void isvd_zDimm(
+    const CHAR1 side, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, COMP8 *b, const INT ldb
+);
+//\}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_blas_like_module
+/// Solves a diagonal matrix equation.
+//\{
+void isvd_sDism(
+    const CHAR1 side, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, REAL4 *b, const INT ldb
+);
+void isvd_dDism(
+    const CHAR1 side, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, REAL8 *b, const INT ldb
+);
+void isvd_cDism(
+    const CHAR1 side, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, COMP4 *b, const INT ldb
+);
+void isvd_zDism(
+    const CHAR1 side, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, COMP8 *b, const INT ldb
+);
+//\}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_blas_like_module
 /// Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
 /// matrix.
 ///

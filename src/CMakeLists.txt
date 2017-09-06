@@ -34,7 +34,8 @@ set_target(isvd /dev/null)
 set_property(TARGET isvd PROPERTY LINKER_LANGUAGE C)
 
 # libisvd_core
-file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*")
+file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*"
+                        "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/util/*")
 set_target(isvd_core "${files}")
 isvd_set_target_omp(isvd_core C)
 isvd_set_target_mpi(isvd_core)

@@ -1,14 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/util/mpi.h
+/// \file       src/libisvd/util/mpi.c
 /// \brief      The MPI utilities.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_UTIL_MPI_H_
-#define _LIBISVD_UTIL_MPI_H_
-
+#include <isvd/util/mpi.h>
 #include <libisvd/def.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
@@ -17,27 +15,25 @@
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_util_module
+/// \ingroup  c_util_mpi_module
 /// \brief  Returns the size of the group associated with a communicator.
 ///
 /// \param  comm  The communicator.
 ///
 /// \return       The number of processes in the group of \a comm.
 ///
-static inline mpi_int_t isvd_getMpiSize( const MPI_Comm comm ) {
+mpi_int_t isvd_getMpiSize( const MPI_Comm comm ) {
   mpi_int_t size; isvd_assert_pass(MPI_Comm_size(comm, &size)); return size;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_util_module
+/// \ingroup  c_util_mpi_module
 /// \brief  Determines the rank of the calling process in the communicator.
 ///
 /// \param  comm  The communicator.
 ///
 /// \return       The rank of the calling process in group of \a comm.
 ///
-static inline mpi_int_t isvd_getMpiRank( const MPI_Comm comm ) {
+mpi_int_t isvd_getMpiRank( const MPI_Comm comm ) {
   mpi_int_t rank; isvd_assert_pass(MPI_Comm_rank(comm, &rank)); return rank;
 }
-
-#endif  // _LIBISVD_UTIL_MPI_H_

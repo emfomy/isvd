@@ -63,7 +63,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 //\{
 #if defined(ISVD_USE_GTEST) && defined(__cplusplus)
 
@@ -106,17 +106,17 @@ extern "C" {
 #define isvd_assert_fail()  { isvd_assert_true(false); }
 //\}
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_vdisp( format, len, vector, inc ) printf(#vector ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
     printf(format "\t", (vector)[_isvd_i_ * inc]); \
   } \
   printf("\n");
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_mcdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
@@ -125,7 +125,7 @@ extern "C" {
     printf("\n"); \
   }
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_mrdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \

@@ -129,7 +129,7 @@ void isvd_@x@PostprocessSymmetric_gpu(
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    isvd_@x@Gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_@x@Gemm('T', 'N', k, mj, l, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {

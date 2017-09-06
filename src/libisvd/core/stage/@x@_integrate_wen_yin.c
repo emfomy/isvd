@@ -226,8 +226,8 @@ void isvd_@x@IntegrateWenYin(
       // Compute inv(C)
       isvd_@x@Geinv(l2, c, ldc);
 
-      // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
-      // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
+      // Fc  [in C_21] := I + inv(C)_22 * Dc - inv(C)_21
+      // Fgc [in C_11] :=     inv(C)_12 * Dc - inv(C)_21
       isvd_@x@Gemm('N', 'N', l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c21[ii+ldc*ii] += 1.0;

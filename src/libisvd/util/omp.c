@@ -6,18 +6,16 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_UTIL_OMP_H_
-#define _LIBISVD_UTIL_OMP_H_
-
+#include <isvd/util/omp.h>
 #include <libisvd/def.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_util_module
+/// \ingroup  c_util_omp_module
 /// \brief  Returns the number of threads in the current team.
 ///
 /// \return  The number of threads in the current team.
 ///
-static inline omp_int_t isvd_getOmpSize( void ) {
+omp_int_t isvd_getOmpSize( void ) {
 #if defined(ISVD_USE_OMP)
   return omp_get_num_threads();
 #else  // ISVD_USE_OMP
@@ -26,17 +24,15 @@ static inline omp_int_t isvd_getOmpSize( void ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  src_util_module
+/// \ingroup  c_util_omp_module
 /// \brief  Returns a unique thread identification number within the current team.
 ///
 /// \return  The thread identification number within the current team.
 ///
-static inline omp_int_t isvd_getOmpRank( void ) {
+omp_int_t isvd_getOmpRank( void ) {
 #if defined(ISVD_USE_OMP)
   return omp_get_thread_num();
 #else  // ISVD_USE_OMP
   return 0;
 #endif  // ISVD_USE_OMP
 }
-
-#endif  // _LIBISVD_UTIL_OMP_H_

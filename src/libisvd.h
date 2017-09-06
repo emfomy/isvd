@@ -17,10 +17,4 @@
   #include <libisvd/gpu.h>
 #endif  // ISVD_USE_GPU
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  src_util_module  Development Utility
-/// \ingroup   src_module
-/// \brief     The Development Utility
-///
-
 #endif  // _LIBISVD_H_

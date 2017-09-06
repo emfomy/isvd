@@ -143,7 +143,7 @@ void isvd_@x@PostprocessGramian(
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {
-    isvd_@x@Gemm('T', 'N', k, mj, k, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+    isvd_@x@Gemm('T', 'N', k, mj, l, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
@@ -156,10 +156,8 @@ void isvd_@x@PostprocessGramian(
 
   // V := Z * W / S (V' := (W / S)' * Z')
   if ( vt_root >= -1 ) {
-    for ( isvd_int_t ii = 0; ii < l; ++ii ) {
-      isvd_@x@Scal(l, 1.0/s[ii], w + ii*ldw, 1);
-    }
-    isvd_@x@Gemm('T', 'N', k, nj, k, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
+    isvd_@x@Dism('R', l, k, 1.0, s, w, ldw);
+    isvd_@x@Gemm('T', 'N', k, nj, l, 1.0, w, ldw, zt, ldzt, 0.0, vt, ldvt);
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
