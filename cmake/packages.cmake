@@ -131,11 +131,12 @@ if(ISVD_USE_GPU)
       set(CUDA_TOOLKIT_ROOT_DIR "$ENV{CUDADIR}")
     endif()
   endif()
-  set(CUDA_TOOLKIT_ROOT_DIR "${CUDA_TOOLKIT_ROOT_DIR}" CACHE PATH "The root path of CUDA toolkit." FORCE)
-  unset(CUDA_TOOLKIT_ROOT_DIR)
 
   find_package(CUDA ${findtype})
   find_package(MAGMA ${findtype})
+
+  set(CUDA_TOOLKIT_ROOT_DIR "${CUDA_TOOLKIT_ROOT_DIR}" CACHE PATH "The root path of CUDA toolkit." FORCE)
+  unset(CUDA_TOOLKIT_ROOT_DIR)
 
   function(ISVD_SET_TARGET_GPU target)
     target_include_directories(${target} SYSTEM PUBLIC ${MAGMA_INCLUDES} ${CUDA_INCLUDE_DIRS})

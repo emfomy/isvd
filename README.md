@@ -50,10 +50,12 @@ The following table are the main options
 | `ISVD_BLAS`            | the selection BLAS/LAPACK library. | Options: `BLAS/MKL`            |
 | `ISVD_BUILD_DEMO`      | build demo codes.                  |                                |
 | `ISVD_BUILD_DOC`       | build documentation.               |                                |
+| `ISVD_BUILD_LIB`       | build libraries.                   |                                |
 | `ISVD_BUILD_TEST`      | build unit tests.                  |                                |
 | `ISVD_INDEX_TYPE`      | the selection index type.          | Options: `32/64`               |
 | `ISVD_OMP`             | the selection OpenMP library.      | Options: `OFF/GOMP/IOMP`       |
 | `ISVD_USE_GPU`         | enable GPU support.                |                                |
+| `ISVD_VERBOSE_TEST`    | enable verbose unit tests.         |                                |
 | `GTEST_ROOT`           | the root path of Google Test.      | Require `ISVD_BUILD_TEST`      |
 | `INTEL_ROOT`           | the root path of Intel libraries.  | Require `ISVD_BLAS = MKL`      |
 | `MKL_ROOT`             | the root path of Intel MKL.        | Require `ISVD_BLAS = MKL`      |
@@ -66,7 +68,7 @@ The following table are the main make rules
 
 | Command        | Detail                         |
 |----------------|--------------------------------|
-| `make all`     | build all binaries             |
+| `make all`     | build all libraries            |
 | `make install` | install package                |
 | `make check`   | build and run unit tests       |
 | `make doc`     | build documentation            |
@@ -75,6 +77,7 @@ The following table are the main make rules
 ## Usage
 
 * Define `ISVD_USE_ILP64` before include `isvd.h` to use 64-bit integer.
+* All 64bit libraries and executables are named with suffix `_64`.
 
 ### Libraries
 

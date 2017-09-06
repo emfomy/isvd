@@ -17,8 +17,10 @@
   #undef MKL_ILP64
 #endif  // ISVD_USE_ILP64
 
-#if defined(_OPENMP) && !defined(ISVD_USE_OMP)
-  #define ISVD_USE_OMP
+#if defined(_OPENMP)
+  #if !defined(ISVD_USE_OMP)
+    #define ISVD_USE_OMP
+  #endif  // ISVD_USE_OMP
 #else  // _OPENMP
   #undef ISVD_USE_OMP
 #endif  // _OPENMP

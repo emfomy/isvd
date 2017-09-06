@@ -1,7 +1,6 @@
 # Configure functions
 function(ISVD_CONFIGURE_FN srcdir outdir)
   message(STATUS "Configure files in ${srcdir}")
-  string(REPLACE ";" " " DEFS_STR "${DEFS}")
   file(
     GLOB_RECURSE cfgfiles
     RELATIVE "${srcdir}" "${srcdir}/*"
@@ -20,7 +19,6 @@ endfunction()
 function(ISVD_CONFIGURE_X_FN srcdir outdir xtypes)
   isvd_set_types(${xtypes})
   message(STATUS "Configure files in ${srcdir} for ${xname} precision")
-  string(REPLACE ";" " " DEFS_STR "${DEFS}")
   file(
     GLOB_RECURSE cfgfiles
     RELATIVE "${srcdir}" "${srcdir}/*\@x\@*"

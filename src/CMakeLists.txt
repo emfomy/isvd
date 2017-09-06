@@ -2,6 +2,12 @@
 
 isvd_set_config_var()
 
+# Break
+if(NOT ISVD_BUILD_LIB)
+  return()
+endif()
+
+# RPath
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 

@@ -26,7 +26,13 @@ endmacro()
 macro(_ADD_CHECK checktype)
   set(checkmain check.cxx)
   _add_check_predo("${checktype}" "")
-  gtest_add_tests($<TARGET_FILE:${checktarget}> "" ${checkmain} ${files})
+
+  # Add test
+  if(ISVD_VERBOSE_TEST)
+    gtest_add_tests($<TARGET_FILE:${checktarget}> "" ${checkmain} ${files})
+  else()
+    add_test(NAME ${checkname} COMMAND $<TARGET_FILE:${checktarget}>)
+  endif()
 
   # Add rule
   add_custom_target(
@@ -42,7 +48,14 @@ macro(_ADD_MPI_CHECK checktype listprocs)
   set(checkmain check_mpi.cxx)
   _add_check_predo("${checktype}")
 
-  gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${listprocs}" "" ${checkmain} ${files})
+  # Add test
+  if(ISVD_VERBOSE_TEST)
+    gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${listprocs}" "" ${checkmain} ${files})
+  else()
+    foreach(procs ${listprocs})
+      add_test(NAME ${checkname}_${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env OMP_NUM_THREADS=${OMP_THRDS} $<TARGET_FILE:${checktarget}>)
+    endforeach()
+  endif()
 
   # Add rule
   foreach(procs ${listprocs})

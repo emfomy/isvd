@@ -11,10 +11,12 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 # Set options
+option(ISVD_BUILD_LIB     "Build libraries."      "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
 option(ISVD_BUILD_TEST    "Build unit tests."     "OFF")
 option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
 option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
+option(ISVD_VERBOSE_TEST  "Verbose unit tests."   "ON")
 
 set(ISVD_INDEX_TYPE "32" CACHE STRING "Index type. [32/64]")
 set_property(CACHE ISVD_INDEX_TYPE PROPERTY STRINGS "32;64")
@@ -42,8 +44,10 @@ set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
 set(OMP_THRDS 4 CACHE STRING "The number of OpenMP threads used in demo/check codes.")
 
 # Set variables
-if(ISVD_BUILD_DEMO OR ISVD_BUILD_TEST)
+if(ISVD_BUILD_LIB OR ISVD_BUILD_DEMO OR ISVD_BUILD_TEST)
   set(ISVD_BUILD_BIN "ON")
+else()
+  set(ISVD_BUILD_BIN "OFF")
 endif()
 
 if(ISVD_INDEX_TYPE STREQUAL "32")
