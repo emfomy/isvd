@@ -107,7 +107,7 @@ static void sketchBlockCol(
 
     isvd_VSLStreamStatePtr stream;
     isvd_vslNewStream(&stream, seed_);
-    isvd_vslSkipAheadStream(stream, (nb * Nl * param.mpi_rank + start) * 2);
+    isvd_vslSkipAheadStream(stream, (Nl * nb * param.mpi_rank + start) * 2);
     isvd_v@x@RngGaussian(stream, len, omegat + start, 0.0, 1.0);
 
     isvd_vslDeleteStream(&stream);

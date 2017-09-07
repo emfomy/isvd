@@ -98,7 +98,7 @@ void isvd_@x@PostprocessSymmetric_gpu(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *zt = isvd_@x@malloc(nb * l);
+  @xtype@ *zt = isvd_@x@malloc(l * nb);
   isvd_int_t ldzt = l;
 
   @xtype@ *w = isvd_@x@malloc(l * l);

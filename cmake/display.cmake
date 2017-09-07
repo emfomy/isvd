@@ -58,14 +58,28 @@ message(STATUS "")
 message(STATUS "================================================================================")
 message(STATUS "")
 
+# Display install prefix
+disp("Install path:                   " "${CMAKE_INSTALL_PREFIX}")
+disp("Install include directory:      " "${CMAKE_INSTALL_PREFIX}/include")
+disp("Install library directory:      " "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
+
+message(STATUS "")
+
+disp("Build type:                     " "${CMAKE_BUILD_TYPE}")
+
+message(STATUS "")
+
 # Display compilers
 disp("Use C   Compiler:               " "${CMAKE_C_COMPILER}")
 disp("Use C++ Compiler:               " "${CMAKE_CXX_COMPILER}")
 
 message(STATUS "")
 
-disp("Use C   flags:                  " "${CMAKE_C_FLAGS}")
-disp("Use C++ flags:                  " "${CMAKE_CXX_FLAGS}")
+string(TOUPPER "CMAKE_C_FLAGS_${CMAKE_BUILD_TYPE}" cflag_name)
+string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" cxxflag_name)
+
+disp("Use C   flags:                  " "${CMAKE_C_FLAGS} ${${cflag_name}}")
+disp("Use C++ flags:                  " "${CMAKE_CXX_FLAGS} ${${cxxflag_name}}")
 
 message(STATUS "")
 

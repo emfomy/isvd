@@ -15,6 +15,9 @@ if(NOT ISVD_BUILD_TEST)
   return()
 endif()
 
+# Set build type
+set(CMAKE_BUILD_TYPE "Debug")
+
 # Target rule
 function(ISVD_SET_TARGET_CHECK_CPU target)
   isvd_set_target_omp(${target} CXX)

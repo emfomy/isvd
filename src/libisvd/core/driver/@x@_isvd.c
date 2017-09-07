@@ -127,10 +127,10 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *yst = isvd_@x@malloc(mb * Nl);
+  @xtype@ *yst = isvd_@x@malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
-  @xtype@ *qt = isvd_@x@malloc(mb * l);
+  @xtype@ *qt = isvd_@x@malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // ====================================================================================================================== //

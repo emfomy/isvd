@@ -155,7 +155,6 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   const isvd_int_t mj  = param.nrow_proc;
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
-  const isvd_int_t nj  = param.ncol_proc;
 
   // Create matrices
   isvd_val_t *a;
@@ -174,20 +173,14 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   }
   isvd_int_t lda = lda0;
 
-  isvd_val_t *qt = qt0 + param.rowidxbegin * ldqt0;
-  isvd_int_t ldqt = ldqt0;
+  isvd_val_t *qt = isvd_@x@malloc(l * mb);
+  isvd_int_t ldqt = l;
+  isvd_@x@Omatcopy('N', l, mj, 1.0, qt0 + param.rowidxbegin * ldqt0, ldqt0, qt, ldqt);
 
   isvd_val_t *s = isvd_@x@malloc(l);
 
-  isvd_val_t *ut_ = isvd_@x@malloc(Pmb * l);
+  isvd_val_t *ut_ = isvd_@x@malloc(l * Pmb);
   isvd_int_t ldut_ = l;
-
-  // Limit GPU memory
-  if ( ordera_ == 'C' ) {
-    isvd_gpu_memory_limit = (m*l  + (m+l)*nj/3) * sizeof(isvd_val_t);
-  } else {
-    isvd_gpu_memory_limit = (mj*l + (mj+l)*n/3) * sizeof(isvd_val_t);
-  }
 
   switch ( jobuv ) {
     case GatherUV: {
@@ -202,7 +195,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case BlockUV: {
 
       // Create matrices
-      isvd_val_t *ut = isvd_@x@malloc(mb * l);
+      isvd_val_t *ut = isvd_@x@malloc(l * mb);
       isvd_int_t ldut = l;
 
       // Run stage
@@ -210,6 +203,9 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
       // Gather results
       MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, ut_, mb*ldut, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+
+      // Deallocate memory
+      isvd_free(ut);
 
       break;
     }
@@ -227,33 +223,41 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     }
   }
 
-  if ( jobuv != NoUV ) {
-    // Compute space
-    isvd_val_t *uut_ = isvd_@x@malloc(m * m);
-    isvd_int_t lduut_ = m;
-    isvd_val_t *uut0 = isvd_@x@malloc(m * m);
-    isvd_int_t lduut0 = m;
-    isvd_@x@Syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
-    isvd_@x@Syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+  // Check results
+  if ( mpi_rank == mpi_root ) {
+    for ( isvd_int_t ir = 0; ir < l; ++ir ) {
+      ASSERT_NEAR(s[ir], s0[ir], @x@err) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
+    }
+    if ( jobuv != NoUV ) {
+      // Compute space
+      isvd_val_t *uut_ = isvd_@x@malloc(m * m);
+      isvd_int_t lduut_ = m;
+      isvd_val_t *uut0 = isvd_@x@malloc(m * m);
+      isvd_int_t lduut0 = m;
+      isvd_@x@Syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
+      isvd_@x@Syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
 
-    // Check results
-    if ( mpi_rank == mpi_root ) {
-      for ( isvd_int_t ir = 0; ir < l; ++ir ) {
-        ASSERT_NEAR(s[ir], s0[ir], @x@err) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
-      }
+      // Check results
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
         for ( isvd_int_t ic = ir; ic < m; ++ic ) {
           ASSERT_NEAR(uut_[ir+ic*lduut_], uut0[ir+ic*lduut0], @x@err) << "(ir, ic) =  (" << ir << ", " << ic << ")";
         }
       }
-    }
-  } else {
-    if ( mpi_rank == mpi_root ) {
-      for ( isvd_int_t ir = 0; ir < l; ++ir ) {
-        ASSERT_NEAR(s[ir], s0[ir], @x@err) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
-      }
+
+      // Deallocate memory
+      isvd_free(uut_);
+      isvd_free(uut0);
     }
   }
+
+  // Deallocate memory
+  isvd_free(a0);
+  isvd_free(qt0);
+  isvd_free(s0);
+  isvd_free(ut0);
+  isvd_free(qt);
+  isvd_free(s);
+  isvd_free(ut_);
 }
 
 TEST(@XStr@_SymmetricPostprocessing_Gpu, BlockCol_ColMajor_GatherUV) {

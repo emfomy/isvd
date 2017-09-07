@@ -74,7 +74,7 @@ static void test( char dista, char ordera ) {
     ASSERT_EQ(m_, m);
   }
 
-  isvd_val_t *yst0 = isvd_@x@malloc(m * Nl);
+  isvd_val_t *yst0 = isvd_@x@malloc(Nl * m);
   isvd_int_t ldyst0 = Nl;
 
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
@@ -115,7 +115,7 @@ static void test( char dista, char ordera ) {
   }
   isvd_int_t lda = lda0;
 
-  isvd_val_t *yst = isvd_@x@malloc(mb * Nl);
+  isvd_val_t *yst = isvd_@x@malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
   // Run stage
@@ -123,7 +123,7 @@ static void test( char dista, char ordera ) {
 
 #if defined(ISVD_USE_MKL)
   // Gather results
-  isvd_val_t *yst_ = isvd_@x@malloc(Pmb * Nl);
+  isvd_val_t *yst_ = isvd_@x@malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_@X_TYPE@, yst_, mb*ldyst, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
 
@@ -135,10 +135,18 @@ static void test( char dista, char ordera ) {
       }
     }
   }
+
+  // Deallocate memory
+  isvd_free(yst_);
 #else
   ISVD_UNUSED(mpi_rank);
   ISVD_UNUSED(Pmb);
 #endif /// ISVD_USE_MKL
+
+  // Deallocate memory
+  isvd_free(a0);
+  isvd_free(yst0);
+  isvd_free(yst);
 }
 
 TEST(@XStr@_GaussianProjectionSketching, BlockCol_ColMajor) {

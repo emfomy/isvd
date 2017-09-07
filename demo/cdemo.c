@@ -77,13 +77,16 @@ int main( int argc, char **argv ) {
   // Allocate matrix
   const isvd_int_t k = 20, p = 12, l = k+p, N = 16, P = mpi_size;
   const isvd_int_t mb = (m-1)/P+1;
+  const isvd_int_t nb = (n-1)/P+1;
+  const isvd_int_t Pmb = P * mb;
+  const isvd_int_t Pnb = P * nb;
 
   double *s  = isvd_dmalloc(l);
 
-  double *ut = isvd_dmalloc(l * m);
+  double *ut = isvd_dmalloc(l * Pmb);
   isvd_int_t ldut = l;
 
-  double *vt = isvd_dmalloc(l * n);
+  double *vt = isvd_dmalloc(l * Pnb);
   isvd_int_t ldvt = l;
   /// [alloc-matrix]
 
