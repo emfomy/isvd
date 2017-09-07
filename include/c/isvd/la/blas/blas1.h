@@ -107,6 +107,46 @@ static inline REAL8 isvd_dzAsum(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_1_module
+/// Finds the index of the element with maximum absolute value.
+//\{
+INT isvd_isAmax( const INT n, const REAL4 *x, const INT incx );
+INT isvd_idAmax( const INT n, const REAL8 *x, const INT incx );
+INT isvd_icAmax( const INT n, const COMP4 *x, const INT incx );
+INT isvd_izAmax( const INT n, const COMP8 *x, const INT incx );
+//\}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_blas_1_module
+/// Finds the index of the element with minimum absolute value.
+//\{
+INT isvd_isAmin( const INT n, const REAL4 *x, const INT incx );
+INT isvd_idAmin( const INT n, const REAL8 *x, const INT incx );
+INT isvd_icAmin( const INT n, const COMP4 *x, const INT incx );
+INT isvd_izAmin( const INT n, const COMP8 *x, const INT incx );
+//\}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_blas_1_module
+/// Finds the the element with maximum absolute value.
+//\{
+REAL4 isvd_sAmax( const INT n, const REAL4 *x, const INT incx );
+REAL8 isvd_dAmax( const INT n, const REAL8 *x, const INT incx );
+COMP4 isvd_cAmax( const INT n, const COMP4 *x, const INT incx );
+COMP8 isvd_zAmax( const INT n, const COMP8 *x, const INT incx );
+//\}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_blas_1_module
+/// Finds the the element with minimum absolute value.
+//\{
+REAL4 isvd_sAmin( const INT n, const REAL4 *x, const INT incx );
+REAL8 isvd_dAmin( const INT n, const REAL8 *x, const INT incx );
+COMP4 isvd_cAmin( const INT n, const COMP4 *x, const INT incx );
+COMP8 isvd_zAmin( const INT n, const COMP8 *x, const INT incx );
+//\}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_blas_1_module
 /// Computes the product of a vector by a scalar.
 //\{
 static inline void isvd_sScal(

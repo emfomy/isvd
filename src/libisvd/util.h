@@ -11,9 +11,5 @@
 
 #include <libisvd/util/arg.h>
 #include <libisvd/util/function.h>
-#include <libisvd/util/io.h>
-#include <libisvd/util/memory.h>
-#include <libisvd/util/mpi.h>
-#include <libisvd/util/omp.h>
 
 #endif  // _LIBISVD_UTIL_H_

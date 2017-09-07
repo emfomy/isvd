@@ -8,7 +8,7 @@
 
 #include <isvd/la/lapack/least_square.h>
 #include <libisvd/def.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
@@ -41,6 +41,7 @@ void isvd_sSyev(
   lwork = qwork;
   REAL4 *work = isvd_smalloc(lwork);
   ssyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
+  isvd_free(work);
 }
 void isvd_dSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL8 *a, const INT lda, REAL8 *w
@@ -50,6 +51,7 @@ void isvd_dSyev(
   lwork = qwork;
   REAL8 *work = isvd_dmalloc(lwork);
   dsyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
+  isvd_free(work);
 }
 void isvd_cSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w
@@ -60,6 +62,8 @@ void isvd_cSyev(
   COMP4 *work  = isvd_cmalloc(lwork);
   REAL4 *rwork = isvd_smalloc(5*n-2);
   cheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
+  isvd_free(work);
+  isvd_free(rwork);
 }
 void isvd_zSyev(
     const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w
@@ -70,6 +74,8 @@ void isvd_zSyev(
   COMP8 *work  = isvd_zmalloc(lwork);
   REAL8 *rwork = isvd_dmalloc(5*n-2);
   zheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
+  isvd_free(work);
+  isvd_free(rwork);
 }
 
 @ISVD_LA_BLAS_TYPE_UNDEF@

@@ -1,28 +1,18 @@
-# Set default variables
-unset(INCS)
-unset(LIBS)
-unset(DEFS)
-unset(COMFLGS)
-unset(LNKFLGS)
-
 # Check Compiler
-if(CMAKE_C_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+if(CMAKE_C_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel" OR CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
   set(ISVD_USE_ICC "ON")
 else()
   set(ISVD_USE_ICC "OFF")
 endif()
 
-# Set install prefix
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix." FORCE)
-endif()
-
 # Set options
-option(ISVD_BUILD_DEMO  "Build demo codes."       "ON")
-option(ISVD_BUILD_TEST  "Build unit tests."       "OFF")
-option(ISVD_BUILD_DOC   "Build documentation."    "OFF")
-option(ISVD_USE_FORTRAN "Enable Fortran support." "OFF")
-option(ISVD_USE_GPU     "Enable GPU support."     "OFF")
+option(ISVD_BUILD_LIB     "Build libraries."        "ON")
+option(ISVD_BUILD_DEMO    "Build demo codes."       "ON")
+option(ISVD_BUILD_TEST    "Build unit tests."       "OFF")
+option(ISVD_BUILD_DOC     "Build documentation."    "OFF")
+option(ISVD_USE_FORTRAN   "Enable Fortran support." "ON")
+option(ISVD_USE_GPU       "Enable GPU support."     "OFF")
+option(ISVD_VERBOSE_TEST  "Verbose unit tests."     "ON")
 
 set(ISVD_INDEX_TYPE "32" CACHE STRING "Index type. [32/64]")
 set_property(CACHE ISVD_INDEX_TYPE PROPERTY STRINGS "32;64")
@@ -50,8 +40,10 @@ set(MPI_PROCS 4 CACHE STRING "The number of MPI processes used in demo codes.")
 set(OMP_THRDS 4 CACHE STRING "The number of OpenMP threads used in demo/check codes.")
 
 # Set variables
-if(ISVD_BUILD_DEMO OR ISVD_BUILD_TEST)
+if(ISVD_BUILD_LIB OR ISVD_BUILD_DEMO OR ISVD_BUILD_TEST)
   set(ISVD_BUILD_BIN "ON")
+else()
+  set(ISVD_BUILD_BIN "OFF")
 endif()
 
 if(ISVD_INDEX_TYPE STREQUAL "32")
@@ -64,21 +56,12 @@ else()
   set(BIN_FOLDER "bin64")
   set(LIB_FOLDER "lib64")
   set(ISVD_USE_ILP64 "ON")
-  list(APPEND DEFS "ISVD_USE_ILP64")
-endif()
-
-if(ISVD_USE_FORTRAN)
-  enable_language(Fortran)
-  unset(FILP64)
-  if(ISVD_USE_ILP64)
-    set(FILP64 "-fdefault-integer-8")
-  endif()
-else()
-  unset(CMAKE_Fortran_COMPILER)
+  set(CMAKE_C_EXTRA_FLAGS       "${CMAKE_C_EXTRA_FLAGS} -DISVD_USE_ILP64")
+  set(CMAKE_CXX_EXTRA_FLAGS     "${CMAKE_CXX_EXTRA_FLAGS} -DISVD_USE_ILP64")
+  set(CMAKE_Fortran_EXTRA_FLAGS "${CMAKE_Fortran_EXTRA_FLAGS} -fdefault-integer-8")
 endif()
 
 if(ISVD_BLAS STREQUAL "MKL")
-  list(APPEND DEFS "ISVD_USE_MKL")
   set(MKL_ILP64 ${ISVD_USE_ILP64})
   set(ISVD_USE_MKL "ON")
 else()
@@ -87,13 +70,6 @@ else()
 endif()
 
 set(MKL_OMP ${ISVD_OMP})
-
-if(ISVD_USE_GPU)
-  list(APPEND DEFS "ISVD_USE_GPU")
-  if(ISVD_USE_ILP64)
-    list(APPEND DEFS "MAGMA_ILP64")
-  endif()
-endif()
 
 # Enable testing
 if(ISVD_BUILD_TEST)

@@ -8,7 +8,7 @@
 
 #include <isvd/la/lapack/least_square.h>
 #include <libisvd/def.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 #include <libisvd/util/function.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@
@@ -43,6 +43,7 @@ void isvd_sGesvd(
   lwork = qwork;
   REAL4 *work = isvd_smalloc(lwork);
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
+  isvd_free(work);
 }
 void isvd_dGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL8 *a, const INT lda, REAL8 *s, REAL8 *u, const INT ldu,
@@ -53,6 +54,7 @@ void isvd_dGesvd(
   lwork = qwork;
   REAL8 *work = isvd_dmalloc(lwork);
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
+  isvd_free(work);
 }
 void isvd_cGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP4 *a, const INT lda, REAL4 *s, COMP4 *u, const INT ldu,
@@ -64,6 +66,8 @@ void isvd_cGesvd(
   COMP4 *work  = isvd_cmalloc(lwork);
   REAL4 *rwork = isvd_smalloc(5*min(m, n));
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
+  isvd_free(work);
+  isvd_free(rwork);
 }
 void isvd_zGesvd(
     const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP8 *a, const INT lda, REAL8 *s, COMP8 *u, const INT ldu,
@@ -75,6 +79,8 @@ void isvd_zGesvd(
   COMP8 *work  = isvd_zmalloc(lwork);
   REAL8 *rwork = isvd_dmalloc(5*min(m, n));
   zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
+  isvd_free(work);
+  isvd_free(rwork);
 }
 //\}
 

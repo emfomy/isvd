@@ -9,7 +9,7 @@
 #ifndef _LIBISVD_DEF_H_
 #define _LIBISVD_DEF_H_
 
-#include <isvd.h>
+#include <isvd/def.h>
 
 #if defined(ISVD_USE_ILP64) && !defined(MKL_ILP64)
   #define MKL_ILP64
@@ -17,8 +17,10 @@
   #undef MKL_ILP64
 #endif  // ISVD_USE_ILP64
 
-#if defined(_OPENMP) && !defined(ISVD_USE_OMP)
-  #define ISVD_USE_OMP
+#if defined(_OPENMP)
+  #if !defined(ISVD_USE_OMP)
+    #define ISVD_USE_OMP
+  #endif  // ISVD_USE_OMP
 #else  // _OPENMP
   #undef ISVD_USE_OMP
 #endif  // _OPENMP
@@ -30,8 +32,9 @@
   #define ISVD_OMP_PARALLEL
 #endif  // ISVD_USE_OMP
 
+#include <mpi.h>
+
 #if defined(ISVD_USE_GTEST) && defined(__cplusplus)
-  #undef I
   #include <gtest/gtest.h>
 #endif  // ISVD_USE_GTEST
 
@@ -46,8 +49,8 @@
 #if defined(ISVD_USE_MKL)
   #define MKL_INT       isvd_int_t
   #define MKL_UINT      isvd_uint_t
-  #define MKL_Complex8  complex float
-  #define MKL_Complex16 complex double
+  #define MKL_Complex8  _Complex float
+  #define MKL_Complex16 _Complex double
 #endif  // ISVD_USE_MKL
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -60,7 +63,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 //\{
 #if defined(ISVD_USE_GTEST) && defined(__cplusplus)
 
@@ -103,17 +106,17 @@ extern "C" {
 #define isvd_assert_fail()  { isvd_assert_true(false); }
 //\}
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_disp( format, expression ) printf(#expression " \t= " format "\n", expression);
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_vdisp( format, len, vector, inc ) printf(#vector ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < len; ++_isvd_i_ ) { \
     printf(format "\t", (vector)[_isvd_i_ * inc]); \
   } \
   printf("\n");
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_mcdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \
@@ -122,7 +125,7 @@ extern "C" {
     printf("\n"); \
   }
 
-/// \ingroup  src_util_module
+/// \ingroup  src_module
 #define isvd_mrdisp( format, nrow, ncol, matrix, ld ) printf(#matrix ":\n"); \
   for ( isvd_int_t _isvd_i_ = 0; _isvd_i_ < nrow; ++_isvd_i_ ) { \
     for ( isvd_int_t _isvd_j_ = 0; _isvd_j_ < ncol; ++_isvd_j_ ) { \

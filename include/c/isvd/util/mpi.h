@@ -1,13 +1,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       include/c/isvd/core/print_environment.h
-/// \brief      Display the iSVD environment.
+/// \file       include/c/isvd/util/mpi.h
+/// \brief      The MPI utilities.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_CORE_PRINT_ENVIRONMENT_H_
-#define _ISVD_CORE_PRINT_ENVIRONMENT_H_
+#ifndef _ISVD_UTIL_MPI_H_
+#define _ISVD_UTIL_MPI_H_
 
 #include <isvd/def.h>
 
@@ -15,10 +15,11 @@
 extern "C" {
 #endif  // __cplusplus
 
-void isvd_printEnvironment( const MPI_Comm comm, const mpi_int_t mpi_root );
+mpi_int_t isvd_getMpiSize( const MPI_Comm comm );
+mpi_int_t isvd_getMpiRank( const MPI_Comm comm );
 
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_PRINT_ENVIRONMENT_H_
+#endif  // _ISVD_UTIL_MPI_H_

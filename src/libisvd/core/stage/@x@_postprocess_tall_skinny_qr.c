@@ -9,7 +9,9 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-#include <libisvd/util/memory.h>
+// #include <libisvd/core/stage/@x@_postprocess.h>
+#include <libisvd/util/arg.h>
+#include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module

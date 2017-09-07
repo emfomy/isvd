@@ -9,7 +9,7 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 #define kMaxit    256
 #define kTol      1e-3
@@ -95,23 +95,23 @@ void isvd_@x@IntegrateWenYin(
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  @xtype@ *qct = isvd_@x@malloc(mj * l);
+  @xtype@ *qct = isvd_@x@malloc(l * mj);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype@ *qpt = isvd_@x@malloc(mj * l);
+  @xtype@ *qpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  @xtype@ *gct = isvd_@x@malloc(mj * l);
+  @xtype@ *gct = isvd_@x@malloc(l * mj);
   isvd_int_t ldgct = l;
 
   // matrix Xc'
-  @xtype@ *xct = isvd_@x@malloc(mj * l);
+  @xtype@ *xct = isvd_@x@malloc(l * mj);
   isvd_int_t ldxct = l;
 
   // matrix X+'
-  @xtype@ *xpt = isvd_@x@malloc(mj * l);
+  @xtype@ *xpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldxpt = l;
 
   // matrix Bc
@@ -226,8 +226,8 @@ void isvd_@x@IntegrateWenYin(
       // Compute inv(C)
       isvd_@x@Geinv(l2, c, ldc);
 
-      // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
-      // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
+      // Fc  [in C_21] := I + inv(C)_22 * Dc - inv(C)_21
+      // Fgc [in C_11] :=     inv(C)_12 * Dc - inv(C)_21
       isvd_@x@Gemm('N', 'N', l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c21[ii+ldc*ii] += 1.0;

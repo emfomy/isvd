@@ -33,7 +33,7 @@ void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip ) {
 #else  // ISVD_USE_MKL
 
 #include <stdlib.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const INT seed ) {
   *streamp = isvd_imalloc(4);

@@ -9,7 +9,8 @@
 #include <isvd/core/@x@_driver.h>
 #include <libisvd/def.h>
 #include <libisvd/core/@x@_arg.h>
-#include <libisvd/util/memory.h>
+#include <libisvd/util/function.h>
+#include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_driver_module
@@ -85,7 +86,7 @@ void isvd_@x@Isvd(
     const isvd_int_t  lda,
           @xtype@    *s,
           @xtype@    *ut,
-    const isvd_int_t  ldut,
+    const isvd_int_t ldut,
           @xtype@    *vt,
     const isvd_int_t  ldvt,
     const isvd_int_t  seed,
@@ -98,10 +99,15 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Check arguments
 
-  const int16_t algs_ = isvd_arg2char2("ALGS", algs, "GP",     nullptr);
-  const int16_t algo_ = isvd_arg2char2("ALGO", algo, "TSGR",   nullptr);
-  const int16_t algi_ = isvd_arg2char2("ALGI", algi, "KNWYHR", nullptr);
-  const int16_t algp_ = isvd_arg2char2("ALGP", algp, "TSGR",   nullptr);
+  const char *optss[] = {"GP", "GP_gpu"};
+  const char *optso[] = {"TS", "GR"};
+  const char *optsi[] = {"KN", "WY", "HR"};
+  const char *optsp[] = {"TS", "GR", "TS_gpu", "GR_gpu"};
+
+  const char *algs_ = isvd_arg2str("ALGS", algs, optss, nullptr, lenof(optss));
+  const char *algo_ = isvd_arg2str("ALGO", algo, optso, nullptr, lenof(optso));
+  const char *algi_ = isvd_arg2str("ALGI", algi, optsi, nullptr, lenof(optsi));
+  const char *algp_ = isvd_arg2str("ALGP", algp, optsp, nullptr, lenof(optsp));
   if ( !algs_ || !algo_ || !algi_ || !algp_ ) return;
 
   isvd_fun_t funs = isvd_arg2@x@algs(algs_);
@@ -121,10 +127,10 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *yst = isvd_@x@malloc(mb * Nl);
+  @xtype@ *yst = isvd_@x@malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
-  @xtype@ *qt = isvd_@x@malloc(mb * l);
+  @xtype@ *qt = isvd_@x@malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // ====================================================================================================================== //
@@ -134,5 +140,11 @@ void isvd_@x@Isvd(
   funo(param, nullptr, 0, nullptr, 0, yst, ldyst);
   funi(param, nullptr, 0, nullptr, 0, yst, ldyst, qt, ldqt);
   funp(param, nullptr, 0, nullptr, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
+
+  // ====================================================================================================================== //
+  // Deallocate memory
+
+  isvd_free(yst);
+  isvd_free(qt);
 
 }
