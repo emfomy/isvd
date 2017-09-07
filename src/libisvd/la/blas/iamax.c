@@ -33,9 +33,9 @@ INT isvd_idAmax( const INT n, const REAL8 *x, const INT incx ) { return idamax_(
 INT isvd_icAmax( const INT n, const COMP4 *x, const INT incx ) { return icamax_(&n, x, &incx); }
 INT isvd_izAmax( const INT n, const COMP8 *x, const INT incx ) { return izamax_(&n, x, &incx); }
 
-REAL4 isvd_sAmax( const INT n, const REAL4 *x, const INT incx ) { INT i = isamax_(&n, x, &incx); return fabsf(x[i]); }
-REAL8 isvd_dAmax( const INT n, const REAL8 *x, const INT incx ) { INT i = idamax_(&n, x, &incx); return fabs(x[i]); }
-COMP4 isvd_cAmax( const INT n, const COMP4 *x, const INT incx ) { INT i = icamax_(&n, x, &incx); return cabsf(x[i]); }
-COMP8 isvd_zAmax( const INT n, const COMP8 *x, const INT incx ) { INT i = izamax_(&n, x, &incx); return cabs(x[i]); }
+REAL4 isvd_sAmax( const INT n, const REAL4 *x, const INT incx ) { INT i = isvd_isAmax(n, x, incx); return fabsf(x[i]); }
+REAL8 isvd_dAmax( const INT n, const REAL8 *x, const INT incx ) { INT i = isvd_idAmax(n, x, incx); return fabs(x[i]); }
+COMP4 isvd_cAmax( const INT n, const COMP4 *x, const INT incx ) { INT i = isvd_icAmax(n, x, incx); return cabsf(x[i]); }
+COMP8 isvd_zAmax( const INT n, const COMP8 *x, const INT incx ) { INT i = isvd_izAmax(n, x, incx); return cabs(x[i]); }
 
 @ISVD_LA_BLAS_TYPE_UNDEF@

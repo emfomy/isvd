@@ -70,10 +70,10 @@ static inline const char* isvd_arg2str(
 
   fprintf(stderr, "%s ('%s') must be one of the following strings: ", name, arg);
   if ( nopts > 0 ) {
-    fprintf(stderr, "\"%.2s\"", opts[0]);
+    fprintf(stderr, "\"%s\"", opts[0]);
   }
   for ( size_t i = 1; i < nopts; ++i ) {
-    fprintf(stderr, ", \"%.2s\"", opts[i]);
+    fprintf(stderr, ", \"%s\"", opts[i]);
   }
   fprintf(stderr, ".\n");
   return 0;

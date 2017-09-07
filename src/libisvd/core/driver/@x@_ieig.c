@@ -128,4 +128,10 @@ void isvd_@x@Ieig(
   funi(param, nullptr, 0, nullptr, 0, yst, ldyst, qt, ldqt);
   funp(param, nullptr, 0, nullptr, 0, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, ut_root);
 
+  // ====================================================================================================================== //
+  // Deallocate memory
+
+  isvd_free(yst);
+  isvd_free(qt);
+
 }

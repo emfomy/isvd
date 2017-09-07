@@ -2,6 +2,8 @@
 
 isvd_set_config_var()
 
+SET(BUILD_SHARED_LIBS ON)
+
 # RPath
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
@@ -10,7 +12,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 macro(SET_TARGET target files)
   # Set library
   add_library(${target} SHARED ${files})
-  isvd_set_target(${target} ".so")
+  isvd_set_target(${target})
   set_property(TARGET ${target} PROPERTY VERSION ${ISVD_VERSION})
   install(TARGETS ${target} LIBRARY DESTINATION ${LIB_FOLDER})
 endmacro()

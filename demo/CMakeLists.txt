@@ -10,7 +10,7 @@ macro(SET_TARGET target files)
   # Set target
   add_executable(isvd_${target} EXCLUDE_FROM_ALL ${files})
 
-  isvd_set_target(isvd_${target} "")
+  isvd_set_target(isvd_${target})
 
   # Add run rule
   add_custom_target(
@@ -25,6 +25,7 @@ endmacro()
 # Set include paths
 include_directories("${PROJECT_CONFIG_DIR}/include/c")
 
-# Set target
-set_target(ctest ctest.c)
-target_link_libraries(isvd_ctest isvd)
+# C demo
+set_target(cdemo cdemo.c ${PROJECT_SOURCE_DIR}/data/a.mtx /dev/null /dev/null /dev/null)
+target_link_libraries(isvd_cdemo isvd extmmio)
+target_include_directories(isvd_cdemo SYSTEM PUBLIC "${PROJECT_SOURCE_DIR}/ext")

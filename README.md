@@ -84,12 +84,12 @@ The following table are the main make rules
 Please link exact one library of each kind.
 
 * Correct
-  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core -lisvd_la_mkl_iomp -lisvd_gpu_magma`
-  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_none`
+  * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_mkl_iomp -lisvd_gpu_magma`
+  * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_none`
 * Wrong
-  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core`
+  * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core`
     * (Some kind of libraries are not linked)
-  * `gcc test.c -I<include-path> -L<library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_magma -lisvd_gpu_none`
+  * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_magma -lisvd_gpu_none`
     * (Some kind of libraries are linked multiple times)
 
 | Name                   | Kind           | Detail                                 |

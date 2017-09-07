@@ -1,5 +1,5 @@
 # The main CMake setting
-project(ISVD)
+
 # cmake_minimum_required(VERSION 3.0)
 cmake_minimum_required(VERSION 2.8.12)
 
@@ -9,6 +9,13 @@ set(ISVD_MAJOR_VERSION 1)
 set(ISVD_MINOR_VERSION 1)
 set(ISVD_PATCH_VERSION 1)
 set(ISVD_VERSION "${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}.${ISVD_PATCH_VERSION}")
+
+# Set cache options
+include(cmake/cache.cmake)
+
+# Initialize project
+cmake_policy(SET CMP0048 OLD)
+project(ISVD)
 
 # Set Makefile
 set(CMAKE_COLOR_MAKEFILE ON)

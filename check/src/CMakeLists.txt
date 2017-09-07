@@ -19,7 +19,7 @@ file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*"
                         "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/util/*"
                         "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/nogpu/*")
 add_library(checkisvd EXCLUDE_FROM_ALL ${files})
-isvd_set_target(checkisvd ".a")
+isvd_set_target(checkisvd)
 isvd_set_target_omp(checkisvd CXX)
 isvd_set_target_mpi(checkisvd)
 isvd_set_target_blas(checkisvd)
@@ -31,7 +31,7 @@ file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*"
                         "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/util/*"
                         "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/gpu/*")
 add_library(checkisvd_gpu EXCLUDE_FROM_ALL ${files})
-isvd_set_target(checkisvd_gpu ".a")
+isvd_set_target(checkisvd_gpu)
 isvd_set_target_omp(checkisvd_gpu CXX)
 isvd_set_target_mpi(checkisvd_gpu)
 isvd_set_target_blas(checkisvd_gpu)

@@ -5,11 +5,6 @@ else()
   set(ISVD_USE_ICC "OFF")
 endif()
 
-# Set install prefix
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "The install path prefix." FORCE)
-endif()
-
 # Set options
 option(ISVD_BUILD_LIB     "Build libraries."      "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")

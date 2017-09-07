@@ -6,7 +6,7 @@ endif()
 
 # Check compiler support
 if(ISVD_BUILD_BIN)
-  list(APPEND cflags "-std=c99" "-O2" "-g" "-Wall" "-Wextra" "-pedantic" ${CILP64})
+  string(REGEX REPLACE " " ";" cflags "${CMAKE_C_FLAGS}")
   include(CheckCCompilerFlag)
   foreach(cflag ${cflags})
     string(TOUPPER ${cflag} cflagname)
@@ -22,7 +22,7 @@ if(ISVD_BUILD_BIN)
     endif()
   endforeach()
 
-  list(APPEND cxxflags "-std=c++98" "-O2" "-g" "-Wall" "-Wextra" "-pedantic" ${CILP64})
+  string(REGEX REPLACE " " ";" cxxflags "${CMAKE_CXX_FLAGS}")
   include(CheckCXXCompilerFlag)
   foreach(cxxflag ${cxxflags})
     string(TOUPPER ${cxxflag} cxxflagname)
@@ -38,10 +38,6 @@ if(ISVD_BUILD_BIN)
     endif()
   endforeach()
 endif()
-
-# Set complier flags
-string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${cflags}")
-string(REGEX REPLACE ";" " " CMAKE_CXX_FLAGS "${cxxflags}")
 
 # Set target
 find_library(
@@ -62,8 +58,8 @@ if(NOT PTHREAD_LIBRARY)
 endif()
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
 
-function(ISVD_SET_TARGET target ext)
-  set_property(TARGET ${target} PROPERTY SUFFIX "${BIN_SUFFIX}${ext}")
+function(ISVD_SET_TARGET target)
+  set_property(TARGET ${target} PROPERTY OUTPUT_NAME "${target}${BIN_SUFFIX}")
   target_link_libraries(${target} ${M_LIBRARY} ${PTHREAD_LIBRARY})
   set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--no-as-needed")
 endfunction()

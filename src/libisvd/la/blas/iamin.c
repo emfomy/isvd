@@ -37,26 +37,29 @@ INT isvd_izAmin( const INT n, const COMP8 *x, const INT incx ) { return izamin_(
 
 #else  // ISVD_USE_MKL
 
-#define isvd_ixAmin( n, x, incx, abs ) \
+#define isvd_ixAmin( RTYPE, n, x, incx, abs ) \
   if ( n < 1 || incx <= 0 ) { return -1; } \
   if ( n == 1 ) { return 0; } \
   INT idamin = 0; \
-  smin = abs(x[0]); \
+  RTYPE smin = abs(x[0]); \
   for ( INT i = 1, j = incx; i < n; ++i, j += incx ) { \
-    if ( abs(x[j]) < smin) { idamin = i; } \
+    if ( abs(x[j]) < smin) { \
+      idamin = i; \
+      smin = abs(x[j]); \
+    } \
   } \
   return idamin;
 
-INT isvd_isAmin( const INT n, const REAL4 *x, const INT incx ) { return isvd_ixAmin(n, x, incx, fabsf); }
-INT isvd_idAmin( const INT n, const REAL8 *x, const INT incx ) { return isvd_ixAmin(n, x, incx, fabs); }
-INT isvd_icAmin( const INT n, const COMP4 *x, const INT incx ) { return isvd_ixAmin(n, x, incx, cabsf); }
-INT isvd_izAmin( const INT n, const COMP8 *x, const INT incx ) { return isvd_ixAmin(n, x, incx, cabs); }
+INT isvd_isAmin( const INT n, const REAL4 *x, const INT incx ) { isvd_ixAmin(REAL4, n, x, incx, fabsf); }
+INT isvd_idAmin( const INT n, const REAL8 *x, const INT incx ) { isvd_ixAmin(REAL8, n, x, incx, fabs); }
+INT isvd_icAmin( const INT n, const COMP4 *x, const INT incx ) { isvd_ixAmin(REAL4, n, x, incx, cabsf); }
+INT isvd_izAmin( const INT n, const COMP8 *x, const INT incx ) { isvd_ixAmin(REAL8, n, x, incx, cabs); }
 
 #endif  // ISVD_USE_MKL
 
-REAL4 isvd_sAmin( const INT n, const REAL4 *x, const INT incx ) { INT i = isamin_(&n, x, &incx); return fabsf(x[i]); }
-REAL8 isvd_dAmin( const INT n, const REAL8 *x, const INT incx ) { INT i = idamin_(&n, x, &incx); return fabs(x[i]); }
-COMP4 isvd_cAmin( const INT n, const COMP4 *x, const INT incx ) { INT i = icamin_(&n, x, &incx); return cabsf(x[i]); }
-COMP8 isvd_zAmin( const INT n, const COMP8 *x, const INT incx ) { INT i = izamin_(&n, x, &incx); return cabs(x[i]); }
+REAL4 isvd_sAmin( const INT n, const REAL4 *x, const INT incx ) { INT i = isvd_isAmin(n, x, incx); return fabsf(x[i]); }
+REAL8 isvd_dAmin( const INT n, const REAL8 *x, const INT incx ) { INT i = isvd_idAmin(n, x, incx); return fabs(x[i]); }
+COMP4 isvd_cAmin( const INT n, const COMP4 *x, const INT incx ) { INT i = isvd_icAmin(n, x, incx); return cabsf(x[i]); }
+COMP8 isvd_zAmin( const INT n, const COMP8 *x, const INT incx ) { INT i = isvd_izAmin(n, x, incx); return cabs(x[i]); }
 
 @ISVD_LA_BLAS_TYPE_UNDEF@

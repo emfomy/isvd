@@ -48,6 +48,8 @@ void isvd_sGeinv(
   REAL4 *work = isvd_smalloc(lwork);
   sgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_free(ipiv);
+  isvd_free(work);
 }
 void isvd_dGeinv(
     const INT n, REAL8 *a, const INT lda
@@ -59,6 +61,8 @@ void isvd_dGeinv(
   REAL8 *work = isvd_dmalloc(lwork);
   dgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_free(ipiv);
+  isvd_free(work);
 }
 void isvd_cGeinv(
     const INT n, COMP4 *a, const INT lda
@@ -70,6 +74,8 @@ void isvd_cGeinv(
   COMP4 *work  = isvd_cmalloc(lwork);
   cgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_free(ipiv);
+  isvd_free(work);
 }
 void isvd_zGeinv(
     const INT n, COMP8 *a, const INT lda
@@ -81,6 +87,8 @@ void isvd_zGeinv(
   COMP8 *work  = isvd_zmalloc(lwork);
   zgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
   zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_free(ipiv);
+  isvd_free(work);
 }
 
 @ISVD_LA_BLAS_TYPE_UNDEF@

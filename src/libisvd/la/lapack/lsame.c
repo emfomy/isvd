@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       src/libisvd/la/lapack/lsamen.c
-/// \brief      The LAPACK Lsamen routine.
+/// \file       src/libisvd/la/lapack/lsame.c
+/// \brief      The LAPACK Lsame routine.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -40,7 +40,13 @@ bool isvd_Lsame(
 bool isvd_Lsamen(
     const INT n, const CHAR1 *sa, const CHAR1 *sb
 ) {
-  return lsamen_(&n, sa, sb);
+  // return lsamen_(&n, sa, sb);
+  for ( INT i = 0; i < n; ++i ) {
+    if ( !lsame_(sa+i, sb+i) ) {
+      return false;
+    }
+  }
+  return true;
 }
 
 @ISVD_LA_BLAS_TYPE_UNDEF@
