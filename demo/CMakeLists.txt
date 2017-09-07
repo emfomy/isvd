@@ -6,19 +6,19 @@ if(NOT ISVD_BUILD_DEMO)
 endif()
 
 # Macro
-macro(SET_TARGET target files)
-  # Set target
-  add_executable(isvd_${target} EXCLUDE_FROM_ALL ${files})
+macro(SET_TARGET name files)
+  set(target "isvd_${name}")
+  add_executable(${target} EXCLUDE_FROM_ALL ${files})
 
-  isvd_set_target(isvd_${target})
+  isvd_set_target(${target})
 
   # Add run rule
   add_custom_target(
-    run_${target}
-    COMMAND ${CMAKE_COMMAND} -E env OMP_NUM_THREADS=${OMP_THRDS} ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPI_PROCS} $<TARGET_FILE:isvd_${target}> ${ARGN}
-    DEPENDS isvd_${target}
+    run_${name}
+    COMMAND ${CMAKE_COMMAND} -E env ${ENVS} ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPI_PROCS} $<TARGET_FILE:${target}> ${ARGN}
+    DEPENDS ${target}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Running ${target}"
+    COMMENT "Running ${name}"
   )
 endmacro()
 

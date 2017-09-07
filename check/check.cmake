@@ -53,7 +53,7 @@ macro(_ADD_MPI_CHECK checktype listprocs)
     gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${listprocs}" "" ${checkmain} ${files})
   else()
     foreach(procs ${listprocs})
-      add_test(NAME ${checkname}_${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env OMP_NUM_THREADS=${OMP_THRDS} $<TARGET_FILE:${checktarget}>)
+      add_test(NAME ${checkname}_${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env ${ENVS} $<TARGET_FILE:${checktarget}>)
     endforeach()
   endif()
 
@@ -61,7 +61,7 @@ macro(_ADD_MPI_CHECK checktype listprocs)
   foreach(procs ${listprocs})
     add_custom_target(
       check_${checkname}_${procs}
-      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env OMP_NUM_THREADS=${OMP_THRDS} $<TARGET_FILE:${checktarget}>
+      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env ${ENVS} $<TARGET_FILE:${checktarget}>
       DEPENDS ${checktarget}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Run check ${checkpath}"

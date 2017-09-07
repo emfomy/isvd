@@ -93,7 +93,11 @@ int main( int argc, char **argv ) {
   /// [run-isvd]
   isvd_int_t seed = 0;
   isvd_dIsvd(
+#if !defined(ISVD_USE_GPU)
     "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',
+#else  // ISVD_USE_GPU
+    "GP_gpu", "GR", "KN", "GR_gpu", m, n, k, p, N, 'R', 'C',
+#endif  // ISVD_USE_GPU
     a + mb * mpi_rank, lda, s, ut, ldut, vt, ldvt, seed, mpi_root, mpi_root, mpi_root, MPI_COMM_WORLD
   );
   /// [run-isvd]
