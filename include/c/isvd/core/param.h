@@ -17,7 +17,7 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// The parameters.
+/// \brief  The parameters.
 ///
 typedef struct {
 
@@ -85,14 +85,12 @@ typedef struct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Initialize the parameters.
+/// \brief  Initializes the parameters.
 ///
 isvd_Param isvd_createParam(
     const isvd_int_t nrow, const isvd_int_t ncol, const isvd_int_t rank, const isvd_int_t over_rank,
     const isvd_int_t num_sketch, const mpi_int_t mpi_root, const MPI_Comm mpi_comm
 );
-
-typedef void (*isvd_fun_t)(isvd_Param, ...);
 
 #if defined(__cplusplus)
 }

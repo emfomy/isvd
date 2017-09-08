@@ -9,7 +9,7 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 #define kMaxit    256
 #define kTol      1e-3
@@ -23,12 +23,12 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Wen-Yin Integration (@xname@ precision)
+/// \brief  Wen-Yin Integration (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. <br>
-///                          \b argv[0]: The maximum number of iteration. (optional, default as \ref kMaxit) <br>
-///                          \b argv[1]: The tolerance of convergence condition. (optional, default as \ref kTol)
+///                          \b argv[0]: The maximum number of iteration. <br>
+///                          \b argv[1]: The tolerance of convergence condition.
 /// \param[in]   retv, retc  The return values and its length.
 /// <hr>
 /// \param[in]   yst, ldyst  The row-block 𝕼 (\f$ m_b \times Nl \f$, row-major) and its leading dimension.
@@ -38,6 +38,9 @@
 ///                          \b retv[0]: The number of iteration. <br>
 ///                          \b retv[1]: The error.
 /// \param[out]  qt          Replaced by the row-block 𝑸 (row-major).
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@IntegrateWenYin(
     const isvd_Param  param,
@@ -50,6 +53,23 @@ void isvd_@x@IntegrateWenYin(
           @xtype@    *qt,
     const isvd_int_t  ldqt
 ) {
+
+  // ====================================================================================================================== //
+  // Query arguments
+
+  if ( argc < 0 ) {
+    isvd_int_t argi = -1;
+    if ( retc > ++argi ) retv[argi] = kMaxit;
+    if ( retc > ++argi ) retv[argi] = kTol;
+    if ( retc > ++argi ) retv[argi] = kTau0;
+    if ( retc > ++argi ) retv[argi] = kTaumax;
+    if ( retc > ++argi ) retv[argi] = kTaumin;
+    if ( retc > ++argi ) retv[argi] = kTauMaxit;
+    if ( retc > ++argi ) retv[argi] = kBeta;
+    if ( retc > ++argi ) retv[argi] = kSigma;
+    if ( retc > ++argi ) retv[argi] = kEta;
+    return;
+  }
 
   // ====================================================================================================================== //
   // Get arguments
@@ -95,23 +115,23 @@ void isvd_@x@IntegrateWenYin(
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  @xtype@ *qct = isvd_@x@malloc(mj * l);
+  @xtype@ *qct = isvd_@x@malloc(l * mj);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype@ *qpt = isvd_@x@malloc(mj * l);
+  @xtype@ *qpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  @xtype@ *gct = isvd_@x@malloc(mj * l);
+  @xtype@ *gct = isvd_@x@malloc(l * mj);
   isvd_int_t ldgct = l;
 
   // matrix Xc'
-  @xtype@ *xct = isvd_@x@malloc(mj * l);
+  @xtype@ *xct = isvd_@x@malloc(l * mj);
   isvd_int_t ldxct = l;
 
   // matrix X+'
-  @xtype@ *xpt = isvd_@x@malloc(mj * l);
+  @xtype@ *xpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldxpt = l;
 
   // matrix Bc
@@ -226,8 +246,8 @@ void isvd_@x@IntegrateWenYin(
       // Compute inv(C)
       isvd_@x@Geinv(l2, c, ldc);
 
-      // Fc  [in C21] := I + inv(C22) * Dc - inv(C21)
-      // Fgc [in C11] :=     inv(C12) * Dc - inv(C21)
+      // Fc  [in C_21] := I + inv(C)_22 * Dc - inv(C)_21
+      // Fgc [in C_11] :=     inv(C)_12 * Dc - inv(C)_21
       isvd_@x@Gemm('N', 'N', l2, l, l, 1.0, cs2, ldc, dc, lddc, -1.0, cs1, ldc);
       for ( isvd_int_t ii = 0; ii < l; ++ii ) {
         c21[ii+ldc*ii] += 1.0;

@@ -10,11 +10,18 @@
 #define _ISVD_LA_VML_H_
 
 #include <isvd/la/vml/mathematical.h>
+#include <isvd/la/vml/power_root.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \defgroup  c_la_vml_math_module  Mathematical Routines
 /// \ingroup   c_la_vml_module
 /// \brief     The VML Mathematical Routines
+///
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \defgroup  c_la_vml_pow_module  Power and Root Routines
+/// \ingroup   c_la_vml_module
+/// \brief     The VML Power and Root Routines
 ///
 
 #endif  // _ISVD_LA_VML_H_

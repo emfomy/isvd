@@ -15,11 +15,21 @@
 extern "C" {
 #endif  // __cplusplus
 
-static inline int max( int a, int b ) {
+#define lenof( Array ) sizeof(Array) / sizeof(Array[0])
+
+static inline isvd_int_t max( isvd_int_t a, isvd_int_t b ) {
   return (a > b) ? a : b;
 }
 
-static inline int min( int a, int b ) {
+static inline isvd_int_t min( isvd_int_t a, isvd_int_t b ) {
+  return (a < b) ? a : b;
+}
+
+static inline size_t maxl( size_t a, size_t b ) {
+  return (a > b) ? a : b;
+}
+
+static inline size_t minl( size_t a, size_t b ) {
   return (a < b) ? a : b;
 }
 

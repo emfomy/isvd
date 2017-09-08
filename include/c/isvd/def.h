@@ -18,7 +18,9 @@
 #include <math.h>
 #include <isvd/config.h>
 
-#include <mpi.h>
+#undef I
+#undef imaginary
+#undef complex
 
 #if !defined(__cplusplus)
   #define ISVD_UNKNOWN
@@ -31,24 +33,32 @@ extern "C" {
 #endif  // __cplusplus
 
 /// \ingroup  c_core_module
-/// The type of index.
-//\{
+/// \brief  The type of index.
 #if !defined(ISVD_USE_ILP64)
 typedef int32_t  isvd_int_t;
-typedef uint32_t isvd_uint_t;
 #else  // ISVD_USE_ILP64
 typedef int64_t  isvd_int_t;
-typedef uint64_t isvd_uint_t;
 #endif  // ISVD_USE_ILP64
-//\}
 
 /// \ingroup  c_core_module
-/// The type of MPI index.
+/// \brief  The type of unsigned index.
+#if !defined(ISVD_USE_ILP64)
+typedef uint32_t  isvd_uint_t;
+#else  // ISVD_USE_ILP64
+typedef uint64_t  isvd_uint_t;
+#endif  // ISVD_USE_ILP64
+
+/// \ingroup  c_core_module
+/// \brief  The type of MPI index.
 typedef int mpi_int_t;
 
 /// \ingroup  c_core_module
-/// The type of OpenMP index.
+/// \brief    The type of OpenMP index.
 typedef int omp_int_t;
+
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
+typedef int MPI_Comm;
+#endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 #if defined(__cplusplus)
 }

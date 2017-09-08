@@ -9,11 +9,11 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-#include <libisvd/util/memory.h>
+#include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Gramian Orthogonalization (@xname@ precision)
+/// \brief  Gramian Orthogonalization (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -22,6 +22,9 @@
 /// \param[in]   yst, ldyst  The row-block 𝖄 (\f$ m_b \times Nl \f$, row-major) and its leading dimension.
 /// <hr>
 /// \param[out]  yst         Replaced by the row-block 𝕼 (row-major).
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@OrthogonalizeGramian(
     const isvd_Param  param,
@@ -33,8 +36,11 @@ void isvd_@x@OrthogonalizeGramian(
     const isvd_int_t  ldyst
 ) {
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
 
@@ -54,7 +60,7 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *yst_ = isvd_@x@malloc(mj * ldyst);
+  @xtype@ *yst_ = isvd_@x@malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
   @xtype@ *w = isvd_@x@malloc(l * Nl);
@@ -79,9 +85,7 @@ void isvd_@x@OrthogonalizeGramian(
   isvd_v@x@Sqrt(lds*N, s, s);
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
-  for ( isvd_int_t ii = 0; ii < Nl; ++ii ) {
-    isvd_@x@Scal(l, 1.0/s[ii], w + ii*ldw, 1);
-  }
+  isvd_@x@Dism('R', l, Nl, 1.0, s, w, ldw);
   isvd_@x@memcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);

@@ -98,9 +98,6 @@
 #
 # Modified by Mu Yang <emfomy@gmail.com>
 
-find_program(CMAKE_ENV env)
-mark_as_advanced(CMAKE_ENV)
-
 ################################################################################
 
 function(GTEST_ADD_TESTS executable extra_args)
@@ -165,7 +162,7 @@ function(GTEST_ADD_MPI_TESTS executable listprocs extra_args)
       continue()
       endif()
       foreach(procs ${listprocs})
-        add_test(NAME ${test_name}.${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_ENV} OMP_NUM_THREADS=${OMP_THRDS} ${executable} --gtest_filter=${test_name} ${extra_args})
+        add_test(NAME ${test_name}.${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env ${ENVS} ${executable} --gtest_filter=${test_name} ${extra_args})
       endforeach()
     endforeach()
   endforeach()

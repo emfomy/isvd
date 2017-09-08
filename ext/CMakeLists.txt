@@ -8,8 +8,5 @@ macro(SET_TARGET target files)
   set_target_properties(${target} PROPERTIES COMPILE_FLAGS "-w")
 endmacro()
 
-# Disable asserts
-list(APPEND DEFS "NDEBUG")
-
 # mmio
 set_target(extmmio ${CMAKE_CURRENT_SOURCE_DIR}/mmio/mmio.c)

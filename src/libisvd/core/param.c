@@ -8,7 +8,7 @@
 
 #include <isvd/core/param.h>
 #include <libisvd/def.h>
-#include <libisvd/util/mpi.h>
+#include <isvd/util/mpi.h>
 
 isvd_Param isvd_createParam(
     const isvd_int_t nrow,

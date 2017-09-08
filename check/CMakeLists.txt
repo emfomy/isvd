@@ -15,32 +15,39 @@ if(NOT ISVD_BUILD_TEST)
   return()
 endif()
 
-# GTest
-if(GTEST_FOUND)
-  list(APPEND INCS "${GTEST_INCLUDE_DIRS}")
-  list(APPEND LIBS "${GTEST_BOTH_LIBRARIES}")
-  list(APPEND DEFS "ISVD_USE_GTEST")
-endif()
+# Target rule
+function(ISVD_SET_TARGET_CHECK_CPU target)
+  isvd_set_target_omp(${target} CXX)
+  isvd_set_target_mpi(${target})
+  isvd_set_target_blas(${target})
+  isvd_set_target_gtest(${target})
+  target_link_libraries(${target} checkisvd extmmio)
+  target_compile_definitions(${target} PUBLIC "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
+endfunction()
+
+function(ISVD_SET_TARGET_CHECK_GPU target)
+  isvd_set_target_omp(${target} CXX)
+  isvd_set_target_mpi(${target})
+  isvd_set_target_blas(${target})
+  isvd_set_target_gtest(${target})
+  isvd_set_target_gpu(${target})
+  target_link_libraries(${target} checkisvd_gpu extmmio)
+  target_compile_definitions(${target} PUBLIC "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
+endfunction()
 
 # Set include paths
 include_directories("${PROJECT_CONFIG_DIR}/include/c"
                     "${CMAKE_CURRENT_CONFIG_DIR}/src"
+                    "${PROJECT_CONFIG_DIR}/src"
              SYSTEM "${PROJECT_SOURCE_DIR}/ext")
 
 # Add subdirectories
 add_subdirectory(src)
 
-# Set libraries
-list(APPEND LIBS checkisvd)
-list(APPEND LIBS extmmio)
-
-# Set definitions
-list(APPEND DEFS "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
-
 # Configure files
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_S_TYPES}")
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_D_TYPES}")
-isvd_configure_in_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check")
+isvd_configure_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check")
 
 # Include macros
 include(check.cmake)
@@ -50,30 +57,30 @@ macro(ISVD_CHECK_FN xtypes)
 
   isvd_set_types(${xtypes})
 
-  # CPU unit tests
-  set(DEFS_TMP "${DEFS}")
-  list(REMOVE_ITEM DEFS "ISVD_USE_GPU")
-
   # Sketching
-  add_mpi_check(libisvd/core/stage/${x}_sketch_gaussian_projection "${XName} Precision Gaussian Projection Sketching check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_sketch_gaussian_projection "${XName} Precision Gaussian Projection Sketching" "1;2;3;4;6;12")
 
   # Orthogonalization
-  add_mpi_check(libisvd/core/stage/${x}_orthogonalize_gramian "${XName} Precision Gramian Orthogonalization check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_orthogonalize_gramian "${XName} Precision Gramian Orthogonalization" "1;2;3;4;6;12")
 
   # Integration
-  add_mpi_check(libisvd/core/stage/${x}_integrate_kolmogorov_nagumo "${XName} Precision Kolmogorov Nagumo Integration check" "1;2;3;4;6;12")
-  add_mpi_check(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen Yin Integration check" "1;2;3;4;6;12")
-  add_mpi_check(libisvd/core/stage/${x}_integrate_hierarchical_reduction "${XName} Precision Hierarchical Reduction Integration check" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_kolmogorov_nagumo "${XName} Precision Kolmogorov Nagumo Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen Yin Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_hierarchical_reduction "${XName} Precision Hierarchical Reduction Integration" "1;2;3;4;6;12")
 
   # Postprocessing
-  add_mpi_check(libisvd/core/stage/${x}_postprocess_gramian "${XName} Precision Gramian Postprocessing check" "1;2;3;4;6;12")
-  add_mpi_check(libisvd/core/stage/${x}_postprocess_symmetric "${XName} Precision Symmetric Postprocessing check" "1;2;3;4;6;12")
-
-  set(DEFS "${DEFS_TMP}")
-  unset(DEFS_TMP)
+  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_gramian "${XName} Precision Gramian Postprocessing" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_symmetric "${XName} Precision Symmetric Postprocessing" "1;2;3;4;6;12")
 
   # GPU unit tests
   if(ISVD_USE_GPU)
+
+    # Sketching
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} Precision GPU Gaussian Projection Sketching" "1;2")
+
+    # Postprocessing
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} Precision GPU Gramian Postprocessing" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} Precision GPU Symmetric Postprocessing" "1;2")
   endif()
 endmacro()
 

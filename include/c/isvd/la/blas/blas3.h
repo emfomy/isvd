@@ -38,7 +38,7 @@ extern void zherk_(ISVD_UNKNOWN);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_3_module
-/// Computes a matrix-matrix product with general matrices.
+/// \brief  Computes a matrix-matrix product with general matrices.
 //\{
 static inline void isvd_sGemm(
     const CHAR1 transa, const CHAR1 transb, const INT m, const INT n, const INT k, const REAL4 alpha, const REAL4 *a,
@@ -60,7 +60,7 @@ static inline void isvd_zGemm(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_3_module
-/// Computes a matrix-matrix product where one input matrix is symmetric/Hermitian.
+/// \brief  Computes a matrix-matrix product where one input matrix is symmetric/Hermitian.
 //\{
 static inline void isvd_sSymm(
     const CHAR1 side, const CHAR1 uplo, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda,
@@ -82,7 +82,7 @@ static inline void isvd_zSymm(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_3_module
-/// Performs a symmetric/Hermitian rank-k update.
+/// \brief  Performs a symmetric/Hermitian rank-k update.
 //\{
 static inline void isvd_sSyrk(
     const CHAR1 uplo, const CHAR1 trans, const INT n, const INT k, const REAL4 alpha, const REAL4 *a, const INT lda,

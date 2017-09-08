@@ -24,13 +24,11 @@ extern void dlarnv_(const INT *idist, INT *iseed, const INT *n, REAL8 *x);
 extern void clarnv_(const INT *idist, INT *iseed, const INT *n, COMP4 *x);
 extern void zlarnv_(const INT *idist, INT *iseed, const INT *n, COMP8 *x);
 
-extern INT lsame_(ISVD_UNKNOWN);
-
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_aux_module
-/// Returns a vector of random numbers from a uniform or normal distribution.
+/// \brief  Returns a vector of random numbers from a uniform or normal distribution.
 //\{
 static inline void isvd_sLarnv(
     const INT idist, INT *iseed, const INT n, REAL4 *x
@@ -48,12 +46,13 @@ static inline void isvd_zLarnv(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_aux_module
-/// Tests two characters for equality regardless of the case.
-//\{
-static inline INT isvd_lsame(
-    const CHAR1 ca, const CHAR1 cb
-) { return lsame_(&ca, &cb); }
-//\}
+/// \brief  Tests two characters for equality regardless of the case.
+bool isvd_Lsame( const CHAR1 ca, const CHAR1 cb );
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \ingroup  c_la_lapack_aux_module
+/// \brief  Tests two character strings for equality regardless of the case.
+bool isvd_Lsamen( const INT n, const CHAR1 *sa, const CHAR1 *sb );
 
 @ISVD_LA_BLAS_TYPE_UNDEF@
 

@@ -12,7 +12,7 @@
 
 typedef @xtype@ isvd_val_t;
 
-TEST(@XStr@HierarchicalReductionIntegration, Test) {
+TEST(@XStr@_HierarchicalReductionIntegration, Test) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -33,7 +33,7 @@ TEST(@XStr@HierarchicalReductionIntegration, Test) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &Nl), 0);
 
-  isvd_val_t *qst0 = isvd_@x@malloc(m * Nl);
+  isvd_val_t *qst0 = isvd_@x@malloc(Nl * m);
   isvd_int_t ldqst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
@@ -79,38 +79,51 @@ TEST(@XStr@HierarchicalReductionIntegration, Test) {
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
 
+  const isvd_int_t mj  = param.nrow_proc;
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
 
   // Create matrices
-  isvd_val_t *qst = qst0 + param.rowidxbegin * ldqst0;
-  isvd_int_t ldqst = ldqst0;
+  isvd_val_t *qst = isvd_@x@malloc(Nl * mb);
+  isvd_int_t ldqst = Nl;
+  isvd_@x@Omatcopy('N', Nl, mj, 1.0, qst0 + param.rowidxbegin * ldqst0, ldqst0, qst, ldqst);
 
-  isvd_val_t *qt = isvd_@x@malloc(mb * l);
+  isvd_val_t *qt = isvd_@x@malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // Run stage
   isvd_@x@IntegrateHierarchicalReduction(param, nullptr, 0, nullptr, 0, qst, ldqst, qt, ldqt);
 
   // Gather results
-  isvd_val_t *qt_ = isvd_@x@malloc(Pmb * l);
+  isvd_val_t *qt_ = isvd_@x@malloc(l * Pmb);
   isvd_int_t ldqt_ = l;
   MPI_Gather(qt, mb*ldqt, MPI_@X_TYPE@, qt_, mb*ldqt, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
 
-  // Compute space
-  isvd_val_t *qqt_ = isvd_@x@malloc(m * m);
-  isvd_int_t ldqqt_ = m;
-  isvd_val_t *qqt0 = isvd_@x@malloc(m * m);
-  isvd_int_t ldqqt0 = m;
-  isvd_@x@Syrk('U', 'T', m, l, 1.0, qt_, ldqt_, 0.0, qqt_, ldqqt_);
-  isvd_@x@Syrk('U', 'T', m, l, 1.0, qt0, ldqt0, 0.0, qqt0, ldqqt0);
-
-  // Check results
   if ( mpi_rank == mpi_root ) {
+    // Compute space
+    isvd_val_t *qqt_ = isvd_@x@malloc(m * m);
+    isvd_int_t ldqqt_ = m;
+    isvd_val_t *qqt0 = isvd_@x@malloc(m * m);
+    isvd_int_t ldqqt0 = m;
+    isvd_@x@Syrk('U', 'T', m, l, 1.0, qt_, ldqt_, 0.0, qqt_, ldqqt_);
+    isvd_@x@Syrk('U', 'T', m, l, 1.0, qt0, ldqt0, 0.0, qqt0, ldqqt0);
+
+    // Check results
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
       for ( isvd_int_t ic = ir; ic < m; ++ic ) {
         ASSERT_NEAR(qqt_[ir+ic*ldqqt_], qqt0[ir+ic*ldqqt0], @x@err) << "(ir, ic) =  (" << ir << ", " << ic << ")";
       }
     }
+
+    // Deallocate memory
+    isvd_free(qqt_);
+    isvd_free(qqt0);
   }
+
+  // Deallocate memory
+  isvd_free(qst0);
+  isvd_free(qt0);
+  isvd_free(qst);
+  isvd_free(qt);
+  isvd_free(qt_);
 }

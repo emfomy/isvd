@@ -20,7 +20,7 @@ set(ISVD_DOCS_DIR "${PROJECT_BINARY_DIR}/docs")
 set(ISVD_DOCS_DIR "${ISVD_DOCS_DIR}" PARENT_SCOPE)
 
 # Configure files
-isvd_configure_in_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}")
+isvd_configure_fn("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_CONFIG_DIR}")
 
 # Set install rule
 install(DIRECTORY "${ISVD_DOCS_DIR}" DESTINATION docs)
