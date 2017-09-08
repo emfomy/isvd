@@ -19,7 +19,7 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_le_module
-/// Computes the inverse of a square matrix using LU factorization.
+/// \brief  Computes the inverse of a square matrix using LU factorization.
 //\{
 void isvd_sGeinv( const INT n, REAL4 *a, const INT lda );
 void isvd_dGeinv( const INT n, REAL8 *a, const INT lda );

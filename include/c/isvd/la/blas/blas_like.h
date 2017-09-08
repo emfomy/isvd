@@ -19,7 +19,7 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_like_module
-/// Performs scaling and out-place transposition/copying of matrices.
+/// \brief  Performs scaling and out-place transposition/copying of matrices.
 //\{
 void isvd_sOmatcopy(
     const CHAR1 trans, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda, REAL4 *b, const INT ldb
@@ -37,7 +37,7 @@ void isvd_zOmatcopy(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_like_module
-/// Computes a matrix-matrix product where one input matrix is diagonal.
+/// \brief  Computes a matrix-matrix product where one input matrix is diagonal.
 //\{
 void isvd_sDimm(
     const CHAR1 side, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, REAL4 *b, const INT ldb
@@ -55,7 +55,7 @@ void isvd_zDimm(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_like_module
-/// Solves a diagonal matrix equation.
+/// \brief  Solves a diagonal matrix equation.
 //\{
 void isvd_sDism(
     const CHAR1 side, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, REAL4 *b, const INT ldb
@@ -73,7 +73,7 @@ void isvd_zDism(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_like_module
-/// Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
+/// \brief  Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
 /// matrix.
 ///
 /// \attention  This routine calls \ref isvd_sGemm "isvd_?Gemm" if no MKL support.

@@ -12,6 +12,9 @@ Integrated Singular Value Decomposition (iSVD)
 ### Author
 * Mu Yang <<emfomy@gmail.com>>
 
+### Tutorial
+* @ref tutorial_main
+
 ## Requirements
 * [CMake](https://cmake.org) 2.8+ (CMake 3+ recommended).
 * C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.4+ recommended).

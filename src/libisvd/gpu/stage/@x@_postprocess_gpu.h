@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_GPU_STAGE_@X@_POSTPROCESS_GPU_H_
-#define _LIBISVD_GPU_STAGE_@X@_POSTPROCESS_GPU_H_
+#ifndef _LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
+#define _LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
 
 #include <isvd/gpu/@x@_stage.h>
 #include <libisvd/gpu/def.h>
@@ -17,7 +17,7 @@
 #include <isvd/util/memory.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-static void projectBlockCol_gpu(
+static void projectBlockCol(
     const isvd_Param  param,
     const char        ordera,
     const @xtype@    *a,
@@ -73,7 +73,7 @@ static void projectBlockCol_gpu(
   if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
   n_gpu = min(n_gpu, nj);
   if ( n_gpu <= 0 ) {
-    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+    fprintf(stderr, "No enough GPU memory. (Request at least %" PRId64 " bytes. Only %" PRId64 " bytes free.",
             nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
     isvd_assert_fail();
   }
@@ -150,7 +150,7 @@ static void projectBlockCol_gpu(
 
 }
 
-static void projectBlockRow_gpu(
+static void projectBlockRow(
     const isvd_Param  param,
     const char        ordera,
     const @xtype@    *a,
@@ -205,7 +205,7 @@ static void projectBlockRow_gpu(
   if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
   n_gpu = min(n_gpu, n);
   if ( n_gpu <= 0 ) {
-    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+    fprintf(stderr, "No enough GPU memory. (Request at least %" PRId64 " bytes. Only %" PRId64 " bytes free.",
             nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
     isvd_assert_fail();
   }
@@ -283,4 +283,4 @@ static void projectBlockRow_gpu(
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#endif  // _LIBISVD_GPU_STAGE_@X@_POSTPROCESS_GPU_H_
+#endif  // _LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_

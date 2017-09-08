@@ -13,7 +13,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Gramian Orthogonalization (@xname@ precision)
+/// \brief  Gramian Orthogonalization (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -22,6 +22,9 @@
 /// \param[in]   yst, ldyst  The row-block 𝖄 (\f$ m_b \times Nl \f$, row-major) and its leading dimension.
 /// <hr>
 /// \param[out]  yst         Replaced by the row-block 𝕼 (row-major).
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@OrthogonalizeGramian(
     const isvd_Param  param,
@@ -33,8 +36,11 @@ void isvd_@x@OrthogonalizeGramian(
     const isvd_int_t  ldyst
 ) {
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
 

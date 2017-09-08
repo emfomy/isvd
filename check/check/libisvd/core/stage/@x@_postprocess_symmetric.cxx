@@ -186,7 +186,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case GatherUV: {
 
       // Run stage
-      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, mpi_root);
+      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                   a, lda, qt, ldqt, s, ut_, ldut_, nullptr, 0, mpi_root, -2);
 
       break;
     }
@@ -198,7 +199,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       isvd_int_t ldut = l;
 
       // Run stage
-      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, ut, ldut, -1);
+      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                   a, lda, qt, ldqt, s, ut, ldut, nullptr, 0, -1, -2);
 
       // Gather results
       MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, ut_, mb*ldut, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
@@ -212,7 +214,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case NoUV: {
 
       // Run stage
-      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, qt, ldqt, s, nullptr, 0, -2);
+      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                   a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
 
       break;
     }

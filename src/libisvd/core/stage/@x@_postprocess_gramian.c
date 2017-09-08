@@ -15,7 +15,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Gramian Postprocessing (@xname@ precision)
+/// \brief  Gramian Postprocessing (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -49,9 +49,12 @@
 ///                          \b vt_root = -1: compute row-block 𝑽. <br>
 ///                          \b vt_root < -1: does not compute 𝑽.
 /// <hr>
-/// \param[out]  s           Replaced by the singular values 𝝈.
+/// \param[out]  s           Replaced by the singular values 𝝈 in descending order.
 /// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
 /// \param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@PostprocessGramian(
     const isvd_Param  param,
@@ -74,8 +77,11 @@ void isvd_@x@PostprocessGramian(
     const mpi_int_t   vt_root
 ) {
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
 

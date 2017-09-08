@@ -9,15 +9,18 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-// #include <libisvd/core/stage/@x@_postprocess.h>
+#include <libisvd/core/stage/@x@_postprocess.h>
 #include <libisvd/util/arg.h>
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \brief  Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
 /// \attention  Not implemented!
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@PostprocessTallSkinnyQr(
     const isvd_Param  param,
@@ -42,9 +45,12 @@ void isvd_@x@PostprocessTallSkinnyQr(
 
   fprintf(stderr, "Tall-Skinny QR Postprocessing is not implemented!\n");
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(param);
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
   ISVD_UNUSED(dista);
@@ -60,5 +66,7 @@ void isvd_@x@PostprocessTallSkinnyQr(
   ISVD_UNUSED(ldvt);
   ISVD_UNUSED(ut_root);
   ISVD_UNUSED(vt_root);
+  ISVD_UNUSED(projectBlockCol);
+  ISVD_UNUSED(projectBlockRow);
 
 }

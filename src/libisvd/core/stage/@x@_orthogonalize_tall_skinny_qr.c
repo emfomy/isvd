@@ -13,9 +13,12 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Tall-Skinny QR Orthogonalization (@xname@ precision)
+/// \brief  Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
 /// \attention  Not implemented!
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@OrthogonalizeTallSkinnyQr(
     const isvd_Param  param,
@@ -29,9 +32,12 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
 
   fprintf(stderr, "Tall-Skinny QR Orthogonalization is not implemented!\n");
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(param);
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
   ISVD_UNUSED(yst);

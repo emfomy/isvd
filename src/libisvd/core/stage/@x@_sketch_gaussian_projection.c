@@ -14,7 +14,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Gaussian Projection Sketching (@xname@ precision)
+/// \brief  Gaussian Projection Sketching (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -37,6 +37,9 @@
 /// <hr>
 /// \param[out]  yst         Replaced by the row-block 𝖄 (row-major).
 ///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
+///
 void isvd_@x@SketchGaussianProjection(
     const isvd_Param  param,
     const @xtype@    *argv,
@@ -53,8 +56,11 @@ void isvd_@x@SketchGaussianProjection(
     const mpi_int_t   mpi_root
 ) {
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
 

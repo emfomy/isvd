@@ -55,8 +55,8 @@ else()
   set(BIN_FOLDER "bin64")
   set(LIB_FOLDER "lib64")
   set(ISVD_USE_ILP64 "ON")
-  set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -DISVD_USE_ILP64 ")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DISVD_USE_ILP64 ")
+  set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -DISVD_USE_ILP64")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DISVD_USE_ILP64")
 endif()
 
 if(ISVD_BLAS STREQUAL "MKL")
@@ -68,8 +68,15 @@ else()
 endif()
 
 set(MKL_OMP ${ISVD_OMP})
+if(NOT ISVD_OMP)
+  set(OMP_THRDS 1)
+endif()
 
 # Enable testing
 if(ISVD_BUILD_TEST)
   enable_testing()
 endif()
+
+# Set environment variables
+list(APPEND ENVS "OMP_NUM_THREADS=${OMP_THRDS}")
+list(APPEND ENVS "ASAN_OPTIONS=color=always:protect_shadow_gap=0:replace_intrin=0:detect_leaks=0")

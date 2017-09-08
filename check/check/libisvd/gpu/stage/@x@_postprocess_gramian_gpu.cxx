@@ -250,7 +250,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
       // Run stage
       isvd_@x@PostprocessGramian_gpu(param, nullptr, 0, nullptr, 0, dista_, ordera_,
-                                 a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
+                                     a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
 
       break;
     }
