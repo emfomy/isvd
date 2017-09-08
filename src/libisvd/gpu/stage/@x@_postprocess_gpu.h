@@ -73,7 +73,7 @@ static void projectBlockCol_gpu(
   if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
   n_gpu = min(n_gpu, nj);
   if ( n_gpu <= 0 ) {
-    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+    fprintf(stderr, "No enough GPU memory. (Request at least %" PRId64 " bytes. Only %" PRId64 " bytes free.",
             nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
     isvd_assert_fail();
   }
@@ -205,7 +205,7 @@ static void projectBlockRow_gpu(
   if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
   n_gpu = min(n_gpu, n);
   if ( n_gpu <= 0 ) {
-    fprintf(stderr, "No enough GPU memory. (Request at least %"PRId64" bytes. Only %"PRId64" bytes free.",
+    fprintf(stderr, "No enough GPU memory. (Request at least %" PRId64 " bytes. Only %" PRId64 " bytes free.",
             nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
     isvd_assert_fail();
   }
