@@ -1,0 +1,52 @@
+/**
+  \page tutorial_core_example iSVD Example
+
+  <h3>iSVD</h3>
+
+  iSVD solves an approximate low-rank singular value decomposition of matrix `a`.
+
+  <h3>Example</h3>
+
+  The following is an example of using \ref isvd_dIsvd "iSVD driver". The code is also available in `<ISVD-DIR>/demo/cdemo.c`.
+
+  \includelineno demo/cdemo.c
+
+  <h4>Initialize Environment</h4>
+
+  The iSVD environment and random seed should be set up before calling the driver. \ref isvd_init also initialize the MPI environment and the MAGMA environment, and \ref isvd_printEnvironment display the the MPI environment and the MAGMA environment.
+
+  If one needs CPU only, one may use \ref isvd_init_cpu, \ref isvd_printEnvironment_cpu, and \ref isvd_finalize_cpu.
+
+  \snippetlineno demo/cdemo.c init-isvd
+
+  <h4>Load Data</h4>
+
+  In this example, we load the data from a Matrix Market format file. Note the all the MPI nodes should load the matrix.
+
+  \snippetlineno demo/cdemo.c load-data
+
+  <h4>Allocate matrices</h4>
+
+  The output matrices should be allocated before calling the driver. See \ref isvd_dIsvd for the detail of matrix sizes.
+
+  \snippetlineno demo/cdemo.c allocate-matrix
+
+  <h4>Run iSVD</h4>
+
+  The iSVD driver compute the approximate low-rank singular value decomposition. See \ref isvd_dIsvd for the detail of the arguments.
+
+  \snippetlineno demo/cdemo.c run-isvd
+
+  <h4>Get Executing Time</h4>
+
+  iSVD also records the executing time of each stage.
+
+  \snippetlineno demo/cdemo.c display-time
+
+  <h4>Finalize</h4>
+
+  Remember to \ref isvd_finalize "finalize" the environment.
+
+  \snippetlineno demo/cdemo.c final-isvd
+
+*/

@@ -22,7 +22,7 @@ void isvd_printEnvironment_cpu( const MPI_Comm comm );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Initializes the iSVD environment.
+/// \brief  Initializes the iSVD environment.
 ///
 /// \note  This routines initializes the MPI and MAGMA environments.
 ///
@@ -33,7 +33,7 @@ static inline void isvd_init( int *argcp, char ***argvp, const MPI_Comm mpi_comm
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Finalizes the iSVD environment.
+/// \brief  Finalizes the iSVD environment.
 ///
 /// \note  This routines initializes the MPI and MAGMA environments.
 ///
@@ -44,7 +44,7 @@ static inline void isvd_finalize() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Displays the iSVD environment.
+/// \brief  Displays the iSVD environment.
 ///
 /// \note  This routines displays the MPI and MAGMA environments.
 ///

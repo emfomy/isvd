@@ -15,7 +15,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_driver_module
-/// General iSVD driver (@xname@ precision).
+/// \brief  General iSVD driver (@xname@ precision).
 ///
 /// \param[in]   alg_s         The selection of sketching algorithm. <br>
 ///                            `"GP"`: \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching".
@@ -222,17 +222,6 @@ void isvd_@x@Isvd(
   fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
   time_p = MPI_Wtime() - time_p;
   if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
-
-  if ( stream != nullptr && mpi_rank == mpi_root ) {
-    double time_ = time_s + time_o + time_i + time_p;
-    fprintf(stream, "\n");
-    fprintf(stream, "Average total computing time:   %8.6f seconds.\n", time_);
-    fprintf(stream, "Average sketching time:         %8.6f seconds.\n", time_s);
-    fprintf(stream, "Average orthogonalizing time:   %8.6f seconds.\n", time_o);
-    fprintf(stream, "Average integrating time:       %8.6f seconds.\n", time_i);
-    fprintf(stream, "Average postprocessing time:    %8.6f seconds.\n", time_p);
-    fprintf(stream, "\n");
-  }
 
   // ====================================================================================================================== //
   // Gets executing times

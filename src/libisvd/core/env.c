@@ -13,7 +13,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Initializes the iSVD environment (CPU only).
+/// \brief  Initializes the iSVD environment (CPU only).
 ///
 /// \note  This routines initializes the MPI environment.
 ///
@@ -24,7 +24,7 @@ void isvd_init_cpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Finalizes the iSVD environment (CPU only).
+/// \brief  Finalizes the iSVD environment (CPU only).
 ///
 /// \note  This routines initializes the MPI environment.
 ///
@@ -34,7 +34,7 @@ void isvd_finalize_cpu( void ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
-/// Displays the iSVD environment (CPU only).
+/// \brief  Displays the iSVD environment (CPU only).
 ///
 /// \note  This routines displays the MPI environment.
 ///

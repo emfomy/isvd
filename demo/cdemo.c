@@ -73,7 +73,7 @@ int main( int argc, char **argv ) {
   }
   /// [load-data]
 
-  /// [alloc-matrix]
+  /// [allocate-matrix]
   // Allocate matrix
   const isvd_int_t k = 20, p = 12, l = k+p, N = 16, P = mpi_size;
   const isvd_int_t mb = (m-1)/P+1;
@@ -88,7 +88,7 @@ int main( int argc, char **argv ) {
 
   double *vt = isvd_dmalloc(l * Pnb);
   isvd_int_t ldvt = l;
-  /// [alloc-matrix]
+  /// [allocate-matrix]
 
   /// [run-isvd]
   isvd_int_t seed = 0;
@@ -104,13 +104,26 @@ int main( int argc, char **argv ) {
   );
   /// [run-isvd]
 
-  /// [dealloc-matrix]
-  // Deallocate matrix
+  /// [display-time]
+  if ( mpi_rank == mpi_root ) {
+    double time_ = time[0] + time[1] + time[2] + time[3];
+    printf("\n");
+    printf("Average total computing time:   %8.6f seconds.\n", time_);
+    printf("Average sketching time:         %8.6f seconds.\n", time[0]);
+    printf("Average orthogonalizing time:   %8.6f seconds.\n", time[1]);
+    printf("Average integrating time:       %8.6f seconds.\n", time[2]);
+    printf("Average postprocessing time:    %8.6f seconds.\n", time[3]);
+    printf("\n");
+  }
+  /// [display-time]
+
+  /// [deallocate-matrix]
+  // Deallocateate matrix
   isvd_free(a);
   isvd_free(s);
   isvd_free(ut);
   isvd_free(vt);
-  /// [dealloc-matrix]
+  /// [deallocate-matrix]
 
   /// [final-isvd]
   // Finalize iSVD
