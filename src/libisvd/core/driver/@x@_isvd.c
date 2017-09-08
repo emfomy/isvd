@@ -199,21 +199,40 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Run
 
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ...................... "); fflush(stream); }
   double time_s = MPI_Wtime();
   fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
   time_s = MPI_Wtime() - time_s;
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ................ "); fflush(stream); }
   double time_i = MPI_Wtime();
   fun_o(param, argv_o, argc_o, retv_o, retc_o, yst, ldyst);
   time_i = MPI_Wtime() - time_i;
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Integrating .................... "); fflush(stream); }
   double time_o = MPI_Wtime();
   fun_i(param, argv_i, argc_i, retv_i, retc_i, yst, ldyst, qt, ldqt);
   time_o = MPI_Wtime() - time_o;
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................. "); fflush(stream); }
   double time_p = MPI_Wtime();
   fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
   time_p = MPI_Wtime() - time_p;
+  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+
+  if ( stream != nullptr && mpi_rank == mpi_root ) {
+    double time_ = time_s + time_o + time_i + time_p;
+    fprintf(stream, "\n");
+    fprintf(stream, "Average total computing time:   %8.6f seconds.\n", time_);
+    fprintf(stream, "Average sketching time:         %8.6f seconds.\n", time_s);
+    fprintf(stream, "Average orthogonalizing time:   %8.6f seconds.\n", time_o);
+    fprintf(stream, "Average integrating time:       %8.6f seconds.\n", time_i);
+    fprintf(stream, "Average postprocessing time:    %8.6f seconds.\n", time_p);
+    fprintf(stream, "\n");
+  }
 
   // ====================================================================================================================== //
   // Gets executing times

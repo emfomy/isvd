@@ -9,7 +9,7 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
-// #include <libisvd/core/stage/@x@_postprocess.h>
+#include <libisvd/core/stage/@x@_postprocess.h>
 #include <libisvd/util/arg.h>
 #include <isvd/util/memory.h>
 
@@ -66,5 +66,7 @@ void isvd_@x@PostprocessTallSkinnyQr(
   ISVD_UNUSED(ldvt);
   ISVD_UNUSED(ut_root);
   ISVD_UNUSED(vt_root);
+  ISVD_UNUSED(projectBlockCol);
+  ISVD_UNUSED(projectBlockRow);
 
 }

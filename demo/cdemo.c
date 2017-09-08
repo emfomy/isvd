@@ -104,19 +104,6 @@ int main( int argc, char **argv ) {
   );
   /// [run-isvd]
 
-  /// [disp-time]
-  // Display executing time
-  if ( mpi_rank == mpi_root ) {
-    double time_ = time[0] + time[1] + time[2] + time[3];
-    printf("Average total computing time:   %8.6lf seconds.\n", time_  );
-    printf("Average sketching time:         %8.6lf seconds.\n", time[0]);
-    printf("Average orthogonalizing time:   %8.6lf seconds.\n", time[1]);
-    printf("Average integrating time:       %8.6lf seconds.\n", time[2]);
-    printf("Average postprocessing time:    %8.6lf seconds.\n", time[3]);
-    printf("\n");
-  }
-  /// [disp-time]
-
   /// [dealloc-matrix]
   // Deallocate matrix
   isvd_free(a);
