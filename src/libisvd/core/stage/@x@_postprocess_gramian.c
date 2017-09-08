@@ -53,6 +53,9 @@
 /// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
 /// \param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
+///
 void isvd_@x@PostprocessGramian(
     const isvd_Param  param,
     const @xtype@    *argv,
@@ -74,8 +77,11 @@ void isvd_@x@PostprocessGramian(
     const mpi_int_t   vt_root
 ) {
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
 

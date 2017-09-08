@@ -27,8 +27,8 @@
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. <br>
-///                          \b argv[0]: The maximum number of iteration. (optional, default as \ref kMaxit) <br>
-///                          \b argv[1]: The tolerance of convergence condition. (optional, default as \ref kTol)
+///                          \b argv[0]: The maximum number of iteration. <br>
+///                          \b argv[1]: The tolerance of convergence condition.
 /// \param[in]   retv, retc  The return values and its length.
 /// <hr>
 /// \param[in]   yst, ldyst  The row-block 𝕼 (\f$ m_b \times Nl \f$, row-major) and its leading dimension.
@@ -38,6 +38,9 @@
 ///                          \b retv[0]: The number of iteration. <br>
 ///                          \b retv[1]: The error.
 /// \param[out]  qt          Replaced by the row-block 𝑸 (row-major).
+///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@IntegrateWenYin(
     const isvd_Param  param,
@@ -50,6 +53,23 @@ void isvd_@x@IntegrateWenYin(
           @xtype@    *qt,
     const isvd_int_t  ldqt
 ) {
+
+  // ====================================================================================================================== //
+  // Query arguments
+
+  if ( argc < 0 ) {
+    isvd_int_t argi = -1;
+    if ( retc > ++argi ) retv[argi] = kMaxit;
+    if ( retc > ++argi ) retv[argi] = kTol;
+    if ( retc > ++argi ) retv[argi] = kTau0;
+    if ( retc > ++argi ) retv[argi] = kTaumax;
+    if ( retc > ++argi ) retv[argi] = kTaumin;
+    if ( retc > ++argi ) retv[argi] = kTauMaxit;
+    if ( retc > ++argi ) retv[argi] = kBeta;
+    if ( retc > ++argi ) retv[argi] = kSigma;
+    if ( retc > ++argi ) retv[argi] = kEta;
+    return;
+  }
 
   // ====================================================================================================================== //
   // Get arguments

@@ -26,6 +26,9 @@
 ///
 /// \attention  \b yst will be destroyed!
 ///
+/// \note  If \b argc < 0, then a default argument query is assumed;
+///        the routine only returns the first \b retc default arguments in \b retv.
+///
 void isvd_@x@IntegrateHierarchicalReduction(
     const isvd_Param  param,
     const @xtype@    *argv,
@@ -38,8 +41,11 @@ void isvd_@x@IntegrateHierarchicalReduction(
     const isvd_int_t  ldqt
 ) {
 
+  if ( argc < 0 ) {
+    return;
+  }
+
   ISVD_UNUSED(argv);
-  ISVD_UNUSED(argc);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
 
