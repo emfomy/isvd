@@ -38,6 +38,7 @@ endfunction()
 # Set include paths
 include_directories("${PROJECT_CONFIG_DIR}/include/c"
                     "${CMAKE_CURRENT_CONFIG_DIR}/src"
+                    "${PROJECT_CONFIG_DIR}/src"
              SYSTEM "${PROJECT_SOURCE_DIR}/ext")
 
 # Add subdirectories
@@ -75,11 +76,11 @@ macro(ISVD_CHECK_FN xtypes)
   if(ISVD_USE_GPU)
 
     # Sketching
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} GPU Precision Gaussian Projection Sketching" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} Precision GPU Gaussian Projection Sketching" "1;2")
 
     # Postprocessing
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} GPU Precision Gramian Postprocessing" "1;2")
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} GPU Precision Symmetric Postprocessing" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} Precision GPU Gramian Postprocessing" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} Precision GPU Symmetric Postprocessing" "1;2")
   endif()
 endmacro()
 

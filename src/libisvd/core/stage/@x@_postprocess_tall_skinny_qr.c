@@ -15,7 +15,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \brief  Tall-Skinny QR Postprocessing (@xname@ precision)
 ///
 /// \attention  Not implemented!
 ///

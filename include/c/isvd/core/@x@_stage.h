@@ -68,8 +68,8 @@ void isvd_@x@PostprocessGramian(
 void isvd_@x@PostprocessSymmetric(
     const isvd_Param param, const @xtype@ *argv, const isvd_int_t argc, @xtype@ *retv, const isvd_int_t retc,
     const char dista, const char ordera, const @xtype@ *a, const isvd_int_t lda, const @xtype@ *qt, const isvd_int_t ldqt,
-    @xtype@ *s, @xtype@ *ut, const isvd_int_t ldut,
-    const mpi_int_t ut_root
+    @xtype@ *s, @xtype@ *ut, const isvd_int_t ldut, @xtype@ *vt, const isvd_int_t ldvt,
+    const mpi_int_t ut_root, const mpi_int_t vt_root
 );
 
 #if defined(__cplusplus)

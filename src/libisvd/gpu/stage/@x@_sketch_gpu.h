@@ -6,11 +6,12 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_GPU_STAGE_@X@_SKETCH_GPU_H_
-#define _LIBISVD_GPU_STAGE_@X@_SKETCH_GPU_H_
+#ifndef _LIBISVD_CORE_STAGE_@X@_SKETCH_H_
+#define _LIBISVD_CORE_STAGE_@X@_SKETCH_H_
 
 #include <isvd/gpu/@x@_stage.h>
 #include <libisvd/gpu/def.h>
+#include <isvd/gpu/env.h>
 #include <isvd/la.h>
 #include <libisvd/util/function.h>
 #include <isvd/util/memory.h>
@@ -286,4 +287,4 @@ static void sketchBlockRow(
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#endif  // _LIBISVD_GPU_STAGE_@X@_SKETCH_GPU_H_
+#endif  // _LIBISVD_CORE_STAGE_@X@_SKETCH_H_

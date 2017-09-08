@@ -216,8 +216,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case GatherUV: {
 
       // Run stage
-      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0,
-                                 dista_, ordera_, a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
+      isvd_@x@PostprocessGramian(param, nullptr, 0, nullptr, 0, dista_, ordera_,
+                                 a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
 
       break;
     }

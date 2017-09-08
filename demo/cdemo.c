@@ -21,9 +21,9 @@ int main( int argc, char **argv ) {
   // Initialize iSVD environment
   isvd_init(&argc, &argv, MPI_COMM_WORLD);
 
-  mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
-  mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
-  mpi_int_t mpi_root = 0;
+  const mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
+  const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
+  const mpi_int_t mpi_root = 0;
 
   // Check input
   if ( argc < 5 ) {
@@ -92,15 +92,30 @@ int main( int argc, char **argv ) {
 
   /// [run-isvd]
   isvd_int_t seed = 0;
+  double time[4];
   isvd_dIsvd(
 #if !defined(ISVD_USE_GPU)
-    "GP", "GR", "KN", "GR", m, n, k, p, N, 'R', 'C',
+    "GP", "GR", "KN", "GR"
 #else  // ISVD_USE_GPU
-    "GP_gpu", "GR", "KN", "GR_gpu", m, n, k, p, N, 'R', 'C',
+    "GP_gpu", "GR", "KN", "GR_gpu"
 #endif  // ISVD_USE_GPU
+    , m, n, k, p, N, NULL, NULL, NULL, NULL, time, stdout, 'R', 'C',
     a + mb * mpi_rank, lda, s, ut, ldut, vt, ldvt, seed, mpi_root, mpi_root, mpi_root, MPI_COMM_WORLD
   );
   /// [run-isvd]
+
+  /// [disp-time]
+  // Display executing time
+  if ( mpi_rank == mpi_root ) {
+    double time_ = time[0] + time[1] + time[2] + time[3];
+    printf("Average total computing time:   %8.6lf seconds.\n", time_  );
+    printf("Average sketching time:         %8.6lf seconds.\n", time[0]);
+    printf("Average orthogonalizing time:   %8.6lf seconds.\n", time[1]);
+    printf("Average integrating time:       %8.6lf seconds.\n", time[2]);
+    printf("Average postprocessing time:    %8.6lf seconds.\n", time[3]);
+    printf("\n");
+  }
+  /// [disp-time]
 
   /// [dealloc-matrix]
   // Deallocate matrix

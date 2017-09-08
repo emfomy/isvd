@@ -150,7 +150,10 @@ void isvd_@x@PostprocessSymmetric_gpu(
           @xtype@    *s,
           @xtype@    *ut,
     const isvd_int_t  ldut,
-    const mpi_int_t   ut_root
+          @xtype@    *vt,
+    const isvd_int_t  ldvt,
+    const mpi_int_t   ut_root,
+    const mpi_int_t   vt_root
 ) {
   ISVD_UNUSED(param);
   ISVD_UNUSED(argv);
@@ -166,7 +169,10 @@ void isvd_@x@PostprocessSymmetric_gpu(
   ISVD_UNUSED(s);
   ISVD_UNUSED(ut);
   ISVD_UNUSED(ldut);
+  ISVD_UNUSED(vt);
+  ISVD_UNUSED(ldvt);
   ISVD_UNUSED(ut_root);
+  ISVD_UNUSED(vt_root);
 
   dummy(isvd_@x@PostprocessSymmetric_gpu);
 }

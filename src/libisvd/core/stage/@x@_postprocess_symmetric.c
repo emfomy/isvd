@@ -15,7 +15,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Symmetric Postprocessing (@xname@ precision)
+/// \brief  Symmetric Postprocessing (@xname@ precision)
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -36,16 +36,25 @@
 ///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
 ///                          \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                          \b ut_root < -1: not referenced.
+/// \param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
+///                          \b vt_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                          \b vt_root = -1: the size must be \f$m_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
+///                          \b vt_root < -1: not referenced.
 /// \param[in]   ut_root     The option for computing 𝑼. <br>
 ///                          \b ut_root ≥  0: gather 𝑼 to the MPI process of ID \b ut_root. <br>
 ///                          \b ut_root = -1: compute row-block 𝑼. <br>
 ///                          \b ut_root < -1: does not compute 𝑼.
+/// \param[in]   vt_root     The option for computing 𝑽. <br>
+///                          \b vt_root ≥  0: gather 𝑽 to the MPI process of ID \b vt_root. <br>
+///                          \b vt_root = -1: compute row-block 𝑽. <br>
+///                          \b vt_root < -1: does not compute 𝑽.
 /// <hr>
-/// \param[out]  s           Replaced by the singular values 𝝈.
-/// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
+/// \param[out]  s           Replaced by the eigenvalues 𝝈 in ascending order.
+/// \param[out]  ut          Replaced by the left eigenvectors 𝑼 (row-major).
 ///
 /// \note  If \b argc < 0, then a default argument query is assumed;
 ///        the routine only returns the first \b retc default arguments in \b retv.
+/// \note  The result of 𝑼 and 𝑽 are the same.
 ///
 void isvd_@x@PostprocessSymmetric(
     const isvd_Param  param,
@@ -62,7 +71,10 @@ void isvd_@x@PostprocessSymmetric(
           @xtype@    *s,
           @xtype@    *ut,
     const isvd_int_t  ldut,
-    const mpi_int_t   ut_root
+          @xtype@    *vt,
+    const isvd_int_t  ldvt,
+    const mpi_int_t   ut_root,
+    const mpi_int_t   vt_root
 ) {
 
   if ( argc < 0 ) {
@@ -72,6 +84,8 @@ void isvd_@x@PostprocessSymmetric(
   ISVD_UNUSED(argv);
   ISVD_UNUSED(retv);
   ISVD_UNUSED(retc);
+  ISVD_UNUSED(vt);
+  ISVD_UNUSED(ldvt);
 
   // ====================================================================================================================== //
   // Get parameters
@@ -88,6 +102,10 @@ void isvd_@x@PostprocessSymmetric(
 
   const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
   const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
+  if ( vt_root >= -1 ) {
+    fprintf(stderr, "VT_ROOT must not be set!");
+    return;
+  }
   if ( !dista_ || !ordera_ ) return;
 
   isvd_assert_eq(mj, nj);
@@ -129,7 +147,7 @@ void isvd_@x@PostprocessSymmetric(
   isvd_@x@Syev(jobw_, 'U', l, w, ldw, s);
 
   // ====================================================================================================================== //
-  // Compute singular vectors
+  // Compute eigenvectors
 
   // U := Q * W (U' := W' * Q')
   if ( ut_root >= -1 ) {

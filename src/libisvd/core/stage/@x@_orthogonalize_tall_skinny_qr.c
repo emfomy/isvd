@@ -13,7 +13,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// Tall-Skinny QR Orthogonalization (@xname@ precision)
+/// \brief  Tall-Skinny QR Orthogonalization (@xname@ precision)
 ///
 /// \attention  Not implemented!
 ///
