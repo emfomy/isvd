@@ -1,0 +1,17 @@
+if(CMAKE_VERSION VERSION_LESS 3.0.0)
+  set(CMAKE_ENV env)
+else()
+  set(CMAKE_ENV ${CMAKE_COMMAND} -E env)
+endif()
+
+if(CMAKE_VERSION VERSION_LESS 2.8.12)
+  set(SYSTEM "")
+else()
+  set(SYSTEM "SYSTEM")
+endif()
+
+if(CMAKE_VERSION VERSION_LESS 3.0.0)
+  set(DEPRECATION "WARNING")
+else()
+  set(DEPRECATION "DEPRECATION")
+endif()

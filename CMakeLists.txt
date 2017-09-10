@@ -1,7 +1,9 @@
 # The main CMake setting
 
-# cmake_minimum_required(VERSION 3.0)
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 2.8.11)
+
+# Compatibility with old versions
+include(cmake/old.cmake)
 
 # Set project
 set(ISVD_NAME "Integrated Singular Value Decomposition")
@@ -14,7 +16,7 @@ set(ISVD_VERSION "${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}.${ISVD_PATCH_VERSI
 include(cmake/cache.cmake)
 
 # Initialize project
-cmake_policy(SET CMP0048 OLD)
+# cmake_policy(SET CMP0048 OLD)
 project(ISVD)
 
 # Set Makefile

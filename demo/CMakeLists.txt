@@ -15,7 +15,7 @@ macro(SET_TARGET name files)
   # Add run rule
   add_custom_target(
     run_${name}
-    COMMAND ${CMAKE_COMMAND} -E env ${ENVS} ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPI_PROCS} $<TARGET_FILE:${target}> ${ARGN}
+    COMMAND ${CMAKE_ENV} ${ENVS} ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPI_PROCS} $<TARGET_FILE:${target}> ${ARGN}
     DEPENDS ${target}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Running ${name}"
@@ -28,4 +28,4 @@ include_directories("${PROJECT_CONFIG_DIR}/include/c")
 # C demo
 set_target(cdemo cdemo.c ${PROJECT_SOURCE_DIR}/data/a.mtx /dev/null /dev/null /dev/null)
 target_link_libraries(isvd_cdemo isvd extmmio)
-target_include_directories(isvd_cdemo SYSTEM PUBLIC "${PROJECT_SOURCE_DIR}/ext")
+target_include_directories(isvd_cdemo ${SYSTEM} PUBLIC "${PROJECT_SOURCE_DIR}/ext")

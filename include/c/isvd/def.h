@@ -13,6 +13,11 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+
+#if !defined(__STDC_FORMAT_MACROS)
+  #define __STDC_FORMAT_MACROS
+#endif
+
 #include <inttypes.h>
 #include <complex.h>
 #include <math.h>
