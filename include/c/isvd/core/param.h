@@ -22,7 +22,7 @@ extern "C" {
 typedef struct {
 
   /// The MPI communicator.
-  const MPI_Comm mpi_comm;
+  const isvd_MpiComm mpi_comm;
 
   /// \f$P\f$ The MPI size.
   const mpi_int_t mpi_size;
@@ -89,7 +89,7 @@ typedef struct {
 ///
 isvd_Param isvd_createParam(
     const isvd_int_t nrow, const isvd_int_t ncol, const isvd_int_t rank, const isvd_int_t over_rank,
-    const isvd_int_t num_sketch, const mpi_int_t mpi_root, const MPI_Comm mpi_comm
+    const isvd_int_t num_sketch, const mpi_int_t mpi_root, const isvd_MpiComm mpi_comm
 );
 
 #if defined(__cplusplus)

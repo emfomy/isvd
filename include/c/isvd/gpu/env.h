@@ -18,11 +18,11 @@ extern "C" {
 
 extern size_t isvd_gpu_memory_limit;
 
-void isvd_init_gpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm );
+void isvd_init_gpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm );
 
 void isvd_finalize_gpu( void );
 
-void isvd_printEnvironment_gpu( const MPI_Comm comm );
+void isvd_printEnvironment_gpu( const isvd_MpiComm comm );
 
 #if defined(__cplusplus)
 }

@@ -9,15 +9,14 @@
 #ifndef _ISVD_DEF_H_
 #define _ISVD_DEF_H_
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-
 #if !defined(__STDC_FORMAT_MACROS)
   #define __STDC_FORMAT_MACROS
 #endif
 
+#include <assert.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include <inttypes.h>
 #include <complex.h>
 #include <math.h>
@@ -61,9 +60,9 @@ typedef int mpi_int_t;
 /// \brief    The type of OpenMP index.
 typedef int omp_int_t;
 
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-typedef int MPI_Comm;
-#endif  // DOXYGEN_SHOULD_SKIP_THIS
+/// \ingroup  c_core_module
+/// \brief  The MPI communicator type.
+typedef int isvd_MpiComm;
 
 #if defined(__cplusplus)
 }

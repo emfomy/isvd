@@ -16,9 +16,9 @@
 extern "C" {
 #endif  // __cplusplus
 
-void isvd_init_cpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm );
+void isvd_init_cpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm );
 void isvd_finalize_cpu( void );
-void isvd_printEnvironment_cpu( const MPI_Comm comm );
+void isvd_printEnvironment_cpu( const isvd_MpiComm comm );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
@@ -26,7 +26,7 @@ void isvd_printEnvironment_cpu( const MPI_Comm comm );
 ///
 /// \note  This routines initializes the MPI and MAGMA environments.
 ///
-static inline void isvd_init( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
+static inline void isvd_init( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
   isvd_init_cpu(argcp, argvp, mpi_comm);
   isvd_init_gpu(argcp, argvp, mpi_comm);
 }
@@ -48,7 +48,7 @@ static inline void isvd_finalize() {
 ///
 /// \note  This routines displays the MPI and MAGMA environments.
 ///
-static inline void isvd_printEnvironment( const MPI_Comm mpi_comm ) {
+static inline void isvd_printEnvironment( const isvd_MpiComm mpi_comm ) {
   isvd_printEnvironment_cpu(mpi_comm);
   isvd_printEnvironment_gpu(mpi_comm);
 }

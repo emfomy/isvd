@@ -11,12 +11,14 @@ set(ISVD_MAJOR_VERSION 1)
 set(ISVD_MINOR_VERSION 2)
 set(ISVD_PATCH_VERSION 0)
 set(ISVD_VERSION "${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}.${ISVD_PATCH_VERSION}")
+if(NOT CMAKE_VERSION VERSION_LESS 3.0.0)
+  cmake_policy(SET CMP0048 OLD)
+endif()
 
 # Set cache options
 include(cmake/cache.cmake)
 
 # Initialize project
-# cmake_policy(SET CMP0048 OLD)
 project(ISVD)
 
 # Set Makefile
