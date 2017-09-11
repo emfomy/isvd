@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_H_
-#define _ISVD_H_
+#ifndef ISVD_H_
+#define ISVD_H_
 
 #include <isvd/def.h>
 #include <isvd/core.h>
@@ -39,4 +39,4 @@
 /// \brief     The Utilities
 ///
 
-#endif  // _ISVD_H_
+#endif  // ISVD_H_

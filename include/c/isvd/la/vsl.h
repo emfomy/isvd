@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_VSL_H_
-#define _ISVD_LA_VSL_H_
+#ifndef ISVD_LA_VSL_H_
+#define ISVD_LA_VSL_H_
 
 #include <isvd/la/vsl/service.h>
 #include <isvd/la/vsl/distribution.h>
@@ -24,4 +24,4 @@
 /// \brief     The VSL Distribution Generators
 ///
 
-#endif  // _ISVD_LA_VSL_H_
+#endif  // ISVD_LA_VSL_H_

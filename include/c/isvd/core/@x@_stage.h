@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_CORE_@X@_STAGE_H_
-#define _ISVD_CORE_@X@_STAGE_H_
+#ifndef ISVD_CORE_@X@_STAGE_H_
+#define ISVD_CORE_@X@_STAGE_H_
 
 #include <isvd/def.h>
 #include <isvd/core/param.h>
@@ -76,4 +76,4 @@ void isvd_@x@PostprocessSymmetric(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_@X@_STAGE_H_
+#endif  // ISVD_CORE_@X@_STAGE_H_

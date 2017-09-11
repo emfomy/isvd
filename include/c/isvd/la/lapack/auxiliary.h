@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_LAPACK_AUXILARY_H_
-#define _ISVD_LA_LAPACK_AUXILARY_H_
+#ifndef ISVD_LA_LAPACK_AUXILIARY_H_
+#define ISVD_LA_LAPACK_AUXILIARY_H_
 
 #include <isvd/def.h>
 
@@ -60,4 +60,4 @@ bool isvd_Lsamen( const INT n, const CHAR1 *sa, const CHAR1 *sb );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_LAPACK_AUXILARY_H_
+#endif  // ISVD_LA_LAPACK_AUXILIARY_H_

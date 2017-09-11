@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_BLAS_BLAS_LIKE_H_
-#define _ISVD_LA_BLAS_BLAS_LIKE_H_
+#ifndef ISVD_LA_BLAS_BLAS_LIKE_H_
+#define ISVD_LA_BLAS_BLAS_LIKE_H_
 
 #include <isvd/def.h>
 
@@ -73,8 +73,8 @@ void isvd_zDism(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_like_module
-/// \brief  Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the result
-/// matrix.
+/// \brief  Computes a matrix-matrix product with general matrices but updates only the upper or lower triangular part of the
+///         result matrix.
 ///
 /// \attention  This routine calls \ref isvd_sGemm "isvd_?Gemm" if no MKL support.
 //\{
@@ -102,4 +102,4 @@ void isvd_zGemmt(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_BLAS_BLAS_LIKE_H_
+#endif  // ISVD_LA_BLAS_BLAS_LIKE_H_

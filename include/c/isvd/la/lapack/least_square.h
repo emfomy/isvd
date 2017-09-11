@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_LAPACK_LEAST_SQUARE_H_
-#define _ISVD_LA_LAPACK_LEAST_SQUARE_H_
+#ifndef ISVD_LA_LAPACK_LEAST_SQUARE_H_
+#define ISVD_LA_LAPACK_LEAST_SQUARE_H_
 
 #include <isvd/def.h>
 
@@ -47,4 +47,4 @@ void isvd_zGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n,
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_LAPACK_LEAST_SQUARE_H_
+#endif  // ISVD_LA_LAPACK_LEAST_SQUARE_H_

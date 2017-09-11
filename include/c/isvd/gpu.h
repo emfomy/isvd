@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_GPU_H_
-#define _ISVD_GPU_H_
+#ifndef ISVD_GPU_H_
+#define ISVD_GPU_H_
 
 #include <isvd/gpu/env.h>
 #include <isvd/gpu/s_stage.h>
@@ -25,4 +25,4 @@
 /// \brief     The Stage Routines with Real Double Precision
 ///
 
-#endif  // _ISVD_GPU_H_
+#endif  // ISVD_GPU_H_

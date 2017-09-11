@@ -6,10 +6,9 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_CORE_H_
-#define _ISVD_CORE_H_
+#ifndef ISVD_CORE_H_
+#define ISVD_CORE_H_
 
-#include <isvd/core/env.h>
 #include <isvd/core/env.h>
 #include <isvd/core/param.h>
 #include <isvd/core/s_driver.h>
@@ -41,4 +40,4 @@
 /// \brief     The Stage Routines with Real Double Precision
 ///
 
-#endif  // _ISVD_CORE_H_
+#endif  // ISVD_CORE_H_

@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_UTIL_MEMORY_H_
-#define _ISVD_UTIL_MEMORY_H_
+#ifndef ISVD_UTIL_MEMORY_H_
+#define ISVD_UTIL_MEMORY_H_
 
 #include <isvd/def.h>
 
@@ -39,4 +39,4 @@ void isvd_zmemcpy( _Complex double *dst, const _Complex double *src, const size_
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_UTIL_MEMORY_H_
+#endif  // ISVD_UTIL_MEMORY_H_

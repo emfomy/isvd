@@ -6,10 +6,10 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_CORE_H_
-#define _LIBISVD_CORE_H_
+#ifndef LIBISVD_CORE_H_
+#define LIBISVD_CORE_H_
 
 #include <libisvd/core/s_arg.h>
 #include <libisvd/core/d_arg.h>
 
-#endif  // _LIBISVD_CORE_H_
+#endif  // LIBISVD_CORE_H_

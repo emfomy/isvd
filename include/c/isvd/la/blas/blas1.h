@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_BLAS_BLAS1_H_
-#define _ISVD_LA_BLAS_BLAS1_H_
+#ifndef ISVD_LA_BLAS_BLAS1_H_
+#define ISVD_LA_BLAS_BLAS1_H_
 
 #include <isvd/def.h>
 
@@ -175,4 +175,4 @@ static inline void isvd_zdScal(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_BLAS_BLAS1_H_
+#endif  // ISVD_LA_BLAS_BLAS1_H_

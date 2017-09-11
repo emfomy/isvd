@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_UTIL_H_
-#define _ISVD_UTIL_H_
+#ifndef ISVD_UTIL_H_
+#define ISVD_UTIL_H_
 
 #include <isvd/util/io.h>
 #include <isvd/util/memory.h>
@@ -38,4 +38,4 @@
 /// \brief     The OpenMP Utilities
 ///
 
-#endif  // _ISVD_UTIL_H_
+#endif  // ISVD_UTIL_H_

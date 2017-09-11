@@ -123,7 +123,7 @@ void isvd_@x@Isvd(
     const mpi_int_t   ut_root,
     const mpi_int_t   vt_root,
     const mpi_int_t   mpi_root,
-    const MPI_Comm    mpi_comm
+    const isvd_MpiComm    mpi_comm
 ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);

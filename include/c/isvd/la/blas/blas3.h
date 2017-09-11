@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_BLAS_BLAS3_H_
-#define _ISVD_LA_BLAS_BLAS3_H_
+#ifndef ISVD_LA_BLAS_BLAS3_H_
+#define ISVD_LA_BLAS_BLAS3_H_
 
 #include <isvd/def.h>
 
@@ -108,4 +108,4 @@ static inline void isvd_zSyrk(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_BLAS_BLAS3_H_
+#endif  // ISVD_LA_BLAS_BLAS3_H_

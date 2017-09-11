@@ -17,7 +17,7 @@ macro(_ADD_CHECK_PREDO checktype)
   add_executable(${checktarget} EXCLUDE_FROM_ALL ${checkmain} ${files})
   isvd_set_target(${checktarget})
   target_compile_definitions(${checktarget} PUBLIC "ISVD_CHECK_NAME=\"${checkcomment}\"")
-  set(CMAKE_CHECK_TARGETS ${CMAKE_CHECK_TARGETS} ${checktarget} PARENT_SCOPE)
+  add_dependencies(build_check ${checktarget})
   list(REVERSE files)
 endmacro()
 
@@ -53,7 +53,7 @@ macro(_ADD_MPI_CHECK checktype listprocs)
     gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${listprocs}" "" ${checkmain} ${files})
   else()
     foreach(procs ${listprocs})
-      add_test(NAME ${checkname}_${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env ${ENVS} $<TARGET_FILE:${checktarget}>)
+      add_test(NAME ${checkname}_${procs} COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_ENV} ${ENVS} $<TARGET_FILE:${checktarget}>)
     endforeach()
   endif()
 
@@ -61,7 +61,7 @@ macro(_ADD_MPI_CHECK checktype listprocs)
   foreach(procs ${listprocs})
     add_custom_target(
       check_${checkname}_${procs}
-      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_COMMAND} -E env ${ENVS} $<TARGET_FILE:${checktarget}>
+      COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${procs} ${CMAKE_ENV} ${ENVS} $<TARGET_FILE:${checktarget}>
       DEPENDS ${checktarget}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Run check ${checkpath}"

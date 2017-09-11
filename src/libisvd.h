@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_H_
-#define _LIBISVD_H_
+#ifndef LIBISVD_H_
+#define LIBISVD_H_
 
 #include <libisvd/def.h>
 #include <libisvd/core.h>
@@ -17,4 +17,4 @@
   #include <libisvd/gpu.h>
 #endif  // ISVD_USE_GPU
 
-#endif  // _LIBISVD_H_
+#endif  // LIBISVD_H_

@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_VSL_DISTRIBUTION_H_
-#define _ISVD_LA_VSL_DISTRIBUTION_H_
+#ifndef ISVD_LA_VSL_DISTRIBUTION_H_
+#define ISVD_LA_VSL_DISTRIBUTION_H_
 
 #include <isvd/def.h>
 #include <isvd/la/vsl/service.h>
@@ -32,4 +32,4 @@ void isvd_vdRngGaussian( isvd_VSLStreamStatePtr stream, const INT n, REAL8 *r, c
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_VSL_DISTRIBUTION_H_
+#endif  // ISVD_LA_VSL_DISTRIBUTION_H_

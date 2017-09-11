@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_UTIL_OMP_H_
-#define _ISVD_UTIL_OMP_H_
+#ifndef ISVD_UTIL_OMP_H_
+#define ISVD_UTIL_OMP_H_
 
 #include <isvd/def.h>
 
@@ -22,4 +22,4 @@ omp_int_t isvd_getOmpRank( void );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_UTIL_OMP_H_
+#endif  // ISVD_UTIL_OMP_H_

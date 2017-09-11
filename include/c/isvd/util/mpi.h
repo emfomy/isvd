@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_UTIL_MPI_H_
-#define _ISVD_UTIL_MPI_H_
+#ifndef ISVD_UTIL_MPI_H_
+#define ISVD_UTIL_MPI_H_
 
 #include <isvd/def.h>
 
@@ -15,11 +15,11 @@
 extern "C" {
 #endif  // __cplusplus
 
-mpi_int_t isvd_getMpiSize( const MPI_Comm comm );
-mpi_int_t isvd_getMpiRank( const MPI_Comm comm );
+mpi_int_t isvd_getMpiSize( const isvd_MpiComm comm );
+mpi_int_t isvd_getMpiRank( const isvd_MpiComm comm );
 
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_UTIL_MPI_H_
+#endif  // ISVD_UTIL_MPI_H_
