@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_UTIL_IO_H_
-#define _ISVD_UTIL_IO_H_
+#ifndef ISVD_UTIL_IO_H_
+#define ISVD_UTIL_IO_H_
 
 #include <isvd/def.h>
 
@@ -23,4 +23,4 @@ void isvd_dfget( FILE *stream, double *varp );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_UTIL_IO_H_
+#endif  // ISVD_UTIL_IO_H_

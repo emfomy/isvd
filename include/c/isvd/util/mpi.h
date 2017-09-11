@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_UTIL_MPI_H_
-#define _ISVD_UTIL_MPI_H_
+#ifndef ISVD_UTIL_MPI_H_
+#define ISVD_UTIL_MPI_H_
 
 #include <isvd/def.h>
 
@@ -22,4 +22,4 @@ mpi_int_t isvd_getMpiRank( const isvd_MpiComm comm );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_UTIL_MPI_H_
+#endif  // ISVD_UTIL_MPI_H_

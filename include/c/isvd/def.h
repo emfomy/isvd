@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_DEF_H_
-#define _ISVD_DEF_H_
+#ifndef ISVD_DEF_H_
+#define ISVD_DEF_H_
 
 #if !defined(__STDC_FORMAT_MACROS)
   #define __STDC_FORMAT_MACROS
@@ -68,4 +68,4 @@ typedef int isvd_MpiComm;
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_DEF_H_
+#endif  // ISVD_DEF_H_

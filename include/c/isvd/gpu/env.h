@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_GPU_ENV_H_
-#define _ISVD_GPU_ENV_H_
+#ifndef ISVD_GPU_ENV_H_
+#define ISVD_GPU_ENV_H_
 
 #include <isvd/def.h>
 #include <mpi.h>
@@ -28,4 +28,4 @@ void isvd_printEnvironment_gpu( const isvd_MpiComm comm );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_GPU_ENV_H_
+#endif  // ISVD_GPU_ENV_H_

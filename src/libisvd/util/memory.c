@@ -13,9 +13,9 @@
 
 #if defined(ISVD_USE_MKL)
   #define isvd_xmalloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
-#else // ISVD_USE_MKL
+#else  // ISVD_USE_MKL
   #define isvd_xmalloc( num, type ) (type*)(malloc(num * sizeof(type)));
-#endif // ISVD_USE_MKL
+#endif  // ISVD_USE_MKL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_util_memory_module
@@ -57,9 +57,9 @@ _Complex double* isvd_zmalloc( const size_t num ) {
 void isvd_free( void *ptr ) {
 #if defined(ISVD_USE_MKL)
   mkl_free(ptr);
-#else // ISVD_USE_MKL
+#else  // ISVD_USE_MKL
   free(ptr);
-#endif // ISVD_USE_MKL
+#endif  // ISVD_USE_MKL
 }
 //\}
 

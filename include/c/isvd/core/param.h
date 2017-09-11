@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_CORE_PARAM_H_
-#define _ISVD_CORE_PARAM_H_
+#ifndef ISVD_CORE_PARAM_H_
+#define ISVD_CORE_PARAM_H_
 
 #include <isvd/def.h>
 
@@ -96,4 +96,4 @@ isvd_Param isvd_createParam(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_PARAM_H_
+#endif  // ISVD_CORE_PARAM_H_

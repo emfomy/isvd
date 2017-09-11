@@ -17,7 +17,7 @@ macro(_ADD_CHECK_PREDO checktype)
   add_executable(${checktarget} EXCLUDE_FROM_ALL ${checkmain} ${files})
   isvd_set_target(${checktarget})
   target_compile_definitions(${checktarget} PUBLIC "ISVD_CHECK_NAME=\"${checkcomment}\"")
-  set(CMAKE_CHECK_TARGETS ${CMAKE_CHECK_TARGETS} ${checktarget} PARENT_SCOPE)
+  add_dependencies(build_check ${checktarget})
   list(REVERSE files)
 endmacro()
 

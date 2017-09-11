@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_VML_MATHEMATICAL_H_
-#define _ISVD_LA_VML_MATHEMATICAL_H_
+#ifndef ISVD_LA_VML_MATHEMATICAL_H_
+#define ISVD_LA_VML_MATHEMATICAL_H_
 
 #include <isvd/def.h>
 
@@ -53,4 +53,4 @@ void isvd_vzSqrt( const INT n, const COMP8 *a, COMP8 *y );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_VML_MATHEMATICAL_H_
+#endif  // ISVD_LA_VML_MATHEMATICAL_H_

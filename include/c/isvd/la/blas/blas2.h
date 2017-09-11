@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_BLAS_BLAS2_H_
-#define _ISVD_LA_BLAS_BLAS2_H_
+#ifndef ISVD_LA_BLAS_BLAS2_H_
+#define ISVD_LA_BLAS_BLAS2_H_
 
 #include <isvd/def.h>
 
@@ -27,4 +27,4 @@ extern "C" {
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_BLAS_BLAS2_H_
+#endif  // ISVD_LA_BLAS_BLAS2_H_

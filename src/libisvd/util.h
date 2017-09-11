@@ -6,10 +6,10 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_UTIL_H_
-#define _LIBISVD_UTIL_H_
+#ifndef LIBISVD_UTIL_H_
+#define LIBISVD_UTIL_H_
 
 #include <libisvd/util/arg.h>
 #include <libisvd/util/function.h>
 
-#endif  // _LIBISVD_UTIL_H_
+#endif  // LIBISVD_UTIL_H_

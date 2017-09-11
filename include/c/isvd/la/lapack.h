@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_LAPACK_H_
-#define _ISVD_LA_LAPACK_H_
+#ifndef ISVD_LA_LAPACK_H_
+#define ISVD_LA_LAPACK_H_
 
 #include <isvd/la/lapack/linear_equation.h>
 #include <isvd/la/lapack/least_square.h>
@@ -31,4 +31,4 @@
 /// \brief     The LAPACK Auxiliary Routines
 ///
 
-#endif  // _ISVD_LA_LAPACK_H_
+#endif  // ISVD_LA_LAPACK_H_

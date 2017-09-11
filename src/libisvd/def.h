@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_DEF_H_
-#define _LIBISVD_DEF_H_
+#ifndef LIBISVD_DEF_H_
+#define LIBISVD_DEF_H_
 
 #include <isvd/def.h>
 
@@ -56,7 +56,7 @@
 
 #if defined(ISVD_USE_MKL)
   #include <mkl.h>
-#endif // ISVD_USE_MKL
+#endif  // ISVD_USE_MKL
 
 
 #if defined(__cplusplus)
@@ -138,4 +138,4 @@ extern "C" {
 }
 #endif  // __cplusplus
 
-#endif  // _LIBISVD_DEF_H_
+#endif  // LIBISVD_DEF_H_

@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_CORE_@X@_DRIVER_H_
-#define _ISVD_CORE_@X@_DRIVER_H_
+#ifndef ISVD_CORE_@X@_DRIVER_H_
+#define ISVD_CORE_@X@_DRIVER_H_
 
 #include <isvd/def.h>
 
@@ -31,4 +31,4 @@ void isvd_@x@Isvd(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_@X@_DRIVER_H_
+#endif  // ISVD_CORE_@X@_DRIVER_H_

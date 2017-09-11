@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_LAPACK_LINEAR_EQUATION_H_
-#define _ISVD_LA_LAPACK_LINEAR_EQUATION_H_
+#ifndef ISVD_LA_LAPACK_LINEAR_EQUATION_H_
+#define ISVD_LA_LAPACK_LINEAR_EQUATION_H_
 
 #include <isvd/def.h>
 
@@ -33,4 +33,4 @@ void isvd_zGeinv( const INT n, COMP8 *a, const INT lda );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_LAPACK_LINEAR_EQUATION_H_
+#endif  // ISVD_LA_LAPACK_LINEAR_EQUATION_H_

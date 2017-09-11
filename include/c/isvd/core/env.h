@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_CORE_ENV_H_
-#define _ISVD_CORE_ENV_H_
+#ifndef ISVD_CORE_ENV_H_
+#define ISVD_CORE_ENV_H_
 
 #include <isvd/def.h>
 #include <isvd/gpu/env.h>
@@ -57,4 +57,4 @@ static inline void isvd_printEnvironment( const isvd_MpiComm mpi_comm ) {
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_CORE_ENV_H_
+#endif  // ISVD_CORE_ENV_H_

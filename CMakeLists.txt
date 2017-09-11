@@ -51,6 +51,7 @@ add_subdirectory(demo)
 add_subdirectory(share)
 add_subdirectory(check)
 add_subdirectory(doxygen)
+add_subdirectory(cpplint)
 
 # Display message
 include(cmake/display.cmake)

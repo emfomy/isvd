@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_GPU_DEF_H_
-#define _LIBISVD_GPU_DEF_H_
+#ifndef LIBISVD_GPU_DEF_H_
+#define LIBISVD_GPU_DEF_H_
 
 #if !defined(ISVD_USE_GPU)
   #error ISVD_USE_GPU must be set to enable GPU support!
@@ -25,4 +25,4 @@
 
 static const size_t isvd_kBlockSizeGpu = 64;
 
-#endif  // _LIBISVD_GPU_DEF_H_
+#endif  // LIBISVD_GPU_DEF_H_
