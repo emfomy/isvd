@@ -79,4 +79,4 @@ endif()
 
 # Set environment variables
 list(APPEND ENVS "OMP_NUM_THREADS=${OMP_THRDS}")
-list(APPEND ENVS "ASAN_OPTIONS=color=always:protect_shadow_gap=0:replace_intrin=0:detect_leaks=0")
+list(APPEND ENVS "ASAN_OPTIONS=color=always:protect_shadow_gap=0")

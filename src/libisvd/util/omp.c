@@ -7,3 +7,5 @@
 ///
 /// \note  Implement in \ref src/libisvd/la/util/omp.c
 ///
+
+#include <isvd/util/omp.h>

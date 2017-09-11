@@ -141,6 +141,7 @@ static void sketchBlockCol(
   // Deallocate memory
 
   isvd_free(omegat);
+  isvd_free(yst_);
   magma_free(a_gpu);
   magma_free(omegat_gpu);
   magma_free(yst_gpu);

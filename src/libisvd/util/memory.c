@@ -7,3 +7,5 @@
 ///
 /// \note  Implement in \ref src/libisvd/la/util/memory.c
 ///
+
+#include <isvd/util/memory.h>
