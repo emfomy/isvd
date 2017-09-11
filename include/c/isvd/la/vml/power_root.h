@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_VML_POWER_ROOT_H_
-#define _ISVD_LA_VML_POWER_ROOT_H_
+#ifndef ISVD_LA_VML_POWER_ROOT_H_
+#define ISVD_LA_VML_POWER_ROOT_H_
 
 #include <isvd/def.h>
 
@@ -33,4 +33,4 @@ void isvd_vzDiv( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_VML_POWER_ROOT_H_
+#endif  // ISVD_LA_VML_POWER_ROOT_H_

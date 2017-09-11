@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_CORE_STAGE_@X@_SKETCH_H_
-#define _LIBISVD_CORE_STAGE_@X@_SKETCH_H_
+#ifndef LIBISVD_CORE_STAGE_@X@_SKETCH_H_
+#define LIBISVD_CORE_STAGE_@X@_SKETCH_H_
 
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
@@ -178,4 +178,4 @@ static void sketchBlockRow(
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#endif  // _LIBISVD_CORE_STAGE_@X@_SKETCH_H_
+#endif  // LIBISVD_CORE_STAGE_@X@_SKETCH_H_

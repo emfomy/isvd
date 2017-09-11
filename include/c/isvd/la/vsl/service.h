@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_VSL_SERVICE_H_
-#define _ISVD_LA_VSL_SERVICE_H_
+#ifndef ISVD_LA_VSL_SERVICE_H_
+#define ISVD_LA_VSL_SERVICE_H_
 
 #include <isvd/def.h>
 
@@ -40,4 +40,4 @@ void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip );
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_LA_VSL_SERVICE_H_
+#endif  // ISVD_LA_VSL_SERVICE_H_

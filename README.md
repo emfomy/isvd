@@ -16,7 +16,7 @@ Integrated Singular Value Decomposition (iSVD)
 * @ref tutorial_main
 
 ## Requirements
-* [CMake](https://cmake.org) 2.8+ (CMake 3+ recommended).
+* [CMake](https://cmake.org) 2.8.11+ (CMake 3.0+ recommended).
 * C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.4+ recommended).
 * [BLAS](http://www.netlib.org/blas) & [LAPACK](http://www.netlib.org/lapack) library (Used for multi-core parallelization).
 * MPI Library v2.2+ ([MPICH](http://www.mpich.org) or [OpenMPI](https://www.open-mpi.org)).
@@ -84,26 +84,26 @@ The following table are the main make rules
 
 ### Libraries
 
-Please link exact one library of each kind.
+Please link exactly one library for all categories.
 
 * Correct
   * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_mkl_iomp -lisvd_gpu_magma`
   * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_none`
 * Wrong
   * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core`
-    * (Some kind of libraries are not linked)
+    * (Some category of libraries are not linked)
   * `gcc test.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_blas -lisvd_gpu_magma -lisvd_gpu_none`
-    * (Some kind of libraries are linked multiple times)
+    * (Some category of libraries are linked multiple times)
 
-| Name                   | Kind           | Detail                                 |
-|------------------------|----------------|----------------------------------------|
-| `isvd_core`            | Core           | Core routines                          |
-| `isvd_la_blas`         | Linear Algebra | Sequential Plain BLAS                  |
-| `isvd_la_mkl`          | Linear Algebra | Sequential Intel MKL                   |
-| `isvd_la_mkl_gomp`     | Linear Algebra | Parallel Intel MKL using GNU OpenMP    |
-| `isvd_la_mkl_iomp`     | Linear Algebra | Parallel Intel MKL using Intel OpenMP  |
-| `isvd_gpu_none`        | GPU            | No GPU                                 |
-| `isvd_gpu_magma`       | GPU            | MAGMA GPU                              |
+| Name                   | Category       | Detail                                 | Options                            |
+|------------------------|----------------|----------------------------------------|------------------------------------|
+| `isvd_core`            | Core           | Core routines                          |                                    |
+| `isvd_la_blas`         | Linear Algebra | Sequential Plain BLAS                  | `ISVD_BLAS=BLAS`, `ISVD_OMP=NO`    |
+| `isvd_la_mkl`          | Linear Algebra | Sequential Intel MKL                   | `ISVD_BLAS=MKL`,  `ISVD_OMP=NO`    |
+| `isvd_la_mkl_gomp`     | Linear Algebra | Parallel Intel MKL using GNU OpenMP    | `ISVD_BLAS=MKL`,  `ISVD_OMP=GOMP`  |
+| `isvd_la_mkl_iomp`     | Linear Algebra | Parallel Intel MKL using Intel OpenMP  | `ISVD_BLAS=MKL`,  `ISVD_OMP=IOMP`  |
+| `isvd_gpu_none`        | GPU            | No GPU                                 | `ISVD_USE_GPU=NO`                  |
+| `isvd_gpu_magma`       | GPU            | MAGMA GPU                              | `ISVD_USE_GPU=YES`                 |
 
 ## Q&amp;A
 
@@ -114,11 +114,11 @@ Please link exact one library of each kind.
 * After changing the options, press `<c>` to configure, and press `<g>` to generate Makefiles if configured successfully.
 * To quit without saving, press `<q>`.
 
-### Why Intel MKL is not found?
+### Why isn't Intel MKL found?
 
 * Source `mklvars.sh` in the `bin` folder of your Intel MKL to set the environment variables.
 
-### Why Google Test is not found?
+### Why isn't Google Test found?
 
 * Set `GTEST_ROOT` to a folder containing `include` and `lib` of Google Test.
 

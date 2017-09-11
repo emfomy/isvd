@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_UTIL_FUNCTION_H_
-#define _LIBISVD_UTIL_FUNCTION_H_
+#ifndef LIBISVD_UTIL_FUNCTION_H_
+#define LIBISVD_UTIL_FUNCTION_H_
 
 #include <libisvd/def.h>
 
@@ -37,4 +37,4 @@ static inline size_t minl( size_t a, size_t b ) {
 }
 #endif  // __cplusplus
 
-#endif  // _LIBISVD_UTIL_FUNCTION_H_
+#endif  // LIBISVD_UTIL_FUNCTION_H_

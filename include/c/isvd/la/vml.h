@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_VML_H_
-#define _ISVD_LA_VML_H_
+#ifndef ISVD_LA_VML_H_
+#define ISVD_LA_VML_H_
 
 #include <isvd/la/vml/mathematical.h>
 #include <isvd/la/vml/power_root.h>
@@ -24,4 +24,4 @@
 /// \brief     The VML Power and Root Routines
 ///
 
-#endif  // _ISVD_LA_VML_H_
+#endif  // ISVD_LA_VML_H_

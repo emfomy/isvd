@@ -12,7 +12,7 @@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-void isvd_init_gpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
+void isvd_init_gpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
   ISVD_UNUSED(argcp);
   ISVD_UNUSED(argvp);
   ISVD_UNUSED(mpi_comm);
@@ -21,7 +21,7 @@ void isvd_init_gpu( int *argcp, char ***argvp, const MPI_Comm mpi_comm ) {
 void isvd_finalize_gpu( void ) {
 }
 
-void isvd_printEnvironment_gpu( const MPI_Comm mpi_comm ) {
+void isvd_printEnvironment_gpu( const isvd_MpiComm mpi_comm ) {
   ISVD_UNUSED(mpi_comm);
   printf("No GPU support\n\n");
 }

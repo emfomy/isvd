@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_BLAS_H_
-#define _ISVD_LA_BLAS_H_
+#ifndef ISVD_LA_BLAS_H_
+#define ISVD_LA_BLAS_H_
 
 #include <isvd/la/blas/blas1.h>
 #include <isvd/la/blas/blas2.h>
@@ -38,4 +38,4 @@
 /// \brief     The BLAS-Like Routines
 ///
 
-#endif  // _ISVD_LA_BLAS_H_
+#endif  // ISVD_LA_BLAS_H_

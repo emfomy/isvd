@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_UTIL_ARG_H_
-#define _LIBISVD_UTIL_ARG_H_
+#ifndef LIBISVD_UTIL_ARG_H_
+#define LIBISVD_UTIL_ARG_H_
 
 #include <libisvd/def.h>
 #include <stdio.h>
@@ -83,4 +83,4 @@ static inline const char* isvd_arg2str(
 }
 #endif  // __cplusplus
 
-#endif  // _LIBISVD_UTIL_ARG_H_
+#endif  // LIBISVD_UTIL_ARG_H_

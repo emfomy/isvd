@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_LA_H_
-#define _ISVD_LA_H_
+#ifndef ISVD_LA_H_
+#define ISVD_LA_H_
 
 #include <isvd/la/blas.h>
 #include <isvd/la/lapack.h>
@@ -38,4 +38,4 @@
 /// \brief     The Vector Statical Library
 ///
 
-#endif  // _ISVD_LA_H_
+#endif  // ISVD_LA_H_

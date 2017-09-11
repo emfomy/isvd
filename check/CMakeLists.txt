@@ -15,10 +15,24 @@ if(NOT ISVD_BUILD_TEST)
   return()
 endif()
 
+# Add rule 'build_check'
+add_custom_target(
+  build_check
+  COMMENT "Building unit tests"
+)
+
+# Add rule 'check'
+add_custom_target(
+  check
+  COMMAND ${CMAKE_CTEST_COMMAND}
+  DEPENDS build_check
+  COMMENT "Running unit tests"
+)
+
 # Target rule
 function(ISVD_SET_TARGET_CHECK_CPU target)
   isvd_set_target_omp(${target} CXX)
-  isvd_set_target_mpi(${target})
+  isvd_set_target_mpi(${target} CXX)
   isvd_set_target_blas(${target})
   isvd_set_target_gtest(${target})
   target_link_libraries(${target} checkisvd extmmio)
@@ -27,7 +41,7 @@ endfunction()
 
 function(ISVD_SET_TARGET_CHECK_GPU target)
   isvd_set_target_omp(${target} CXX)
-  isvd_set_target_mpi(${target})
+  isvd_set_target_mpi(${target} CXX)
   isvd_set_target_blas(${target})
   isvd_set_target_gtest(${target})
   isvd_set_target_gpu(${target})
@@ -88,18 +102,3 @@ endmacro()
 isvd_check_fn("${ISVD_S_TYPES}")
 isvd_check_fn("${ISVD_D_TYPES}")
 unset(isvd_check_fn)
-
-# Add rule 'build_check'
-add_custom_target(
-  build_check
-  DEPENDS ${CMAKE_CHECK_TARGETS}
-  COMMENT "Building unit tests"
-)
-
-# Add rule 'check'
-add_custom_target(
-  check
-  COMMAND ${CMAKE_CTEST_COMMAND}
-  DEPENDS ${CMAKE_CHECK_TARGETS}
-  COMMENT "Running unit tests"
-)

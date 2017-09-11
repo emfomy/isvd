@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
-#define _LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
+#ifndef LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
+#define LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
 
 #include <libisvd/def.h>
 #include <isvd/la.h>
@@ -167,4 +167,4 @@ static void projectBlockRow(
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-#endif  // _LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_
+#endif  // LIBISVD_CORE_STAGE_@X@_POSTPROCESS_H_

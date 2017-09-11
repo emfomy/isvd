@@ -22,7 +22,7 @@
 ///
 /// \return       The number of processes in the group of \a comm.
 ///
-mpi_int_t isvd_getMpiSize( const MPI_Comm comm ) {
+mpi_int_t isvd_getMpiSize( const isvd_MpiComm comm ) {
   mpi_int_t size; isvd_assert_pass(MPI_Comm_size(comm, &size)); return size;
 }
 
@@ -34,6 +34,6 @@ mpi_int_t isvd_getMpiSize( const MPI_Comm comm ) {
 ///
 /// \return       The rank of the calling process in group of \a comm.
 ///
-mpi_int_t isvd_getMpiRank( const MPI_Comm comm ) {
+mpi_int_t isvd_getMpiRank( const isvd_MpiComm comm ) {
   mpi_int_t rank; isvd_assert_pass(MPI_Comm_rank(comm, &rank)); return rank;
 }

@@ -6,9 +6,9 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _LIBISVD_GPU_H_
-#define _LIBISVD_GPU_H_
+#ifndef LIBISVD_GPU_H_
+#define LIBISVD_GPU_H_
 
 #include <libisvd/gpu/def.h>
 
-#endif  // _LIBISVD_GPU_H_
+#endif  // LIBISVD_GPU_H_

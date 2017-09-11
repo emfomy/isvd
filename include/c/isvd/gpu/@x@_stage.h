@@ -6,8 +6,8 @@
 /// \copyright  MIT License
 ///
 
-#ifndef _ISVD_GPU_@X@_STAGE_H_
-#define _ISVD_GPU_@X@_STAGE_H_
+#ifndef ISVD_GPU_@X@_STAGE_H_
+#define ISVD_GPU_@X@_STAGE_H_
 
 #include <isvd/def.h>
 #include <isvd/core/param.h>
@@ -79,4 +79,4 @@ void isvd_@x@PostprocessSymmetric_gpu(
 }
 #endif  // __cplusplus
 
-#endif  // _ISVD_GPU_@X@_STAGE_H_
+#endif  // ISVD_GPU_@X@_STAGE_H_
