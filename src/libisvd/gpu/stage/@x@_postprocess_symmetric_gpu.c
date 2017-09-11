@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/gpu/stage/@x@_postprocess_symmetric_gpu.c
-/// \brief      The GPU Symmetric Postprocessing (@xname@ precision)
+/// \brief      The GPU Symmetric Postprocessing (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_postprocess.h
-/// \brief      The Postprocessing utilities (@xname@ precision)
+/// \brief      The Postprocessing utilities (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

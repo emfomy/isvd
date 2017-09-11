@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/gpu/stage/@x@_sketch_gaussian_projection_gpu.c
-/// \brief      The GPU Gaussian Projection Sketching (@xname@ precision)
+/// \brief      The GPU Gaussian Projection Sketching (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

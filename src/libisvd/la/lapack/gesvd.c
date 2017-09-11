@@ -7,7 +7,7 @@
 ///
 
 #include <isvd/la/lapack/least_square.h>
-#include <libisvd/def.h>
+#include <libisvd/la/def.h>
 #include <isvd/util/memory.h>
 #include <libisvd/util/function.h>
 

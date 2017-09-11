@@ -11,6 +11,7 @@
 
 #include <isvd/la/vsl/service.h>
 #include <isvd/la/vsl/distribution.h>
+#include <isvd/la/vsl/driver.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \defgroup  c_la_vsl_service_module  Service Routines
@@ -22,6 +23,12 @@
 /// \defgroup  c_la_vsl_distribution_module  Distribution Generators
 /// \ingroup   c_la_vsl_module
 /// \brief     The VSL Distribution Generators
+///
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \defgroup  c_la_vsl_driver_module  Driver Generators
+/// \ingroup   c_la_vsl_module
+/// \brief     The VSL Driver Generators
 ///
 
 #endif  // ISVD_LA_VSL_H_

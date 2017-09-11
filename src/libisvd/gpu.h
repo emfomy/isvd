@@ -9,6 +9,4 @@
 #ifndef LIBISVD_GPU_H_
 #define LIBISVD_GPU_H_
 
-#include <libisvd/gpu/def.h>
-
 #endif  // LIBISVD_GPU_H_

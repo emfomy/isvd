@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_orthogonalize_tall_skinny_qr.c
-/// \brief      The Tall-Skinny QR Orthogonalization (@xname@ precision)
+/// \brief      The Tall-Skinny QR Orthogonalization (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -13,7 +13,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// \brief  Tall-Skinny QR Orthogonalization (@xname@ precision)
+/// \brief  Tall-Skinny QR Orthogonalization (@xname@ precision).
 ///
 /// \attention  Not implemented!
 ///

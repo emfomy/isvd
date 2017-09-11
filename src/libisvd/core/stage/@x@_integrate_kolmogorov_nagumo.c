@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_integrate_kolmogorov_nagumo.c
-/// \brief      The Kolmogorov-Nagumo Integration (@xname@ precision)
+/// \brief      The Kolmogorov-Nagumo Integration (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -16,7 +16,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// \brief  Kolmogorov-Nagumo Integration (@xname@ precision)
+/// \brief  Kolmogorov-Nagumo Integration (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. <br>

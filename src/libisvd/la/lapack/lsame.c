@@ -7,7 +7,7 @@
 ///
 
 #include <isvd/la/lapack/auxiliary.h>
-#include <libisvd/def.h>
+#include <libisvd/la/def.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@
 

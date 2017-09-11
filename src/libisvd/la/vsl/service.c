@@ -12,7 +12,7 @@
 #endif  // ISVD_USE_MKL
 
 #include <isvd/la/vsl/service.h>
-#include <libisvd/def.h>
+#include <libisvd/la/def.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@
 

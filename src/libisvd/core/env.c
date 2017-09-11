@@ -39,11 +39,8 @@ void isvd_finalize_cpu( void ) {
 /// \note  This routines displays the MPI environment.
 ///
 void isvd_printEnvironment_cpu( const isvd_MpiComm mpi_comm ) {
-  mpi_int_t mpi_size = isvd_getMpiSize(mpi_comm), omp_size;
-  ISVD_OMP_PARALLEL
-  {
-    omp_size = isvd_getOmpSize();
-  }
+  mpi_int_t mpi_size = isvd_getMpiSize(mpi_comm);
+  omp_int_t omp_size = isvd_getOmpMaxSize();
 
   printf("iSVD %s, %lu-bit isvd_int_t, %lu-bit pointer\n", ISVD_VERSION, sizeof(isvd_int_t) * 8, sizeof(void*) * 8);
   printf("%d MPI nodes, %d OpenMP threads per node\n\n", mpi_size, omp_size);

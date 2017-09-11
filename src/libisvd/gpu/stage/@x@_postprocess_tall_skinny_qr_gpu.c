@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/gpu/stage/@x@_postprocess_tall_skinny_qr_gpu.c
-/// \brief      The GPU Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \brief      The GPU Tall-Skinny QR Postprocessing (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License

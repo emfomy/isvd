@@ -2,9 +2,8 @@
 
 isvd_set_config_var()
 
+# Shared library
 SET(BUILD_SHARED_LIBS ON)
-
-# RPath
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 

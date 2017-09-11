@@ -18,7 +18,7 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_@x@_stage_module
-/// \brief  GPU Gaussian Projection Sketching (@xname@ precision)
+/// \brief  GPU Gaussian Projection Sketching (@xname@ precision).
 ///
 /// \copydetails  isvd_@x@SketchGaussianProjection
 ///
@@ -32,7 +32,7 @@ void isvd_@x@SketchGaussianProjection_gpu(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_@x@_stage_module
-/// \brief  GPU Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \brief  GPU Tall-Skinny QR Postprocessing (@xname@ precision).
 ///
 /// \copydetails  isvd_@x@PostprocessTallSkinnyQr
 ///
@@ -47,7 +47,7 @@ void isvd_@x@PostprocessTallSkinnyQr_gpu(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_@x@_stage_module
-/// \brief  GPU Gramian Postprocessing (@xname@ precision)
+/// \brief  GPU Gramian Postprocessing (@xname@ precision).
 ///
 /// \copydetails  isvd_@x@PostprocessGramian
 ///
@@ -62,7 +62,7 @@ void isvd_@x@PostprocessGramian_gpu(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_gpu_@x@_stage_module
-/// \brief  GPU Symmetric Postprocessing (@xname@ precision)
+/// \brief  GPU Symmetric Postprocessing (@xname@ precision).
 ///
 /// \copydetails  isvd_@x@PostprocessSymmetric
 ///

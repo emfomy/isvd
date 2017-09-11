@@ -7,7 +7,7 @@
 ///
 
 #include <isvd/la/blas/blas_like.h>
-#include <libisvd/def.h>
+#include <libisvd/la/def.h>
 #include <libisvd/util/arg.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@

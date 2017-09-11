@@ -10,54 +10,17 @@
 #define LIBISVD_DEF_H_
 
 #include <isvd/def.h>
-
-#if defined(ISVD_USE_ILP64) && !defined(MKL_ILP64)
-  #define MKL_ILP64
-#else  // ISVD_USE_ILP64
-  #undef MKL_ILP64
-#endif  // ISVD_USE_ILP64
-
-#if defined(_OPENMP)
-  #if !defined(ISVD_USE_OMP)
-    #define ISVD_USE_OMP
-  #endif  // ISVD_USE_OMP
-#else  // _OPENMP
-  #undef ISVD_USE_OMP
-#endif  // _OPENMP
-
-#if defined(ISVD_USE_OMP)
-  #include <omp.h>
-  #define ISVD_OMP_PARALLEL _Pragma("omp parallel")
-#else
-  #define ISVD_OMP_PARALLEL
-#endif  // ISVD_USE_OMP
-
 #include <mpi.h>
 
 #if defined(ISVD_USE_GTEST) && defined(__cplusplus)
   #include <gtest/gtest.h>
 #endif  // ISVD_USE_GTEST
 
-
 #define ISVD_UNUSED( x ) (void)(x)
 
 #if !defined(__cplusplus) || (__cplusplus < 201103L)
   #define nullptr NULL
 #endif
-
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-#if defined(ISVD_USE_MKL)
-  #define MKL_INT       isvd_int_t
-  #define MKL_UINT      isvd_uint_t
-  #define MKL_Complex8  _Complex float
-  #define MKL_Complex16 _Complex double
-#endif  // ISVD_USE_MKL
-#endif  // DOXYGEN_SHOULD_SKIP_THIS
-
-#if defined(ISVD_USE_MKL)
-  #include <mkl.h>
-#endif  // ISVD_USE_MKL
-
 
 #if defined(__cplusplus)
 extern "C" {

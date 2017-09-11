@@ -15,6 +15,7 @@
 extern "C" {
 #endif  // __cplusplus
 
+omp_int_t isvd_getOmpMaxSize( void );
 omp_int_t isvd_getOmpSize( void );
 omp_int_t isvd_getOmpRank( void );
 

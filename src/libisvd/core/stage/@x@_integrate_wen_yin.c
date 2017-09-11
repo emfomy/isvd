@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_integrate_wen_yin.c
-/// \brief      The Wen-Yin Integration (@xname@ precision)
+/// \brief      The Wen-Yin Integration (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -23,7 +23,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// \brief  Wen-Yin Integration (@xname@ precision)
+/// \brief  Wen-Yin Integration (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. <br>

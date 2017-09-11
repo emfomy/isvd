@@ -7,7 +7,7 @@
 ///
 
 #include <isvd/la/lapack/linear_equation.h>
-#include <libisvd/def.h>
+#include <libisvd/la/def.h>
 #include <isvd/util/memory.h>
 
 @ISVD_LA_BLAS_TYPE_DEFINE@

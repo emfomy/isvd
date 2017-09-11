@@ -9,8 +9,8 @@
 #ifndef LIBISVD_H_
 #define LIBISVD_H_
 
-#include <libisvd/def.h>
 #include <libisvd/core.h>
+#include <libisvd/la.h>
 #include <libisvd/util.h>
 
 #if defined(ISVD_USE_GPU)

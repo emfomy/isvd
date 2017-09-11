@@ -9,7 +9,6 @@
 #ifndef ISVD_H_
 #define ISVD_H_
 
-#include <isvd/def.h>
 #include <isvd/core.h>
 #include <isvd/gpu.h>
 #include <isvd/la.h>

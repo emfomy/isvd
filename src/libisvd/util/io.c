@@ -19,7 +19,7 @@
 //\{
 void isvd_ifget( FILE *stream, isvd_int_t *varp ) {
 #if !defined(ISVD_USE_ILP64)
-  isvd_int_t info = fscanf(stream, "%"PRId32,  varp);
+  isvd_int_t info = fscanf(stream, "%" PRId32,  varp);
 #else  // ISVD_USE_ILP64
   isvd_int_t info = fscanf(stream, "%" PRId64, varp);
 #endif  // ISVD_USE_ILP64

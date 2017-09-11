@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_orthogonalize_gramian.c
-/// \brief      The Gramian Orthogonalization (@xname@ precision)
+/// \brief      The Gramian Orthogonalization (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -13,7 +13,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// \brief  Gramian Orthogonalization (@xname@ precision)
+/// \brief  Gramian Orthogonalization (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)

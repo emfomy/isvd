@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/gpu/stage/@x@_sketch_gpu.h
-/// \brief      The GPU Sketching utilities (@xname@ precision)
+/// \brief      The GPU Sketching utilities (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -100,25 +100,7 @@ static void sketchBlockCol(
 
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm);
-
-  ISVD_OMP_PARALLEL
-  {
-    omp_int_t omp_size = isvd_getOmpSize();
-    omp_int_t omp_rank = isvd_getOmpRank();
-
-    isvd_int_t len   = nj * Nl / omp_size;
-    isvd_int_t start = len * omp_rank;
-    if ( omp_rank == omp_size-1 ) {
-      len = nj * Nl - start;
-    }
-
-    isvd_VSLStreamStatePtr stream;
-    isvd_vslNewStream(&stream, seed_);
-    isvd_vslSkipAheadStream(stream, (Nl * nb * param.mpi_rank + start) * 2);
-    isvd_v@x@RngGaussian(stream, len, omegat + start, 0.0, 1.0);
-
-    isvd_vslDeleteStream(&stream);
-  }
+  isvd_v@x@RngGaussianDriver(seed_, Nl * nb * param.mpi_rank, nj * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //
   // Project
@@ -232,25 +214,7 @@ static void sketchBlockRow(
 
   isvd_int_t seed_ = seed;
   MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
-
-  ISVD_OMP_PARALLEL
-  {
-    omp_int_t omp_size = isvd_getOmpSize();
-    omp_int_t omp_rank = isvd_getOmpRank();
-
-    isvd_int_t len   = n * Nl / omp_size;
-    isvd_int_t start = len * omp_rank;
-    if ( omp_rank == omp_size-1 ) {
-      len = n * Nl - start;
-    }
-
-    isvd_VSLStreamStatePtr stream;
-    isvd_vslNewStream(&stream, seed_);
-    isvd_vslSkipAheadStream(stream, start * 2);
-    isvd_v@x@RngGaussian(stream, len, omegat + start, 0.0, 1.0);
-
-    isvd_vslDeleteStream(&stream);
-  }
+  isvd_v@x@RngGaussianDriver(seed_, 0, n * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //
   // Project

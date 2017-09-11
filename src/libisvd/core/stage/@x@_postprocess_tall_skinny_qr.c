@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_postprocess_tall_skinny_qr.c
-/// \brief      The Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \brief      The Tall-Skinny QR Postprocessing (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -15,7 +15,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// \brief  Tall-Skinny QR Postprocessing (@xname@ precision)
+/// \brief  Tall-Skinny QR Postprocessing (@xname@ precision).
 ///
 /// \attention  Not implemented!
 ///

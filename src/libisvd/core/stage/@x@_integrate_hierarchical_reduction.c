@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \file       src/libisvd/core/stage/@x@_integrate_hierarchical_reduction.c
-/// \brief      The Hierarchical Reduction Integration (@xname@ precision)
+/// \brief      The Hierarchical Reduction Integration (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  MIT License
@@ -13,7 +13,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
-/// \brief  Hierarchical Reduction Integration (@xname@ precision)
+/// \brief  Hierarchical Reduction Integration (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
