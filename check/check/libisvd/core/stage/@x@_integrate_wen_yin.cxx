@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
-#include <mmio/mmio.h>
+#include <mmio.h>
 #include <isvd.h>
 #include <libisvd.h>
 

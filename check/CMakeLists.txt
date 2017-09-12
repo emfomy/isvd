@@ -53,7 +53,7 @@ endfunction()
 include_directories("${PROJECT_CONFIG_DIR}/include/c"
                     "${CMAKE_CURRENT_CONFIG_DIR}/src"
                     "${PROJECT_CONFIG_DIR}/src"
-             SYSTEM "${PROJECT_SOURCE_DIR}/ext")
+             SYSTEM "${PROJECT_SOURCE_DIR}/ext/mmio")
 
 # Add subdirectories
 add_subdirectory(src)
