@@ -94,36 +94,41 @@
 /// \param[out]  ut            Replaced by the left singular vectors 𝑼 (row-major).
 /// \param[out]  vt            Replaced by the right singular vectors 𝑽 (row-major).
 ///
+/// \note  If \b argc ≠ `NULL` and \b argc[i] < 0, then a default argument query is assumed on the i-th stage;
+///        the routine only returns the first \b retc[i] default arguments in \b retv[i].
+///
+/// \see isvd_Param
+///
 void isvd_@x@Isvd(
-    const char       *alg_s,
-    const char       *alg_o,
-    const char       *alg_i,
-    const char       *alg_p,
-    const isvd_int_t  m,
-    const isvd_int_t  n,
-    const isvd_int_t  k,
-    const isvd_int_t  p,
-    const isvd_int_t  N,
-    const @xtype@    *argv[4],
-    const isvd_int_t  argc[4],
-          @xtype@    *retv[4],
-    const isvd_int_t  retc[4],
-          double      time[4],
-          FILE       *stream,
-    const char        dista,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-          @xtype@    *s,
-          @xtype@    *ut,
-    const isvd_int_t ldut,
-          @xtype@    *vt,
-    const isvd_int_t  ldvt,
-    const isvd_int_t  seed,
-    const mpi_int_t   ut_root,
-    const mpi_int_t   vt_root,
-    const mpi_int_t   mpi_root,
-    const isvd_MpiComm    mpi_comm
+    const char        *alg_s,
+    const char        *alg_o,
+    const char        *alg_i,
+    const char        *alg_p,
+    const isvd_int_t   m,
+    const isvd_int_t   n,
+    const isvd_int_t   k,
+    const isvd_int_t   p,
+    const isvd_int_t   N,
+    const @xtype@     *argv[4],
+    const isvd_int_t   argc[4],
+          @xtype@     *retv[4],
+    const isvd_int_t   retc[4],
+          double       time[4],
+          FILE        *stream,
+    const char         dista,
+    const char         ordera,
+    const @xtype@     *a,
+    const isvd_int_t   lda,
+          @xtype@     *s,
+          @xtype@     *ut,
+    const isvd_int_t   ldut,
+          @xtype@     *vt,
+    const isvd_int_t   ldvt,
+    const isvd_int_t   seed,
+    const mpi_int_t    ut_root,
+    const mpi_int_t    vt_root,
+    const mpi_int_t    mpi_root,
+    const isvd_MpiComm mpi_comm
 ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
@@ -146,14 +151,6 @@ void isvd_@x@Isvd(
   isvd_fun_t fun_o = isvd_arg2@x@AlgO(alg_o_);
   isvd_fun_t fun_i = isvd_arg2@x@AlgI(alg_i_);
   isvd_fun_t fun_p = isvd_arg2@x@AlgP(alg_p_);
-
-  if ( stream != nullptr && mpi_rank == mpi_root ) {
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameS(alg_s_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameO(alg_o_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameI(alg_i_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameP(alg_p_));
-    fprintf(stream, "\n");
-  }
 
   // ====================================================================================================================== //
   // Create parameters
@@ -186,6 +183,53 @@ void isvd_@x@Isvd(
   const isvd_int_t retc_o = (retv != nullptr) ? retc[1] : 0;
   const isvd_int_t retc_i = (retv != nullptr) ? retc[2] : 0;
   const isvd_int_t retc_p = (retv != nullptr) ? retc[3] : 0;
+
+  // ====================================================================================================================== //
+  // Check stage arguments
+
+  if ( argc_s > 0 ) isvd_assert_ne(argv_s, nullptr);
+  if ( argc_o > 0 ) isvd_assert_ne(argv_o, nullptr);
+  if ( argc_i > 0 ) isvd_assert_ne(argv_i, nullptr);
+  if ( argc_p > 0 ) isvd_assert_ne(argv_p, nullptr);
+  if ( retc_s > 0 ) isvd_assert_ne(retv_s, nullptr);
+  if ( retc_o > 0 ) isvd_assert_ne(retv_o, nullptr);
+  if ( retc_i > 0 ) isvd_assert_ne(retv_i, nullptr);
+  if ( retc_p > 0 ) isvd_assert_ne(retv_p, nullptr);
+
+  // ====================================================================================================================== //
+  // Query stage arguments
+
+  bool query = false;
+  if ( argc_s < 0 ) {
+    fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, NULL, 1, NULL, 1, seed, mpi_root);
+    query = true;
+  }
+  if ( argc_o < 0 ) {
+    fun_o(param, argv_o, argc_o, retv_o, retc_o, NULL, 1);
+    query = true;
+  }
+  if ( argc_i < 0 ) {
+    fun_i(param, argv_i, argc_i, retv_i, retc_i, NULL, 1, NULL, 1);
+    query = true;
+  }
+  if ( argc_p < 0 ) {
+    fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, NULL, 1, NULL, 1, NULL, NULL, 1, NULL, 1, ut_root, vt_root);
+    query = true;
+  }
+  if ( query ) {
+    return;
+  }
+
+  // ====================================================================================================================== //
+  // Print arguments
+
+  if ( stream != nullptr && mpi_rank == mpi_root ) {
+    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameS(alg_s_));
+    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameO(alg_o_));
+    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameI(alg_i_));
+    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameP(alg_p_));
+    fprintf(stream, "\n");
+  }
 
   // ====================================================================================================================== //
   // Allocate memory

@@ -28,7 +28,14 @@
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. <br>
 ///                          \b argv[0]: The maximum number of iteration. <br>
-///                          \b argv[1]: The tolerance of convergence condition.
+///                          \b argv[1]: The tolerance of convergence condition. <br>
+///                          \b argv[2]: The initial step size \f$ \tau_0 \f$. <br>
+///                          \b argv[3]: The maximum predicting step size \f$ \tau_\max \f$. <br>
+///                          \b argv[4]: The minimum predicting step size \f$ \tau_\min \f$. <br>
+///                          \b argv[5]: The maximum number of iteration in predicting step size. <br>
+///                          \b argv[6]: The scaling parameter for step size searching \f$ \beta \f$. <br>
+///                          \b argv[7]: The parameter for step size searching \f$ \sigma \f$. <br>
+///                          \b argv[8]: The parameter for next step searching \f$ \eta \f$.
 /// \param[in]   retv, retc  The return values and its length.
 /// <hr>
 /// \param[in]   yst, ldyst  The row-block 𝕼 (\f$ m_b \times Nl \f$, row-major) and its leading dimension.
@@ -53,6 +60,9 @@ void isvd_@x@IntegrateWenYin(
           @xtype@    *qt,
     const isvd_int_t  ldqt
 ) {
+
+  if ( argc > 0 ) isvd_assert_ne(argv, nullptr);
+  if ( retc > 0 ) isvd_assert_ne(retv, nullptr);
 
   // ====================================================================================================================== //
   // Query arguments

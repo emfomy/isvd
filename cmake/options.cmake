@@ -9,7 +9,7 @@ endif()
 option(ISVD_BUILD_LIB     "Build libraries."      "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
 option(ISVD_BUILD_TEST    "Build unit tests."     "OFF")
-option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
+option(ISVD_BUILD_DOC     "Build documentation."  "ON")
 option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
 option(ISVD_VERBOSE_TEST  "Verbose unit tests."   "ON")
 

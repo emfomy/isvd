@@ -53,7 +53,7 @@ int main( int argc, char **argv ) {
   if ( !mm_is_array(matcode) || !mm_is_real(matcode) || !mm_is_general(matcode) ) {
     if ( mpi_rank == mpi_root ) {
       fprintf(stderr, "Sorry, this application does not support ");
-      fprintf(stderr, "Market Market type: [%s]\n", mm_typecode_to_str(matcode));
+      fprintf(stderr, "Matrix Market type: [%s]\n", mm_typecode_to_str(matcode));
       MPI_Abort(MPI_COMM_WORLD, 1);
     }
     MPI_Barrier(MPI_COMM_WORLD);
