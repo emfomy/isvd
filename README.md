@@ -7,7 +7,7 @@ Integrated Singular Value Decomposition (iSVD)
 * https://github.com/emfomy/isvd
 
 ### Documentation
-* Please download from https://github.com/emfomy/isvd/releases or build using `make doc` (see below) on your own computer.
+* Please download from https://github.com/emfomy/isvd/releases or build using **make doc** (see below) on your own computer.
 
 ### Author
 * Mu Yang <<emfomy@gmail.com>>
@@ -33,9 +33,10 @@ Integrated Singular Value Decomposition (iSVD)
 Please use the following commands to create Makefiles
 
 ```
+cd <isvd-source-folder>
 mkdir build
 cd build
-cmake <path-to-source>
+cmake ..
 ```
 
 ### Options
@@ -43,7 +44,7 @@ cmake <path-to-source>
 Use the following command to set options
 
 ```
-ccmake <path-to-source>
+ccmake ..
 ```
 
 The following table are the main options
@@ -81,6 +82,8 @@ The following table are the main make rules
 
 * Define `ISVD_USE_ILP64` before include `isvd.h` to use 64-bit integer.
 * All 64bit libraries and executables are named with suffix "`_64`".
+* The header files are located in `build/include`
+* The libraries are located in `build/lib`
 
 ### Libraries
 

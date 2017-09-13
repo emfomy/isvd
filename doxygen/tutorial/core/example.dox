@@ -1,5 +1,5 @@
 /**
-  \page tutorial_core_example iSVD Example
+  \page tutorial_core_example Example Code
 
   <h3>iSVD Example</h3>
 
@@ -9,13 +9,13 @@
 
   The iSVD environment and random seed should be set up before calling the driver. \ref isvd_init also initialize the MPI environment and the MAGMA environment, and \ref isvd_printEnvironment display the the MPI environment and the MAGMA environment.
 
-  If one needs CPU only, one may use \ref isvd_init_cpu, \ref isvd_printEnvironment_cpu, and \ref isvd_finalize_cpu.
+  If one needs CPU only, one may use \ref isvd_init_cpu, \ref isvd_printEnvironment_cpu, and \ref isvd_finalize_cpu instead.
 
   \snippetlineno demo/cdemo.c init-isvd
 
   <h4>Load Data</h4>
 
-  In this example, we load the data from a Matrix Market format file. Note the all the MPI nodes should load the matrix.
+  In this example, we load the data from a Matrix Market format file. Note the all the MPI processors should load the matrix.
 
   \snippetlineno demo/cdemo.c load-data
 
@@ -27,7 +27,7 @@
 
   <h4>Run iSVD</h4>
 
-  The iSVD driver compute the approximate low-rank singular value decomposition. See \ref isvd_dIsvd for the detail of the arguments.
+  The iSVD driver compute the approximate low-rank singular value decomposition. See \ref isvd_dIsvd for the detail of the arguments. The 𝑗-th MPI-rank stores the 𝑗-th block of the input matrix 𝑨 (see \ref tutorial_core_storage for detail).
 
   \snippetlineno demo/cdemo.c run-isvd
 
@@ -42,5 +42,33 @@
   Remember to \ref isvd_finalize "finalize" the environment.
 
   \snippetlineno demo/cdemo.c final-isvd
+
+  <h3>Possible Result</h3>
+
+  The following are the possible results of the example code. One may use **make run_cdemo** to run \ref demo/cdemo.c.
+
+  \code{.txt}
+  iSVD C demo
+  iSVD 1.2.0, 32-bit isvd_int_t, 64-bit pointer
+  4 MPI processors, 4 OpenMP threads per process
+
+  No GPU support
+
+  Using Real Double Precision Gaussian Projection Sketching
+  Using Real Double Precision Gramian Orthogonalization
+  Using Real Double Precision Kolmogorov-Nagumo Integration
+  Using Real Double Precision Gramian Postprocessing
+
+  Sketching ...................... done
+  Orthogonalizing ................ done
+  Integrating .................... done
+  Postprocessing ................. done
+
+  Average total computing time:   0.085510 seconds.
+  Average sketching time:         0.030245 seconds.
+  Average orthogonalizing time:   0.028071 seconds.
+  Average integrating time:       0.026233 seconds.
+  Average postprocessing time:    0.000962 seconds.
+  \endcode
 
 */

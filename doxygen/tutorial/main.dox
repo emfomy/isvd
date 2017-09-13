@@ -4,6 +4,7 @@
   <h4>Subpages</h4>
 
   - \subpage tutorial_core_example
+  - \subpage tutorial_core_notation
   - \subpage tutorial_core_stage
   - \subpage tutorial_core_storage
 */

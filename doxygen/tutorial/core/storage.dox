@@ -1,58 +1,58 @@
 /**
-  @page tutorial_core_storage Block Parallelism Storage
-
-  <h3>Notations</h3>
-
-  In the following, denote @ref isvd_Param::mpi_size "𝑃" as the number of MPI nodes, @ref isvd_Param::num_sketch "𝑁" as the number of sketches.
+  @page tutorial_core_storage Parallelism Storage
 
   <h3>Block-Row Storage</h3>
 
-  In Block-Row Parallelism, we storage the matrices in row-blocks. The 𝑗-th block is stored in the 𝑗-th MPI-rank.
+  In Block-Row Parallelism, we storage the matrices in row-blocks. The \f$j\f$-th block is stored in the \f$j\f$-th MPI-rank.
 
   @f[
-    𝑨 =
+    \boldsymbol{A} =
       \begin{bmatrix}
-        𝘈^{(1)} \\ 𝘈^{(2)} \\ \vdots \\ 𝘈^{(P)}
+        \mathsf{A}^{(0)} \\ \mathsf{A}^{(1)} \\ \vdots \\ \mathsf{A}^{(P-1)}
       \end{bmatrix},
     \qquad
-    𝖄 =
+    \boldsymbol{\mathfrak{Y}} =
       \begin{bmatrix}
-        𝔜^{(1)} \\ 𝔜^{(2)} \\ \vdots \\ 𝔜^{(P)}
+        \mathfrak{Y}^{(0)} \\ \mathfrak{Y}^{(1)} \\ \vdots \\ \mathfrak{Y}^{(P-1)}
       \end{bmatrix},
     \qquad
-    𝕼 =
+    \boldsymbol{\mathfrak{Q}} =
       \begin{bmatrix}
-        𝔔^{(1)} \\ 𝔔^{(2)} \\ \vdots \\ 𝔔^{(P)}
+        \mathfrak{Q}^{(0)} \\ \mathfrak{Q}^{(1)} \\ \vdots \\ \mathfrak{Q}^{(P-1)}
       \end{bmatrix},
     \qquad
-    \overline{𝑸} =
+    \overline{\boldsymbol{Q}} =
       \begin{bmatrix}
-        \overline{𝘘}^{(1)} \\ \overline{𝘘}^{(2)} \\ \vdots \\ \overline{𝘘}^{(P)}
+        \overline{\mathsf{Q}}^{(0)} \\ \overline{\mathsf{Q}}^{(1)} \\ \vdots \\ \overline{\mathsf{Q}}^{(P-1)}
       \end{bmatrix},
     \qquad
-    \widehat{𝑼} =
+    \boldsymbol{U} =
       \begin{bmatrix}
-        \widehat{𝘜}^{(1)} \\ \widehat{𝘜}^{(2)} \\ \vdots \\ \widehat{𝘜}^{(P)}
+        \mathsf{U}^{(0)} \\ \mathsf{U}^{(1)} \\ \vdots \\ \mathsf{U}^{(P-1)}
       \end{bmatrix},
     \qquad
-    \widehat{𝑽} =
+    \boldsymbol{V} =
       \begin{bmatrix}
-        \widehat{𝘝}^{(1)} \\ \widehat{𝘝}^{(2)} \\ \vdots \\ \widehat{𝘝}^{(P)}
+        \mathsf{V}^{(0)} \\ \mathsf{V}^{(1)} \\ \vdots \\ \mathsf{V}^{(P-1)}
       \end{bmatrix}.
   @f]
 
-  The row indices of the blocks are [@ref isvd_Param::rowidxbegin, @ref isvd_Param::rowidxend).
+  The \f$j\f$-th block of the input matrices should contain \f$m^{(j)}\f$ rows, and the \f$j\f$-th block of the input matrices should contain \f$m_b\f$ rows.
+
+  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 rows and \f$P\f$ is 4. Then \f$\mathsf{A}^{(0)}\f$ are the (0-2)-th rows, \f$\mathsf{A}^{(1)}\f$ are the (0-5)-th rows, \f$\mathsf{A}^{(2)}\f$ are the (6-8)-th rows, \f$\mathsf{A}^{(3)}\f$ are the (9-10)-th rows.
 
   <h3>Block-Column Storage</h3>
 
-  In Block-Column Parallelism, we storage the input matrix 𝑨 in row-blocks. The 𝑗-th block is stored in the 𝑗-th MPI-rank.
+  In Block-Column Parallelism, we storage the input matrix \f$\boldsymbol{A}\f$ in row-blocks. The \f$j\f$-th block is stored in the \f$j\f$-th MPI-rank.
 
   @f[
-    𝑨 =
+    \boldsymbol{A} =
       \begin{bmatrix}
-        𝘈^{\langle 1 \rangle} & 𝘈^{\langle 2 \rangle} & \cdots & 𝘈^{\langle P \rangle}
-      \end{bmatrix},.
+        \mathsf{A}^{\langle 0 \rangle} & \mathsf{A}^{\langle 1 \rangle} & \cdots & \mathsf{A}^{\langle P-1 \rangle}
+      \end{bmatrix}.
   @f]
 
-  The column indices of the blocks are [@ref isvd_Param::colidxbegin, @ref isvd_Param::colidxend).
+  The \f$j\f$-th block of the input matrices should contain \f$n^{(j)}\f$ columns, and the \f$j\f$-th block of the input matrices should contain \f$n_b\f$ columns.
+
+  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 columns and \f$P\f$ is 4. Then \f$\mathsf{A}^{\langle 0 \rangle}\f$ are the (0-2)-th columns, \f$\mathsf{A}^{\langle 1 \rangle}\f$ are the (0-5)-th columns, \f$\mathsf{A}^{\langle 2 \rangle}\f$ are the (6-8)-th columns, \f$\mathsf{A}^{\langle 3 \rangle}\f$ are the (9-10)-th columns.
 */

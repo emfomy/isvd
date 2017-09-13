@@ -50,13 +50,13 @@ function(ISVD_SET_TARGET_CHECK_GPU target)
 endfunction()
 
 # Set include paths
-include_directories("${PROJECT_CONFIG_DIR}/include/c"
-                    "${CMAKE_CURRENT_CONFIG_DIR}/src"
-                    "${PROJECT_CONFIG_DIR}/src"
+include_directories("${CMAKE_CURRENT_CONFIG_DIR}/lib"
+                    "${PROJECT_BINARY_DIR}/include/c"
+                    "${PROJECT_BINARY_DIR}/lib"
              SYSTEM "${PROJECT_SOURCE_DIR}/ext/mmio")
 
 # Add subdirectories
-add_subdirectory(src)
+add_subdirectory(lib)
 
 # Configure files
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_S_TYPES}")

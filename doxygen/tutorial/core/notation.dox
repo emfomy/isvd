@@ -1,0 +1,36 @@
+/**
+  @page tutorial_core_notation Notations
+
+  <h3>Format Notations</h3>
+  Name                           | Format                                 | Example
+  -------------------------------|----------------------------------------|--------------------------------
+  scalars                        | normal italic                          | \f$m, \alpha, N\f$
+  vectors                        | bold italic lowercase                  | \f$\boldsymbol{v}, \boldsymbol{\beta}\f$
+  matrices                       | bold italic uppercase                  | \f$\boldsymbol{A}, \boldsymbol{\Omega}\f$
+  combined matrices              | bold Frankfurt uppercase               | \f$\boldsymbol{\mathfrak{Q}}, \boldsymbol{\mathfrak{Y}}\f$
+  submatrices                    | sans serif / Frankfurt uppercase       | \f$\mathsf{U}, \mathfrak{Y}\f$
+  things in \f$i\f$-th sketch    | under-script bracketed                 | \f$\boldsymbol{Q}_{[i]}, \boldsymbol{Y}_{[i]}\f$
+  things in \f$j\f$-th process   | super-script parenthesized / angled    | \f$\mathsf{V}^{(j)}, \mathsf{A}^{\langle j \rangle}\f$
+
+  <h3>Parameter Notations</h3>
+
+  - \f$m\f$: the number of rows of the input matrix \f$\boldsymbol{A}\f$.
+  - \f$n\f$: the number of columns of the input matrix \f$\boldsymbol{A}\f$.
+  - \f$k\f$: the desired rank of approximate SVD.
+  - \f$p\f$: the oversampling parameter.
+  - \f$l\f$: the dimension of randomized sketches, i.e., \f$l=k+p\f$.
+  - \f$N\f$: the number of random sketches.
+  - \f$P\f$: the number of MPI processors.
+  - \f$m_b\f$: the row dimensions of a row-block, i.e., \f$m_b = \lceil \frac{m}{P} \rceil\f$.
+  - \f$n_b\f$: the column dimensions of a column-block, i.e., \f$n_b = \lceil \frac{n}{P} \rceil\f$.
+  - \f$m^{(j)}\f$: the exact row dimensions of the \f$j\f$-th row-block.
+    - For \f$j < P-1\f$, \f$m^{(j)} = m_b\f$.
+    - For \f$j = P-1\f$, \f$m^{(j)} = m - m_b(P-1)\f$.
+    - \f$m^{(0)} + m^{(1)} + \dotsb + m^{(P-1)} = m\f$.
+  - \f$n^{(j)}\f$: the exact column dimensions of the \f$j\f$-th column-block.
+    - For \f$j < P-1\f$, \f$n^{(j)} = n_b\f$.
+    - For \f$j = P-1\f$, \f$n^{(j)} = n - n_b(P-1)\f$.
+    - \f$n^{(0)} + n^{(1)} + \dotsb + n^{(P-1)} = n\f$.
+
+  \see  isvd_Param
+*/

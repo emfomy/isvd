@@ -1,19 +1,45 @@
 /**
-  \page tutorial_core_stage iSVD Stages
+  \page tutorial_core_stage Stages
 
-  <h3>Sketching</h3>
+  The iSVD algorithm contains four stages: sketching, orthogonalization, integration, and postprocessing.
 
-  The sketching stage randomly sketches \ref isvd_Param::num_sketch "𝑁" rank-\ref isvd_Param::dim_sketch "𝑙" column subspaces \f$\boldsymbol{Y}_{[i]}\f$ of the input matrix \f$\boldsymbol{A}\f$.
+  <h3>Flow Chart</h3>
+
+  Stage               | Input                                              | Output
+  --------------------|----------------------------------------------------|--------------------------------
+  sketching           | \f$\boldsymbol{A}\f$                               | \f$\boldsymbol{\mathfrak{Y}}\f$
+  orthogonalization   | \f$\boldsymbol{\mathfrak{Y}}\f$                    | \f$\boldsymbol{\mathfrak{Q}}\f$
+  integration         | \f$\boldsymbol{\mathfrak{Q}}\f$                    | \f$\overline{\boldsymbol{Q}}\f$
+  postprocessing      | \f$\boldsymbol{A}, \overline{\boldsymbol{Q}}\f$    | \f$\boldsymbol{U}, \boldsymbol{V}, \boldsymbol{\sigma}\f$
+
+  Note that the Frankfurt matrices are defined as
+  @f[
+    \boldsymbol{\mathfrak{Y}} =
+      \begin{bmatrix}
+        \boldsymbol{Y}_{[0]} & \boldsymbol{Y}_{[1]} & \cdots & \boldsymbol{Y}_{[N-1]}
+      \end{bmatrix},
+    \qquad
+    \boldsymbol{\mathfrak{Q}} =
+      \begin{bmatrix}
+        \boldsymbol{Q}_{[0]} & \boldsymbol{Q}_{[1]} & \cdots & \boldsymbol{Q}_{[N-1]}
+      \end{bmatrix}.
+  @f]
+
+  <h3>Details</h3>
+
+  <h4>Sketching</h4>
+
+  The sketching stage randomly sketches 𝑁 rank-𝑙 column subspaces \f$\boldsymbol{Y}_{[i]}\f$ of the input matrix \f$\boldsymbol{A}\f$.
 
   - The \ref isvd_dSketchGaussianProjection "Gramian Projection Sketching" multiples \f$\boldsymbol{A}\f$ by some random matrices using Gaussian normal distribution.
 
-  <h3>Orthogonalization</h3>
+  <h4>Orthogonalization</h4>
 
   The orthogonalization stage computes an approximate basis \f$\boldsymbol{Q}_{[i]}\f$ for the range of the input matrix from those \f$\boldsymbol{Y}_{[i]}\f$.
 
   - The \ref isvd_dOrthogonalizeGramian "Gramian Orthogonalization" finds the orthonormal basis using the eigen-decomposition of \f$\boldsymbol{Y}_{[i]}^\top \boldsymbol{Y}_{[i]}\f$ — the Gramiam of \f$\boldsymbol{Y}_{[i]}\f$.
 
-  <h3>Integration</h3>
+  <h4>Integration</h4>
 
   The integration stage find a kind of average \f$\overline{\boldsymbol{Q}}\f$ of those \f$\boldsymbol{Q}_{[i]}\f$.
 
@@ -21,9 +47,9 @@
   - The \ref isvd_dIntegrateWenYin "Wen-Yin Integration" finds the average using line search proposed by Wen and Yin.
   - The \ref isvd_dIntegrateHierarchicalReduction "Hierarchical Reduction Integration" finds the average using divide and conquer algorithm. Note that it is faster but less accurate.
 
-  <h3>Postprocessing</h3>
+  <h4>Postprocessing</h4>
 
-  The postprocessing stage forms a rank-\ref isvd_Param::rank "𝑘" approximate SVD of \f$\boldsymbol{A}\f$ in the range of \f$\overline{\boldsymbol{Q}}\f$.
+  The postprocessing stage forms a rank-𝑘 approximate SVD of \f$\boldsymbol{A}\f$ in the range of \f$\overline{\boldsymbol{Q}}\f$.
 
   - The \ref isvd_dPostprocessGramian "Gramian Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \boldsymbol{A}^\top \overline{\boldsymbol{Q}}\f$.
   - The \ref isvd_dPostprocessSymmetric "Symmetric Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \overline{\boldsymbol{Q}}\f$ for symmetric input matrix \f$\boldsymbol{A}\f$.

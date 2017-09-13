@@ -23,7 +23,7 @@ macro(SET_TARGET name files)
 endmacro()
 
 # Set include paths
-include_directories("${PROJECT_CONFIG_DIR}/include/c")
+include_directories("${PROJECT_BINARY_DIR}/include/c")
 
 # C demo
 set_target(cdemo cdemo.c ${PROJECT_SOURCE_DIR}/data/a.mtx /dev/null /dev/null /dev/null)
