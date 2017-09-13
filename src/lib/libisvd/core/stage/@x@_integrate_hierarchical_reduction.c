@@ -41,8 +41,8 @@ void isvd_@x@IntegrateHierarchicalReduction(
     const isvd_int_t  ldqt
 ) {
 
-  if ( argc > 0 ) { isvd_assert_ne(argv, (void*)(nullptr)); }
-  if ( retc > 0 ) { isvd_assert_ne(retv, (void*)(nullptr)); }
+  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
+  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;
 
   // ====================================================================================================================== //
@@ -104,7 +104,7 @@ void isvd_@x@IntegrateHierarchicalReduction(
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'
-      isvd_@x@Gesvd('O', 'S', l, l, w, ldw, s, nullptr, 1, tt, ldtt);
+      isvd_@x@Gesvd('O', 'S', l, l, w, ldw, s, NULL, 1, tt, ldtt);
 
       // Q(i) := Q(i) * W + Q(i+h) * T (Q(i)' := W' * Q(i)' + T' * Q(i+h)')
       isvd_@x@Omatcopy('N', l, mj, 1.0, qit, ldqit, tmpt, ldtmpt);

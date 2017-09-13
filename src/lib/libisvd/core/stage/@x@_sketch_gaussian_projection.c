@@ -56,15 +56,15 @@ void isvd_@x@SketchGaussianProjection(
     const mpi_int_t   mpi_root
 ) {
 
-  if ( argc > 0 ) { isvd_assert_ne(argv, (void*)(nullptr)); }
-  if ( retc > 0 ) { isvd_assert_ne(retv, (void*)(nullptr)); }
+  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
+  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;
 
   // ====================================================================================================================== //
   // Check arguments
 
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   if ( !dista_ || !ordera_ ) return;
 
   // ====================================================================================================================== //

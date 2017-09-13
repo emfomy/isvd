@@ -14,7 +14,7 @@
 @ISVD_LA_BLAS_TYPE_DEFINE@
 
 #define isvd_xDimm( side, m, n, alpha, a, b, ldb, xScal, xMul ) \
-  const char side_ = isvd_arg2char("SIDE", side, "LR", nullptr); \
+  const char side_ = isvd_arg2char("SIDE", side, "LR", NULL); \
   if ( !side_ ) return; \
   switch ( side_ ) { \
     case 'L': { \

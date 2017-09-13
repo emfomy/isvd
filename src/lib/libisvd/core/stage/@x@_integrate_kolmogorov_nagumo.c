@@ -47,8 +47,8 @@ void isvd_@x@IntegrateKolmogorovNagumo(
     const isvd_int_t  ldqt
 ) {
 
-  if ( argc > 0 ) { isvd_assert_ne(argv, (void*)(nullptr)); }
-  if ( retc > 0 ) { isvd_assert_ne(retv, (void*)(nullptr)); }
+  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
+  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
 
   // ====================================================================================================================== //
   // Query arguments

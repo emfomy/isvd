@@ -77,8 +77,8 @@ void isvd_@x@PostprocessSymmetric(
     const mpi_int_t   vt_root
 ) {
 
-  if ( argc > 0 ) { isvd_assert_ne(argv, (void*)(nullptr)); }
-  if ( retc > 0 ) { isvd_assert_ne(retv, (void*)(nullptr)); }
+  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
+  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;
 
   ISVD_UNUSED(vt);
@@ -97,8 +97,8 @@ void isvd_@x@PostprocessSymmetric(
   // ====================================================================================================================== //
   // Check arguments
 
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   if ( vt_root >= -1 ) {
     fprintf(stderr, "VT_ROOT must not be set!");
     return;
@@ -154,7 +154,7 @@ void isvd_@x@PostprocessSymmetric(
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@X_TYPE@, ut, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, nullptr, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
+        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, NULL, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
       }
     }
   }

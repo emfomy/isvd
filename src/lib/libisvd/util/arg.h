@@ -24,7 +24,7 @@ static inline isvd_int_t isvd_arg2char(
     const char *opts,
     const char *rets
 ) {
-  if ( rets == nullptr ) {
+  if ( rets == NULL ) {
     rets = opts;
   }
 
@@ -56,7 +56,7 @@ static inline const char* isvd_arg2str(
     const char *rets[],
     const size_t nopts
 ) {
-  if ( rets == nullptr ) {
+  if ( rets == NULL ) {
     rets = opts;
   }
 

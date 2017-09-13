@@ -19,7 +19,7 @@
 #define ISVD_UNUSED( x ) (void)(x)
 
 #if !defined(__cplusplus) || (__cplusplus < 201103L)
-  #define nullptr NULL
+  #define nullptr (void*)(NULL)
 #endif
 
 #if defined(__cplusplus)

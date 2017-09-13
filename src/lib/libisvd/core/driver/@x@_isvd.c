@@ -141,10 +141,10 @@ void isvd_@x@Isvd(
   const char *opts_i[] = {"KN", "WY", "HR"};
   const char *opts_p[] = {"TS", "GR", "SY", "TS_gpu", "GR_gpu", "SY_gpu"};
 
-  const char *alg_s_ = isvd_arg2str("ALG_S", alg_s, opts_s, nullptr, lenof(opts_s));
-  const char *alg_o_ = isvd_arg2str("ALG_O", alg_o, opts_o, nullptr, lenof(opts_o));
-  const char *alg_i_ = isvd_arg2str("ALG_I", alg_i, opts_i, nullptr, lenof(opts_i));
-  const char *alg_p_ = isvd_arg2str("ALG_P", alg_p, opts_p, nullptr, lenof(opts_p));
+  const char *alg_s_ = isvd_arg2str("ALG_S", alg_s, opts_s, NULL, lenof(opts_s));
+  const char *alg_o_ = isvd_arg2str("ALG_O", alg_o, opts_o, NULL, lenof(opts_o));
+  const char *alg_i_ = isvd_arg2str("ALG_I", alg_i, opts_i, NULL, lenof(opts_i));
+  const char *alg_p_ = isvd_arg2str("ALG_P", alg_p, opts_p, NULL, lenof(opts_p));
   if ( !alg_s_ || !alg_o_ || !alg_i_ || !alg_p_ ) return;
 
   isvd_fun_t fun_s = isvd_arg2@x@AlgS(alg_s_);
@@ -164,56 +164,56 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Gets arguments and return values of stages
 
-  const @xtype@ *argv_s = (argv != nullptr) ? argv[0] : nullptr;
-  const @xtype@ *argv_o = (argv != nullptr) ? argv[1] : nullptr;
-  const @xtype@ *argv_i = (argv != nullptr) ? argv[2] : nullptr;
-  const @xtype@ *argv_p = (argv != nullptr) ? argv[3] : nullptr;
+  const @xtype@ *argv_s = (argv != NULL) ? argv[0] : NULL;
+  const @xtype@ *argv_o = (argv != NULL) ? argv[1] : NULL;
+  const @xtype@ *argv_i = (argv != NULL) ? argv[2] : NULL;
+  const @xtype@ *argv_p = (argv != NULL) ? argv[3] : NULL;
 
-  const isvd_int_t argc_s = (argv != nullptr) ? argc[0] : 0;
-  const isvd_int_t argc_o = (argv != nullptr) ? argc[1] : 0;
-  const isvd_int_t argc_i = (argv != nullptr) ? argc[2] : 0;
-  const isvd_int_t argc_p = (argv != nullptr) ? argc[3] : 0;
+  const isvd_int_t argc_s = (argv != NULL) ? argc[0] : 0;
+  const isvd_int_t argc_o = (argv != NULL) ? argc[1] : 0;
+  const isvd_int_t argc_i = (argv != NULL) ? argc[2] : 0;
+  const isvd_int_t argc_p = (argv != NULL) ? argc[3] : 0;
 
-  @xtype@ *retv_s = (retv != nullptr) ? retv[0] : nullptr;
-  @xtype@ *retv_o = (retv != nullptr) ? retv[1] : nullptr;
-  @xtype@ *retv_i = (retv != nullptr) ? retv[2] : nullptr;
-  @xtype@ *retv_p = (retv != nullptr) ? retv[3] : nullptr;
+  @xtype@ *retv_s = (retv != NULL) ? retv[0] : NULL;
+  @xtype@ *retv_o = (retv != NULL) ? retv[1] : NULL;
+  @xtype@ *retv_i = (retv != NULL) ? retv[2] : NULL;
+  @xtype@ *retv_p = (retv != NULL) ? retv[3] : NULL;
 
-  const isvd_int_t retc_s = (retv != nullptr) ? retc[0] : 0;
-  const isvd_int_t retc_o = (retv != nullptr) ? retc[1] : 0;
-  const isvd_int_t retc_i = (retv != nullptr) ? retc[2] : 0;
-  const isvd_int_t retc_p = (retv != nullptr) ? retc[3] : 0;
+  const isvd_int_t retc_s = (retv != NULL) ? retc[0] : 0;
+  const isvd_int_t retc_o = (retv != NULL) ? retc[1] : 0;
+  const isvd_int_t retc_i = (retv != NULL) ? retc[2] : 0;
+  const isvd_int_t retc_p = (retv != NULL) ? retc[3] : 0;
 
   // ====================================================================================================================== //
   // Check stage arguments
 
-  if ( argc_s > 0 ) { isvd_assert_ne(argv_s, (void*)(nullptr)) };
-  if ( argc_o > 0 ) { isvd_assert_ne(argv_o, (void*)(nullptr)) };
-  if ( argc_i > 0 ) { isvd_assert_ne(argv_i, (void*)(nullptr)) };
-  if ( argc_p > 0 ) { isvd_assert_ne(argv_p, (void*)(nullptr)) };
-  if ( retc_s > 0 ) { isvd_assert_ne(retv_s, (void*)(nullptr)) };
-  if ( retc_o > 0 ) { isvd_assert_ne(retv_o, (void*)(nullptr)) };
-  if ( retc_i > 0 ) { isvd_assert_ne(retv_i, (void*)(nullptr)) };
-  if ( retc_p > 0 ) { isvd_assert_ne(retv_p, (void*)(nullptr)) };
+  if ( argc_s > 0 ) { isvd_assert_ne(argv_s, nullptr); }
+  if ( argc_o > 0 ) { isvd_assert_ne(argv_o, nullptr); }
+  if ( argc_i > 0 ) { isvd_assert_ne(argv_i, nullptr); }
+  if ( argc_p > 0 ) { isvd_assert_ne(argv_p, nullptr); }
+  if ( retc_s > 0 ) { isvd_assert_ne(retv_s, nullptr); }
+  if ( retc_o > 0 ) { isvd_assert_ne(retv_o, nullptr); }
+  if ( retc_i > 0 ) { isvd_assert_ne(retv_i, nullptr); }
+  if ( retc_p > 0 ) { isvd_assert_ne(retv_p, nullptr); }
 
   // ====================================================================================================================== //
   // Query stage arguments
 
   bool query = false;
   if ( argc_s < 0 ) {
-    fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, nullptr, 1, nullptr, 1, seed, mpi_root);
+    fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, NULL, 1, NULL, 1, seed, mpi_root);
     query = true;
   }
   if ( argc_o < 0 ) {
-    fun_o(param, argv_o, argc_o, retv_o, retc_o, nullptr, 1);
+    fun_o(param, argv_o, argc_o, retv_o, retc_o, NULL, 1);
     query = true;
   }
   if ( argc_i < 0 ) {
-    fun_i(param, argv_i, argc_i, retv_i, retc_i, nullptr, 1, nullptr, 1);
+    fun_i(param, argv_i, argc_i, retv_i, retc_i, NULL, 1, NULL, 1);
     query = true;
   }
   if ( argc_p < 0 ) {
-    fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, nullptr, 1, nullptr, 1, nullptr, nullptr, 1, nullptr, 1, ut_root, vt_root);
+    fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, NULL, 1, NULL, 1, NULL, NULL, 1, NULL, 1, ut_root, vt_root);
     query = true;
   }
   if ( query ) {
@@ -223,7 +223,7 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Print arguments
 
-  if ( stream != nullptr && mpi_rank == mpi_root ) {
+  if ( stream != NULL && mpi_rank == mpi_root ) {
     fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameS(alg_s_));
     fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameO(alg_o_));
     fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameI(alg_i_));
@@ -243,33 +243,33 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Run
 
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ...................... "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ...................... "); fflush(stream); }
   double time_s = MPI_Wtime();
   fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
   time_s = MPI_Wtime() - time_s;
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ................ "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ................ "); fflush(stream); }
   double time_i = MPI_Wtime();
   fun_o(param, argv_o, argc_o, retv_o, retc_o, yst, ldyst);
   time_i = MPI_Wtime() - time_i;
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Integrating .................... "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Integrating .................... "); fflush(stream); }
   double time_o = MPI_Wtime();
   fun_i(param, argv_i, argc_i, retv_i, retc_i, yst, ldyst, qt, ldqt);
   time_o = MPI_Wtime() - time_o;
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................. "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................. "); fflush(stream); }
   double time_p = MPI_Wtime();
   fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
   time_p = MPI_Wtime() - time_p;
-  if ( stream != nullptr && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
 
   // ====================================================================================================================== //
   // Gets executing times
-  if ( time != nullptr ) {
+  if ( time != NULL ) {
     time[0] = time_s;
     time[1] = time_i;
     time[2] = time_o;

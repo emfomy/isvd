@@ -36,8 +36,8 @@ void isvd_@x@OrthogonalizeGramian(
     const isvd_int_t  ldyst
 ) {
 
-  if ( argc > 0 ) { isvd_assert_ne(argv, (void*)(nullptr)); }
-  if ( retc > 0 ) { isvd_assert_ne(retv, (void*)(nullptr)); }
+  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
+  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;
 
   // ====================================================================================================================== //
@@ -76,7 +76,7 @@ void isvd_@x@OrthogonalizeGramian(
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@Gesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, nullptr, 1, nullptr, 1);
+    isvd_@x@Gesvd('O', 'N', l, l, w + i*ldw*l, ldw, s + i*lds, NULL, 1, NULL, 1);
   }
   isvd_v@x@Sqrt(lds*N, s, s);
 

@@ -61,7 +61,7 @@ void isvd_cGesvd(
     COMP4 *v, const INT ldvt
 ) {
   COMP4 qwork; INT lwork = -1, info;
-  cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, nullptr, &info); isvd_assert_pass(info);
+  cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
   COMP4 *work  = isvd_cmalloc(lwork);
   REAL4 *rwork = isvd_smalloc(5*min(m, n));
@@ -74,7 +74,7 @@ void isvd_zGesvd(
     COMP8 *v, const INT ldvt
 ) {
   COMP8 qwork; INT lwork = -1, info;
-  zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, nullptr, &info); isvd_assert_pass(info);
+  zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
   COMP8 *work  = isvd_zmalloc(lwork);
   REAL8 *rwork = isvd_dmalloc(5*min(m, n));

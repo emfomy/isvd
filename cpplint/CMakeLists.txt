@@ -9,8 +9,8 @@ function(SET_CPPLINT_TARGET path)
   string(REPLACE "/" "_" target ${path})
   add_custom_target(
     cpplint_${target}
-    COMMAND ${CMAKE_CPPLINT} --recursive --root=${PROJECT_CONFIG_DIR}/${path} ${ARGN} ${path}
-    WORKING_DIRECTORY ${PROJECT_CONFIG_DIR}
+    COMMAND ${CMAKE_CPPLINT} --recursive --root=${PROJECT_BINARY_DIR}/${path} ${ARGN} ${path}
+    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
     COMMENT "Run cpplint for ${path}"
   )
   add_dependencies(cpplint cpplint_${target})
@@ -25,4 +25,4 @@ add_custom_target(
 )
 
 set_cpplint_target(include/c --linelength=128 --filter=-build/include,-build/include_order,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens)
-set_cpplint_target(src --linelength=128 --filter=-build/include,-build/include_order,-build/include_what_you_use,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens)
+set_cpplint_target(lib --linelength=128 --filter=-build/include,-build/include_order,-build/include_what_you_use,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens)

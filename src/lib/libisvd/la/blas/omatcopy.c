@@ -50,7 +50,7 @@ static inline float  rconjf( const float  z ) { return z; }
 static inline double rconj(  const double z ) { return z; }
 
 #define isvd_xOmatcopy( trans, m, n, alpha, a, lda, b, ldb, conj ) \
-  const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", nullptr); \
+  const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", NULL); \
   if ( !trans_ ) return; \
   switch ( trans_ ) { \
     case 'N': { \

@@ -31,7 +31,7 @@ TEST(@XStr@_KolmogorovNagumoIntegration, Test) {
 
   // Read Qs
   file = fopen(QS_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -52,7 +52,7 @@ TEST(@XStr@_KolmogorovNagumoIntegration, Test) {
 
   // Read Qbar
   file = fopen(Q_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
