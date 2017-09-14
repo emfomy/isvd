@@ -1,9 +1,7 @@
 /**
-  \page tutorial_core_stage Stages
+  @page tutorial_core_stage Stages
 
   The iSVD algorithm contains four stages: sketching, orthogonalization, integration, and postprocessing.
-
-  <h3>Flow Chart</h3>
 
   Stage               | Input                                              | Output
   --------------------|----------------------------------------------------|--------------------------------
@@ -25,21 +23,19 @@
       \end{bmatrix}.
   @f]
 
-  <h3>Details</h3>
-
-  <h4>Sketching</h4>
+  <h3>Sketching</h3>
 
   The sketching stage randomly sketches 𝑁 rank-𝑙 column subspaces \f$\boldsymbol{Y}_{[i]}\f$ of the input matrix \f$\boldsymbol{A}\f$.
 
   - The \ref isvd_dSketchGaussianProjection "Gramian Projection Sketching" multiples \f$\boldsymbol{A}\f$ by some random matrices using Gaussian normal distribution.
 
-  <h4>Orthogonalization</h4>
+  <h3>Orthogonalization</h3>
 
   The orthogonalization stage computes an approximate basis \f$\boldsymbol{Q}_{[i]}\f$ for the range of the input matrix from those \f$\boldsymbol{Y}_{[i]}\f$.
 
   - The \ref isvd_dOrthogonalizeGramian "Gramian Orthogonalization" finds the orthonormal basis using the eigen-decomposition of \f$\boldsymbol{Y}_{[i]}^\top \boldsymbol{Y}_{[i]}\f$ — the Gramiam of \f$\boldsymbol{Y}_{[i]}\f$.
 
-  <h4>Integration</h4>
+  <h3>Integration</h3>
 
   The integration stage find a kind of average \f$\overline{\boldsymbol{Q}}\f$ of those \f$\boldsymbol{Q}_{[i]}\f$.
 
@@ -47,11 +43,10 @@
   - The \ref isvd_dIntegrateWenYin "Wen-Yin Integration" finds the average using line search proposed by Wen and Yin.
   - The \ref isvd_dIntegrateHierarchicalReduction "Hierarchical Reduction Integration" finds the average using divide and conquer algorithm. Note that it is faster but less accurate.
 
-  <h4>Postprocessing</h4>
+  <h3>Postprocessing</h3>
 
   The postprocessing stage forms a rank-𝑘 approximate SVD of \f$\boldsymbol{A}\f$ in the range of \f$\overline{\boldsymbol{Q}}\f$.
 
   - The \ref isvd_dPostprocessGramian "Gramian Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \boldsymbol{A}^\top \overline{\boldsymbol{Q}}\f$.
   - The \ref isvd_dPostprocessSymmetric "Symmetric Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \overline{\boldsymbol{Q}}\f$ for symmetric input matrix \f$\boldsymbol{A}\f$.
-
 */

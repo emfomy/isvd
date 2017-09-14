@@ -68,7 +68,7 @@ The following table are the main options
 
 ### Makefile
 
-The following table are the main make rules
+The following table are the main Makefile rules
 
 | Command        | Detail                         | Options                        |
 |----------------|--------------------------------|--------------------------------|
@@ -77,6 +77,12 @@ The following table are the main make rules
 | `make check`   | build and run unit tests       | Require `ISVD_BUILD_TEST`      |
 | `make doc`     | build documentation            | Require `ISVD_BUILD_DOC`       |
 | `make help`    | display make-rules             |                                |
+
+### Test installation
+
+* Set `ISVD_BUILD_TEST` using **ccmake**. (Also recommended to unset `ISVD_VERBOSE_TEST` if GPU is enabled).
+* Run **make check**
+  * Known issue: RealSingle_WenYinIntegration.Test.#/s_integrate_wen_yin_# always fail the test.
 
 ## Usage
 
