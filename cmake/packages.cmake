@@ -159,7 +159,7 @@ if(ISVD_BUILD_TEST)
   endfunction()
 endif()
 
-# DOxygen
+# Doxygen
 if(ISVD_BUILD_DOC)
   find_package(Doxygen REQUIRED)
 endif()

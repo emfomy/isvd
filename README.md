@@ -7,7 +7,8 @@ Integrated Singular Value Decomposition (iSVD)
 * https://github.com/emfomy/isvd
 
 ### Documentation
-* Please download from https://github.com/emfomy/isvd/releases or build using **make doc** (see below) on your own computer.
+* https://github.com/emfomy/isvd/releases/latest
+* May also build it using **make doc** (see below) on your own computer.
 
 ### Author
 * Mu Yang <<emfomy@gmail.com>>
@@ -26,7 +27,7 @@ Integrated Singular Value Decomposition (iSVD)
 * [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support).
 * [OpenMP](http://openmp.org) Library (**Recommended** for better performance, used for multi-thread parallelization).
 * [Google Test Library](https://github.com/google/googletest) (Used for code testing).
-* [DOxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
+* [Doxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
 
 ## Installation
 
