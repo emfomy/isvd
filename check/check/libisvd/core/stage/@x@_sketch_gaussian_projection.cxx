@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
-#include <mmio/mmio.h>
+#include <mmio.h>
 #include <isvd.h>
 #include <libisvd.h>
 
@@ -10,7 +10,7 @@
 #define serr 1e-1
 #define derr 1e-6
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 static void test( char dista, char ordera ) {
 
@@ -25,14 +25,14 @@ static void test( char dista, char ordera ) {
   MM_typecode matcode;
 
   // Check arguments
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');
 
   // Read A
   file = fopen(A_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -63,7 +63,7 @@ static void test( char dista, char ordera ) {
 
   // Read Ys
   file = fopen(YS_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -119,13 +119,13 @@ static void test( char dista, char ordera ) {
   isvd_int_t ldyst = Nl;
 
   // Run stage
-  isvd_@x@SketchGaussianProjection(param, nullptr, 0, nullptr, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
+  isvd_@x@SketchGaussianProjection(param, NULL, 0, NULL, 0, dista_, ordera_, a, lda, yst, ldyst, seed, mpi_root);
 
 #if defined(ISVD_USE_MKL)
   // Gather results
   isvd_val_t *yst_ = isvd_@x@malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
-  MPI_Gather(yst, mb*ldyst, MPI_@X_TYPE@, yst_, mb*ldyst, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+  MPI_Gather(yst, mb*ldyst, MPI_@XTYPE@, yst_, mb*ldyst, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
   // Check results
   if ( mpi_rank == mpi_root ) {

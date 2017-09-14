@@ -5,15 +5,14 @@ find_program(CMAKE_CPPLINT cpplint)
 mark_as_advanced(CMAKE_CPPLINT)
 
 # Macro
-function(SET_CPPLINT_TARGET path)
+function(SET_CPPLINT_TARGET path linelength filter)
   string(REPLACE "/" "_" target ${path})
-  add_custom_target(
-    cpplint_${target}
-    COMMAND ${CMAKE_CPPLINT} --recursive --root=${PROJECT_CONFIG_DIR}/${path} ${ARGN} ${path}
-    WORKING_DIRECTORY ${PROJECT_CONFIG_DIR}
+  add_custom_command(
+    TARGET cpplint POST_BUILD
+    COMMAND ${CMAKE_CPPLINT} --recursive --root="${PROJECT_BINARY_DIR}/${path}" --linelength=${linelength} --filter=${filter} ${path}
+    WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
     COMMENT "Run cpplint for ${path}"
   )
-  add_dependencies(cpplint cpplint_${target})
 endfunction()
 
 # CppLint
@@ -24,5 +23,5 @@ add_custom_target(
   COMMENT "Run cpplint"
 )
 
-set_cpplint_target(include/c --linelength=128 --filter=-build/include,-build/include_order,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens)
-set_cpplint_target(src --linelength=128 --filter=-build/include,-build/include_order,-build/include_what_you_use,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens)
+set_cpplint_target(include/c 128 "-build/include,-build/include_order,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens")
+set_cpplint_target(lib 128 "-build/include,-build/include_order,-build/include_what_you_use,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens")

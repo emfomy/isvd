@@ -1,8 +1,10 @@
 /**
   \page tutorial_main Tutorial
 
-  <h4>Subpages</h4>
+  <h2>Subpages</h2>
 
   - \subpage tutorial_core_example
+  - \subpage tutorial_core_notation
   - \subpage tutorial_core_stage
+  - \subpage tutorial_core_storage
 */

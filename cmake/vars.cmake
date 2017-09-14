@@ -1,11 +1,11 @@
 # Types definitions
-macro(ISVD_SET_TYPES x_ xtype_ x_type_ XName_ XStr_)
+macro(ISVD_SET_TYPES x_ xtype_ XName_ XStr_)
   string(TOLOWER "${x_}" x)
   string(TOUPPER "${x_}" X)
 
-  set(xtype ${xtype_})
+  set(xtype_____ ${xtype_})
 
-  string(TOUPPER "${x_type_}" X_TYPE)
+  string(TOUPPER "${xtype_}" XTYPE)
 
   string(TOLOWER "${XName_}" xname)
   set(XName "${XName_}")
@@ -17,25 +17,25 @@ unset(ISVD_S_TYPES)
 unset(ISVD_D_TYPES)
 unset(ISVD_C_TYPES)
 unset(ISVD_Z_TYPES)
-list(APPEND ISVD_S_TYPES "s" "float"           "float"          "Real Single"    "RealSingle")
-list(APPEND ISVD_D_TYPES "d" "double"          "double"         "Real Double"    "RealDouble")
-list(APPEND ISVD_C_TYPES "c" "_Complex float"  "complex_float"  "Complex Single" "ComplexSingle")
-list(APPEND ISVD_Z_TYPES "z" "_Complex double" "complex_double" "Complex Double" "ComplexDouble")
+list(APPEND ISVD_S_TYPES "s" "isvd_s_val_t" "Real Single"    "RealSingle")
+list(APPEND ISVD_D_TYPES "d" "isvd_d_val_t" "Real Double"    "RealDouble")
+list(APPEND ISVD_C_TYPES "c" "isvd_c_val_t" "Complex Single" "ComplexSingle")
+list(APPEND ISVD_Z_TYPES "z" "isvd_z_val_t" "Complex Double" "ComplexDouble")
 
 # BLAS definitions
 set(
-  ISVD_LA_BLAS_TYPE_DEFINE
+  ISVD_TYPE_MACRO_DEFINE
   "#define CHAR1 char"
   "#define INT   isvd_int_t"
-  "#define REAL4 float"
-  "#define REAL8 double"
-  "#define COMP4 _Complex float"
-  "#define COMP8 _Complex double"
+  "#define REAL4 isvd_s_val_t"
+  "#define REAL8 isvd_d_val_t"
+  "#define COMP4 isvd_c_val_t"
+  "#define COMP8 isvd_z_val_t"
 )
-string(REPLACE ";" "\n" ISVD_LA_BLAS_TYPE_DEFINE "${ISVD_LA_BLAS_TYPE_DEFINE}")
+string(REPLACE ";" "\n" ISVD_TYPE_MACRO_DEFINE "${ISVD_TYPE_MACRO_DEFINE}")
 
 set(
-  ISVD_LA_BLAS_TYPE_UNDEF
+  ISVD_TYPE_MACRO_UNDEF
   "#undef CHAR1"
   "#undef INT"
   "#undef REAL4"
@@ -43,4 +43,4 @@ set(
   "#undef COMP4"
   "#undef COMP8"
 )
-string(REPLACE ";" "\n" ISVD_LA_BLAS_TYPE_UNDEF "${ISVD_LA_BLAS_TYPE_UNDEF}")
+string(REPLACE ";" "\n" ISVD_TYPE_MACRO_UNDEF "${ISVD_TYPE_MACRO_UNDEF}")

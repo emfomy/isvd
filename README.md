@@ -7,7 +7,7 @@ Integrated Singular Value Decomposition (iSVD)
 * https://github.com/emfomy/isvd
 
 ### Documentation
-* http://emfomy.github.io/isvd
+* Please download from https://github.com/emfomy/isvd/releases or build using **make doc** (see below) on your own computer.
 
 ### Author
 * Mu Yang <<emfomy@gmail.com>>
@@ -33,9 +33,10 @@ Integrated Singular Value Decomposition (iSVD)
 Please use the following commands to create Makefiles
 
 ```
+cd <isvd-source-folder>
 mkdir build
 cd build
-cmake <path-to-source>
+cmake ..
 ```
 
 ### Options
@@ -43,7 +44,7 @@ cmake <path-to-source>
 Use the following command to set options
 
 ```
-ccmake <path-to-source>
+ccmake ..
 ```
 
 The following table are the main options
@@ -67,20 +68,28 @@ The following table are the main options
 
 ### Makefile
 
-The following table are the main make rules
+The following table are the main Makefile rules
 
-| Command        | Detail                         |
-|----------------|--------------------------------|
-| `make all`     | build all libraries            |
-| `make install` | install package                |
-| `make check`   | build and run unit tests       |
-| `make doc`     | build documentation            |
-| `make help`    | display make-rules             |
+| Command        | Detail                         | Options                        |
+|----------------|--------------------------------|--------------------------------|
+| `make all`     | build all libraries            |                                |
+| `make install` | install package                |                                |
+| `make check`   | build and run unit tests       | Require `ISVD_BUILD_TEST`      |
+| `make doc`     | build documentation            | Require `ISVD_BUILD_DOC`       |
+| `make help`    | display make-rules             |                                |
+
+### Test installation
+
+* Set `ISVD_BUILD_TEST` using **ccmake**. (Also recommended to unset `ISVD_VERBOSE_TEST` if GPU is enabled).
+* Run **make check**
+  * Known issue: RealSingle_WenYinIntegration.Test.#/s_integrate_wen_yin_# always fail the test.
 
 ## Usage
 
 * Define `ISVD_USE_ILP64` before include `isvd.h` to use 64-bit integer.
 * All 64bit libraries and executables are named with suffix "`_64`".
+* The header files are located in `build/include`
+* The libraries are located in `build/lib`
 
 ### Libraries
 

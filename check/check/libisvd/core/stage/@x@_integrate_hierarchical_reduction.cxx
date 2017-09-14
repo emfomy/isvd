@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
-#include <mmio/mmio.h>
+#include <mmio.h>
 #include <isvd.h>
 #include <libisvd.h>
 
@@ -10,7 +10,7 @@
 #define serr 1e-3
 #define derr 1e-8
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 TEST(@XStr@_HierarchicalReductionIntegration, Test) {
 
@@ -26,7 +26,7 @@ TEST(@XStr@_HierarchicalReductionIntegration, Test) {
 
   // Read Qs
   file = fopen(QS_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -47,7 +47,7 @@ TEST(@XStr@_HierarchicalReductionIntegration, Test) {
 
   // Read Qbar
   file = fopen(Q_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -92,12 +92,12 @@ TEST(@XStr@_HierarchicalReductionIntegration, Test) {
   isvd_int_t ldqt = l;
 
   // Run stage
-  isvd_@x@IntegrateHierarchicalReduction(param, nullptr, 0, nullptr, 0, qst, ldqst, qt, ldqt);
+  isvd_@x@IntegrateHierarchicalReduction(param, NULL, 0, NULL, 0, qst, ldqst, qt, ldqt);
 
   // Gather results
   isvd_val_t *qt_ = isvd_@x@malloc(l * Pmb);
   isvd_int_t ldqt_ = l;
-  MPI_Gather(qt, mb*ldqt, MPI_@X_TYPE@, qt_, mb*ldqt, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+  MPI_Gather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
   if ( mpi_rank == mpi_root ) {
     // Compute space

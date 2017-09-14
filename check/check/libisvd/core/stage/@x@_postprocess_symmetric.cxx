@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <mpi.h>
-#include <mmio/mmio.h>
+#include <mmio.h>
 #include <isvd.h>
 #include <libisvd.h>
 
@@ -12,7 +12,7 @@
 #define serr 1e-3
 #define derr 1e-8
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 typedef enum {
   GatherUV,
@@ -33,14 +33,14 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   MM_typecode matcode;
 
   // Check arguments
-  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", nullptr);
-  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", nullptr);
+  const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
+  const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   ASSERT_NE(dista_,  '\0');
   ASSERT_NE(ordera_, '\0');
 
   // Read A
   file = fopen(A_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -71,7 +71,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
   // Read Q
   file = fopen(Q_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -96,7 +96,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
   // Read S
   file = fopen(S_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -119,7 +119,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
   // Read U
   file = fopen(U_PATH, "r");
-  ASSERT_NE(file, (void*)(nullptr));
+  ASSERT_NE(file, nullptr);
   ASSERT_EQ(mm_read_banner(file, &matcode), 0);
   EXPECT_TRUE(mm_is_array(matcode))   << mm_typecode_to_str(matcode);
   EXPECT_TRUE(mm_is_real(matcode))    << mm_typecode_to_str(matcode);
@@ -186,8 +186,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case GatherUV: {
 
       // Run stage
-      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_,
-                                   a, lda, qt, ldqt, s, ut_, ldut_, nullptr, 0, mpi_root, -2);
+      isvd_@x@PostprocessSymmetric(param, NULL, 0, NULL, 0, dista_, ordera_,
+                                   a, lda, qt, ldqt, s, ut_, ldut_, NULL, 0, mpi_root, -2);
 
       break;
     }
@@ -199,11 +199,11 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       isvd_int_t ldut = l;
 
       // Run stage
-      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_,
-                                   a, lda, qt, ldqt, s, ut, ldut, nullptr, 0, -1, -2);
+      isvd_@x@PostprocessSymmetric(param, NULL, 0, NULL, 0, dista_, ordera_,
+                                   a, lda, qt, ldqt, s, ut, ldut, NULL, 0, -1, -2);
 
       // Gather results
-      MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, ut_, mb*ldut, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+      MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, ut_, mb*ldut, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
       // Deallocate memory
       isvd_free(ut);
@@ -214,8 +214,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case NoUV: {
 
       // Run stage
-      isvd_@x@PostprocessSymmetric(param, nullptr, 0, nullptr, 0, dista_, ordera_,
-                                   a, lda, qt, ldqt, s, nullptr, 0, nullptr, 0, -2, -2);
+      isvd_@x@PostprocessSymmetric(param, NULL, 0, NULL, 0, dista_, ordera_,
+                                   a, lda, qt, ldqt, s, NULL, 0, NULL, 0, -2, -2);
 
       break;
     }

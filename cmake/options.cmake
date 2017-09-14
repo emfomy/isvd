@@ -9,7 +9,7 @@ endif()
 option(ISVD_BUILD_LIB     "Build libraries."      "ON")
 option(ISVD_BUILD_DEMO    "Build demo codes."     "ON")
 option(ISVD_BUILD_TEST    "Build unit tests."     "OFF")
-option(ISVD_BUILD_DOC     "Build documentation."  "OFF")
+option(ISVD_BUILD_DOC     "Build documentation."  "ON")
 option(ISVD_USE_GPU       "Enable GPU support."   "OFF")
 option(ISVD_VERBOSE_TEST  "Verbose unit tests."   "ON")
 
@@ -79,4 +79,4 @@ endif()
 
 # Set environment variables
 list(APPEND ENVS "OMP_NUM_THREADS=${OMP_THRDS}")
-list(APPEND ENVS "ASAN_OPTIONS=color=always:protect_shadow_gap=0:replace_intrin=0:detect_leaks=0")
+list(APPEND ENVS "ASAN_OPTIONS=color=always:protect_shadow_gap=0")

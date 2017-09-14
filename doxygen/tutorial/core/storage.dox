@@ -1,0 +1,58 @@
+/**
+  \page tutorial_core_storage Parallelism Storage
+
+  <h3>Block-Row Storage</h3>
+
+  In Block-Row Parallelism, we storage the matrices in row-blocks. The \f$j\f$-th block is stored in the \f$j\f$-th MPI-rank.
+
+  @f[
+    \boldsymbol{A} =
+      \begin{bmatrix}
+        \mathsf{A}^{(0)} \\ \mathsf{A}^{(1)} \\ \vdots \\ \mathsf{A}^{(P-1)}
+      \end{bmatrix},
+    \qquad
+    \boldsymbol{\mathfrak{Y}} =
+      \begin{bmatrix}
+        \mathfrak{Y}^{(0)} \\ \mathfrak{Y}^{(1)} \\ \vdots \\ \mathfrak{Y}^{(P-1)}
+      \end{bmatrix},
+    \qquad
+    \boldsymbol{\mathfrak{Q}} =
+      \begin{bmatrix}
+        \mathfrak{Q}^{(0)} \\ \mathfrak{Q}^{(1)} \\ \vdots \\ \mathfrak{Q}^{(P-1)}
+      \end{bmatrix},
+    \qquad
+    \overline{\boldsymbol{Q}} =
+      \begin{bmatrix}
+        \overline{\mathsf{Q}}^{(0)} \\ \overline{\mathsf{Q}}^{(1)} \\ \vdots \\ \overline{\mathsf{Q}}^{(P-1)}
+      \end{bmatrix},
+    \qquad
+    \boldsymbol{U} =
+      \begin{bmatrix}
+        \mathsf{U}^{(0)} \\ \mathsf{U}^{(1)} \\ \vdots \\ \mathsf{U}^{(P-1)}
+      \end{bmatrix},
+    \qquad
+    \boldsymbol{V} =
+      \begin{bmatrix}
+        \mathsf{V}^{(0)} \\ \mathsf{V}^{(1)} \\ \vdots \\ \mathsf{V}^{(P-1)}
+      \end{bmatrix}.
+  @f]
+
+  The \f$j\f$-th block of the input matrices should contain \f$m^{(j)}\f$ rows, and the \f$j\f$-th block of the input matrices should contain \f$m_b\f$ rows.
+
+  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 rows and \f$P\f$ is 4. Then \f$\mathsf{A}^{(0)}\f$ are the (0-2)-th rows, \f$\mathsf{A}^{(1)}\f$ are the (0-5)-th rows, \f$\mathsf{A}^{(2)}\f$ are the (6-8)-th rows, \f$\mathsf{A}^{(3)}\f$ are the (9-10)-th rows.
+
+  <h3>Block-Column Storage</h3>
+
+  In Block-Column Parallelism, we storage the input matrix \f$\boldsymbol{A}\f$ in row-blocks. The \f$j\f$-th block is stored in the \f$j\f$-th MPI-rank.
+
+  @f[
+    \boldsymbol{A} =
+      \begin{bmatrix}
+        \mathsf{A}^{\langle 0 \rangle} & \mathsf{A}^{\langle 1 \rangle} & \cdots & \mathsf{A}^{\langle P-1 \rangle}
+      \end{bmatrix}.
+  @f]
+
+  The \f$j\f$-th block of the input matrices should contain \f$n^{(j)}\f$ columns, and the \f$j\f$-th block of the input matrices should contain \f$n_b\f$ columns.
+
+  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 columns and \f$P\f$ is 4. Then \f$\mathsf{A}^{\langle 0 \rangle}\f$ are the (0-2)-th columns, \f$\mathsf{A}^{\langle 1 \rangle}\f$ are the (0-5)-th columns, \f$\mathsf{A}^{\langle 2 \rangle}\f$ are the (6-8)-th columns, \f$\mathsf{A}^{\langle 3 \rangle}\f$ are the (9-10)-th columns.
+*/
