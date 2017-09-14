@@ -15,7 +15,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
@@ -54,7 +54,7 @@ bool isvd_Lsame( const CHAR1 ca, const CHAR1 cb );
 /// \brief  Tests two character strings for equality regardless of the case.
 bool isvd_Lsamen( const INT n, const CHAR1 *sa, const CHAR1 *sb );
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

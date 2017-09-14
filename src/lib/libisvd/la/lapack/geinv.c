@@ -10,7 +10,7 @@
 #include <libisvd/la/def.h>
 #include <isvd/util/memory.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
@@ -91,4 +91,4 @@ void isvd_zGeinv(
   isvd_free(work);
 }
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

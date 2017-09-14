@@ -15,13 +15,13 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

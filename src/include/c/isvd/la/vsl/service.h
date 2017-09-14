@@ -15,7 +15,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 typedef INT* isvd_VSLStreamStatePtr;
 
@@ -34,7 +34,7 @@ void isvd_vslDeleteStream( isvd_VSLStreamStatePtr *streamp );
 /// \brief  Initializes the stream by the skip-ahead method.
 void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip );
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

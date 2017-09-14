@@ -10,6 +10,7 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
@@ -21,13 +22,13 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@OrthogonalizeTallSkinnyQr(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-          @xtype@    *yst,
-    const isvd_int_t  ldyst
+    const isvd_Param   param,
+    const @xtype_____@ *argv,
+    const isvd_int_t   argc,
+          @xtype_____@ *retv,
+    const isvd_int_t   retc,
+          @xtype_____@ *yst,
+    const isvd_int_t   ldyst
 ) {
 
   fprintf(stderr, "Tall-Skinny QR Orthogonalization is not implemented!\n");

@@ -16,7 +16,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vsl_distribution_module
@@ -26,7 +26,7 @@ void isvd_vsRngGaussian( isvd_VSLStreamStatePtr stream, const INT n, REAL4 *r, c
 void isvd_vdRngGaussian( isvd_VSLStreamStatePtr stream, const INT n, REAL8 *r, const REAL8 a, const REAL8 sigma );
 //\}
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

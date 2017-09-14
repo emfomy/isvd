@@ -15,7 +15,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_ls_module
@@ -41,7 +41,7 @@ void isvd_zGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n,
                   const INT ldu, COMP8 *v, const INT ldvt );
 //\}
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

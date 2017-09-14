@@ -12,7 +12,7 @@
 #define serr 1e-3
 #define derr 1e-8
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 typedef enum {
   GatherUV,
@@ -203,7 +203,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
                                    a, lda, qt, ldqt, s, ut, ldut, NULL, 0, -1, -2);
 
       // Gather results
-      MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, ut_, mb*ldut, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+      MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, ut_, mb*ldut, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
       // Deallocate memory
       isvd_free(ut);

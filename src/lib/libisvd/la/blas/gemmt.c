@@ -10,7 +10,7 @@
 #include <libisvd/la/def.h>
 #include <libisvd/util/arg.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if defined(ISVD_USE_MKL)
 
@@ -71,4 +71,4 @@ void isvd_zGemmt(
 
 #endif  // ISVD_USE_MKL
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

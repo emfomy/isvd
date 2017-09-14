@@ -10,6 +10,7 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 #define kMaxit    256
 #define kTol      1e-3
@@ -50,15 +51,15 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@IntegrateWenYin(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-    const @xtype@    *yst,
-    const isvd_int_t  ldyst,
-          @xtype@    *qt,
-    const isvd_int_t  ldqt
+    const isvd_Param   param,
+    const @xtype_____@ *argv,
+    const isvd_int_t   argc,
+          @xtype_____@ *retv,
+    const isvd_int_t   retc,
+    const @xtype_____@ *yst,
+    const isvd_int_t   ldyst,
+          @xtype_____@ *qt,
+    const isvd_int_t   ldqt
 ) {
 
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
@@ -85,15 +86,15 @@ void isvd_@x@IntegrateWenYin(
   // Get arguments
 
   isvd_int_t argi = -1;
-  const isvd_int_t maxit    = ( argc > ++argi ) ? argv[argi] : kMaxit;
-  const @xtype@ tol         = ( argc > ++argi ) ? argv[argi] : kTol;
-  const @xtype@ tau0        = ( argc > ++argi ) ? argv[argi] : kTau0;
-  const @xtype@ taumax      = ( argc > ++argi ) ? argv[argi] : kTaumax;
-  const @xtype@ taumin      = ( argc > ++argi ) ? argv[argi] : kTaumin;
-  const isvd_int_t taumaxit = ( argc > ++argi ) ? argv[argi] : kTauMaxit;
-  const @xtype@ beta        = ( argc > ++argi ) ? argv[argi] : kBeta;
-  const @xtype@ sigma       = ( argc > ++argi ) ? argv[argi] : kSigma;
-  const @xtype@ eta         = ( argc > ++argi ) ? argv[argi] : kEta;
+  const isvd_int_t   maxit    = ( argc > ++argi ) ? argv[argi] : kMaxit;
+  const @xtype_____@ tol      = ( argc > ++argi ) ? argv[argi] : kTol;
+  const @xtype_____@ tau0     = ( argc > ++argi ) ? argv[argi] : kTau0;
+  const @xtype_____@ taumax   = ( argc > ++argi ) ? argv[argi] : kTaumax;
+  const @xtype_____@ taumin   = ( argc > ++argi ) ? argv[argi] : kTaumin;
+  const isvd_int_t   taumaxit = ( argc > ++argi ) ? argv[argi] : kTauMaxit;
+  const @xtype_____@ beta     = ( argc > ++argi ) ? argv[argi] : kBeta;
+  const @xtype_____@ sigma    = ( argc > ++argi ) ? argv[argi] : kSigma;
+  const @xtype_____@ eta      = ( argc > ++argi ) ? argv[argi] : kEta;
 
   // ====================================================================================================================== //
   // Get parameters
@@ -121,74 +122,74 @@ void isvd_@x@IntegrateWenYin(
   // ====================================================================================================================== //
   // Allocate memory
 
-  const @xtype@ *qst = yst;
+  const @xtype_____@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  @xtype@ *qct = isvd_@x@malloc(l * mj);
+  @xtype_____@ *qct = isvd_@x@malloc(l * mj);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype@ *qpt = isvd_@x@malloc(l * mj);
+  @xtype_____@ *qpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  @xtype@ *gct = isvd_@x@malloc(l * mj);
+  @xtype_____@ *gct = isvd_@x@malloc(l * mj);
   isvd_int_t ldgct = l;
 
   // matrix Xc'
-  @xtype@ *xct = isvd_@x@malloc(l * mj);
+  @xtype_____@ *xct = isvd_@x@malloc(l * mj);
   isvd_int_t ldxct = l;
 
   // matrix X+'
-  @xtype@ *xpt = isvd_@x@malloc(l * mj);
+  @xtype_____@ *xpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldxpt = l;
 
   // matrix Bc
-  @xtype@ *bc = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *bc = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbc = Nl;
 
   // matrix B+
-  @xtype@ *bp = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *bp = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbp = Nl;
 
   // matrix Bgc
-  @xtype@ *bgc = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *bgc = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbgc = Nl;
 
   // matrix Dc
-  @xtype@ *dc = isvd_@x@malloc(l * l);
+  @xtype_____@ *dc = isvd_@x@malloc(l * l);
   isvd_int_t lddc = l;
 
   // matrix Dgc
-  @xtype@ *dgc = isvd_@x@malloc(l * l);
+  @xtype_____@ *dgc = isvd_@x@malloc(l * l);
   isvd_int_t lddgc = l;
 
   // matrix C & inv(C)
-  @xtype@ *c = isvd_@x@malloc(l2 * l2);
+  @xtype_____@ *c = isvd_@x@malloc(l2 * l2);
   isvd_int_t ldc = l2;
 
   // matrix inv(C)_??
-  @xtype@ *c11 = c;
-  @xtype@ *c21 = c + l;
-  @xtype@ *c12 = c + ldc*l;
-  @xtype@ *c22 = c + l + ldc*l;
+  @xtype_____@ *c11 = c;
+  @xtype_____@ *c21 = c + l;
+  @xtype_____@ *c12 = c + ldc*l;
+  @xtype_____@ *c22 = c + l + ldc*l;
 
   // matrix inv(C)_#?
-  @xtype@ *cs1 = c11;
-  @xtype@ *cs2 = c12;
+  @xtype_____@ *cs1 = c11;
+  @xtype_____@ *cs2 = c12;
 
   // matrix Fc
-  @xtype@ *fc = c21;
+  @xtype_____@ *fc = c21;
   isvd_int_t ldfc = ldc;
 
   // matrix Fgc
-  @xtype@ *fgc = c11;
+  @xtype_____@ *fgc = c11;
   isvd_int_t ldfgc = ldc;
 
-  @xtype@ *tmp;
+  @xtype_____@ *tmp;
 
-  @xtype@ taug, zeta, phi, mu;
+  @xtype_____@ taug, zeta, phi, mu;
 
   // ====================================================================================================================== //
   // Initializing
@@ -198,7 +199,7 @@ void isvd_@x@IntegrateWenYin(
 
   // Bc := Qs' * Qc
   isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
-  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // Dc := 1/N * Bc' * Bc
   isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
@@ -208,7 +209,7 @@ void isvd_@x@IntegrateWenYin(
 
   // Bgc := Qs' * Gc
   isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
-  MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // Dgc := 1/N * Bc' * Bgc
   isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bgc, ldbgc, 0.0, dgc, lddgc);
@@ -234,7 +235,7 @@ void isvd_@x@IntegrateWenYin(
 
     // ================================================================================================================== //
     // Find step size
-    @xtype@ tau = taug, phit = phi;
+    @xtype_____@ tau = taug, phit = phi;
     for ( isvd_int_t tauiter = 1; tauiter <= taumaxit; ++tauiter, tau *= beta ) {
 
       // C := [ Dc/2 - I/tau , I/2          ;
@@ -295,7 +296,7 @@ void isvd_@x@IntegrateWenYin(
 
     // Bg+ [in Bgc] := Qs' * G+ [in Gc]
     isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
-    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
     // Dg+ [in Dgc] := 1/N * B+' * Bg+ [in Bgc]
     isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bp, ldbp, bgc, ldbgc, 0.0, dgc, lddgc);
@@ -327,7 +328,7 @@ void isvd_@x@IntegrateWenYin(
     isvd_v@x@Sub(mj*ldxct, xct, xpt, xct);
 
     // Update taug
-    @xtype@ t[2];
+    @xtype_____@ t[2];
 
     if ( iter % 2 ) {
       t[0] = isvd_@x@Dot(mj*ldqct, qct, 1, qct, 1);
@@ -337,7 +338,7 @@ void isvd_@x@IntegrateWenYin(
       t[1] = isvd_@x@Dot(mj*ldxct, xct, 1, xct, 1);
     }
 
-    MPI_Allreduce(MPI_IN_PLACE, t, 2, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+    MPI_Allreduce(MPI_IN_PLACE, t, 2, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
     taug = fabs(t[0]/t[1]);
     if ( taug < taumin ) { taug = taumin; }

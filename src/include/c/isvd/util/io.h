@@ -15,9 +15,13 @@
 extern "C" {
 #endif  // __cplusplus
 
-void isvd_ifget( FILE *stream, isvd_int_t *varp );
-void isvd_sfget( FILE *stream, float *varp );
-void isvd_dfget( FILE *stream, double *varp );
+@ISVD_TYPE_MACRO_DEFINE@
+
+void isvd_ifget( FILE *stream, INT   *varp );
+void isvd_sfget( FILE *stream, REAL4 *varp );
+void isvd_dfget( FILE *stream, REAL8 *varp );
+
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

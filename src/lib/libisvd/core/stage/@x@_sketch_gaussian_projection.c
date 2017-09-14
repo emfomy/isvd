@@ -41,19 +41,19 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@SketchGaussianProjection(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-    const char        dista,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-          @xtype@    *yst,
-    const isvd_int_t  ldyst,
-    const isvd_int_t  seed,
-    const mpi_int_t   mpi_root
+    const isvd_Param    param,
+    const @xtype_____@ *argv,
+    const isvd_int_t    argc,
+          @xtype_____@ *retv,
+    const isvd_int_t    retc,
+    const char          dista,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+          @xtype_____@ *yst,
+    const isvd_int_t    ldyst,
+    const isvd_int_t    seed,
+    const mpi_int_t     mpi_root
 ) {
 
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }

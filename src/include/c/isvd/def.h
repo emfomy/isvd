@@ -65,6 +65,22 @@ typedef uintN_t  isvd_uint_t;
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 /// \ingroup  c_core_module
+/// \brief  The type of real single floating point.
+typedef float           isvd_s_val_t;
+
+/// \ingroup  c_core_module
+/// \brief  The type of real double floating point.
+typedef double          isvd_d_val_t;
+
+/// \ingroup  c_core_module
+/// \brief  The type of complex single floating point.
+typedef _Complex float  isvd_c_val_t;
+
+/// \ingroup  c_core_module
+/// \brief  The type of complex double floating point.
+typedef _Complex double isvd_z_val_t;
+
+/// \ingroup  c_core_module
 /// \brief  The type of MPI index.
 typedef int mpi_int_t;
 

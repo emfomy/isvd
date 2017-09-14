@@ -9,11 +9,6 @@
 #include <isvd/util/mpi.h>
 #include <libisvd/def.h>
 
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-#define MPI_COMPLEX_FLOAT  MPI_COMPLEX8
-#define MPI_COMPLEX_DOUBLE MPI_COMPLEX16
-#endif  // DOXYGEN_SHOULD_SKIP_THIS
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_util_mpi_module
 /// \brief  Returns the size of the group associated with a communicator.

@@ -12,21 +12,22 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol(
-    const isvd_Param  param,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-    const @xtype@    *qt,
-    const isvd_int_t  ldqt,
-          @xtype@    *zt,
-    const isvd_int_t  ldzt,
-          @xtype@    *s,
-          @xtype@    *ut,
-    const isvd_int_t  ldut,
-    const mpi_int_t   ut_root
+    const isvd_Param    param,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+    const @xtype_____@ *qt,
+    const isvd_int_t    ldqt,
+          @xtype_____@ *zt,
+    const isvd_int_t    ldzt,
+          @xtype_____@ *s,
+          @xtype_____@ *ut,
+    const isvd_int_t    ldut,
+    const mpi_int_t     ut_root
 ) {
 
   ISVD_UNUSED(s);
@@ -61,7 +62,7 @@ static void projectBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *qt_;
+  @xtype_____@ *qt_;
   if ( use_ut ) {
     qt_ = ut;
   } else {
@@ -72,7 +73,7 @@ static void projectBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Allgather(qt, mb*ldqt, MPI_@X_TYPE@, qt_, mb*ldqt, MPI_@X_TYPE@, param.mpi_comm);
+  MPI_Allgather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Project
@@ -91,18 +92,18 @@ static void projectBlockCol(
 }
 
 static void projectBlockRow(
-    const isvd_Param  param,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-    const @xtype@    *qt,
-    const isvd_int_t  ldqt,
-          @xtype@    *zt,
-    const isvd_int_t  ldzt,
-          @xtype@    *s,
-          @xtype@    *vt,
-    const isvd_int_t  ldvt,
-    const mpi_int_t   vt_root
+    const isvd_Param    param,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+    const @xtype_____@ *qt,
+    const isvd_int_t    ldqt,
+          @xtype_____@ *zt,
+    const isvd_int_t    ldzt,
+          @xtype_____@ *s,
+          @xtype_____@ *vt,
+    const isvd_int_t    ldvt,
+    const mpi_int_t     vt_root
 ) {
 
   ISVD_UNUSED(s);
@@ -137,7 +138,7 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *zt_;
+  @xtype_____@ *zt_;
   if ( use_vt ) {
     zt_ = vt;
   } else {
@@ -155,7 +156,7 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Deallocate memory

@@ -10,7 +10,7 @@
 #include <libisvd/la/def.h>
 #include <libisvd/util/arg.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if defined(ISVD_USE_MKL)
 
@@ -46,8 +46,8 @@ void isvd_zOmatcopy(
 
 #else  // ISVD_USE_MKL
 
-static inline float  rconjf( const float  z ) { return z; }
-static inline double rconj(  const double z ) { return z; }
+static inline REAL4 rconjf( const REAL4 z ) { return z; }
+static inline REAL8 rconj(  const REAL8 z ) { return z; }
 
 #define isvd_xOmatcopy( trans, m, n, alpha, a, lda, b, ldb, conj ) \
   const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", NULL); \
@@ -105,4 +105,4 @@ void isvd_zOmatcopy(
 
 #endif  // ISVD_USE_MKL
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

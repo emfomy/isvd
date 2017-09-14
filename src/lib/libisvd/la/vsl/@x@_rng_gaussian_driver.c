@@ -16,9 +16,9 @@ void isvd_v@x@RngGaussianDriver(
     const isvd_int_t seed,
     const isvd_int_t nskip,
     const isvd_int_t n,
-          @xtype@ *r,
-    const @xtype@ a,
-    const @xtype@ sigma
+          @xtype_____@ *r,
+    const @xtype_____@ a,
+    const @xtype_____@ sigma
 ) {
   ISVD_OMP_PARALLEL
   {

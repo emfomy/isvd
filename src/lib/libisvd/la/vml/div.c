@@ -9,7 +9,7 @@
 #include <isvd/la/vml/power_root.h>
 #include <libisvd/la/def.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if defined(ISVD_USE_MKL)
 
@@ -32,4 +32,4 @@ void isvd_vzDiv( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y ) { isvd_
 
 #endif  // ISVD_USE_MKL
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

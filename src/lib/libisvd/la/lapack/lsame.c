@@ -9,7 +9,7 @@
 #include <isvd/la/lapack/auxiliary.h>
 #include <libisvd/la/def.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
@@ -49,4 +49,4 @@ bool isvd_Lsamen(
   return true;
 }
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

@@ -15,7 +15,7 @@
 #define serr 1e-3
 #define derr 1e-8
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 TEST(@XStr@_WenYinIntegration, Test) {
 
@@ -107,7 +107,7 @@ TEST(@XStr@_WenYinIntegration, Test) {
   // Gather results
   isvd_val_t *qt_ = isvd_@x@malloc(l * Pmb);
   isvd_int_t ldqt_ = l;
-  MPI_Gather(qt, mb*ldqt, MPI_@X_TYPE@, qt_, mb*ldqt, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+  MPI_Gather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
   // Check results
   if ( mpi_rank == mpi_root ) {

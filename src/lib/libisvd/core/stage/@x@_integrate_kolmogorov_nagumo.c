@@ -10,6 +10,7 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 #define kMaxit 256
 #define kTol   1e-4
@@ -36,15 +37,15 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@IntegrateKolmogorovNagumo(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-    const @xtype@    *yst,
-    const isvd_int_t  ldyst,
-          @xtype@    *qt,
-    const isvd_int_t  ldqt
+    const isvd_Param   param,
+    const @xtype_____@ *argv,
+    const isvd_int_t   argc,
+          @xtype_____@ *retv,
+    const isvd_int_t   retc,
+    const @xtype_____@ *yst,
+    const isvd_int_t   ldyst,
+          @xtype_____@ *qt,
+    const isvd_int_t   ldqt
 ) {
 
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
@@ -65,7 +66,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
   isvd_int_t argi = -1;
   const isvd_int_t maxit = ( argc > ++argi ) ? argv[argi] : kMaxit;
-  const @xtype@ tol      = ( argc > ++argi ) ? argv[argi] : kTol;
+  const @xtype_____@ tol = ( argc > ++argi ) ? argv[argi] : kTol;
 
   // ====================================================================================================================== //
   // Get parameters
@@ -85,64 +86,64 @@ void isvd_@x@IntegrateKolmogorovNagumo(
   // ====================================================================================================================== //
   // Allocate memory
 
-  const @xtype@ *qst = yst;
+  const @xtype_____@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
   // matrix Qc'
-  @xtype@ *qct = isvd_@x@malloc(l * mj);
+  @xtype_____@ *qct = isvd_@x@malloc(l * mj);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype@ *qpt = isvd_@x@malloc(l * mj);
+  @xtype_____@ *qpt = isvd_@x@malloc(l * mj);
   isvd_int_t ldqpt = l;
 
   // matrix Gc'
-  @xtype@ *gct = isvd_@x@malloc(l * mj);
+  @xtype_____@ *gct = isvd_@x@malloc(l * mj);
   isvd_int_t ldgct = l;
 
   // matrix Bc
-  @xtype@ *bc = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *bc = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbc = Nl;
 
   // matrix B+
-  @xtype@ *bp = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *bp = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbp = Nl;
 
   // matrix Bgc
-  @xtype@ *bgc = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *bgc = isvd_@x@malloc(Nl * l);
   isvd_int_t ldbgc = Nl;
 
   // matrix Dc
-  @xtype@ *dc = isvd_@x@malloc(l * l);
+  @xtype_____@ *dc = isvd_@x@malloc(l * l);
   isvd_int_t lddc = l;
 
   // matrix Z
-  @xtype@ *z = isvd_@x@malloc(l * l);
+  @xtype_____@ *z = isvd_@x@malloc(l * l);
   isvd_int_t ldz = l;
 
   // matrix C
-  @xtype@ *c = isvd_@x@malloc(l * l);
+  @xtype_____@ *c = isvd_@x@malloc(l * l);
   isvd_int_t ldc = l;
 
   // matrix inv(C)
-  @xtype@ *cinv = isvd_@x@malloc(l * l);
+  @xtype_____@ *cinv = isvd_@x@malloc(l * l);
   isvd_int_t ldcinv = l;
 
   // vector s
-  @xtype@ *s = isvd_@x@malloc(l * 2);
+  @xtype_____@ *s = isvd_@x@malloc(l * 2);
 
   // matrix Z * sqrt(S)
-  @xtype@ *zs     = cinv;
-  isvd_int_t ldzs    = ldcinv;
+  @xtype_____@ *zs = cinv;
+  isvd_int_t ldzs = ldcinv;
 
   // matrix Z / sqrt(S)
-  @xtype@ *zinvs  = z;
+  @xtype_____@ *zinvs = z;
   isvd_int_t ldzinvs = ldz;
 
   // matrix sqrt(S)
-  @xtype@ *ss = s + l;
+  @xtype_____@ *ss = s + l;
 
-  @xtype@ *tmp;
+  @xtype_____@ *tmp;
 
   // ====================================================================================================================== //
   // Initializing
@@ -152,13 +153,13 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
   // Bc := Qs' * Qc
   isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
-  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Iterating
 
   isvd_int_t iter;
-  @xtype@ error = -1.0/0.0;
+  @xtype_____@ error = -1.0/0.0;
 
   for ( iter = 1; ; ++iter ) {
 
@@ -170,7 +171,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
     // Bgc := Qs' * Gc
     isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
-    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
     // Dc := 1/N * Bc' * Bc
     isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);

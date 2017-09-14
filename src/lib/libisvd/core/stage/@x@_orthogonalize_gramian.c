@@ -10,6 +10,7 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
@@ -27,13 +28,13 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@OrthogonalizeGramian(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-          @xtype@    *yst,
-    const isvd_int_t  ldyst
+    const isvd_Param   param,
+    const @xtype_____@ *argv,
+    const isvd_int_t   argc,
+          @xtype_____@ *retv,
+    const isvd_int_t   retc,
+          @xtype_____@ *yst,
+    const isvd_int_t   ldyst
 ) {
 
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
@@ -56,13 +57,13 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *yst_ = isvd_@x@malloc(ldyst * mj);
+  @xtype_____@ *yst_ = isvd_@x@malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
-  @xtype@ *w = isvd_@x@malloc(l * Nl);
+  @xtype_____@ *w = isvd_@x@malloc(l * Nl);
   isvd_int_t ldw = l;
 
-  @xtype@ *s = isvd_@x@malloc(l * N);
+  @xtype_____@ *s = isvd_@x@malloc(l * N);
   isvd_int_t lds = l;
 
   // ====================================================================================================================== //
@@ -72,7 +73,7 @@ void isvd_@x@OrthogonalizeGramian(
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
   }
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {

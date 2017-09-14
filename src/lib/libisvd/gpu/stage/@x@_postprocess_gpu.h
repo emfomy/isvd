@@ -21,21 +21,22 @@
 #include <isvd/la.h>
 #include <libisvd/util/function.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void projectBlockCol(
-    const isvd_Param  param,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-    const @xtype@    *qt,
-    const isvd_int_t  ldqt,
-          @xtype@    *zt,
-    const isvd_int_t  ldzt,
-          @xtype@    *s,
-          @xtype@    *ut,
-    const isvd_int_t  ldut,
-    const mpi_int_t   ut_root
+    const isvd_Param    param,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+    const @xtype_____@ *qt,
+    const isvd_int_t    ldqt,
+          @xtype_____@ *zt,
+    const isvd_int_t    ldzt,
+          @xtype_____@ *s,
+          @xtype_____@ *ut,
+    const isvd_int_t    ldut,
+    const mpi_int_t     ut_root
 ) {
 
   ISVD_UNUSED(s);
@@ -73,21 +74,21 @@ static void projectBlockCol(
   size_t free_byte, total_byte;
   cudaMemGetInfo(&free_byte, &total_byte);
   if ( isvd_gpu_memory_limit > 0 ) free_byte = minl(free_byte, isvd_gpu_memory_limit);
-  size_t melem = free_byte / sizeof(@xtype@);
+  size_t melem = free_byte / sizeof(@xtype_____@);
   size_t nelem_used = m * l;
   isvd_int_t n_gpu = (melem - nelem_used) / (m + l);
   if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
   n_gpu = min(n_gpu, nj);
   if ( n_gpu <= 0 ) {
     fprintf(stderr, "No enough GPU memory. (Request at least %" PRId64 " bytes. Only %" PRId64 " bytes free.",
-            nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
+            nelem_used * sizeof(@xtype_____@), melem * sizeof(@xtype_____@));
     isvd_assert_fail();
   }
 
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *qt_;
+  @xtype_____@ *qt_;
   if ( use_ut ) {
     qt_ = ut;
   } else {
@@ -95,22 +96,22 @@ static void projectBlockCol(
   }
   isvd_int_t ldqt_ = l;
 
-  @xtype@ *a_gpu;
+  @xtype_____@ *a_gpu;
   magma_@x@malloc(&a_gpu, m * n_gpu);
   isvd_int_t lda_gpu = (ordera == 'C') ? m : n_gpu;
 
-  @xtype@ *qt_gpu;
+  @xtype_____@ *qt_gpu;
   magma_@x@malloc(&qt_gpu, l * m);
   isvd_int_t ldqt_gpu = l;
 
-  @xtype@ *zt_gpu;
+  @xtype_____@ *zt_gpu;
   magma_@x@malloc(&zt_gpu, l * n_gpu);
   isvd_int_t ldzt_gpu = l;
 
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Allgather(qt, mb*ldqt, MPI_@X_TYPE@, qt_, mb*ldqt, MPI_@X_TYPE@, param.mpi_comm);
+  MPI_Allgather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Send data
@@ -124,8 +125,8 @@ static void projectBlockCol(
   isvd_int_t idx;
 
   for ( idx = 0; idx < nj; idx += n_gpu ) {
-    const @xtype@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
-          @xtype@ *zt_tmp = zt + ldzt*idx;
+    const @xtype_____@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
+          @xtype_____@ *zt_tmp = zt + ldzt*idx;
     const isvd_int_t n_tmp = min(n_gpu, nj-idx);
 
     // Send A
@@ -157,18 +158,18 @@ static void projectBlockCol(
 }
 
 static void projectBlockRow(
-    const isvd_Param  param,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-    const @xtype@    *qt,
-    const isvd_int_t  ldqt,
-          @xtype@    *zt,
-    const isvd_int_t  ldzt,
-          @xtype@    *s,
-          @xtype@    *vt,
-    const isvd_int_t  ldvt,
-    const mpi_int_t   vt_root
+    const isvd_Param    param,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+    const @xtype_____@ *qt,
+    const isvd_int_t    ldqt,
+          @xtype_____@ *zt,
+    const isvd_int_t    ldzt,
+          @xtype_____@ *s,
+          @xtype_____@ *vt,
+    const isvd_int_t    ldvt,
+    const mpi_int_t     vt_root
 ) {
 
   ISVD_UNUSED(s);
@@ -205,21 +206,21 @@ static void projectBlockRow(
 
   size_t free_byte, total_byte;
   cudaMemGetInfo(&free_byte, &total_byte);
-  size_t melem = free_byte / sizeof(@xtype@);
+  size_t melem = free_byte / sizeof(@xtype_____@);
   size_t nelem_used = mj * l;
   isvd_int_t n_gpu = (melem - nelem_used) / (mj + l);
   if ( n_gpu > (isvd_int_t)isvd_kBlockSizeGpu ) n_gpu = (n_gpu / isvd_kBlockSizeGpu) * isvd_kBlockSizeGpu;
   n_gpu = min(n_gpu, n);
   if ( n_gpu <= 0 ) {
     fprintf(stderr, "No enough GPU memory. (Request at least %" PRId64 " bytes. Only %" PRId64 " bytes free.",
-            nelem_used * sizeof(@xtype@), melem * sizeof(@xtype@));
+            nelem_used * sizeof(@xtype_____@), melem * sizeof(@xtype_____@));
     isvd_assert_fail();
   }
 
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *zt_;
+  @xtype_____@ *zt_;
   if ( use_vt ) {
     zt_ = vt;
   } else {
@@ -227,15 +228,15 @@ static void projectBlockRow(
   }
   isvd_int_t ldzt_ = l;
 
-  @xtype@ *a_gpu;
+  @xtype_____@ *a_gpu;
   magma_@x@malloc(&a_gpu, mj * n_gpu);
   isvd_int_t lda_gpu = (ordera == 'C') ? mj : n_gpu;
 
-  @xtype@ *qt_gpu;
+  @xtype_____@ *qt_gpu;
   magma_@x@malloc(&qt_gpu, l * mj);
   isvd_int_t ldqt_gpu = l;
 
-  @xtype@ *zt_gpu;
+  @xtype_____@ *zt_gpu;
   magma_@x@malloc(&zt_gpu, l * n_gpu);
   isvd_int_t ldzt_gpu = l;
 
@@ -251,8 +252,8 @@ static void projectBlockRow(
   isvd_int_t idx;
 
   for ( idx = 0; idx < n; idx += n_gpu ) {
-    const @xtype@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
-          @xtype@ *zt_tmp = zt_ + ldzt*idx;
+    const @xtype_____@ *a_tmp = (ordera == 'C') ? (a + lda*idx) : (a+idx);
+          @xtype_____@ *zt_tmp = zt_ + ldzt*idx;
     const isvd_int_t n_tmp = min(n_gpu, n-idx);
 
     // Send A
@@ -273,7 +274,7 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Deallocate memory

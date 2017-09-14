@@ -41,8 +41,8 @@ extern "C" {
 #if defined(ISVD_USE_MKL)
   #define MKL_INT       isvd_int_t
   #define MKL_UINT      isvd_uint_t
-  #define MKL_Complex8  _Complex float
-  #define MKL_Complex16 _Complex double
+  #define MKL_Complex8  isvd_c_val_t
+  #define MKL_Complex16 isvd_z_val_t
 #endif  // ISVD_USE_MKL
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS

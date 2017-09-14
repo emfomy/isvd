@@ -25,9 +25,9 @@ extern "C" {
 /// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
 ///
 void isvd_@x@SketchGaussianProjection_gpu(
-    const isvd_Param param, const @xtype@ *argv, const isvd_int_t argc, @xtype@ *retv, const isvd_int_t retc,
-    const char dista, const char ordera, const @xtype@ *a, const isvd_int_t lda,
-    @xtype@ *yst, const isvd_int_t ldyst, const isvd_int_t seed, const mpi_int_t mpi_root
+    const isvd_Param param, const @xtype_____@ *argv, const isvd_int_t argc, @xtype_____@ *retv, const isvd_int_t retc,
+    const char dista, const char ordera, const @xtype_____@ *a, const isvd_int_t lda,
+    @xtype_____@ *yst, const isvd_int_t ldyst, const isvd_int_t seed, const mpi_int_t mpi_root
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,9 +39,10 @@ void isvd_@x@SketchGaussianProjection_gpu(
 /// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
 ///
 void isvd_@x@PostprocessTallSkinnyQr_gpu(
-    const isvd_Param param, const @xtype@ *argv, const isvd_int_t argc, @xtype@ *retv, const isvd_int_t retc,
-    const char dista, const char ordera, const @xtype@ *a, const isvd_int_t lda, const @xtype@ *qt, const isvd_int_t ldqt,
-    @xtype@ *s, @xtype@ *ut, const isvd_int_t ldut, @xtype@ *vt, const isvd_int_t ldvt,
+    const isvd_Param param, const @xtype_____@ *argv, const isvd_int_t argc, @xtype_____@ *retv, const isvd_int_t retc,
+    const char dista, const char ordera,
+    const @xtype_____@ *a, const isvd_int_t lda, const @xtype_____@ *qt, const isvd_int_t ldqt,
+          @xtype_____@ *s, @xtype_____@ *ut, const isvd_int_t ldut, @xtype_____@ *vt, const isvd_int_t ldvt,
     const mpi_int_t ut_root, const mpi_int_t vt_root
 );
 
@@ -54,9 +55,10 @@ void isvd_@x@PostprocessTallSkinnyQr_gpu(
 /// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
 ///
 void isvd_@x@PostprocessGramian_gpu(
-    const isvd_Param param, const @xtype@ *argv, const isvd_int_t argc, @xtype@ *retv, const isvd_int_t retc,
-    const char dista, const char ordera, const @xtype@ *a, const isvd_int_t lda, const @xtype@ *qt, const isvd_int_t ldqt,
-    @xtype@ *s, @xtype@ *ut, const isvd_int_t ldut, @xtype@ *vt, const isvd_int_t ldvt,
+    const isvd_Param param, const @xtype_____@ *argv, const isvd_int_t argc, @xtype_____@ *retv, const isvd_int_t retc,
+    const char dista, const char ordera,
+    const @xtype_____@ *a, const isvd_int_t lda, const @xtype_____@ *qt, const isvd_int_t ldqt,
+          @xtype_____@ *s, @xtype_____@ *ut, const isvd_int_t ldut, @xtype_____@ *vt, const isvd_int_t ldvt,
     const mpi_int_t ut_root, const mpi_int_t vt_root
 );
 
@@ -69,9 +71,10 @@ void isvd_@x@PostprocessGramian_gpu(
 /// \attention  Set \ref isvd_gpu_memory_limit as the limit of GPU memory usage.
 ///
 void isvd_@x@PostprocessSymmetric_gpu(
-    const isvd_Param param, const @xtype@ *argv, const isvd_int_t argc, @xtype@ *retv, const isvd_int_t retc,
-    const char dista, const char ordera, const @xtype@ *a, const isvd_int_t lda, const @xtype@ *qt, const isvd_int_t ldqt,
-    @xtype@ *s, @xtype@ *ut, const isvd_int_t ldut, @xtype@ *vt, const isvd_int_t ldvt,
+    const isvd_Param param, const @xtype_____@ *argv, const isvd_int_t argc, @xtype_____@ *retv, const isvd_int_t retc,
+    const char dista, const char ordera,
+    const @xtype_____@ *a, const isvd_int_t lda, const @xtype_____@ *qt, const isvd_int_t ldqt,
+          @xtype_____@ *s, @xtype_____@ *ut, const isvd_int_t ldut, @xtype_____@ *vt, const isvd_int_t ldvt,
     const mpi_int_t ut_root, const mpi_int_t vt_root
 );
 

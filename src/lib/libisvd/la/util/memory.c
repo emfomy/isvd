@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+@ISVD_TYPE_MACRO_DEFINE@
+
 #if defined(ISVD_USE_MKL)
   #define isvd_xmalloc( num, type ) (type*)(mkl_malloc(num * sizeof(type), 64));
 #else  // ISVD_USE_MKL
@@ -26,24 +28,24 @@
 /// \return      The pointer to the array.
 ///
 //\{
-isvd_int_t* isvd_imalloc( const size_t num ) {
-  return isvd_xmalloc(num, isvd_int_t);
+INT*   isvd_imalloc( const size_t num ) {
+  return isvd_xmalloc(num, INT);
 }
 
-float* isvd_smalloc( const size_t num ) {
-  return isvd_xmalloc(num, float);
+REAL4* isvd_smalloc( const size_t num ) {
+  return isvd_xmalloc(num, REAL4);
 }
 
-double* isvd_dmalloc( const size_t num ) {
-  return isvd_xmalloc(num, double);
+REAL8* isvd_dmalloc( const size_t num ) {
+  return isvd_xmalloc(num, REAL8);
 }
 
-_Complex float* isvd_cmalloc( const size_t num ) {
-  return isvd_xmalloc(num, _Complex float);
+COMP4* isvd_cmalloc( const size_t num ) {
+  return isvd_xmalloc(num, COMP4);
 }
 
-_Complex double* isvd_zmalloc( const size_t num ) {
-  return isvd_xmalloc(num, _Complex double);
+COMP8* isvd_zmalloc( const size_t num ) {
+  return isvd_xmalloc(num, COMP8);
 }
 //\}
 
@@ -73,24 +75,24 @@ void isvd_free( void *ptr ) {
 /// \param  num  The number of objects.
 ///
 //\{
-void isvd_imemset0( isvd_int_t *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, isvd_int_t);
+void isvd_imemset0( INT   *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, INT);
 }
 
-void isvd_smemset0( float *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, float);
+void isvd_smemset0( REAL4 *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, REAL4);
 }
 
-void isvd_dmemset0( double *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, double);
+void isvd_dmemset0( REAL8 *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, REAL8);
 }
 
-void isvd_cmemset0( _Complex float *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, _Complex float);
+void isvd_cmemset0( COMP4 *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, COMP4);
 }
 
-void isvd_zmemset0( _Complex double *ptr, const size_t num ) {
-  isvd_xmemset0(ptr, num, _Complex double);
+void isvd_zmemset0( COMP8 *ptr, const size_t num ) {
+  isvd_xmemset0(ptr, num, COMP8);
 }
 //\}
 
@@ -105,23 +107,25 @@ void isvd_zmemset0( _Complex double *ptr, const size_t num ) {
 /// \param  num  The number of objects.
 ///
 //\{
-void isvd_imemcpy( isvd_int_t *dst, const isvd_int_t *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, isvd_int_t);
+void isvd_imemcpy( INT   *dst, const INT   *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, INT);
 }
 
-void isvd_smemcpy( float *dst, const float *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, float);
+void isvd_smemcpy( REAL4 *dst, const REAL4 *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, REAL4);
 }
 
-void isvd_dmemcpy( double *dst, const double *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, double);
+void isvd_dmemcpy( REAL8 *dst, const REAL8 *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, REAL8);
 }
 
-void isvd_cmemcpy( _Complex float *dst, const _Complex float *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, _Complex float);
+void isvd_cmemcpy( COMP4 *dst, const COMP4 *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, COMP4);
 }
 
-void isvd_zmemcpy( _Complex double *dst, const _Complex double *src, const size_t num ) {
-  isvd_xmemcpy(dst, src, num, _Complex double);
+void isvd_zmemcpy( COMP8 *dst, const COMP8 *src, const size_t num ) {
+  isvd_xmemcpy(dst, src, num, COMP8);
 }
 //\}
+
+@ISVD_TYPE_MACRO_UNDEF@

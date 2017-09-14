@@ -13,18 +13,19 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 #include <isvd/util/omp.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 static void sketchBlockCol(
-    const isvd_Param  param,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-          @xtype@    *yst,
-    const isvd_int_t  ldyst,
-    const isvd_int_t  seed,
-    const mpi_int_t   mpi_root
+    const isvd_Param    param,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+          @xtype_____@ *yst,
+    const isvd_int_t    ldyst,
+    const isvd_int_t    seed,
+    const mpi_int_t     mpi_root
 ) {
 
   ISVD_UNUSED(ldyst);
@@ -52,10 +53,10 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *omegat = isvd_@x@malloc(Nl * nj);
+  @xtype_____@ *omegat = isvd_@x@malloc(Nl * nj);
   isvd_int_t ldomegat = Nl;
 
-  @xtype@ *yst_ = isvd_@x@malloc(Nl * Pmb);
+  @xtype_____@ *yst_ = isvd_@x@malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
 
   // ====================================================================================================================== //
@@ -75,7 +76,7 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -86,14 +87,14 @@ static void sketchBlockCol(
 }
 
 static void sketchBlockRow(
-    const isvd_Param  param,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-          @xtype@    *yst,
-    const isvd_int_t  ldyst,
-    const isvd_int_t  seed,
-    const mpi_int_t   mpi_root
+    const isvd_Param    param,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+          @xtype_____@ *yst,
+    const isvd_int_t    ldyst,
+    const isvd_int_t    seed,
+    const mpi_int_t     mpi_root
 ) {
 
   // ====================================================================================================================== //
@@ -116,7 +117,7 @@ static void sketchBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *omegat = isvd_@x@malloc(Nl * n);
+  @xtype_____@ *omegat = isvd_@x@malloc(Nl * n);
   isvd_int_t ldomegat = Nl;
 
   // ====================================================================================================================== //

@@ -10,7 +10,7 @@
 #define serr 1e-3
 #define derr 1e-8
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 TEST(@XStr@_GramianOrthogonalization, Test) {
 
@@ -95,7 +95,7 @@ TEST(@XStr@_GramianOrthogonalization, Test) {
   // Gather results
   isvd_val_t *qst_ = isvd_@x@malloc(Pmb * ldyst);
   isvd_int_t ldqst_ = ldyst;
-  MPI_Gather(yst, mb*ldyst, MPI_@X_TYPE@, qst_, mb*ldyst, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+  MPI_Gather(yst, mb*ldyst, MPI_@XTYPE@, qst_, mb*ldyst, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
   if ( mpi_rank == mpi_root ) {
     // Compute space

@@ -9,7 +9,7 @@
 #include <isvd/la/blas/blas1.h>
 #include <libisvd/la/def.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #if defined(ISVD_USE_MKL)
 
@@ -62,4 +62,4 @@ REAL8 isvd_dAmin( const INT n, const REAL8 *x, const INT incx ) { INT i = isvd_i
 COMP4 isvd_cAmin( const INT n, const COMP4 *x, const INT incx ) { INT i = isvd_icAmin(n, x, incx); return cabsf(x[i]); }
 COMP8 isvd_zAmin( const INT n, const COMP8 *x, const INT incx ) { INT i = isvd_izAmin(n, x, incx); return cabs(x[i]); }
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

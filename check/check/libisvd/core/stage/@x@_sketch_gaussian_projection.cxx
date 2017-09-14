@@ -10,7 +10,7 @@
 #define serr 1e-1
 #define derr 1e-6
 
-typedef @xtype@ isvd_val_t;
+typedef @xtype_____@ isvd_val_t;
 
 static void test( char dista, char ordera ) {
 
@@ -125,7 +125,7 @@ static void test( char dista, char ordera ) {
   // Gather results
   isvd_val_t *yst_ = isvd_@x@malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
-  MPI_Gather(yst, mb*ldyst, MPI_@X_TYPE@, yst_, mb*ldyst, MPI_@X_TYPE@, mpi_root, MPI_COMM_WORLD);
+  MPI_Gather(yst, mb*ldyst, MPI_@XTYPE@, yst_, mb*ldyst, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
   // Check results
   if ( mpi_rank == mpi_root ) {

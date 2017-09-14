@@ -100,35 +100,35 @@
 /// \see isvd_Param
 ///
 void isvd_@x@Isvd(
-    const char        *alg_s,
-    const char        *alg_o,
-    const char        *alg_i,
-    const char        *alg_p,
-    const isvd_int_t   m,
-    const isvd_int_t   n,
-    const isvd_int_t   k,
-    const isvd_int_t   p,
-    const isvd_int_t   N,
-    const @xtype@     *argv[4],
-    const isvd_int_t   argc[4],
-          @xtype@     *retv[4],
-    const isvd_int_t   retc[4],
-          double       time[4],
+    const char         *alg_s,
+    const char         *alg_o,
+    const char         *alg_i,
+    const char         *alg_p,
+    const isvd_int_t    m,
+    const isvd_int_t    n,
+    const isvd_int_t    k,
+    const isvd_int_t    p,
+    const isvd_int_t    N,
+    const @xtype_____@ *argv[4],
+    const isvd_int_t    argc[4],
+          @xtype_____@ *retv[4],
+    const isvd_int_t    retc[4],
+          double        time[4],
           FILE        *stream,
-    const char         dista,
-    const char         ordera,
-    const @xtype@     *a,
-    const isvd_int_t   lda,
-          @xtype@     *s,
-          @xtype@     *ut,
-    const isvd_int_t   ldut,
-          @xtype@     *vt,
-    const isvd_int_t   ldvt,
-    const isvd_int_t   seed,
-    const mpi_int_t    ut_root,
-    const mpi_int_t    vt_root,
-    const mpi_int_t    mpi_root,
-    const isvd_MpiComm mpi_comm
+    const char          dista,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+          @xtype_____@ *s,
+          @xtype_____@ *ut,
+    const isvd_int_t    ldut,
+          @xtype_____@ *vt,
+    const isvd_int_t    ldvt,
+    const isvd_int_t    seed,
+    const mpi_int_t     ut_root,
+    const mpi_int_t     vt_root,
+    const mpi_int_t     mpi_root,
+    const isvd_MpiComm  mpi_comm
 ) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
@@ -164,25 +164,25 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Gets arguments and return values of stages
 
-  const @xtype@ *argv_s = (argv != NULL) ? argv[0] : NULL;
-  const @xtype@ *argv_o = (argv != NULL) ? argv[1] : NULL;
-  const @xtype@ *argv_i = (argv != NULL) ? argv[2] : NULL;
-  const @xtype@ *argv_p = (argv != NULL) ? argv[3] : NULL;
+  const @xtype_____@ *argv_s = (argv != NULL) ? argv[0] : NULL;
+  const @xtype_____@ *argv_o = (argv != NULL) ? argv[1] : NULL;
+  const @xtype_____@ *argv_i = (argv != NULL) ? argv[2] : NULL;
+  const @xtype_____@ *argv_p = (argv != NULL) ? argv[3] : NULL;
 
-  const isvd_int_t argc_s = (argv != NULL) ? argc[0] : 0;
-  const isvd_int_t argc_o = (argv != NULL) ? argc[1] : 0;
-  const isvd_int_t argc_i = (argv != NULL) ? argc[2] : 0;
-  const isvd_int_t argc_p = (argv != NULL) ? argc[3] : 0;
+  const isvd_int_t    argc_s = (argv != NULL) ? argc[0] : 0;
+  const isvd_int_t    argc_o = (argv != NULL) ? argc[1] : 0;
+  const isvd_int_t    argc_i = (argv != NULL) ? argc[2] : 0;
+  const isvd_int_t    argc_p = (argv != NULL) ? argc[3] : 0;
 
-  @xtype@ *retv_s = (retv != NULL) ? retv[0] : NULL;
-  @xtype@ *retv_o = (retv != NULL) ? retv[1] : NULL;
-  @xtype@ *retv_i = (retv != NULL) ? retv[2] : NULL;
-  @xtype@ *retv_p = (retv != NULL) ? retv[3] : NULL;
+        @xtype_____@ *retv_s = (retv != NULL) ? retv[0] : NULL;
+        @xtype_____@ *retv_o = (retv != NULL) ? retv[1] : NULL;
+        @xtype_____@ *retv_i = (retv != NULL) ? retv[2] : NULL;
+        @xtype_____@ *retv_p = (retv != NULL) ? retv[3] : NULL;
 
-  const isvd_int_t retc_s = (retv != NULL) ? retc[0] : 0;
-  const isvd_int_t retc_o = (retv != NULL) ? retc[1] : 0;
-  const isvd_int_t retc_i = (retv != NULL) ? retc[2] : 0;
-  const isvd_int_t retc_p = (retv != NULL) ? retc[3] : 0;
+  const isvd_int_t    retc_s = (retv != NULL) ? retc[0] : 0;
+  const isvd_int_t    retc_o = (retv != NULL) ? retc[1] : 0;
+  const isvd_int_t    retc_i = (retv != NULL) ? retc[2] : 0;
+  const isvd_int_t    retc_p = (retv != NULL) ? retc[3] : 0;
 
   // ====================================================================================================================== //
   // Check stage arguments
@@ -234,10 +234,10 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *yst = isvd_@x@malloc(Nl * mb);
+  @xtype_____@ *yst = isvd_@x@malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
-  @xtype@ *qt = isvd_@x@malloc(l * mb);
+  @xtype_____@ *qt = isvd_@x@malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // ====================================================================================================================== //

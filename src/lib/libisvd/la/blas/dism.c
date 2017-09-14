@@ -11,7 +11,7 @@
 #include <isvd/la/vml/power_root.h>
 #include <libisvd/util/arg.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #define isvd_xDism( side, m, n, alpha, a, b, ldb, xScal, xDiv ) \
   const char side_ = isvd_arg2char("SIDE", side, "LR", NULL); \
@@ -48,4 +48,4 @@ void isvd_zDism(
     const CHAR1 side, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, COMP8 *b, const INT ldb
 ) { isvd_xDism(side, m, n, alpha, a, b, ldb, isvd_zScal, isvd_vzDiv); }
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

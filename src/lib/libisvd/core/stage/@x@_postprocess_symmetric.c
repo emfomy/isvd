@@ -57,24 +57,24 @@
 /// \note  The result of 𝑼 and 𝑽 are the same.
 ///
 void isvd_@x@PostprocessSymmetric(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-    const char        dista,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-    const @xtype@    *qt,
-    const isvd_int_t  ldqt,
-          @xtype@    *s,
-          @xtype@    *ut,
-    const isvd_int_t  ldut,
-          @xtype@    *vt,
-    const isvd_int_t  ldvt,
-    const mpi_int_t   ut_root,
-    const mpi_int_t   vt_root
+    const isvd_Param    param,
+    const @xtype_____@ *argv,
+    const isvd_int_t    argc,
+          @xtype_____@ *retv,
+    const isvd_int_t    retc,
+    const char          dista,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+    const @xtype_____@ *qt,
+    const isvd_int_t    ldqt,
+          @xtype_____@ *s,
+          @xtype_____@ *ut,
+    const isvd_int_t    ldut,
+          @xtype_____@ *vt,
+    const isvd_int_t    ldvt,
+    const mpi_int_t     ut_root,
+    const mpi_int_t     vt_root
 ) {
 
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
@@ -117,10 +117,10 @@ void isvd_@x@PostprocessSymmetric(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *zt = isvd_@x@malloc(l * nb);
+  @xtype_____@ *zt = isvd_@x@malloc(l * nb);
   isvd_int_t ldzt = l;
 
-  @xtype@ *w = isvd_@x@malloc(l * l);
+  @xtype_____@ *w = isvd_@x@malloc(l * l);
   isvd_int_t ldw = l;
 
   // ====================================================================================================================== //
@@ -137,7 +137,7 @@ void isvd_@x@PostprocessSymmetric(
 
   // W := Z' * Q
   isvd_@x@Gemmt('U', 'N', 'T', l, nj, 1.0, zt, ldzt, qt, ldqt, 0.0, w, ldw);
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+  MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S * W'
   const char jobw_ = (ut_root >= -1) ? 'V' : 'N';
@@ -152,9 +152,9 @@ void isvd_@x@PostprocessSymmetric(
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@X_TYPE@, ut, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
+        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@X_TYPE@, NULL, mb*ldut, MPI_@X_TYPE@, ut_root, param.mpi_comm);
+        MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
       }
     }
   }

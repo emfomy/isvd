@@ -11,7 +11,7 @@
 #include <isvd/la/vml/mathematical.h>
 #include <libisvd/util/arg.h>
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 #define isvd_xDimm( side, m, n, alpha, a, b, ldb, xScal, xMul ) \
   const char side_ = isvd_arg2char("SIDE", side, "LR", NULL); \
@@ -48,4 +48,4 @@ void isvd_zDimm(
     const CHAR1 side, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, COMP8 *b, const INT ldb
 ) { isvd_xDimm(side, m, n, alpha, a, b, ldb, isvd_zScal, isvd_vzMul); }
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@

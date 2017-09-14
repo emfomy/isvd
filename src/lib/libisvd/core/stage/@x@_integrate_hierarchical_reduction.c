@@ -10,6 +10,7 @@
 #include <libisvd/def.h>
 #include <isvd/la.h>
 #include <isvd/util/memory.h>
+#include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
@@ -30,15 +31,15 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@IntegrateHierarchicalReduction(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-          @xtype@    *yst,
-    const isvd_int_t  ldyst,
-          @xtype@    *qt,
-    const isvd_int_t  ldqt
+    const isvd_Param   param,
+    const @xtype_____@ *argv,
+    const isvd_int_t   argc,
+          @xtype_____@ *retv,
+    const isvd_int_t   retc,
+          @xtype_____@ *yst,
+    const isvd_int_t   ldyst,
+          @xtype_____@ *qt,
+    const isvd_int_t   ldqt
 ) {
 
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
@@ -61,21 +62,21 @@ void isvd_@x@IntegrateHierarchicalReduction(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype@ *qst = yst;
+  @xtype_____@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
   // matrix B
-  @xtype@ *bs = isvd_@x@malloc(l * l * (N+1)/2);
+  @xtype_____@ *bs = isvd_@x@malloc(l * l * (N+1)/2);
   isvd_int_t ldbs = l;
 
   // matrix T
-  @xtype@ *tt = isvd_@x@malloc(l * l);
+  @xtype_____@ *tt = isvd_@x@malloc(l * l);
   isvd_int_t ldtt = l;
 
   // vector s
-  @xtype@ *s = isvd_@x@malloc(l);
+  @xtype_____@ *s = isvd_@x@malloc(l);
 
-  @xtype@ *tmpt = qt;
+  @xtype_____@ *tmpt = qt;
   isvd_int_t ldtmpt = ldqt;
 
   // ====================================================================================================================== //
@@ -87,20 +88,20 @@ void isvd_@x@IntegrateHierarchicalReduction(
     for ( isvd_int_t i = 0; i < h; ++i ) {
       isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
-    MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@X_TYPE@, MPI_SUM, param.mpi_comm);
+    MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
     for ( isvd_int_t i = 0; i < h; ++i ) {
 
       // matrix W
-      @xtype@ *w = bs + i*ldbs*l;
+      @xtype_____@ *w = bs + i*ldbs*l;
       isvd_int_t ldw = ldbs;
 
       // matrix Q(i)
-      @xtype@ *qit = qst + i*l;
+      @xtype_____@ *qit = qst + i*l;
       isvd_int_t ldqit = ldqst;
 
       // matrix Q(i+h)
-      @xtype@ *qiht = qst + (i+h)*l;
+      @xtype_____@ *qiht = qst + (i+h)*l;
       isvd_int_t ldqiht = ldqst;
 
       // svd(B(i)) = W * S * T'

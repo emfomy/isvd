@@ -15,7 +15,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_LA_BLAS_TYPE_DEFINE@
+@ISVD_TYPE_MACRO_DEFINE@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vml_math_module
@@ -27,7 +27,7 @@ void isvd_vcDiv( const INT n, const COMP4 *a, const COMP4 *b, COMP4 *y );
 void isvd_vzDiv( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y );
 //\}
 
-@ISVD_LA_BLAS_TYPE_UNDEF@
+@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

@@ -23,24 +23,24 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
 void isvd_@x@PostprocessTallSkinnyQr(
-    const isvd_Param  param,
-    const @xtype@    *argv,
-    const isvd_int_t  argc,
-          @xtype@    *retv,
-    const isvd_int_t  retc,
-    const char        dista,
-    const char        ordera,
-    const @xtype@    *a,
-    const isvd_int_t  lda,
-    const @xtype@    *qt,
-    const isvd_int_t  ldqt,
-          @xtype@    *s,
-          @xtype@    *ut,
-    const isvd_int_t  ldut,
-          @xtype@    *vt,
-    const isvd_int_t  ldvt,
-    const mpi_int_t   ut_root,
-    const mpi_int_t   vt_root
+    const isvd_Param    param,
+    const @xtype_____@ *argv,
+    const isvd_int_t    argc,
+          @xtype_____@ *retv,
+    const isvd_int_t    retc,
+    const char          dista,
+    const char          ordera,
+    const @xtype_____@ *a,
+    const isvd_int_t    lda,
+    const @xtype_____@ *qt,
+    const isvd_int_t    ldqt,
+          @xtype_____@ *s,
+          @xtype_____@ *ut,
+    const isvd_int_t    ldut,
+          @xtype_____@ *vt,
+    const isvd_int_t    ldvt,
+    const mpi_int_t     ut_root,
+    const mpi_int_t     vt_root
 ) {
 
   fprintf(stderr, "Tall-Skinny QR Postprocessing is not implemented!\n");
