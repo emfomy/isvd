@@ -1,9 +1,31 @@
 /**
-  \page tutorial_core_stage iSVD Stages
+  @page tutorial_core_stage Stages
+
+  The iSVD algorithm contains four stages: sketching, orthogonalization, integration, and postprocessing.
+
+  Stage               | Input                                              | Output
+  --------------------|----------------------------------------------------|--------------------------------
+  sketching           | \f$\boldsymbol{A}\f$                               | \f$\boldsymbol{\mathfrak{Y}}\f$
+  orthogonalization   | \f$\boldsymbol{\mathfrak{Y}}\f$                    | \f$\boldsymbol{\mathfrak{Q}}\f$
+  integration         | \f$\boldsymbol{\mathfrak{Q}}\f$                    | \f$\overline{\boldsymbol{Q}}\f$
+  postprocessing      | \f$\boldsymbol{A}, \overline{\boldsymbol{Q}}\f$    | \f$\boldsymbol{U}, \boldsymbol{V}, \boldsymbol{\sigma}\f$
+
+  Note that the Frankfurt matrices are defined as
+  @f[
+    \boldsymbol{\mathfrak{Y}} =
+      \begin{bmatrix}
+        \boldsymbol{Y}_{[0]} & \boldsymbol{Y}_{[1]} & \cdots & \boldsymbol{Y}_{[N-1]}
+      \end{bmatrix},
+    \qquad
+    \boldsymbol{\mathfrak{Q}} =
+      \begin{bmatrix}
+        \boldsymbol{Q}_{[0]} & \boldsymbol{Q}_{[1]} & \cdots & \boldsymbol{Q}_{[N-1]}
+      \end{bmatrix}.
+  @f]
 
   <h3>Sketching</h3>
 
-  The sketching stage randomly sketches \ref isvd_Param::num_sketch "𝑁" rank-\ref isvd_Param::dim_sketch "𝑙" column subspaces \f$\boldsymbol{Y}_{[i]}\f$ of the input matrix \f$\boldsymbol{A}\f$.
+  The sketching stage randomly sketches 𝑁 rank-𝑙 column subspaces \f$\boldsymbol{Y}_{[i]}\f$ of the input matrix \f$\boldsymbol{A}\f$.
 
   - The \ref isvd_dSketchGaussianProjection "Gramian Projection Sketching" multiples \f$\boldsymbol{A}\f$ by some random matrices using Gaussian normal distribution.
 
@@ -23,9 +45,8 @@
 
   <h3>Postprocessing</h3>
 
-  The postprocessing stage forms a rank-\ref isvd_Param::rank "𝑘" approximate SVD of \f$\boldsymbol{A}\f$ in the range of \f$\overline{\boldsymbol{Q}}\f$.
+  The postprocessing stage forms a rank-𝑘 approximate SVD of \f$\boldsymbol{A}\f$ in the range of \f$\overline{\boldsymbol{Q}}\f$.
 
   - The \ref isvd_dPostprocessGramian "Gramian Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \boldsymbol{A}^\top \overline{\boldsymbol{Q}}\f$.
   - The \ref isvd_dPostprocessSymmetric "Symmetric Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \overline{\boldsymbol{Q}}\f$ for symmetric input matrix \f$\boldsymbol{A}\f$.
-
 */

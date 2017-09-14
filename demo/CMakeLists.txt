@@ -23,9 +23,13 @@ macro(SET_TARGET name files)
 endmacro()
 
 # Set include paths
-include_directories("${PROJECT_CONFIG_DIR}/include/c")
+include_directories("${PROJECT_BINARY_DIR}/include/c")
 
 # C demo
 set_target(cdemo cdemo.c ${PROJECT_SOURCE_DIR}/data/a.mtx /dev/null /dev/null /dev/null)
 target_link_libraries(isvd_cdemo isvd extmmio)
-target_include_directories(isvd_cdemo ${SYSTEM} PUBLIC "${PROJECT_SOURCE_DIR}/ext")
+target_include_directories(isvd_cdemo ${SYSTEM} PUBLIC "${PROJECT_SOURCE_DIR}/ext/mmio")
+
+# C test
+set_target(ctest ctest.c)
+target_link_libraries(isvd_ctest isvd)

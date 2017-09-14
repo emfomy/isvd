@@ -153,4 +153,8 @@ if(ISVD_BUILD_BIN)
   if(ISVD_BLAS STREQUAL "MKL" AND NOT ISVD_OMP)
     message(${DEPRECATION} "${Esc}[1;33mOpenMP is not enabled. Recommended to use it for better performance.${Esc}[0m")
   endif()
+
+  if(CMAKE_COMPILER_IS_GNUCC AND NOT CMAKE_C_COMPILER_VERSION VERSION_GREATER 7 AND ISVD_USE_GPU AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(${DEPRECATION} "${Esc}[1;33mGPU routines with GCC under 7.0 might crash in debug mode.${Esc}[0m")
+  endif()
 endif()

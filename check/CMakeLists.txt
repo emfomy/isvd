@@ -35,7 +35,7 @@ function(ISVD_SET_TARGET_CHECK_CPU target)
   isvd_set_target_mpi(${target} CXX)
   isvd_set_target_blas(${target})
   isvd_set_target_gtest(${target})
-  target_link_libraries(${target} checkisvd extmmio)
+  target_link_libraries(${target} checkisvd_gpu_none checkisvd_core_la extmmio)
   target_compile_definitions(${target} PUBLIC "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
 endfunction()
 
@@ -45,18 +45,18 @@ function(ISVD_SET_TARGET_CHECK_GPU target)
   isvd_set_target_blas(${target})
   isvd_set_target_gtest(${target})
   isvd_set_target_gpu(${target})
-  target_link_libraries(${target} checkisvd_gpu extmmio)
+  target_link_libraries(${target} checkisvd_gpu_magma checkisvd_core_la extmmio)
   target_compile_definitions(${target} PUBLIC "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
 endfunction()
 
 # Set include paths
-include_directories("${PROJECT_CONFIG_DIR}/include/c"
-                    "${CMAKE_CURRENT_CONFIG_DIR}/src"
-                    "${PROJECT_CONFIG_DIR}/src"
-             SYSTEM "${PROJECT_SOURCE_DIR}/ext")
+include_directories("${CMAKE_CURRENT_CONFIG_DIR}/lib"
+                    "${PROJECT_BINARY_DIR}/include/c"
+                    "${PROJECT_BINARY_DIR}/lib"
+             SYSTEM "${PROJECT_SOURCE_DIR}/ext/mmio")
 
 # Add subdirectories
-add_subdirectory(src)
+add_subdirectory(lib)
 
 # Configure files
 isvd_configure_x_fn("${CMAKE_CURRENT_SOURCE_DIR}/check" "${CMAKE_CURRENT_CONFIG_DIR}/check" "${ISVD_S_TYPES}")
