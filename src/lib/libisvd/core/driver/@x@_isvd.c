@@ -97,7 +97,7 @@
 /// \note  If \b argc ≠ `NULL` and \b argc[i] < 0, then a default argument query is assumed on the i-th stage;
 ///        the routine only returns the first \b retc[i] default arguments in \b retv[i].
 ///
-/// \see isvd_Param
+/// \see isvd_Param, \ref tutorial_core_notation
 ///
 void isvd_@x@Isvd(
     const char         *alg_s,

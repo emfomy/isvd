@@ -7,7 +7,7 @@ Integrated Singular Value Decomposition (iSVD)
 * https://github.com/emfomy/isvd
 
 ### Documentation
-* https://github.com/emfomy/isvd/releases/latest
+* Download **isvd-#.#.#-docs.zip** from https://github.com/emfomy/isvd/releases/latest
 * May also build it using **make doc** (see below) on your own computer.
 
 ### Author
@@ -83,7 +83,7 @@ The following table are the main Makefile rules
 
 * Set `ISVD_BUILD_TEST` using **ccmake**. (Also recommended to unset `ISVD_VERBOSE_TEST` if GPU is enabled).
 * Run **make check**
-  * Known issue: RealSingle_WenYinIntegration.Test.#/s_integrate_wen_yin_# always fail the test.
+  * Known issue: **RealSingle_WenYinIntegration.Test.#** / **s_integrate_wen_yin_#** fail the test.
 
 ## Usage
 

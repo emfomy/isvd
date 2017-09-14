@@ -1,7 +1,7 @@
 /**
   \page tutorial_core_example Example Code
 
-  \ref isvd_dIsvd "iSVD driver" solves an approximate low-rank singular value decomposition of matrix 𝑨. \ref demo/cdemo.c is an example code. In the following, we describe the details of each part of this example.
+  \ref isvd_dIsvd "iSVD driver" solves an approximate low-rank singular value decomposition of matrix \f$\boldsymbol{A}\f$. \ref demo/cdemo.c is an example code. In the following, we describe the details of each part of this example.
 
   <h3>Initialize Environment</h3>
 
@@ -25,7 +25,7 @@
 
   <h3>Run iSVD</h3>
 
-  The iSVD driver compute the approximate low-rank singular value decomposition. See \ref isvd_dIsvd for the detail of the arguments. The 𝑗-th MPI-rank stores the 𝑗-th block of the input matrix 𝑨 (see \ref tutorial_core_storage for detail).
+  The iSVD driver compute the approximate low-rank singular value decomposition. See \ref isvd_dIsvd for the detail of the arguments. The \f$j\f$-th MPI-rank stores the \f$j\f$-th block of the input matrix \f$\boldsymbol{A}\f$ (see \ref tutorial_core_storage for detail).
 
   \snippetlineno demo/cdemo.c run-isvd
 
@@ -43,7 +43,15 @@
 
   <h2>Possible Result</h2>
 
-  One may use **make run_cdemo** to run \ref demo/cdemo.c. If you want to compile it directly, please refer the usage guide in the main page. The following are the possible results of the example code.
+  Above example code can be compiled by
+
+  ```
+  gcc demo/cdemo.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_mkl_gomp -lisvd_gpu_none
+  ```
+
+  One may also use **make run_cdemo** to run it.
+
+  The outputs of the example are shown as below. (Note that the detailed number might be different due to the executing environment.)
 
   \code{.txt}
   iSVD C demo
