@@ -56,6 +56,8 @@
 ///        the routine only returns the first \b retc default arguments in \b retv.
 /// \note  The result of 𝑼 and 𝑽 are the same.
 ///
+/// \see isvd_Param, \ref tutorial_core_notation
+///
 void isvd_@x@PostprocessSymmetric(
     const isvd_Param    param,
     const @xtype_____@ *argv,

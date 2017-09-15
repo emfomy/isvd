@@ -6,7 +6,8 @@ function(ISVD_CONFIGURE_FN srcdir outdir)
     RELATIVE "${srcdir}" "${srcdir}/*"
   )
   foreach(cfgfile ${cfgfiles})
-    if(NOT cfgfile MATCHES "\@")
+    if(NOT cfgfile MATCHES "\@" AND
+       NOT cfgfile MATCHES CMakeLists.txt)
       configure_file(
         "${srcdir}/${cfgfile}"
         "${outdir}/${cfgfile}"
