@@ -64,6 +64,25 @@ function(ISVD_SET_TARGET target)
   set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--no-as-needed")
 endfunction()
 
+# MKL
+if(ISVD_USE_MKL)
+  find_package(MKL ${findtype})
+  function(ISVD_SET_TARGET_BLAS target)
+    target_include_directories(${target} ${SYSTEM} PUBLIC ${MKL_INCLUDES})
+    target_link_libraries(${target} ${MKL_LIBRARIES})
+    target_compile_definitions(${target} PUBLIC "ISVD_USE_MKL")
+    set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MKL_FLAGS}")
+  endfunction()
+endif()
+
+# LAPACK
+if(NOT ISVD_USE_MKL)
+  find_package(LAPACK ${findtype})
+  function(ISVD_SET_TARGET_BLAS target)
+    target_link_libraries(${target} ${LAPACK_LIBRARIES})
+  endfunction()
+endif()
+
 # OpenMP
 if(ISVD_OMP)
   set(OpenMP ${ISVD_OMP})
@@ -100,25 +119,6 @@ function(ISVD_SET_TARGET_MPI target lang)
   set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MPI_${lang}_COMPILE_FLAGS}")
   set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS    " ${MPI_${lang}_LINK_FLAGS}")
 endfunction()
-
-# MKL
-if(ISVD_USE_MKL)
-  find_package(MKL ${findtype})
-  function(ISVD_SET_TARGET_BLAS target)
-    target_include_directories(${target} ${SYSTEM} PUBLIC ${MKL_INCLUDES})
-    target_link_libraries(${target} ${MKL_LIBRARIES})
-    target_compile_definitions(${target} PUBLIC "ISVD_USE_MKL")
-    set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MKL_FLAGS}")
-  endfunction()
-endif()
-
-# LAPACK
-if(NOT ISVD_USE_MKL)
-  find_package(LAPACK ${findtype})
-  function(ISVD_SET_TARGET_BLAS target)
-    target_link_libraries(${target} ${LAPACK_LIBRARIES})
-  endfunction()
-endif()
 
 # CUDA & MAGMA
 if(ISVD_USE_GPU)
