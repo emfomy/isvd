@@ -27,8 +27,9 @@ void isvd_init_gpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
   ISVD_UNUSED(argcp);
   ISVD_UNUSED(argvp);
   const isvd_int_t mpi_rank = isvd_getMpiRank(mpi_comm);
-  int count;
-  isvd_assert_eq(cudaGetDeviceCount(&count), cudaSuccess);
+  int count = 0;
+  isvd_assert_pass(cudaGetDeviceCount(&count));
+  isvd_assert_ne(count, 0);
   magma_init();
   magma_setdevice(mpi_rank % count);
 }
