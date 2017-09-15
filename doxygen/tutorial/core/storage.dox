@@ -1,5 +1,7 @@
 /**
-  \page tutorial_core_storage Parallelism Storage
+  \page tutorial_core_storage Input/Output Matrix Storage
+
+  The input matrix \f$\boldsymbol{A}\f$ should be distributed to all MPI processes. The output matrices \f$\boldsymbol{U}\f$ and \f$\boldsymbol{V}\f$ might also be distributed. The \f$j\f$-th MPI-rank stores the \f$j\f$-th block of the matrix. The detail of this distributed storage are shown as below.
 
   <h3>Block-Row Storage</h3>
 
@@ -39,7 +41,7 @@
 
   The \f$j\f$-th block of the input matrices should contain \f$m^{(j)}\f$ rows, and the \f$j\f$-th block of the input matrices should contain \f$m_b\f$ rows.
 
-  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 rows and \f$P\f$ is 4. Then \f$\mathsf{A}^{(0)}\f$ are the (0-2)-th rows, \f$\mathsf{A}^{(1)}\f$ are the (0-5)-th rows, \f$\mathsf{A}^{(2)}\f$ are the (6-8)-th rows, \f$\mathsf{A}^{(3)}\f$ are the (9-10)-th rows.
+  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 rows and \f$P\f$ is 4. Then \f$\mathsf{A}^{(0)}\f$ are the (0-2)-th rows, \f$\mathsf{A}^{(1)}\f$ are the (3-5)-th rows, \f$\mathsf{A}^{(2)}\f$ are the (6-8)-th rows, \f$\mathsf{A}^{(3)}\f$ are the (9-10)-th rows.
 
   <h3>Block-Column Storage</h3>
 
@@ -54,5 +56,5 @@
 
   The \f$j\f$-th block of the input matrices should contain \f$n^{(j)}\f$ columns, and the \f$j\f$-th block of the input matrices should contain \f$n_b\f$ columns.
 
-  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 columns and \f$P\f$ is 4. Then \f$\mathsf{A}^{\langle 0 \rangle}\f$ are the (0-2)-th columns, \f$\mathsf{A}^{\langle 1 \rangle}\f$ are the (0-5)-th columns, \f$\mathsf{A}^{\langle 2 \rangle}\f$ are the (6-8)-th columns, \f$\mathsf{A}^{\langle 3 \rangle}\f$ are the (9-10)-th columns.
+  For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 columns and \f$P\f$ is 4. Then \f$\mathsf{A}^{\langle 0 \rangle}\f$ are the (0-2)-th columns, \f$\mathsf{A}^{\langle 1 \rangle}\f$ are the (3-5)-th columns, \f$\mathsf{A}^{\langle 2 \rangle}\f$ are the (6-8)-th columns, \f$\mathsf{A}^{\langle 3 \rangle}\f$ are the (9-10)-th columns.
 */

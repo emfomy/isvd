@@ -40,6 +40,8 @@
 /// \note  If \b argc < 0, then a default argument query is assumed;
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
+/// \see isvd_Param, \ref tutorial_core_notation
+///
 void isvd_@x@SketchGaussianProjection(
     const isvd_Param    param,
     const @xtype_____@ *argv,
