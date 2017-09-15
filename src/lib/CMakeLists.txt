@@ -27,8 +27,9 @@ if(NOT ISVD_BUILD_LIB)
 endif()
 
 # libisvd
-set_target(isvd /dev/null)
-set_property(TARGET isvd PROPERTY LINKER_LANGUAGE C)
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/null.c" "")
+set_target(isvd "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/null.c")
+# set_property(TARGET isvd PROPERTY LINKER_LANGUAGE C)
 
 # libisvd_core
 file(GLOB_RECURSE files "${CMAKE_CURRENT_CONFIG_DIR}/libisvd/core/*"

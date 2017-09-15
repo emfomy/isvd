@@ -18,17 +18,24 @@
 /// \brief  General iSVD driver (@xname@ precision).
 ///
 /// \param[in]   alg_s         The selection of sketching algorithm. <br>
-///                            `"GP"`: \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching".
+///                            `"GP"`:     \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching".
+///                            `"GP_gpu"`: \ref isvd_@x@SketchGaussianProjection
+///                                               "Gaussian Projection sketching with GPU support".
 /// \param[in]   alg_o         The selection of orthogonalization algorithm. <br>
-///                            `"TS"`: \ref isvd_@x@OrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
-///                            `"GR"`: \ref isvd_@x@OrthogonalizeGramian "GRamian orthogonalization".
+///                            `"TS"`:     \ref isvd_@x@OrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
+///                            `"GR"`:     \ref isvd_@x@OrthogonalizeGramian "GRamian orthogonalization".
 /// \param[in]   alg_i         The selection of integration algorithm. <br>
-///                            `"KN"`: \ref isvd_@x@IntegrateKolmogorovNagumo "Kolmogorov-Nagumo integration". <br>
-///                            `"WY"`: \ref isvd_@x@IntegrateWenYin "Wen-Yin integration". <br>
-///                            `"HR"`: \ref isvd_@x@IntegrateHierarchicalReduction "Hierarchical Reduction integration".
+///                            `"KN"`:     \ref isvd_@x@IntegrateKolmogorovNagumo "Kolmogorov-Nagumo integration". <br>
+///                            `"WY"`:     \ref isvd_@x@IntegrateWenYin "Wen-Yin integration". <br>
+///                            `"HR"`:     \ref isvd_@x@IntegrateHierarchicalReduction "Hierarchical Reduction integration".
 /// \param[in]   alg_p         The selection of postprocessing algorithm. <br>
-///                            `"TS"`: \ref isvd_@x@PostprocessTallSkinnyQr "Tall Skinny qr postprocessing". <br>
-///                            `"GR"`: \ref isvd_@x@PostprocessGramian "GRamian postprocessing".
+///                            `"TS"`:     \ref isvd_@x@PostprocessTallSkinnyQr "Tall Skinny qr postprocessing". <br>
+///                            `"GR"`:     \ref isvd_@x@PostprocessGramian "GRamian postprocessing". <br>
+///                            `"SY"`:     \ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing". <br>
+///                            `"TS_gpu"`: \ref isvd_@x@PostprocessTallSkinnyQr
+///                                               "Tall Skinny qr postprocessing with GPU support". <br>
+///                            `"GR_gpu"`: \ref isvd_@x@PostprocessGramian "GRamian postprocessing with GPU support". <br>
+///                            `"SY_gpu"`: \ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing with GPU support".
 /// <hr>
 /// \param[in]   m             The number of rows of the matrix 𝑨.
 /// \param[in]   n             The number of columns of the matrix 𝑨.
