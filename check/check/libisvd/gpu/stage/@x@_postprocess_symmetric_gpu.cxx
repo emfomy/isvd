@@ -155,6 +155,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   const isvd_int_t mj  = param.nrow_proc;
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
+  const isvd_int_t nb  = param.ncol_each;
+  const isvd_int_t Pnb = param.ncol_total;
 
   // Create matrices
   isvd_val_t *a;
@@ -182,12 +184,15 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   isvd_val_t *ut_ = isvd_@x@malloc(l * Pmb);
   isvd_int_t ldut_ = l;
 
+  isvd_val_t *vt_ = isvd_@x@malloc(l * Pnb);
+  isvd_int_t ldvt_ = l;
+
   switch ( jobuv ) {
     case GatherUV: {
 
       // Run stage
       isvd_@x@PostprocessSymmetric_gpu(param, NULL, 0, NULL, 0, dista_, ordera_,
-                                       a, lda, qt, ldqt, s, ut_, ldut_, NULL, 0, mpi_root, -2);
+                                   a, lda, qt, ldqt, s, ut_, ldut_, vt_, ldvt_, mpi_root, mpi_root);
 
       break;
     }
@@ -198,15 +203,20 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       isvd_val_t *ut = isvd_@x@malloc(l * mb);
       isvd_int_t ldut = l;
 
+      isvd_val_t *vt = isvd_@x@malloc(l * nb);
+      isvd_int_t ldvt = l;
+
       // Run stage
       isvd_@x@PostprocessSymmetric_gpu(param, NULL, 0, NULL, 0, dista_, ordera_,
-                                       a, lda, qt, ldqt, s, ut, ldut, NULL, 0, -1, -2);
+                                   a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, -1, -1);
 
       // Gather results
       MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, ut_, mb*ldut, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
+      MPI_Gather(vt, nb*ldvt, MPI_@XTYPE@, vt_, nb*ldvt, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
       // Deallocate memory
       isvd_free(ut);
+      isvd_free(vt);
 
       break;
     }
@@ -215,7 +225,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
 
       // Run stage
       isvd_@x@PostprocessSymmetric_gpu(param, NULL, 0, NULL, 0, dista_, ordera_,
-                                       a, lda, qt, ldqt, s, NULL, 0, NULL, 0, -2, -2);
+                                   a, lda, qt, ldqt, s, NULL, 0, NULL, 0, -2, -2);
 
       break;
     }
@@ -236,8 +246,13 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       isvd_int_t lduut_ = m;
       isvd_val_t *uut0 = isvd_@x@malloc(m * m);
       isvd_int_t lduut0 = m;
+      isvd_val_t *vvt_ = isvd_@x@malloc(n * n);
+      isvd_int_t ldvvt_ = n;
+      isvd_val_t *vvt0 = uut0;
+      isvd_int_t ldvvt0 = lduut0;
       isvd_@x@Syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
       isvd_@x@Syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
+      isvd_@x@Syrk('U', 'T', n, k, 1.0, vt_, ldvt_, 0.0, vvt_, ldvvt_);
 
       // Check results
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
@@ -245,10 +260,16 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
           ASSERT_NEAR(uut_[ir+ic*lduut_], uut0[ir+ic*lduut0], @x@err) << "(ir, ic) =  (" << ir << ", " << ic << ")";
         }
       }
+      for ( isvd_int_t ir = 0; ir < n; ++ir ) {
+        for ( isvd_int_t ic = ir; ic < n; ++ic ) {
+          ASSERT_NEAR(vvt_[ir+ic*ldvvt_], vvt0[ir+ic*ldvvt0], @x@err) << "(ir, ic) =  (" << ir << ", " << ic << ")";
+        }
+      }
 
       // Deallocate memory
       isvd_free(uut_);
       isvd_free(uut0);
+      isvd_free(vvt_);
     }
   }
 
@@ -260,6 +281,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   isvd_free(qt);
   isvd_free(s);
   isvd_free(ut_);
+  isvd_free(vt_);
 }
 
 TEST(@XStr@_SymmetricPostprocessing_Gpu, BlockCol_ColMajor_GatherUV) {
