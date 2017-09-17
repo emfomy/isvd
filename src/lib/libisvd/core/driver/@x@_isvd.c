@@ -18,7 +18,7 @@
 /// \brief  General iSVD driver (@xname@ precision).
 ///
 /// \param[in]   alg_s         The selection of sketching algorithm. <br>
-///                            `"GP"`:     \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching".
+///                            `"GP"`:     \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching". <br>
 ///                            `"GP_gpu"`: \ref isvd_@x@SketchGaussianProjection
 ///                                               "Gaussian Projection sketching with GPU support".
 /// \param[in]   alg_o         The selection of orthogonalization algorithm. <br>
