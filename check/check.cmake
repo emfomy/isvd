@@ -28,7 +28,7 @@ macro(_ADD_CHECK checktype)
   _add_check_predo("${checktype}" "")
 
   # Add test
-  if(ISVD_VERBOSE_TEST)
+  if(ISVD_TEST_VERBOSE)
     gtest_add_tests($<TARGET_FILE:${checktarget}> "" ${checkmain} ${files})
   else()
     add_test(NAME ${checkname} COMMAND $<TARGET_FILE:${checktarget}>)
@@ -49,7 +49,7 @@ macro(_ADD_MPI_CHECK checktype listprocs)
   _add_check_predo("${checktype}")
 
   # Add test
-  if(ISVD_VERBOSE_TEST)
+  if(ISVD_TEST_VERBOSE)
     gtest_add_mpi_tests($<TARGET_FILE:${checktarget}> "${listprocs}" "" ${checkmain} ${files})
   else()
     foreach(procs ${listprocs})

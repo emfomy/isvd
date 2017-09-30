@@ -60,7 +60,7 @@ The following table are the main options
 | `ISVD_INDEX_TYPE`      | the selection index type.          | Options: `32/64`               |
 | `ISVD_OMP`             | the selection OpenMP library.      | Options: `OFF/GOMP/IOMP`       |
 | `ISVD_USE_GPU`         | enable GPU support.                |                                |
-| `ISVD_VERBOSE_TEST`    | enable verbose unit tests.         |                                |
+| `ISVD_TEST_VERBOSE`    | enable verbose unit tests.         |                                |
 | `GTEST_ROOT`           | the root path of Google Test.      | Require `ISVD_BUILD_TEST`      |
 | `INTEL_ROOT`           | the root path of Intel libraries.  | Require `ISVD_BLAS = MKL`      |
 | `MKL_ROOT`             | the root path of Intel MKL.        | Require `ISVD_BLAS = MKL`      |
@@ -81,7 +81,7 @@ The following table are the main Makefile rules
 
 ### Test installation
 
-* Set `ISVD_BUILD_TEST` using **ccmake**. (Also recommended to unset `ISVD_VERBOSE_TEST` if GPU is enabled).
+* Set `ISVD_BUILD_TEST` using **ccmake**. (Also recommended to unset `ISVD_TEST_VERBOSE` if GPU is enabled).
 * Run **make check**
   * Known issue: **RealSingle_WenYinIntegration.Test.#** / **s_integrate_wen_yin_#** fail the test.
 

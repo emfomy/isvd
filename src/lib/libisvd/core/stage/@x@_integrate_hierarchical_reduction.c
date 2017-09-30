@@ -44,6 +44,9 @@ void isvd_@x@IntegrateHierarchicalReduction(
     const isvd_int_t   ldqt
 ) {
 
+  ISVD_UNUSED(argv);
+  ISVD_UNUSED(retv);
+
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
   if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;
@@ -55,6 +58,8 @@ void isvd_@x@IntegrateHierarchicalReduction(
   const isvd_int_t l  = param.dim_sketch;
   const isvd_int_t N  = param.num_sketch;
   const isvd_int_t Nl = param.dim_sketch_total;
+
+  ISVD_UNUSED(Nl);
 
   // ====================================================================================================================== //
   // Check arguments
