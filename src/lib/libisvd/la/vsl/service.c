@@ -6,13 +6,17 @@
 /// \copyright  MIT License
 ///
 
-
 #if !defined(ISVD_USE_MKL)
 #define _POSIX_SOURCE
 #endif  // ISVD_USE_MKL
 
 #include <isvd/la/vsl/service.h>
 #include <libisvd/la/def.h>
+
+#if !defined(ISVD_USE_MKL)
+#include <stdlib.h>
+#include <isvd/util/memory.h>
+#endif  // ISVD_USE_MKL
 
 @ISVD_TYPE_MACRO_DEFINE@
 
@@ -31,9 +35,6 @@ void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip ) {
 }
 
 #else  // ISVD_USE_MKL
-
-#include <stdlib.h>
-#include <isvd/util/memory.h>
 
 void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const INT seed ) {
   *streamp = isvd_imalloc(4);
