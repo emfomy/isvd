@@ -28,11 +28,15 @@ int main( int argc, char **argv ) {
   }
 
   const isvd_int_t m = 100;
-  const isvd_int_t n = 1000;
+  const isvd_int_t k = 10;
 
-  double *a = isvd_dmalloc(m * n);
+  isvd_d_val_t *q = isvd_dmalloc(k * m);
+  const isvd_int_t ldq = k;
 
-  isvd_vdRngGaussianDriver(0, 0, m*n, a, 0.0, 1.0);
+  isvd_d_val_t *tau = isvd_dmalloc(k);
+
+  isvd_dGelqf(k, m, q, ldq, tau);
+  isvd_dOrglq(k, m, k, q, ldq, tau);
 
   isvd_finalize();
 

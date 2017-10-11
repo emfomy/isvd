@@ -83,8 +83,8 @@ void isvd_@x@IntegrateHierarchicalReduction(
 
   // ====================================================================================================================== //
   // Loop
-  for ( isvd_int_t Nt = N; Nt > 1; Nt = (Nt+1)/2 ) {
-    const isvd_int_t h = Nt / 2;
+  for ( isvd_int_t h2 = N; h2 > 1; h2 = (h2+1)/2 ) {
+    const isvd_int_t h = h2 / 2;
 
     // B(i) := Q(i)' * Q(i+h)
     for ( isvd_int_t i = 0; i < h; ++i ) {

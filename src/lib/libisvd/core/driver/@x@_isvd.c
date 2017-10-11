@@ -19,7 +19,7 @@
 ///
 /// \param[in]   alg_s         The selection of sketching algorithm. <br>
 ///                            `"GP"`:     \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching". <br>
-///                            `"GP_gpu"`: \ref isvd_@x@SketchGaussianProjection
+///                            `"GP_gpu"`: \ref isvd_@x@SketchGaussianProjection_gpu
 ///                                               "Gaussian Projection sketching with GPU support".
 /// \param[in]   alg_o         The selection of orthogonalization algorithm. <br>
 ///                            `"TS"`:     \ref isvd_@x@OrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
@@ -32,10 +32,10 @@
 ///                            `"TS"`:     \ref isvd_@x@PostprocessTallSkinnyQr "Tall Skinny qr postprocessing". <br>
 ///                            `"GR"`:     \ref isvd_@x@PostprocessGramian "GRamian postprocessing". <br>
 ///                            `"SY"`:     \ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing". <br>
-///                            `"TS_gpu"`: \ref isvd_@x@PostprocessTallSkinnyQr
+///                            `"TS_gpu"`: \ref isvd_@x@PostprocessTallSkinnyQr_gpu
 ///                                               "Tall Skinny qr postprocessing with GPU support". <br>
-///                            `"GR_gpu"`: \ref isvd_@x@PostprocessGramian "GRamian postprocessing with GPU support". <br>
-///                            `"SY_gpu"`: \ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing with GPU support".
+///                            `"GR_gpu"`: \ref isvd_@x@PostprocessGramian_gpu "GRamian postprocessing with GPU support". <br>
+///                            `"SY_gpu"`: \ref isvd_@x@PostprocessSymmetric_gpu "SYmmetric postprocessing with GPU support".
 /// <hr>
 /// \param[in]   m             The number of rows of the matrix 𝑨.
 /// \param[in]   n             The number of columns of the matrix 𝑨.
