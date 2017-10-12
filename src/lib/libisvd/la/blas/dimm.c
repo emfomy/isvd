@@ -11,8 +11,6 @@
 #include <isvd/la/vml/mathematical.h>
 #include <libisvd/util/arg.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #define isvd_xDimm( side, m, n, alpha, a, b, ldb, xScal, xMul ) \
   const char side_ = isvd_arg2char("SIDE", side, "LR", NULL); \
   if ( !side_ ) return; \
@@ -36,16 +34,18 @@
   }
 
 void isvd_sDimm(
-    const CHAR1 side, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, REAL4 *b, const INT ldb
+    const char side, const isvd_int_t m, const isvd_int_t n, const isvd_s_val_t alpha, const isvd_s_val_t *a, isvd_s_val_t *b,
+    const isvd_int_t ldb
 ) { isvd_xDimm(side, m, n, alpha, a, b, ldb, isvd_sScal, isvd_vsMul); }
 void isvd_dDimm(
-    const CHAR1 side, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, REAL8 *b, const INT ldb
+    const char side, const isvd_int_t m, const isvd_int_t n, const isvd_d_val_t alpha, const isvd_d_val_t *a, isvd_d_val_t *b,
+    const isvd_int_t ldb
 ) { isvd_xDimm(side, m, n, alpha, a, b, ldb, isvd_dScal, isvd_vdMul); }
 void isvd_cDimm(
-    const CHAR1 side, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, COMP4 *b, const INT ldb
+    const char side, const isvd_int_t m, const isvd_int_t n, const isvd_c_val_t alpha, const isvd_c_val_t *a, isvd_c_val_t *b,
+    const isvd_int_t ldb
 ) { isvd_xDimm(side, m, n, alpha, a, b, ldb, isvd_cScal, isvd_vcMul); }
 void isvd_zDimm(
-    const CHAR1 side, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, COMP8 *b, const INT ldb
+    const char side, const isvd_int_t m, const isvd_int_t n, const isvd_z_val_t alpha, const isvd_z_val_t *a, isvd_z_val_t *b,
+    const isvd_int_t ldb
 ) { isvd_xDimm(side, m, n, alpha, a, b, ldb, isvd_zScal, isvd_vzMul); }
-
-@ISVD_TYPE_MACRO_UNDEF@

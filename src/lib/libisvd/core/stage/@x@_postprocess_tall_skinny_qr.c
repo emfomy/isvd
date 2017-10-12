@@ -47,11 +47,9 @@ void isvd_@x@PostprocessTallSkinnyQr(
 
   fprintf(stderr, "Tall-Skinny QR Postprocessing is not implemented!\n");
 
-  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
-  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
-  if ( argc < 0 ) return;
-
   ISVD_UNUSED(param);
+  ISVD_UNUSED(argv);
+  ISVD_UNUSED(retv);
   ISVD_UNUSED(dista);
   ISVD_UNUSED(ordera);
   ISVD_UNUSED(a);
@@ -67,5 +65,9 @@ void isvd_@x@PostprocessTallSkinnyQr(
   ISVD_UNUSED(vt_root);
   ISVD_UNUSED(projectBlockCol);
   ISVD_UNUSED(projectBlockRow);
+
+  if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
+  if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
+  if ( argc < 0 ) return;
 
 }

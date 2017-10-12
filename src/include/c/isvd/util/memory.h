@@ -15,29 +15,25 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
-INT*   isvd_imalloc( const size_t num );
-REAL4* isvd_smalloc( const size_t num );
-REAL8* isvd_dmalloc( const size_t num );
-COMP4* isvd_cmalloc( const size_t num );
-COMP8* isvd_zmalloc( const size_t num );
+isvd_int_t*   isvd_imalloc( const size_t num );
+isvd_s_val_t* isvd_smalloc( const size_t num );
+isvd_d_val_t* isvd_dmalloc( const size_t num );
+isvd_c_val_t* isvd_cmalloc( const size_t num );
+isvd_z_val_t* isvd_zmalloc( const size_t num );
 
 void isvd_free( void *ptr );
 
-void isvd_imemset0( INT   *ptr, const size_t num );
-void isvd_smemset0( REAL4 *ptr, const size_t num );
-void isvd_dmemset0( REAL8 *ptr, const size_t num );
-void isvd_cmemset0( COMP4 *ptr, const size_t num );
-void isvd_zmemset0( COMP8 *ptr, const size_t num );
+void isvd_imemset0( isvd_int_t   *ptr, const size_t num );
+void isvd_smemset0( isvd_s_val_t *ptr, const size_t num );
+void isvd_dmemset0( isvd_d_val_t *ptr, const size_t num );
+void isvd_cmemset0( isvd_c_val_t *ptr, const size_t num );
+void isvd_zmemset0( isvd_z_val_t *ptr, const size_t num );
 
-void isvd_imemcpy( INT   *dst, const INT   *src, const size_t num );
-void isvd_smemcpy( REAL4 *dst, const REAL4 *src, const size_t num );
-void isvd_dmemcpy( REAL8 *dst, const REAL8 *src, const size_t num );
-void isvd_cmemcpy( COMP4 *dst, const COMP4 *src, const size_t num );
-void isvd_zmemcpy( COMP8 *dst, const COMP8 *src, const size_t num );
-
-@ISVD_TYPE_MACRO_UNDEF@
+void isvd_imemcpy( isvd_int_t   *dst, const isvd_int_t   *src, const size_t num );
+void isvd_smemcpy( isvd_s_val_t *dst, const isvd_s_val_t *src, const size_t num );
+void isvd_dmemcpy( isvd_d_val_t *dst, const isvd_d_val_t *src, const size_t num );
+void isvd_cmemcpy( isvd_c_val_t *dst, const isvd_c_val_t *src, const size_t num );
+void isvd_zmemcpy( isvd_z_val_t *dst, const isvd_z_val_t *src, const size_t num );
 
 #if defined(__cplusplus)
 }

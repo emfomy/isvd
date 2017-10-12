@@ -15,19 +15,15 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_le_module
 /// \brief  Computes the inverse of a square matrix using LU factorization.
 //\{
-void isvd_sGeinv( const INT n, REAL4 *a, const INT lda );
-void isvd_dGeinv( const INT n, REAL8 *a, const INT lda );
-void isvd_cGeinv( const INT n, COMP4 *a, const INT lda );
-void isvd_zGeinv( const INT n, COMP8 *a, const INT lda );
+void isvd_sGeinv( const isvd_int_t n, isvd_s_val_t *a, const isvd_int_t lda );
+void isvd_dGeinv( const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda );
+void isvd_cGeinv( const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda );
+void isvd_zGeinv( const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda );
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

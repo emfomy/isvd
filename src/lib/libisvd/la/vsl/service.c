@@ -6,7 +6,6 @@
 /// \copyright  MIT License
 ///
 
-
 #if !defined(ISVD_USE_MKL)
 #define _POSIX_SOURCE
 #endif  // ISVD_USE_MKL
@@ -14,11 +13,9 @@
 #include <isvd/la/vsl/service.h>
 #include <libisvd/la/def.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if defined(ISVD_USE_MKL)
 
-void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const INT seed ) {
+void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const isvd_int_t seed ) {
   isvd_assert_pass(vslNewStream((VSLStreamStatePtr*)streamp, VSL_BRNG_SFMT19937, seed));
 }
 
@@ -26,7 +23,7 @@ void isvd_vslDeleteStream( isvd_VSLStreamStatePtr *streamp ) {
   isvd_assert_pass(vslDeleteStream((VSLStreamStatePtr*)streamp));
 }
 
-void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip ) {
+void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const isvd_int_t nskip ) {
   isvd_assert_pass(vslSkipAheadStream((VSLStreamStatePtr)stream, nskip));
 }
 
@@ -35,7 +32,7 @@ void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip ) {
 #include <stdlib.h>
 #include <isvd/util/memory.h>
 
-void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const INT seed ) {
+void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const isvd_int_t seed ) {
   *streamp = isvd_imalloc(4);
   (*streamp)[0] = (seed & 0xff) + 1;
   (*streamp)[1] = ((seed >>  8) & 0xff);
@@ -47,7 +44,7 @@ void isvd_vslDeleteStream( isvd_VSLStreamStatePtr *streamp ) {
   isvd_free(*streamp);
 }
 
-void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip ) {
+void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const isvd_int_t nskip ) {
   unsigned int seed = nskip;
   stream[0] ^= rand_r(&seed) % 2048 + 1;
   stream[1] ^= rand_r(&seed) % 4096;
@@ -56,5 +53,3 @@ void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip ) {
 }
 
 #endif  // ISVD_USE_MKL
-
-@ISVD_TYPE_MACRO_UNDEF@
