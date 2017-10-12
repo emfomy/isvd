@@ -10,8 +10,6 @@
 #include <libisvd/la/def.h>
 #include <libisvd/util/arg.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if defined(ISVD_USE_MKL)
 
 #if defined(__cplusplus)
@@ -32,22 +30,26 @@ extern void mkl_zomatcopy_(ISVD_UNKNOWN);
 #endif  // __cplusplus
 
 void isvd_sOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda, REAL4 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_s_val_t alpha, const isvd_s_val_t *a,
+    const isvd_int_t lda, isvd_s_val_t *b, const isvd_int_t ldb
 ) { mkl_somatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
 void isvd_dOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, const INT lda, REAL8 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_d_val_t alpha, const isvd_d_val_t *a,
+    const isvd_int_t lda, isvd_d_val_t *b, const isvd_int_t ldb
 ) { mkl_domatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
 void isvd_cOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, const INT lda, COMP4 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_c_val_t alpha, const isvd_c_val_t *a,
+    const isvd_int_t lda, isvd_c_val_t *b, const isvd_int_t ldb
 ) { mkl_comatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
 void isvd_zOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda, COMP8 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_z_val_t alpha, const isvd_z_val_t *a,
+    const isvd_int_t lda, isvd_z_val_t *b, const isvd_int_t ldb
 ) { mkl_zomatcopy_("C", &trans, &m, &n, &alpha, a, &lda, b, &ldb); }
 
 #else  // ISVD_USE_MKL
 
-static inline REAL4 rconjf( const REAL4 z ) { return z; }
-static inline REAL8 rconj(  const REAL8 z ) { return z; }
+static inline isvd_s_val_t rconjf( const isvd_s_val_t z ) { return z; }
+static inline isvd_d_val_t rconj(  const isvd_d_val_t z ) { return z; }
 
 #define isvd_xOmatcopy( trans, m, n, alpha, a, lda, b, ldb, conj ) \
   const char trans_ = isvd_arg2char("TRANS", trans, "NTRC", NULL); \
@@ -91,18 +93,20 @@ static inline REAL8 rconj(  const REAL8 z ) { return z; }
   }
 
 void isvd_sOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const REAL4 alpha, const REAL4 *a, const INT lda, REAL4 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_s_val_t alpha, const isvd_s_val_t *a,
+    const isvd_int_t lda, isvd_s_val_t *b, const isvd_int_t ldb
 ) { isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, rconjf); }
 void isvd_dOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const REAL8 alpha, const REAL8 *a, const INT lda, REAL8 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_d_val_t alpha, const isvd_d_val_t *a,
+    const isvd_int_t lda, isvd_d_val_t *b, const isvd_int_t ldb
 ) { isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, rconj); }
 void isvd_cOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const COMP4 alpha, const COMP4 *a, const INT lda, COMP4 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_c_val_t alpha, const isvd_c_val_t *a,
+    const isvd_int_t lda, isvd_c_val_t *b, const isvd_int_t ldb
 ) { isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, conjf); }
 void isvd_zOmatcopy(
-    const CHAR1 trans, const INT m, const INT n, const COMP8 alpha, const COMP8 *a, const INT lda, COMP8 *b, const INT ldb
+    const char trans, const isvd_int_t m, const isvd_int_t n, const isvd_z_val_t alpha, const isvd_z_val_t *a,
+    const isvd_int_t lda, isvd_z_val_t *b, const isvd_int_t ldb
 ) { isvd_xOmatcopy(trans, m, n, alpha, a, lda, b, ldb, conj); }
 
 #endif  // ISVD_USE_MKL
-
-@ISVD_TYPE_MACRO_UNDEF@

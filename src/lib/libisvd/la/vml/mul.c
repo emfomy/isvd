@@ -9,14 +9,12 @@
 #include <isvd/la/vml/mathematical.h>
 #include <libisvd/la/def.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if defined(ISVD_USE_MKL)
 
-void isvd_vsMul( const INT n, const REAL4 *a, const REAL4 *b, REAL4 *y ) { vsMul(n, a, b, y); }
-void isvd_vdMul( const INT n, const REAL8 *a, const REAL8 *b, REAL8 *y ) { vdMul(n, a, b, y); }
-void isvd_vcMul( const INT n, const COMP4 *a, const COMP4 *b, COMP4 *y ) { vcMul(n, a, b, y); }
-void isvd_vzMul( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y ) { vzMul(n, a, b, y); }
+void isvd_vsMul( const isvd_int_t n, const isvd_s_val_t *a, const isvd_s_val_t *b, isvd_s_val_t *y ) { vsMul(n, a, b, y); }
+void isvd_vdMul( const isvd_int_t n, const isvd_d_val_t *a, const isvd_d_val_t *b, isvd_d_val_t *y ) { vdMul(n, a, b, y); }
+void isvd_vcMul( const isvd_int_t n, const isvd_c_val_t *a, const isvd_c_val_t *b, isvd_c_val_t *y ) { vcMul(n, a, b, y); }
+void isvd_vzMul( const isvd_int_t n, const isvd_z_val_t *a, const isvd_z_val_t *b, isvd_z_val_t *y ) { vzMul(n, a, b, y); }
 
 #else  // ISVD_USE_MKL
 
@@ -25,11 +23,9 @@ void isvd_vzMul( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y ) { vzMul
     y[i] = a[i] * b[i]; \
   }
 
-void isvd_vsMul( const INT n, const REAL4 *a, const REAL4 *b, REAL4 *y ) { isvd_vxMul(n, a, b, y); }
-void isvd_vdMul( const INT n, const REAL8 *a, const REAL8 *b, REAL8 *y ) { isvd_vxMul(n, a, b, y); }
-void isvd_vcMul( const INT n, const COMP4 *a, const COMP4 *b, COMP4 *y ) { isvd_vxMul(n, a, b, y); }
-void isvd_vzMul( const INT n, const COMP8 *a, const COMP8 *b, COMP8 *y ) { isvd_vxMul(n, a, b, y); }
+void isvd_vsMul( const isvd_int_t n, const isvd_s_val_t *a, const isvd_s_val_t *b, isvd_s_val_t *y ) { isvd_vxMul(n, a, b, y); }
+void isvd_vdMul( const isvd_int_t n, const isvd_d_val_t *a, const isvd_d_val_t *b, isvd_d_val_t *y ) { isvd_vxMul(n, a, b, y); }
+void isvd_vcMul( const isvd_int_t n, const isvd_c_val_t *a, const isvd_c_val_t *b, isvd_c_val_t *y ) { isvd_vxMul(n, a, b, y); }
+void isvd_vzMul( const isvd_int_t n, const isvd_z_val_t *a, const isvd_z_val_t *b, isvd_z_val_t *y ) { isvd_vxMul(n, a, b, y); }
 
 #endif  // ISVD_USE_MKL
-
-@ISVD_TYPE_MACRO_UNDEF@

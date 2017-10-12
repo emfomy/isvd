@@ -10,8 +10,6 @@
 #include <libisvd/la/def.h>
 #include <isvd/util/memory.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if defined(__cplusplus)
@@ -34,48 +32,46 @@ extern void zheev_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 void isvd_sSyev(
-    const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL4 *a, const INT lda, REAL4 *w
+    const char jobz, const char uplo, const isvd_int_t n, isvd_s_val_t *a, const isvd_int_t lda, isvd_s_val_t *w
 ) {
-  REAL4 qwork; INT lwork = -1, info;
+  isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   ssyev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  REAL4 *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_smalloc(lwork);
   ssyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_dSyev(
-    const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL8 *a, const INT lda, REAL8 *w
+    const char jobz, const char uplo, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda, isvd_d_val_t *w
 ) {
-  REAL8 qwork; INT lwork = -1, info;
+  isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dsyev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  REAL8 *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dmalloc(lwork);
   dsyev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_cSyev(
-    const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w
+    const char jobz, const char uplo, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda, isvd_s_val_t *w
 ) {
-  COMP4 qwork; INT lwork = -1, info;
+  isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  COMP4 *work  = isvd_cmalloc(lwork);
-  REAL4 *rwork = isvd_smalloc(5*n-2);
+  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  isvd_s_val_t *rwork = isvd_smalloc(5*n-2);
   cheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
   isvd_free(work);
   isvd_free(rwork);
 }
 void isvd_zSyev(
-    const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w
+    const char jobz, const char uplo, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda, isvd_d_val_t *w
 ) {
-  COMP8 qwork; INT lwork = -1, info;
+  isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zheev_(&jobz, &uplo, &n, a, &lda, w, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  COMP8 *work  = isvd_zmalloc(lwork);
-  REAL8 *rwork = isvd_dmalloc(5*n-2);
+  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  isvd_d_val_t *rwork = isvd_dmalloc(5*n-2);
   zheev_(&jobz, &uplo, &n, a, &lda, w, work, &lwork, rwork, &info);  isvd_assert_pass(info);
   isvd_free(work);
   isvd_free(rwork);
 }
-
-@ISVD_TYPE_MACRO_UNDEF@

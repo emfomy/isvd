@@ -15,14 +15,12 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-extern void slarnv_(const INT *idist, INT *iseed, const INT *n, REAL4 *x);
-extern void dlarnv_(const INT *idist, INT *iseed, const INT *n, REAL8 *x);
-extern void clarnv_(const INT *idist, INT *iseed, const INT *n, COMP4 *x);
-extern void zlarnv_(const INT *idist, INT *iseed, const INT *n, COMP8 *x);
+extern void slarnv_(const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_s_val_t *x);
+extern void dlarnv_(const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_d_val_t *x);
+extern void clarnv_(const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_c_val_t *x);
+extern void zlarnv_(const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_z_val_t *x);
 
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -31,30 +29,28 @@ extern void zlarnv_(const INT *idist, INT *iseed, const INT *n, COMP8 *x);
 /// \brief  Returns a vector of random numbers from a uniform or normal distribution.
 //\{
 static inline void isvd_sLarnv(
-    const INT idist, INT *iseed, const INT n, REAL4 *x
+    const isvd_int_t idist, isvd_int_t *iseed, const isvd_int_t n, isvd_s_val_t *x
 ) { slarnv_(&idist, iseed, &n, x); }
 static inline void isvd_dLarnv(
-    const INT idist, INT *iseed, const INT n, REAL8 *x
+    const isvd_int_t idist, isvd_int_t *iseed, const isvd_int_t n, isvd_d_val_t *x
 ) { dlarnv_(&idist, iseed, &n, x); }
 static inline void isvd_cLarnv(
-    const INT idist, INT *iseed, const INT n, COMP4 *x
+    const isvd_int_t idist, isvd_int_t *iseed, const isvd_int_t n, isvd_c_val_t *x
 ) { clarnv_(&idist, iseed, &n, x); }
 static inline void isvd_zLarnv(
-    const INT idist, INT *iseed, const INT n, COMP8 *x
+    const isvd_int_t idist, isvd_int_t *iseed, const isvd_int_t n, isvd_z_val_t *x
 ) { zlarnv_(&idist, iseed, &n, x); }
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_aux_module
 /// \brief  Tests two characters for equality regardless of the case.
-bool isvd_Lsame( const CHAR1 ca, const CHAR1 cb );
+bool isvd_Lsame( const char ca, const char cb );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_aux_module
 /// \brief  Tests two character strings for equality regardless of the case.
-bool isvd_Lsamen( const INT n, const CHAR1 *sa, const CHAR1 *sb );
-
-@ISVD_TYPE_MACRO_UNDEF@
+bool isvd_Lsamen( const isvd_int_t n, const char *sa, const char *sb );
 
 #if defined(__cplusplus)
 }

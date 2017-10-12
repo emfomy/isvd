@@ -15,33 +15,37 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_ls_module
 /// \brief  Computes all eigenvalues and, optionally, eigenvectors of a real symmetric matrix.
 //\{
-void isvd_sSyev( const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL4 *a, const INT lda, REAL4 *w );
-void isvd_dSyev( const CHAR1 jobz, const CHAR1 uplo, const INT n, REAL8 *a, const INT lda, REAL8 *w );
-void isvd_cSyev( const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP4 *a, const INT lda, REAL4 *w );
-void isvd_zSyev( const CHAR1 jobz, const CHAR1 uplo, const INT n, COMP8 *a, const INT lda, REAL8 *w );
+void isvd_sSyev( const char jobz, const char uplo, const isvd_int_t n, isvd_s_val_t *a, const isvd_int_t lda, isvd_s_val_t *w );
+void isvd_dSyev( const char jobz, const char uplo, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda, isvd_d_val_t *w );
+void isvd_cSyev( const char jobz, const char uplo, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda, isvd_s_val_t *w );
+void isvd_zSyev( const char jobz, const char uplo, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda, isvd_d_val_t *w );
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_ls_module
 /// \brief  Computes the singular value decomposition of a general rectangular matrix.
 //\{
-void isvd_sGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL4 *a, const INT lda, REAL4 *s, REAL4 *u,
-                  const INT ldu, REAL4 *v, const INT ldvt );
-void isvd_dGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL8 *a, const INT lda, REAL8 *s, REAL8 *u,
-                  const INT ldu, REAL8 *v, const INT ldvt );
-void isvd_cGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP4 *a, const INT lda, REAL4 *s, COMP4 *u,
-                  const INT ldu, COMP4 *v, const INT ldvt );
-void isvd_zGesvd( const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP8 *a, const INT lda, REAL8 *s, COMP8 *u,
-                  const INT ldu, COMP8 *v, const INT ldvt );
+void isvd_sGesvd(
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_s_val_t *a, const isvd_int_t lda,
+    isvd_s_val_t *s, isvd_s_val_t *u, const isvd_int_t ldu, isvd_s_val_t *v, const isvd_int_t ldvt
+);
+void isvd_dGesvd(
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda,
+    isvd_d_val_t *s, isvd_d_val_t *u, const isvd_int_t ldu, isvd_d_val_t *v, const isvd_int_t ldvt
+);
+void isvd_cGesvd(
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda,
+    isvd_s_val_t *s, isvd_c_val_t *u, const isvd_int_t ldu, isvd_c_val_t *v, const isvd_int_t ldvt
+);
+void isvd_zGesvd(
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda,
+    isvd_d_val_t *s, isvd_z_val_t *u, const isvd_int_t ldu, isvd_z_val_t *v, const isvd_int_t ldvt
+);
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

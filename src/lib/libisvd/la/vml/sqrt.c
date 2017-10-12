@@ -9,14 +9,12 @@
 #include <isvd/la/vml/power_root.h>
 #include <libisvd/la/def.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if defined(ISVD_USE_MKL)
 
-void isvd_vsSqrt( const INT n, const REAL4 *a, REAL4 *y ) { vsSqrt(n, a, y); }
-void isvd_vdSqrt( const INT n, const REAL8 *a, REAL8 *y ) { vdSqrt(n, a, y); }
-void isvd_vcSqrt( const INT n, const COMP4 *a, COMP4 *y ) { vcSqrt(n, a, y); }
-void isvd_vzSqrt( const INT n, const COMP8 *a, COMP8 *y ) { vzSqrt(n, a, y); }
+void isvd_vsSqrt( const isvd_int_t n, const isvd_s_val_t *a, isvd_s_val_t *y ) { vsSqrt(n, a, y); }
+void isvd_vdSqrt( const isvd_int_t n, const isvd_d_val_t *a, isvd_d_val_t *y ) { vdSqrt(n, a, y); }
+void isvd_vcSqrt( const isvd_int_t n, const isvd_c_val_t *a, isvd_c_val_t *y ) { vcSqrt(n, a, y); }
+void isvd_vzSqrt( const isvd_int_t n, const isvd_z_val_t *a, isvd_z_val_t *y ) { vzSqrt(n, a, y); }
 
 #else  // ISVD_USE_MKL
 
@@ -25,11 +23,9 @@ void isvd_vzSqrt( const INT n, const COMP8 *a, COMP8 *y ) { vzSqrt(n, a, y); }
     y[i] = sqrt(a[i]); \
   }
 
-void isvd_vsSqrt( const INT n, const REAL4 *a, REAL4 *y ) { isvd_xSqrt(n, a, y, sqrtf);  }
-void isvd_vdSqrt( const INT n, const REAL8 *a, REAL8 *y ) { isvd_xSqrt(n, a, y, sqrt);   }
-void isvd_vcSqrt( const INT n, const COMP4 *a, COMP4 *y ) { isvd_xSqrt(n, a, y, csqrtf); }
-void isvd_vzSqrt( const INT n, const COMP8 *a, COMP8 *y ) { isvd_xSqrt(n, a, y, csqrt);  }
+void isvd_vsSqrt( const isvd_int_t n, const isvd_s_val_t *a, isvd_s_val_t *y ) { isvd_xSqrt(n, a, y, sqrtf);  }
+void isvd_vdSqrt( const isvd_int_t n, const isvd_d_val_t *a, isvd_d_val_t *y ) { isvd_xSqrt(n, a, y, sqrt);   }
+void isvd_vcSqrt( const isvd_int_t n, const isvd_c_val_t *a, isvd_c_val_t *y ) { isvd_xSqrt(n, a, y, csqrtf); }
+void isvd_vzSqrt( const isvd_int_t n, const isvd_z_val_t *a, isvd_z_val_t *y ) { isvd_xSqrt(n, a, y, csqrt);  }
 
 #endif  // ISVD_USE_MKL
-
-@ISVD_TYPE_MACRO_UNDEF@

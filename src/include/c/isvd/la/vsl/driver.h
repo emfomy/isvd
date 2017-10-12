@@ -16,17 +16,19 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vsl_driver_module
 /// \brief  Generates normally distributed random numbers in parallel.
 //\{
-void isvd_vsRngGaussianDriver( const INT seed, const INT nskip, const INT n, REAL4 *r, const REAL4 a, const REAL4 sigma );
-void isvd_vdRngGaussianDriver( const INT seed, const INT nskip, const INT n, REAL8 *r, const REAL8 a, const REAL8 sigma );
+void isvd_vsRngGaussianDriver(
+    const isvd_int_t seed, const isvd_int_t nskip, const isvd_int_t n, isvd_s_val_t *r, const isvd_s_val_t a,
+    const isvd_s_val_t sigma
+);
+void isvd_vdRngGaussianDriver(
+    const isvd_int_t seed, const isvd_int_t nskip, const isvd_int_t n, isvd_d_val_t *r, const isvd_d_val_t a,
+    const isvd_d_val_t sigma
+);
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }
