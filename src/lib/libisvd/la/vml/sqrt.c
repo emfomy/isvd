@@ -6,7 +6,7 @@
 /// \copyright  MIT License
 ///
 
-#include <isvd/la/vml/mathematical.h>
+#include <isvd/la/vml/power_root.h>
 #include <libisvd/la/def.h>
 
 @ISVD_TYPE_MACRO_DEFINE@
