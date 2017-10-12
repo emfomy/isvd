@@ -11,8 +11,6 @@
 #include <isvd/util/memory.h>
 #include <libisvd/util/function.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if defined(__cplusplus)
@@ -35,53 +33,51 @@ extern void zgesvd_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 void isvd_sGesvd(
-    const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL4 *a, const INT lda, REAL4 *s, REAL4 *u, const INT ldu,
-    REAL4 *v, const INT ldvt
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_s_val_t *a, const isvd_int_t lda,
+    isvd_s_val_t *s, isvd_s_val_t *u, const isvd_int_t ldu, isvd_s_val_t *v, const isvd_int_t ldvt
 ) {
-  REAL4 qwork; INT lwork = -1, info;
+  isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  REAL4 *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_smalloc(lwork);
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_dGesvd(
-    const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, REAL8 *a, const INT lda, REAL8 *s, REAL8 *u, const INT ldu,
-    REAL8 *v, const INT ldvt
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda,
+    isvd_d_val_t *s, isvd_d_val_t *u, const isvd_int_t ldu, isvd_d_val_t *v, const isvd_int_t ldvt
 ) {
-  REAL8 qwork; INT lwork = -1, info;
+  isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  REAL8 *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dmalloc(lwork);
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_cGesvd(
-    const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP4 *a, const INT lda, REAL4 *s, COMP4 *u, const INT ldu,
-    COMP4 *v, const INT ldvt
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda,
+    isvd_s_val_t *s, isvd_c_val_t *u, const isvd_int_t ldu, isvd_c_val_t *v, const isvd_int_t ldvt
 ) {
-  COMP4 qwork; INT lwork = -1, info;
+  isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
-  COMP4 *work  = isvd_cmalloc(lwork);
-  REAL4 *rwork = isvd_smalloc(5*min(m, n));
+  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  isvd_s_val_t *rwork = isvd_smalloc(5*min(m, n));
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
   isvd_free(work);
   isvd_free(rwork);
 }
 void isvd_zGesvd(
-    const CHAR1 jobu, const CHAR1 jobvt, const INT m, const INT n, COMP8 *a, const INT lda, REAL8 *s, COMP8 *u, const INT ldu,
-    COMP8 *v, const INT ldvt
+    const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda,
+    isvd_d_val_t *s, isvd_z_val_t *u, const isvd_int_t ldu, isvd_z_val_t *v, const isvd_int_t ldvt
 ) {
-  COMP8 qwork; INT lwork = -1, info;
+  isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  COMP8 *work  = isvd_zmalloc(lwork);
-  REAL8 *rwork = isvd_dmalloc(5*min(m, n));
+  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  isvd_d_val_t *rwork = isvd_dmalloc(5*min(m, n));
   zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
   isvd_free(work);
   isvd_free(rwork);
 }
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@

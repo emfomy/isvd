@@ -79,6 +79,9 @@ void isvd_@x@PostprocessGramian(
     const mpi_int_t     vt_root
 ) {
 
+  ISVD_UNUSED(argv);
+  ISVD_UNUSED(retv);
+
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
   if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;

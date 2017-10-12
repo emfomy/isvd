@@ -10,8 +10,6 @@
 #include <libisvd/la/def.h>
 #include <isvd/util/memory.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if defined(__cplusplus)
@@ -39,56 +37,54 @@ extern void zgetri_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 void isvd_sGeinv(
-    const INT n, REAL4 *a, const INT lda
+    const isvd_int_t n, isvd_s_val_t *a, const isvd_int_t lda
 ) {
-  REAL4 qwork; INT lwork = -1, info;
+  isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  INT *ipiv = isvd_imalloc(n);
-  REAL4 *work = isvd_smalloc(lwork);
-  sgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_int_t *ipiv = isvd_imalloc(n);
+  isvd_s_val_t *work = isvd_smalloc(lwork);
+  sgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
+  sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(ipiv);
   isvd_free(work);
 }
 void isvd_dGeinv(
-    const INT n, REAL8 *a, const INT lda
+    const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda
 ) {
-  REAL8 qwork; INT lwork = -1, info;
+  isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  INT *ipiv = isvd_imalloc(n);
-  REAL8 *work = isvd_dmalloc(lwork);
-  dgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_int_t *ipiv = isvd_imalloc(n);
+  isvd_d_val_t *work = isvd_dmalloc(lwork);
+  dgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
+  dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(ipiv);
   isvd_free(work);
 }
 void isvd_cGeinv(
-    const INT n, COMP4 *a, const INT lda
+    const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda
 ) {
-  COMP4 qwork; INT lwork = -1, info;
+  isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  INT *ipiv = isvd_imalloc(n);
-  COMP4 *work  = isvd_cmalloc(lwork);
-  cgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_int_t *ipiv = isvd_imalloc(n);
+  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  cgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
+  cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(ipiv);
   isvd_free(work);
 }
 void isvd_zGeinv(
-    const INT n, COMP8 *a, const INT lda
+    const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda
 ) {
-  COMP8 qwork; INT lwork = -1, info;
+  isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  INT *ipiv = isvd_imalloc(n);
-  COMP8 *work  = isvd_zmalloc(lwork);
-  zgetrf_(&n, &n, a, &lda, ipiv, &info);            isvd_assert_pass(info);
-  zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);  isvd_assert_pass(info);
+  isvd_int_t *ipiv = isvd_imalloc(n);
+  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  zgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
+  zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(ipiv);
   isvd_free(work);
 }
-
-@ISVD_TYPE_MACRO_UNDEF@

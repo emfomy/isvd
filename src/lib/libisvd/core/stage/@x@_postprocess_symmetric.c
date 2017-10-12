@@ -79,12 +79,14 @@ void isvd_@x@PostprocessSymmetric(
     const mpi_int_t     vt_root
 ) {
 
+  ISVD_UNUSED(argv);
+  ISVD_UNUSED(retv);
+  ISVD_UNUSED(vt);
+  ISVD_UNUSED(ldvt);
+
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
   if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;
-
-  ISVD_UNUSED(vt);
-  ISVD_UNUSED(ldvt);
 
   // ====================================================================================================================== //
   // Get parameters
@@ -101,19 +103,19 @@ void isvd_@x@PostprocessSymmetric(
 
   const char dista_  = isvd_arg2char("DISTA",  dista,  "CR", NULL);
   const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
-  if ( vt_root >= -1 ) {
-    fprintf(stderr, "VT_ROOT must not be set!");
-    return;
-  }
   if ( !dista_ || !ordera_ ) return;
+
+  const mpi_int_t  ut_root_ = ( ut_root >= -1 ) ? ut_root : vt_root;
+  @xtype_____@    *ut_      = ( ut_root >= -1 ) ? ut      : vt;
+  const isvd_int_t ldut_    = ( ut_root >= -1 ) ? ldut    : ldvt;
 
   isvd_assert_eq(mj, nj);
   isvd_assert_eq(mb, nb);
 
-  if ( ut_root >= 0 ) {
-    isvd_assert_eq(ldut, l);
-  } else if ( ut_root == -1 ) {
-    isvd_assert_ge(ldut, l);
+  if ( ut_root_ >= 0 ) {
+    isvd_assert_eq(ldut_, l);
+  } else if ( ut_root_ == -1 ) {
+    isvd_assert_ge(ldut_, l);
   }
 
   // ====================================================================================================================== //
@@ -129,8 +131,8 @@ void isvd_@x@PostprocessSymmetric(
   // Projection
 
   switch ( dista_ ) {
-    case 'C': projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
-    case 'R': projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut, ldut, ut_root); break;
+    case 'C': projectBlockCol(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut_, ldut_, ut_root_); break;
+    case 'R': projectBlockRow(param, ordera_, a, lda, qt, ldqt, zt, ldzt, s, ut_, ldut_, ut_root_); break;
     default:  isvd_assert_fail();
   }
 
@@ -142,21 +144,33 @@ void isvd_@x@PostprocessSymmetric(
   MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
 
   // eig(W) = W * S * W'
-  const char jobw_ = (ut_root >= -1) ? 'V' : 'N';
+  const char jobw_ = (ut_root_ >= -1) ? 'V' : 'N';
   isvd_@x@Syev(jobw_, 'U', l, w, ldw, s);
 
   // ====================================================================================================================== //
   // Compute eigenvectors
 
   // U := Q * W (U' := W' * Q')
-  if ( ut_root >= -1 ) {
-    isvd_@x@Gemm('T', 'N', k, mj, l, 1.0, w, ldw, qt, ldqt, 0.0, ut, ldut);
+  if ( ut_root_ >= -1 ) {
+    isvd_@x@Gemm('T', 'N', k, mj, l, 1.0, w, ldw, qt, ldqt, 0.0, ut_, ldut_);
+
+    if ( ut_root >= -1 && vt_root >= -1 ) {
+      isvd_@x@Omatcopy('N', k, mj, 1.0, ut, ldut, vt, ldvt);
+    }
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
         MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
       } else {
         MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+      }
+    }
+
+    if ( vt_root >= 0 ) {
+      if ( param.mpi_rank == vt_root ) {
+        MPI_Gather(MPI_IN_PLACE, mb*ldvt, MPI_@XTYPE@, vt, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+      } else {
+        MPI_Gather(vt, mb*ldvt, MPI_@XTYPE@, NULL, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
       }
     }
   }

@@ -39,6 +39,9 @@ void isvd_@x@OrthogonalizeGramian(
     const isvd_int_t   ldyst
 ) {
 
+  ISVD_UNUSED(argv);
+  ISVD_UNUSED(retv);
+
   if ( argc > 0 ) { isvd_assert_ne(argv, nullptr); }
   if ( retc > 0 ) { isvd_assert_ne(retv, nullptr); }
   if ( argc < 0 ) return;

@@ -16,17 +16,17 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vsl_distribution_module
 /// \brief  Generates normally distributed random numbers.
 //\{
-void isvd_vsRngGaussian( isvd_VSLStreamStatePtr stream, const INT n, REAL4 *r, const REAL4 a, const REAL4 sigma );
-void isvd_vdRngGaussian( isvd_VSLStreamStatePtr stream, const INT n, REAL8 *r, const REAL8 a, const REAL8 sigma );
+void isvd_vsRngGaussian(
+    isvd_VSLStreamStatePtr stream, const isvd_int_t n, isvd_s_val_t *r, const isvd_s_val_t a, const isvd_s_val_t sigma
+);
+void isvd_vdRngGaussian(
+    isvd_VSLStreamStatePtr stream, const isvd_int_t n, isvd_d_val_t *r, const isvd_d_val_t a, const isvd_d_val_t sigma
+);
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

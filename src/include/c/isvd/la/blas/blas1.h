@@ -15,26 +15,24 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
-extern REAL4 sdot_(ISVD_UNKNOWN);
-extern REAL8 ddot_(ISVD_UNKNOWN);
-extern COMP4 cdotc_(ISVD_UNKNOWN);
-extern COMP8 zdotc_(ISVD_UNKNOWN);
-extern COMP4 cdotu_(ISVD_UNKNOWN);
-extern COMP8 zdotu_(ISVD_UNKNOWN);
+extern isvd_s_val_t sdot_(ISVD_UNKNOWN);
+extern isvd_d_val_t ddot_(ISVD_UNKNOWN);
+extern isvd_c_val_t cdotc_(ISVD_UNKNOWN);
+extern isvd_z_val_t zdotc_(ISVD_UNKNOWN);
+extern isvd_c_val_t cdotu_(ISVD_UNKNOWN);
+extern isvd_z_val_t zdotu_(ISVD_UNKNOWN);
 
-extern REAL4 snrm2_(ISVD_UNKNOWN);
-extern REAL8 dnrm2_(ISVD_UNKNOWN);
-extern REAL4 scnrm2_(ISVD_UNKNOWN);
-extern REAL8 dznrm2_(ISVD_UNKNOWN);
+extern isvd_s_val_t snrm2_(ISVD_UNKNOWN);
+extern isvd_d_val_t dnrm2_(ISVD_UNKNOWN);
+extern isvd_s_val_t scnrm2_(ISVD_UNKNOWN);
+extern isvd_d_val_t dznrm2_(ISVD_UNKNOWN);
 
-extern REAL4 sasum_(ISVD_UNKNOWN);
-extern REAL8 dasum_(ISVD_UNKNOWN);
-extern REAL4 scasum_(ISVD_UNKNOWN);
-extern REAL8 dzasum_(ISVD_UNKNOWN);
+extern isvd_s_val_t sasum_(ISVD_UNKNOWN);
+extern isvd_d_val_t dasum_(ISVD_UNKNOWN);
+extern isvd_s_val_t scasum_(ISVD_UNKNOWN);
+extern isvd_d_val_t dzasum_(ISVD_UNKNOWN);
 
 extern void sscal_(ISVD_UNKNOWN);
 extern void dscal_(ISVD_UNKNOWN);
@@ -49,23 +47,23 @@ extern void zdscal_(ISVD_UNKNOWN);
 /// \ingroup  c_la_blas_1_module
 /// \brief  Computes a vector-vector dot product.
 //\{
-static inline REAL4 isvd_sDot(
-    const INT n, const REAL4 *x, const INT incx, REAL4 *y, const INT incy
+static inline isvd_s_val_t isvd_sDot(
+    const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx, isvd_s_val_t *y, const isvd_int_t incy
 ) { return sdot_(&n, x, &incx, y, &incy); }
-static inline REAL8 isvd_dDot(
-    const INT n, const REAL8 *x, const INT incx, REAL8 *y, const INT incy
+static inline isvd_d_val_t isvd_dDot(
+    const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx, isvd_d_val_t *y, const isvd_int_t incy
 ) { return ddot_(&n, x, &incx, y, &incy); }
-static inline COMP4 isvd_cDotc(
-    const INT n, const COMP4 *x, const INT incx, COMP4 *y, const INT incy
+static inline isvd_c_val_t isvd_cDotc(
+    const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx, isvd_c_val_t *y, const isvd_int_t incy
 ) { return cdotc_(&n, x, &incx, y, &incy); }
-static inline COMP8 isvd_zDotc(
-    const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
+static inline isvd_z_val_t isvd_zDotc(
+    const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx, isvd_z_val_t *y, const isvd_int_t incy
 ) { return zdotc_(&n, x, &incx, y, &incy); }
-static inline COMP4 isvd_cDotu(
-    const INT n, const COMP4 *x, const INT incx, COMP4 *y, const INT incy
+static inline isvd_c_val_t isvd_cDotu(
+    const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx, isvd_c_val_t *y, const isvd_int_t incy
 ) { return cdotu_(&n, x, &incx, y, &incy); }
-static inline COMP8 isvd_zDotu(
-    const INT n, const COMP8 *x, const INT incx, COMP8 *y, const INT incy
+static inline isvd_z_val_t isvd_zDotu(
+    const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx, isvd_z_val_t *y, const isvd_int_t incy
 ) { return zdotu_(&n, x, &incx, y, &incy); }
 //\}
 
@@ -73,17 +71,17 @@ static inline COMP8 isvd_zDotu(
 /// \ingroup  c_la_blas_1_module
 /// \brief  Computes the Euclidean norm of a vector.
 //\{
-static inline REAL4 isvd_sNrm2(
-    const INT n, const REAL4 *x, const INT incx
+static inline isvd_s_val_t isvd_sNrm2(
+    const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx
 ) { return snrm2_(&n, x, &incx); }
-static inline REAL8 isvd_dNrm2(
-    const INT n, const REAL8 *x, const INT incx
+static inline isvd_d_val_t isvd_dNrm2(
+    const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx
 ) { return dnrm2_(&n, x, &incx); }
-static inline REAL4 isvd_scNrm2(
-    const INT n, const COMP4 *x, const INT incx
+static inline isvd_s_val_t isvd_scNrm2(
+    const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx
 ) { return scnrm2_(&n, x, &incx); }
-static inline REAL8 isvd_dzNrm2(
-    const INT n, const COMP8 *x, const INT incx
+static inline isvd_d_val_t isvd_dzNrm2(
+    const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx
 ) { return dznrm2_(&n, x, &incx); }
 //\}
 
@@ -91,17 +89,17 @@ static inline REAL8 isvd_dzNrm2(
 /// \ingroup  c_la_blas_1_module
 /// \brief  Computes the sum of magnitudes of the vector elements.
 //\{
-static inline REAL4 isvd_sAsum(
-    const INT n, const REAL4 *x, const INT incx
+static inline isvd_s_val_t isvd_sAsum(
+    const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx
 ) { return  sasum_(&n, x, &incx); }
-static inline REAL8 isvd_dAsum(
-    const INT n, const REAL8 *x, const INT incx
+static inline isvd_d_val_t isvd_dAsum(
+    const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx
 ) { return  dasum_(&n, x, &incx); }
-static inline REAL4 isvd_scAsum(
-    const INT n, const COMP4 *x, const INT incx
+static inline isvd_s_val_t isvd_scAsum(
+    const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx
 ) { return scasum_(&n, x, &incx); }
-static inline REAL8 isvd_dzAsum(
-    const INT n, const COMP8 *x, const INT incx
+static inline isvd_d_val_t isvd_dzAsum(
+    const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx
 ) { return dzasum_(&n, x, &incx); }
 //\}
 
@@ -109,40 +107,40 @@ static inline REAL8 isvd_dzAsum(
 /// \ingroup  c_la_blas_1_module
 /// \brief  Finds the index of the element with maximum absolute value.
 //\{
-INT isvd_isAmax( const INT n, const REAL4 *x, const INT incx );
-INT isvd_idAmax( const INT n, const REAL8 *x, const INT incx );
-INT isvd_icAmax( const INT n, const COMP4 *x, const INT incx );
-INT isvd_izAmax( const INT n, const COMP8 *x, const INT incx );
+isvd_int_t isvd_isAmax( const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx );
+isvd_int_t isvd_idAmax( const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx );
+isvd_int_t isvd_icAmax( const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx );
+isvd_int_t isvd_izAmax( const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx );
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_1_module
 /// \brief  Finds the index of the element with minimum absolute value.
 //\{
-INT isvd_isAmin( const INT n, const REAL4 *x, const INT incx );
-INT isvd_idAmin( const INT n, const REAL8 *x, const INT incx );
-INT isvd_icAmin( const INT n, const COMP4 *x, const INT incx );
-INT isvd_izAmin( const INT n, const COMP8 *x, const INT incx );
+isvd_int_t isvd_isAmin( const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx );
+isvd_int_t isvd_idAmin( const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx );
+isvd_int_t isvd_icAmin( const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx );
+isvd_int_t isvd_izAmin( const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx );
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_1_module
 /// \brief  Finds the the element with maximum absolute value.
 //\{
-REAL4 isvd_sAmax( const INT n, const REAL4 *x, const INT incx );
-REAL8 isvd_dAmax( const INT n, const REAL8 *x, const INT incx );
-COMP4 isvd_cAmax( const INT n, const COMP4 *x, const INT incx );
-COMP8 isvd_zAmax( const INT n, const COMP8 *x, const INT incx );
+isvd_s_val_t isvd_sAmax( const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx );
+isvd_d_val_t isvd_dAmax( const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx );
+isvd_c_val_t isvd_cAmax( const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx );
+isvd_z_val_t isvd_zAmax( const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx );
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_blas_1_module
 /// \brief  Finds the the element with minimum absolute value.
 //\{
-REAL4 isvd_sAmin( const INT n, const REAL4 *x, const INT incx );
-REAL8 isvd_dAmin( const INT n, const REAL8 *x, const INT incx );
-COMP4 isvd_cAmin( const INT n, const COMP4 *x, const INT incx );
-COMP8 isvd_zAmin( const INT n, const COMP8 *x, const INT incx );
+isvd_s_val_t isvd_sAmin( const isvd_int_t n, const isvd_s_val_t *x, const isvd_int_t incx );
+isvd_d_val_t isvd_dAmin( const isvd_int_t n, const isvd_d_val_t *x, const isvd_int_t incx );
+isvd_c_val_t isvd_cAmin( const isvd_int_t n, const isvd_c_val_t *x, const isvd_int_t incx );
+isvd_z_val_t isvd_zAmin( const isvd_int_t n, const isvd_z_val_t *x, const isvd_int_t incx );
 //\}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,26 +148,24 @@ COMP8 isvd_zAmin( const INT n, const COMP8 *x, const INT incx );
 /// \brief  Computes the product of a vector by a scalar.
 //\{
 static inline void isvd_sScal(
-    const INT n, const REAL4 alpha, REAL4 *x, const INT incx
+    const isvd_int_t n, const isvd_s_val_t alpha, isvd_s_val_t *x, const isvd_int_t incx
 ) { sscal_(&n, &alpha, x, &incx); }
 static inline void isvd_dScal(
-    const INT n, const REAL8 alpha, REAL8 *x, const INT incx
+    const isvd_int_t n, const isvd_d_val_t alpha, isvd_d_val_t *x, const isvd_int_t incx
 ) { dscal_(&n, &alpha, x, &incx); }
 static inline void isvd_cScal(
-    const INT n, const COMP4 alpha, COMP4 *x, const INT incx
+    const isvd_int_t n, const isvd_c_val_t alpha, isvd_c_val_t *x, const isvd_int_t incx
 ) { cscal_(&n, &alpha, x, &incx); }
 static inline void isvd_zScal(
-    const INT n, const COMP8 alpha, COMP8 *x, const INT incx
+    const isvd_int_t n, const isvd_z_val_t alpha, isvd_z_val_t *x, const isvd_int_t incx
 ) { zscal_(&n, &alpha, x, &incx); }
 static inline void isvd_csScal(
-    const INT n, const REAL4 alpha, COMP4 *x, const INT incx
+    const isvd_int_t n, const isvd_s_val_t alpha, isvd_c_val_t *x, const isvd_int_t incx
 ) { csscal_(&n, &alpha, x, &incx); }
 static inline void isvd_zdScal(
-    const INT n, const REAL8 alpha, COMP8 *x, const INT incx
+    const isvd_int_t n, const isvd_d_val_t alpha, isvd_z_val_t *x, const isvd_int_t incx
 ) { zdscal_(&n, &alpha, x, &incx); }
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@
 
 #if defined(__cplusplus)
 }

@@ -15,14 +15,12 @@
 extern "C" {
 #endif  // __cplusplus
 
-@ISVD_TYPE_MACRO_DEFINE@
-
-typedef INT* isvd_VSLStreamStatePtr;
+typedef isvd_int_t* isvd_VSLStreamStatePtr;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vsl_service_module
 /// \brief  Creates and initializes a random stream.
-void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const INT seed );
+void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const isvd_int_t seed );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vsl_service_module
@@ -32,9 +30,7 @@ void isvd_vslDeleteStream( isvd_VSLStreamStatePtr *streamp );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_vsl_service_module
 /// \brief  Initializes the stream by the skip-ahead method.
-void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const INT nskip );
-
-@ISVD_TYPE_MACRO_UNDEF@
+void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const isvd_int_t nskip );
 
 #if defined(__cplusplus)
 }
