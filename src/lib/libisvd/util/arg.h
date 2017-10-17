@@ -47,8 +47,6 @@ static inline isvd_int_t isvd_arg2char(
   return 0;
 }
 
-#define isvd_char2( str0, str1 ) (str0 + (str1 << 8))
-
 static inline const char* isvd_arg2str(
     const char *name,
     const char *arg,
