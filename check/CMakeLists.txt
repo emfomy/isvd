@@ -55,6 +55,9 @@ include_directories("${CMAKE_CURRENT_CONFIG_DIR}/lib"
                     "${PROJECT_BINARY_DIR}/lib"
              SYSTEM "${PROJECT_SOURCE_DIR}/ext/mmio")
 
+# Set environment variables
+list(APPEND ENVS "GTEST_COLOR=1")
+
 # Add subdirectories
 add_subdirectory(lib)
 

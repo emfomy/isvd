@@ -143,6 +143,11 @@ Please link exactly one library for all categories.
 * Add `-DISVD_USE_ILP64` to compile flag.
 * Make sure your LAPACK&amp;BLAS / Intel MKL uses 64bit integer.
 
+### Error "make[2]: *** No rule to make target 'tmp/......" occurs. How to solve it?
+
+* Use `cmake .` to and compile again.
+* Note that the `tmp` will be deleted by `make clean`.
+
 ## Reference
 * [Ting-Li Chen, Dawei D. Chang, Su-Yun Huang, Hung Chen, Chienyao Lin, Weichung Wang, “Integrating Multiple Random Sketches for Singular Value Decomposition”](https://arxiv.org/abs/1608.08285)
 * [Mu Yang, “Highly Scalable Parallelism of Integrated Randomized Singular Value Decomposition with Big Data Applications”](http://doi.org/10.6342/NTU201702960)
