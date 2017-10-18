@@ -69,6 +69,7 @@ void isvd_@x@IntegrateHierarchicalReduction(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Q'
   @xtype_____@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
@@ -95,7 +96,7 @@ void isvd_@x@IntegrateHierarchicalReduction(
     for ( isvd_int_t i = 0; i < h; ++i ) {
       isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
-    MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+    isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
     for ( isvd_int_t i = 0; i < h; ++i ) {
 

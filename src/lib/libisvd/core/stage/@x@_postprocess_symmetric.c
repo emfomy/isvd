@@ -105,9 +105,9 @@ void isvd_@x@PostprocessSymmetric(
   const char ordera_ = isvd_arg2char("ORDERA", ordera, "CR", NULL);
   if ( !dista_ || !ordera_ ) return;
 
-  const mpi_int_t  ut_root_ = ( ut_root >= -1 ) ? ut_root : vt_root;
-  @xtype_____@    *ut_      = ( ut_root >= -1 ) ? ut      : vt;
-  const isvd_int_t ldut_    = ( ut_root >= -1 ) ? ldut    : ldvt;
+  const mpi_int_t  ut_root_ = (ut_root >= -1) ? ut_root : vt_root;
+  @xtype_____@    *ut_      = (ut_root >= -1) ? ut      : vt;
+  const isvd_int_t ldut_    = (ut_root >= -1) ? ldut    : ldvt;
 
   isvd_assert_eq(mj, nj);
   isvd_assert_eq(mb, nb);
@@ -121,9 +121,11 @@ void isvd_@x@PostprocessSymmetric(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Z'
   @xtype_____@ *zt = isvd_@x@malloc(l * nb);
   isvd_int_t ldzt = l;
 
+  // matrix W
   @xtype_____@ *w = isvd_@x@malloc(l * l);
   isvd_int_t ldw = l;
 
@@ -160,17 +162,17 @@ void isvd_@x@PostprocessSymmetric(
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       }
     }
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldvt, MPI_@XTYPE@, vt, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldvt, MPI_@XTYPE@, vt, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       } else {
-        MPI_Gather(vt, mb*ldvt, MPI_@XTYPE@, NULL, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(vt, mb*ldvt, MPI_@XTYPE@, NULL, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       }
     }
   }

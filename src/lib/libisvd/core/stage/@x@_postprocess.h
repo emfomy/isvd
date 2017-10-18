@@ -62,6 +62,7 @@ static void projectBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Q'
   @xtype_____@ *qt_;
   if ( use_ut ) {
     qt_ = ut;
@@ -73,7 +74,7 @@ static void projectBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Allgather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, param.mpi_comm);
+  isvd_assert_pass(MPI_Allgather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Project
@@ -138,6 +139,7 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Z'
   @xtype_____@ *zt_;
   if ( use_vt ) {
     zt_ = vt;
@@ -156,7 +158,7 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Deallocate memory

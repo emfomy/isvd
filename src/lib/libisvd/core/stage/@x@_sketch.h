@@ -53,9 +53,11 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Omega'
   @xtype_____@ *omegat = isvd_@x@malloc(Nl * nj);
   isvd_int_t ldomegat = Nl;
 
+  // matrix Y'
   @xtype_____@ *yst_ = isvd_@x@malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
 
@@ -63,7 +65,7 @@ static void sketchBlockCol(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm);
+  isvd_assert_pass(MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm));
   isvd_v@x@RngGaussianDriver(seed_, Nl * nb * param.mpi_rank, nj * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //
@@ -76,7 +78,7 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Deallocate memory
@@ -117,6 +119,7 @@ static void sketchBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Omega'
   @xtype_____@ *omegat = isvd_@x@malloc(Nl * n);
   isvd_int_t ldomegat = Nl;
 
@@ -124,7 +127,7 @@ static void sketchBlockRow(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
+  isvd_assert_pass(MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm));
   isvd_v@x@RngGaussianDriver(seed_, 0, n * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //
