@@ -145,8 +145,8 @@ Please link exactly one library for all categories.
 
 ### Error "make[2]: *** No rule to make target 'tmp/......" occurs. How to solve it?
 
-* Use `cmake .` to and compile again.
-* Note that the `tmp` will be deleted by `make clean`.
+* Use `cmake .` to and recompile again.
+* Note that the `tmp` folder will be deleted after `make clean`.
 
 ## Reference
 * [Ting-Li Chen, Dawei D. Chang, Su-Yun Huang, Hung Chen, Chienyao Lin, Weichung Wang, “Integrating Multiple Random Sketches for Singular Value Decomposition”](https://arxiv.org/abs/1608.08285)

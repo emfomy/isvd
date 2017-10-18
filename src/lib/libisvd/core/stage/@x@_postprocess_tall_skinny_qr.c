@@ -18,7 +18,41 @@
 /// \ingroup  c_core_@x@_stage_module
 /// \brief  Tall-Skinny QR Postprocessing (@xname@ precision).
 ///
-/// \attention  Not implemented!
+/// \param[in]   param       The \ref isvd_Param "parameters".
+/// \param[in]   argv, argc  The arguments and its length. (not using)
+/// \param[in]   retv, retc  The return values and its length. (not using)
+/// <hr>
+/// \param[in]   dista       The parallel distribution of 𝑨. <br>
+///                          `'C'`: block-column parallelism. <br>
+///                          `'R'`: block-row parallelism.
+/// \param[in]   ordera      The storage ordering of 𝑨. <br>
+///                          `'C'`: column-major ordering. <br>
+///                          `'R'`: row-major ordering.
+/// \param[in]   a, lda      The column/row-block 𝑨 (\f$m \times n^{(j)}\f$) and its leading dimension. <br>
+///                          \b dista = `'C'`: the size must be \f$m \times n^{(j)}\f$. <br>
+///                          \b dista = `'R'`: the size must be \f$m^{(j)} \times n\f$.
+/// \param[in]   qt, ldqt    The row-block 𝑸 (\f$ m_b \times l \f$, row-major) and its leading dimension.
+/// \param[in]   s           The vector 𝝈 (\f$k \times 1\f$).
+/// \param[in]   ut, ldut    The matrix 𝑼 (row-major) and its leading dimension. <br>
+///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
+///                          \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
+///                          \b ut_root < -1: not referenced.
+/// \param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
+///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                          \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
+///                          \b vt_root < -1: not referenced.
+/// \param[in]   ut_root     The option for computing 𝑼. <br>
+///                          \b ut_root ≥  0: gather 𝑼 to the MPI process of ID \b ut_root. <br>
+///                          \b ut_root = -1: compute row-block 𝑼. <br>
+///                          \b ut_root < -1: does not compute 𝑼.
+/// \param[in]   vt_root     The option for computing 𝑽. <br>
+///                          \b vt_root ≥  0: gather 𝑽 to the MPI process of ID \b vt_root. <br>
+///                          \b vt_root = -1: compute row-block 𝑽. <br>
+///                          \b vt_root < -1: does not compute 𝑽.
+/// <hr>
+/// \param[out]  s           Replaced by the singular values 𝝈 in descending order.
+/// \param[out]  ut          Replaced by the left singular vectors 𝑼 (row-major).
+/// \param[out]  vt          Replaced by the right singular vectors 𝑽 (row-major).
 ///
 /// \note  If \b argc < 0, then a default argument query is assumed;
 ///        the routine only returns the first \b retc default arguments in \b retv.
