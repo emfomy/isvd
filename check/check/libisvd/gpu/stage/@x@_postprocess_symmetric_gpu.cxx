@@ -238,7 +238,7 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   // Check results
   if ( mpi_rank == mpi_root ) {
     for ( isvd_int_t ir = 0; ir < l; ++ir ) {
-      ASSERT_NEAR(s[ir], s0[ir], @x@err) << "(ir, ic) =  (" << ir << ", " << 1 << ")";
+      ASSERT_NEAR(s[ir], s0[ir], @x@err) << "(ir, ic) =  (" << ir << ", " << 0 << ")";
     }
     if ( jobuv != NoUV ) {
       // Compute space

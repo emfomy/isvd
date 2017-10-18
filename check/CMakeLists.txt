@@ -85,17 +85,19 @@ macro(ISVD_CHECK_FN xtypes)
 
   # Postprocessing
   add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_gramian "${XName} Precision Gramian Postprocessing" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_tall_skinny_qr "${XName} Precision Tall-Skinny QR Postprocessing" "1;2;4;8;16")
   add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_symmetric "${XName} Precision Symmetric Postprocessing" "1;2;3;4;6;12")
 
   # GPU unit tests
   if(ISVD_USE_GPU)
 
     # Sketching
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} Precision GPU Gaussian Projection Sketching" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_sketch_gaussian_projection_gpu "${XName} Precision GPU Gaussian Projection Sketching" "1;2;4")
 
     # Postprocessing
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} Precision GPU Gramian Postprocessing" "1;2")
-    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} Precision GPU Symmetric Postprocessing" "1;2")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_gramian_gpu "${XName} Precision GPU Gramian Postprocessing" "1;2;4")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_tall_skinny_qr_gpu "${XName} Precision GPU Tall-Skinny QR Postprocessing" "1;2;4")
+    add_mpi_check_gpu(libisvd/gpu/stage/${x}_postprocess_symmetric_gpu "${XName} Precision GPU Symmetric Postprocessing" "1;2;4")
   endif()
 endmacro()
 
