@@ -11,8 +11,6 @@
 #include <isvd/util/memory.h>
 #include <libisvd/util/function.h>
 
-@ISVD_TYPE_MACRO_DEFINE@
-
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 
 #if defined(__cplusplus)
@@ -35,45 +33,43 @@ extern void zunglq_(ISVD_UNKNOWN);
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 void isvd_sOrglq(
-    const INT m, const INT n, const INT k, REAL4 *a, const INT lda, REAL4 *tau
+    const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_s_val_t *a, const isvd_int_t lda, isvd_s_val_t *tau
 ) {
-  REAL4 qwork; INT lwork = -1, info;
+  isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sorglq_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  REAL4 *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_smalloc(lwork);
   sorglq_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_dOrglq(
-    const INT m, const INT n, const INT k, REAL8 *a, const INT lda, REAL8 *tau
+    const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_d_val_t *a, const isvd_int_t lda, isvd_d_val_t *tau
 ) {
-  REAL8 qwork; INT lwork = -1, info;
+  isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dorglq_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  REAL8 *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dmalloc(lwork);
   dorglq_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_cOrglq(
-    const INT m, const INT n, const INT k, COMP4 *a, const INT lda, COMP4 *tau
+    const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_c_val_t *a, const isvd_int_t lda, isvd_c_val_t *tau
 ) {
-  COMP4 qwork; INT lwork = -1, info;
+  isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cunglq_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
-  COMP4 *work  = isvd_cmalloc(lwork);
+  isvd_c_val_t *work  = isvd_cmalloc(lwork);
   cunglq_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 void isvd_zOrglq(
-    const INT m, const INT n, const INT k, COMP8 *a, const INT lda, COMP8 *tau
+    const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_z_val_t *a, const isvd_int_t lda, isvd_z_val_t *tau
 ) {
-  COMP8 qwork; INT lwork = -1, info;
+  isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zunglq_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  COMP8 *work  = isvd_zmalloc(lwork);
+  isvd_z_val_t *work  = isvd_zmalloc(lwork);
   zunglq_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
   isvd_free(work);
 }
 //\}
-
-@ISVD_TYPE_MACRO_UNDEF@

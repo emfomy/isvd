@@ -31,7 +31,7 @@ isvd_Param isvd_createParam(
     isvd_int_t num_sketch_;
   } args = {nrow, ncol, rank, over_rank, num_sketch};
 
-  MPI_Bcast(&args, sizeof(args), MPI_BYTE, mpi_root, mpi_comm);
+  isvd_assert_pass(MPI_Bcast(&args, sizeof(args), MPI_BYTE, mpi_root, mpi_comm));
 
   if ( mpi_rank == mpi_root ) {
     isvd_assert_gt(args.nrow_, 0);

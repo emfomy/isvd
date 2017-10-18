@@ -121,7 +121,7 @@ void isvd_@x@Isvd(
           @xtype_____@ *retv[4],
     const isvd_int_t    retc[4],
           double        time[4],
-          FILE        *stream,
+          FILE         *stream,
     const char          dista,
     const char          ordera,
     const @xtype_____@ *a,

@@ -62,12 +62,15 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Y'
   @xtype_____@ *yst_ = isvd_@x@malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
+  // matrix W'
   @xtype_____@ *w = isvd_@x@malloc(l * Nl);
   isvd_int_t ldw = l;
 
+  // matrix S
   @xtype_____@ *s = isvd_@x@malloc(l * N);
   isvd_int_t lds = l;
 
@@ -78,7 +81,7 @@ void isvd_@x@OrthogonalizeGramian(
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
   }
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {

@@ -33,6 +33,10 @@ static inline size_t minl( size_t a, size_t b ) {
   return (a < b) ? a : b;
 }
 
+static inline bool isPowerOf2( isvd_int_t x ) {
+  return x && !(x & (x - 1));
+}
+
 #if defined(__cplusplus)
 }
 #endif  // __cplusplus

@@ -118,9 +118,11 @@ void isvd_@x@PostprocessGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Z'
   @xtype_____@ *zt = isvd_@x@malloc(l * nb);
   isvd_int_t ldzt = l;
 
+  // matrix W
   @xtype_____@ *w = isvd_@x@malloc(l * l);
   isvd_int_t ldw = l;
 
@@ -138,7 +140,7 @@ void isvd_@x@PostprocessGramian(
 
   // W := Z' * Z
   isvd_@x@Gemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
@@ -154,9 +156,9 @@ void isvd_@x@PostprocessGramian(
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       }
     }
   }
@@ -168,9 +170,9 @@ void isvd_@x@PostprocessGramian(
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
-        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@XTYPE@, vt, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@XTYPE@, vt, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       } else {
-        MPI_Gather(vt, nb*ldvt, MPI_@XTYPE@, NULL, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(vt, nb*ldvt, MPI_@XTYPE@, NULL, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       }
     }
   }

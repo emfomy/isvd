@@ -76,10 +76,11 @@ macro(ISVD_CHECK_FN xtypes)
 
   # Orthogonalization
   add_mpi_check_cpu(libisvd/core/stage/${x}_orthogonalize_gramian "${XName} Precision Gramian Orthogonalization" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_orthogonalize_tall_skinny_qr "${XName} Precision Tall-Skinny QR Orthogonalization" "1;2;4")
 
   # Integration
-  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_kolmogorov_nagumo "${XName} Precision Kolmogorov Nagumo Integration" "1;2;3;4;6;12")
-  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen Yin Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_kolmogorov_nagumo "${XName} Precision Kolmogorov-Nagumo Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen-Yin Integration" "1;2;3;4;6;12")
   add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_hierarchical_reduction "${XName} Precision Hierarchical Reduction Integration" "1;2;3;4;6;12")
 
   # Postprocessing

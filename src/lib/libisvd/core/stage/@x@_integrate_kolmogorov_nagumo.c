@@ -67,8 +67,8 @@ void isvd_@x@IntegrateKolmogorovNagumo(
   // Get arguments
 
   isvd_int_t argi = -1;
-  const isvd_int_t maxit = ( argc > ++argi ) ? argv[argi] : kMaxit;
-  const @xtype_____@ tol = ( argc > ++argi ) ? argv[argi] : kTol;
+  const isvd_int_t maxit = (argc > ++argi) ? argv[argi] : kMaxit;
+  const @xtype_____@ tol = (argc > ++argi) ? argv[argi] : kTol;
 
   // ====================================================================================================================== //
   // Get parameters
@@ -88,6 +88,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Q'
   const @xtype_____@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
@@ -155,7 +156,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
   // Bc := Qs' * Qc
   isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, qct, ldqct, 0.0, bc, ldbc);
-  MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, bc, ldbc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Iterating
@@ -173,7 +174,7 @@ void isvd_@x@IntegrateKolmogorovNagumo(
 
     // Bgc := Qs' * Gc
     isvd_@x@Gemm('N', 'T', Nl, l, mj, 1.0, qst, ldqst, gct, ldgct, 0.0, bgc, ldbgc);
-    MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+    isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, bgc, ldbgc*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
     // Dc := 1/N * Bc' * Bc
     isvd_@x@Gemm('T', 'N', l, l, Nl, 1.0/N, bc, ldbc, bc, ldbc, 0.0, dc, lddc);
