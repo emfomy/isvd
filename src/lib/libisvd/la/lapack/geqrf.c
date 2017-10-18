@@ -8,8 +8,8 @@
 
 #include <isvd/la/lapack/least_square.h>
 #include <libisvd/la/def.h>
-#include <isvd/util/memory.h>
 #include <libisvd/util/function.h>
+#include <isvd/util/memory.h>
 
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 

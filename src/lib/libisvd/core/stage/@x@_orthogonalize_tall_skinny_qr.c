@@ -9,9 +9,9 @@
 #include <isvd/core/@x@_stage.h>
 #include <libisvd/def.h>
 #include <isvd/la.h>
+#include <libisvd/util/function.h>
 #include <isvd/util/memory.h>
 #include <isvd/util/mpi.h>
-#include <libisvd/util/function.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_@x@_stage_module
@@ -184,7 +184,7 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
   }
 
   // ====================================================================================================================== //
-  // Finalizing
+  // Multiplication
 
   // Yi *= Pi (Yi' := Pi' * Yi')
   if ( P > 1 ) {
