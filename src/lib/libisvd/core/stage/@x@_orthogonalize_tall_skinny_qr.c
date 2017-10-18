@@ -64,6 +64,10 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
   const isvd_int_t j   = param.mpi_rank;
   const isvd_int_t P   = param.mpi_size;
 
+  ISVD_UNUSED(m);
+  ISVD_UNUSED(mb);
+  ISVD_UNUSED(Pmb);
+
   // ====================================================================================================================== //
   // Check arguments
 

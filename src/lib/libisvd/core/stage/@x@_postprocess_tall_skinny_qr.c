@@ -69,6 +69,9 @@ void isvd_@x@PostprocessTallSkinnyQr(
   const isvd_int_t j   = param.mpi_rank;
   const isvd_int_t P   = param.mpi_size;
 
+  ISVD_UNUSED(n);
+  ISVD_UNUSED(Pnb);
+
   // ====================================================================================================================== //
   // Check arguments
 
