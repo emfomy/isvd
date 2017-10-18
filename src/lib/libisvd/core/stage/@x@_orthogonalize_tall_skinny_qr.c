@@ -119,25 +119,22 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
   rtj  = (j < jj) ? qpt : qpt + ldqpt*l;
   rtjj = (j < jj) ? qpt + ldqpt*l : qpt;
 
-  // Copy Yi
-  isvd_@x@memcpy(yst_, yst, ldyst*mj);
-
-  // Yi~ * Ric = qr(Yi)
+  // Yi * Ric = qr(Yi)
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@Gelqf(l, mj, yst_ + i*l, ldyst_, tau + i*ldtau);
+    isvd_@x@Gelqf(l, mj, yst + i*l, ldyst, tau + i*ldtau);
   }
 
   // Copy Ric
   if ( P > 1 ) {
     isvd_@x@memset0(rtj, ldrt * l);
     for ( isvd_int_t i = 0; i < N; ++i ) {
-      isvd_@x@Lacpy('L', l, l, yst_ + i*l, ldyst_, rtj + i*l, ldrt);
+      isvd_@x@Lacpy('L', l, l, yst + i*l, ldyst, rtj + i*l, ldrt);
     }
   }
 
-  // Form Yi~
+  // Form Yi
   for ( isvd_int_t i = 0; i < N; ++i ) {
-    isvd_@x@Orglq(l, mj, l, yst_ + i*l, ldyst, tau + i*ldtau);
+    isvd_@x@Orglq(l, mj, l, yst + i*l, ldyst, tau + i*ldtau);
   }
 
   // ====================================================================================================================== //
@@ -189,11 +186,12 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
   // ====================================================================================================================== //
   // Finalizing
 
-  // Yi := Yi~ * Pi (Yi' := Pi' * Yi~')
+  // Yi *= Pi (Yi' := Pi' * Yi')
   if ( P > 1 ) {
     for ( isvd_int_t i = 0; i < N; ++i ) {
-      isvd_@x@Gemm('N', 'N', l, mj, l, 1.0, pct + i*l, ldpct, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
+      isvd_@x@Gemm('N', 'N', l, mj, l, 1.0, pct + i*l, ldpct, yst + i*l, ldyst, 0.0, yst_ + i*l, ldyst_);
     }
+    isvd_@x@memcpy(yst, yst_, ldyst*mj);
   }
 
   // ====================================================================================================================== //
