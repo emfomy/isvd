@@ -162,17 +162,21 @@ void isvd_@x@PostprocessSymmetric(
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
-        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@,
+                                    ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       } else {
-        isvd_assert_pass(MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
+        isvd_assert_pass(MPI_Gather(ut, mb*ldut, MPI_@XTYPE@,
+                                    NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       }
     }
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
-        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldvt, MPI_@XTYPE@, vt, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldvt, MPI_@XTYPE@,
+                                    vt, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       } else {
-        isvd_assert_pass(MPI_Gather(vt, mb*ldvt, MPI_@XTYPE@, NULL, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
+        isvd_assert_pass(MPI_Gather(vt, mb*ldvt, MPI_@XTYPE@,
+                                    NULL, mb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       }
     }
   }

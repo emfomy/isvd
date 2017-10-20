@@ -4,6 +4,19 @@
 find_program(CMAKE_CPPLINT cpplint)
 mark_as_advanced(CMAKE_CPPLINT)
 
+# Break
+if(NOT CMAKE_CPPLINT)
+
+  # Add rule 'doc'
+  add_custom_target(
+    cpplint
+    COMMAND eval "exit 1"
+    COMMENT "${Esc}[1;33mWarning: 'cpplint' not found! Please set 'CMAKE_CPPLINT' using ccmake${Esc}[0m."
+  )
+
+  return()
+endif()
+
 # Macro
 function(SET_CPPLINT_TARGET path linelength filter)
   string(REPLACE "/" "_" target ${path})

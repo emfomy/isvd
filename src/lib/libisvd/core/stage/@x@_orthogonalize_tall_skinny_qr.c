@@ -40,8 +40,6 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
     const isvd_int_t   ldyst
 ) {
 
-  // fprintf(stderr, "Tall-Skinny QR Orthogonalization is not implemented!\n");
-
   ISVD_UNUSED(argv);
   ISVD_UNUSED(retv);
 
