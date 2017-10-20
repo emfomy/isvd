@@ -57,10 +57,11 @@ if(NOT PTHREAD_LIBRARY)
   set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
 endif()
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
+set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
 
 function(ISVD_SET_TARGET target)
   set_property(TARGET ${target} PROPERTY OUTPUT_NAME "${target}${BIN_SUFFIX}")
-  target_link_libraries(${target} ${M_LIBRARY} ${PTHREAD_LIBRARY})
+  target_link_libraries(${target} ${DEFAULT_LIBRARY})
   set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--no-as-needed")
 endfunction()
 

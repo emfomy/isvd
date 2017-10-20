@@ -5,7 +5,8 @@ function(DISP item var)
   elseif(var STREQUAL "OFF")
     message(STATUS "${item}${Esc}[31m✘${Esc}[0m")
   else()
-    message(STATUS "${item}${var}")
+    string(REPLACE ";" " " var_ "${var}")
+    message(STATUS "${item}${var_}")
   endif()
 endfunction()
 
@@ -85,6 +86,7 @@ string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" cxxflag_name)
 
 disp("Use C   flags:                  " "${CMAKE_C_FLAGS} ${${cflag_name}}")
 disp("Use C++ flags:                  " "${CMAKE_CXX_FLAGS} ${${cxxflag_name}}")
+disp("Use libraries:                  " "${DEFAULT_LIBRARY}")
 
 message(STATUS "")
 
