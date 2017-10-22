@@ -95,11 +95,11 @@ int main( int argc, char **argv ) {
   double time[4];
   isvd_dIsvd(
 #if !defined(ISVD_USE_GPU)
-    "GP", "GR", "KN", "GR"
+    "GP", "GR", "KN", "GR",
 #else  // ISVD_USE_GPU
-    "GP_gpu", "GR", "KN", "GR_gpu"
+    "GP_gpu", "GR", "KN", "GR_gpu",
 #endif  // ISVD_USE_GPU
-    , m, n, k, p, N, NULL, NULL, NULL, NULL, time, stdout, 'R', 'C',
+    m, n, k, p, N, NULL, NULL, NULL, NULL, time, stdout, 'R', 'C',
     a + mb * mpi_rank, lda, s, ut, ldut, vt, ldvt, seed, mpi_root, mpi_root, mpi_root, MPI_COMM_WORLD
   );
   /// [run-isvd]
@@ -117,15 +117,13 @@ int main( int argc, char **argv ) {
   }
   /// [display-time]
 
-  /// [deallocate-matrix]
-  // Deallocateate matrix
+  /// [final-isvd]
+  // Deallocate matrix
   isvd_free(a);
   isvd_free(s);
   isvd_free(ut);
   isvd_free(vt);
-  /// [deallocate-matrix]
 
-  /// [final-isvd]
   // Finalize iSVD
   isvd_finalize();
   /// [final-isvd]

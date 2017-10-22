@@ -29,6 +29,7 @@ endif()
 # libisvd
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/null.c" "")
 set_target(isvd "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/null.c")
+set_property(TARGET isvd PROPERTY COMPILE_FLAGS "-Wno-pedantic")
 # set_property(TARGET isvd PROPERTY LINKER_LANGUAGE C)
 
 # libisvd_core

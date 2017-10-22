@@ -33,11 +33,13 @@
 /// \param[in]   qt, ldqt    The row-block 𝑸 (\f$ m_b \times l \f$, row-major) and its leading dimension.
 /// \param[in]   s           The vector 𝝈 (\f$k \times 1\f$).
 /// \param[in]   ut, ldut    The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
+///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$ in the root process,
+///                                           and be \f$m_b \times k\f$ in other processes. \b ldut must be \f$l\f$. <br>
 ///                          \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                          \b ut_root < -1: not referenced.
 /// \param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$ in the root process,
+///                                           and be \f$n_b \times k\f$ in other processes. \b ldvt must be \f$l\f$. <br>
 ///                          \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
 ///                          \b vt_root < -1: not referenced.
 /// \param[in]   ut_root     The option for computing 𝑼. <br>

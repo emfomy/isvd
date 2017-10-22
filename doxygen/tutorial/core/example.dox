@@ -19,7 +19,7 @@
 
   <h3>Allocate matrices</h3>
 
-  The output matrices should be allocated before calling the driver. See \ref isvd_dIsvd for the detail of matrix sizes.
+  One should allocate the output matrices by themselves. See \ref isvd_dIsvd for the detail of matrix sizes. <br>
 
   \snippetlineno demo/cdemo.c allocate-matrix
 
@@ -60,15 +60,15 @@
 
   No GPU support
 
-  Using Real Double Precision Gaussian Projection Sketching
-  Using Real Double Precision Gramian Orthogonalization
-  Using Real Double Precision Kolmogorov-Nagumo Integration
-  Using Real Double Precision Gramian Postprocessing
+  Using Real Double Precision Gaussian Projection Sketching.
+  Using Real Double Precision Gramian Orthogonalization.
+  Using Real Double Precision Kolmogorov-Nagumo Integration.
+  Using Real Double Precision Gramian Postprocessing.
 
-  Sketching ...................... done
-  Orthogonalizing ................ done
-  Integrating .................... done
-  Postprocessing ................. done
+  Sketching ..................... done.
+  Orthogonalizing ............... done.
+  Integrating ................... done.
+  Postprocessing ................ done.
 
   Average total computing time:   0.085510 seconds.
   Average sketching time:         0.030245 seconds.

@@ -66,11 +66,13 @@
 ///                            \b dista = `'R'`: the size must be \f$m^{(j)} \times n\f$.
 /// \param[in]   s             The vector 𝝈 (\f$k \times 1\f$).
 /// \param[in]   ut, ldut      The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                            \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
+///                            \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$ in the root process,
+///                                             and be \f$m_b \times k\f$ in other processes. \b ldut must be \f$l\f$. <br>
 ///                            \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                            \b ut_root < -1: not referenced.
 /// \param[in]   vt, ldvt      The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                            \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                            \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$ in the root process,
+///                                             and be \f$n_b \times k\f$ in other processes. \b ldvt must be \f$l\f$. <br>
 ///                            \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
 ///                            \b vt_root < -1: not referenced.
 /// <hr>
@@ -164,9 +166,9 @@ void isvd_@x@Isvd(
 
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, mpi_comm);
 
-  const isvd_int_t mb = param.nrow_each;
-  const isvd_int_t l  = param.dim_sketch;
-  const isvd_int_t Nl = param.dim_sketch_total;
+  const isvd_int_t mb  = param.nrow_each;
+  const isvd_int_t l   = param.dim_sketch;
+  const isvd_int_t Nl  = param.dim_sketch_total;
 
   // ====================================================================================================================== //
   // Gets arguments and return values of stages
@@ -231,10 +233,10 @@ void isvd_@x@Isvd(
   // Print arguments
 
   if ( stream != NULL && mpi_rank == mpi_root ) {
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameS(alg_s_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameO(alg_o_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameI(alg_i_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameP(alg_p_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameS(alg_s_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameO(alg_o_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameI(alg_i_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameP(alg_p_));
     fprintf(stream, "\n");
   }
 
@@ -250,29 +252,29 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Run
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ...................... "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ..................... "); fflush(stream); }
   double time_s = MPI_Wtime();
   fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
   time_s = MPI_Wtime() - time_s;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ................ "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ............... "); fflush(stream); }
   double time_i = MPI_Wtime();
   fun_o(param, argv_o, argc_o, retv_o, retc_o, yst, ldyst);
   time_i = MPI_Wtime() - time_i;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Integrating .................... "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Integrating ................... "); fflush(stream); }
   double time_o = MPI_Wtime();
   fun_i(param, argv_i, argc_i, retv_i, retc_i, yst, ldyst, qt, ldqt);
   time_o = MPI_Wtime() - time_o;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................. "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................ "); fflush(stream); }
   double time_p = MPI_Wtime();
   fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
   time_p = MPI_Wtime() - time_p;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
   // ====================================================================================================================== //
   // Gets executing times

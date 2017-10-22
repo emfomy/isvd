@@ -28,6 +28,8 @@
 /// \note  If \b argc < 0, then a default argument query is assumed;
 ///        the routine only returns the first \b retc default arguments in \b retv.
 ///
+/// \attention  The number of MPI processes \f$P\f$ should be a power of 2.
+///
 /// \see isvd_Param, \ref tutorial_core_notation
 ///
 void isvd_@x@OrthogonalizeTallSkinnyQr(

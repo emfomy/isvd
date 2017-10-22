@@ -34,11 +34,13 @@
 /// \param[in]   qt, ldqt    The row-block 𝑸 (\f$ m_b \times l \f$, row-major) and its leading dimension.
 /// \param[in]   s           The vector 𝝈 (\f$k \times 1\f$).
 /// \param[in]   ut, ldut    The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
+///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$ in the root process,
+///                                           and be \f$m_b \times k\f$ in other processes. \b ldut must be \f$l\f$. <br>
 ///                          \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                          \b ut_root < -1: not referenced.
 /// \param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$ in the root process,
+///                                           and be \f$n_b \times k\f$ in other processes. \b ldvt must be \f$l\f$. <br>
 ///                          \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
 ///                          \b vt_root < -1: not referenced.
 /// \param[in]   ut_root     The option for computing 𝑼. <br>
@@ -56,6 +58,8 @@
 ///
 /// \note  If \b argc < 0, then a default argument query is assumed;
 ///        the routine only returns the first \b retc default arguments in \b retv.
+///
+/// \attention  The number of MPI processes \f$P\f$ should be a power of 2.
 ///
 /// \see isvd_Param, \ref tutorial_core_notation
 ///
@@ -216,7 +220,7 @@ void isvd_@x@PostprocessTallSkinnyQr(
 
     // Update neighbor ID
     qctj = (j < jj) ? qct : qct + ldqct*l;
-    jj = j ^ t;
+    jj   = j ^ t;
     rtj  = (j < jj) ? qpt : qpt + ldqpt*l;
     rtjj = (j < jj) ? qpt + ldqpt*l : qpt;
 
