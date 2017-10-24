@@ -81,11 +81,11 @@ disp("Use C++ Compiler:               " "${CMAKE_CXX_COMPILER}")
 
 message(STATUS "")
 
-string(TOUPPER "CMAKE_C_FLAGS_${CMAKE_BUILD_TYPE}" cflag_name)
-string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" cxxflag_name)
+string(TOUPPER "CMAKE_C_FLAGS_${CMAKE_BUILD_TYPE}" cflag_build)
+string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" cxxflag_build)
 
-disp("Use C   flags:                  " "${CMAKE_C_FLAGS} ${${cflag_name}}")
-disp("Use C++ flags:                  " "${CMAKE_CXX_FLAGS} ${${cxxflag_name}}")
+disp("Use C   flags:                  " "${CMAKE_C_FLAGS} ${${cflag_build}}")
+disp("Use C++ flags:                  " "${CMAKE_CXX_FLAGS} ${${cxxflag_build}}")
 disp("Use libraries:                  " "${DEFAULT_LIBRARY}")
 
 message(STATUS "")
