@@ -36,7 +36,7 @@ function(ISVD_SET_TARGET_CHECK_CPU target)
   isvd_set_target_blas(${target})
   isvd_set_target_gtest(${target})
   target_link_libraries(${target} checkisvd_gpu_none checkisvd_core_la extmmio)
-  target_compile_definitions(${target} PUBLIC "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
+  target_compile_definitions(${target} PRIVATE "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
 endfunction()
 
 function(ISVD_SET_TARGET_CHECK_GPU target)
@@ -46,7 +46,7 @@ function(ISVD_SET_TARGET_CHECK_GPU target)
   isvd_set_target_gtest(${target})
   isvd_set_target_gpu(${target})
   target_link_libraries(${target} checkisvd_gpu_magma checkisvd_core_la extmmio)
-  target_compile_definitions(${target} PUBLIC "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
+  target_compile_definitions(${target} PRIVATE "-DISVD_DATA_PATH=\"${PROJECT_SOURCE_DIR}/data\"")
 endfunction()
 
 # Set include paths

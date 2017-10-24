@@ -10,7 +10,6 @@
 #define ISVD_GPU_ENV_H_
 
 #include <isvd/def.h>
-#include <mpi.h>
 
 #if defined(__cplusplus)
 extern "C" {

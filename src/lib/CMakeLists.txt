@@ -3,8 +3,7 @@
 isvd_set_config_var()
 
 # Shared library
-SET(BUILD_SHARED_LIBS ON)
-SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 
 # Macro
@@ -18,7 +17,7 @@ macro(SET_TARGET target files)
 endmacro()
 
 # Set include paths
-include_directories("${CMAKE_CURRENT_CONFIG_DIR}/../include/c"
+include_directories("${PROJECT_BINARY_DIR}/include/c"
                     "${CMAKE_CURRENT_CONFIG_DIR}")
 
 # Break
