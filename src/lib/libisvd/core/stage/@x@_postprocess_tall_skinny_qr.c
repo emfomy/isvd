@@ -16,7 +16,7 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Tall-Skinny QR Postprocessing (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -138,28 +138,28 @@ void isvd_@x@PostprocessTallSkinnyQr(
   // Allocate memory
 
   // matrix Z'
-  @xtype_____@ *zt = isvd_@x@malloc(l * nb);
+  @xtype_____@ *zt = isvd_@x@Malloc(l * nb);
   isvd_int_t ldzt = l;
 
   // matrix Qc'
-  @xtype_____@ *qct = isvd_@x@malloc(l * l2);
+  @xtype_____@ *qct = isvd_@x@Malloc(l * l2);
   isvd_int_t ldqct = l;
 
   // matrix Q+'
-  @xtype_____@ *qpt = isvd_@x@malloc(l * l2);
+  @xtype_____@ *qpt = isvd_@x@Malloc(l * l2);
   isvd_int_t ldqpt = l;
 
   // matrix Pc'
   @xtype_____@ *pct = NULL;
   if ( vt_root >= -1 ) {
-    pct = isvd_@x@malloc(l * l);
+    pct = isvd_@x@Malloc(l * l);
   }
   isvd_int_t ldpct = l;
 
   // matrix P-'
   @xtype_____@ *pmt = NULL;
   if ( vt_root >= -1 ) {
-    pmt = isvd_@x@malloc(l * l);
+    pmt = isvd_@x@Malloc(l * l);
   }
   isvd_int_t ldpmt = l;
 
@@ -199,7 +199,7 @@ void isvd_@x@PostprocessTallSkinnyQr(
   isvd_@x@Gelqf(l, nj, zt, ldzt, tau);
 
   // Copy Rc
-  isvd_@x@memset0(rtj, ldrt * l);
+  isvd_@x@Memset0(rtj, ldrt * l);
   isvd_@x@Lacpy('L', l, l, zt, ldzt, rtj, ldrt);
 
   // Form Z
@@ -229,7 +229,7 @@ void isvd_@x@PostprocessTallSkinnyQr(
     isvd_@x@Gelqf(l, l2, qct, ldqct, tau);
 
     // Copy Rc
-    isvd_@x@memset0(rtj, ldrt * l);
+    isvd_@x@Memset0(rtj, ldrt * l);
     isvd_@x@Lacpy('L', l, l, qct, ldqct, rtj, ldrt);
 
     if ( vt_root >= -1 ) {
@@ -240,7 +240,7 @@ void isvd_@x@PostprocessTallSkinnyQr(
       if ( t != 0x2 ) {
         isvd_@x@Gemm('N', 'N', l, l, l, 1.0, qctj, ldqct, pmt, ldpmt, 0.0, pct, ldpct);
       } else {
-        isvd_@x@memcpy(pct, qctj, ldpct*l);
+        isvd_@x@Memcpy(pct, qctj, ldpct*l);
       }
     }
   }
@@ -298,12 +298,12 @@ void isvd_@x@PostprocessTallSkinnyQr(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(zt);
-  isvd_free(qct);
-  isvd_free(qpt);
+  isvd_Free(zt);
+  isvd_Free(qct);
+  isvd_Free(qpt);
   if ( vt_root >= -1 ) {
-    isvd_free(pct);
-    isvd_free(pmt);
+    isvd_Free(pct);
+    isvd_Free(pmt);
   }
 
 }

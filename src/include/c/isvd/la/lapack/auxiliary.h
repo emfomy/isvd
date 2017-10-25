@@ -16,6 +16,8 @@
 extern "C" {
 #endif  // __cplusplus
 
+#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
+
 extern void slacpy_( const char *uplo, const isvd_int_t *m, const isvd_int_t *n, const isvd_s_val_t *a, const isvd_int_t *lda,
                      isvd_s_val_t *b, const isvd_int_t *ldb );
 extern void dlacpy_( const char *uplo, const isvd_int_t *m, const isvd_int_t *n, const isvd_d_val_t *a, const isvd_int_t *lda,
@@ -29,6 +31,8 @@ extern void slarnv_( const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_
 extern void dlarnv_( const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_d_val_t *x );
 extern void clarnv_( const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_c_val_t *x );
 extern void zlarnv_( const isvd_int_t *idist, isvd_int_t *iseed, const isvd_int_t *n, isvd_z_val_t *x );
+
+#endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_la_lapack_aux_module

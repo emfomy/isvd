@@ -39,9 +39,9 @@ void isvd_sGeqrf(
   isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sgeqrf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_s_val_t *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_sMalloc(lwork);
   sgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_dGeqrf(
     const isvd_int_t m, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda, isvd_d_val_t *tau
@@ -49,9 +49,9 @@ void isvd_dGeqrf(
   isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dgeqrf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_d_val_t *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dMalloc(lwork);
   dgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_cGeqrf(
     const isvd_int_t m, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda, isvd_c_val_t *tau
@@ -59,9 +59,9 @@ void isvd_cGeqrf(
   isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cgeqrf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
-  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  isvd_c_val_t *work  = isvd_cMalloc(lwork);
   cgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_zGeqrf(
     const isvd_int_t m, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda, isvd_z_val_t *tau
@@ -69,8 +69,8 @@ void isvd_zGeqrf(
   isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zgeqrf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  isvd_z_val_t *work  = isvd_zMalloc(lwork);
   zgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 //\}

@@ -39,9 +39,9 @@ void isvd_sOrgqr(
   isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sorgqr_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_s_val_t *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_sMalloc(lwork);
   sorgqr_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_dOrgqr(
     const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_d_val_t *a, const isvd_int_t lda, isvd_d_val_t *tau
@@ -49,9 +49,9 @@ void isvd_dOrgqr(
   isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dorgqr_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_d_val_t *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dMalloc(lwork);
   dorgqr_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_cOrgqr(
     const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_c_val_t *a, const isvd_int_t lda, isvd_c_val_t *tau
@@ -59,9 +59,9 @@ void isvd_cOrgqr(
   isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cungqr_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
-  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  isvd_c_val_t *work  = isvd_cMalloc(lwork);
   cungqr_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_zOrgqr(
     const isvd_int_t m, const isvd_int_t n, const isvd_int_t k, isvd_z_val_t *a, const isvd_int_t lda, isvd_z_val_t *tau
@@ -69,8 +69,8 @@ void isvd_zOrgqr(
   isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zungqr_(&m, &n, &k, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  isvd_z_val_t *work  = isvd_zMalloc(lwork);
   zungqr_(&m, &n, &k, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 //\}

@@ -15,7 +15,7 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_driver_module
+/// \ingroup  c_core_driver_module
 /// \brief  General iSVD driver (@xname@ precision).
 ///
 /// \param[in]   alg_s         The selection of sketching algorithm. <br>
@@ -244,10 +244,10 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype_____@ *yst = isvd_@x@malloc(Nl * mb);
+  @xtype_____@ *yst = isvd_@x@Malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
-  @xtype_____@ *qt = isvd_@x@malloc(l * mb);
+  @xtype_____@ *qt = isvd_@x@Malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // ====================================================================================================================== //
@@ -289,7 +289,7 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(yst);
-  isvd_free(qt);
+  isvd_Free(yst);
+  isvd_Free(qt);
 
 }

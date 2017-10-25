@@ -20,7 +20,7 @@ int main( int argc, char **argv ) {
 
   /// [init-isvd]
   // Initialize iSVD environment
-  isvd_init(&argc, &argv, MPI_COMM_WORLD);
+  isvd_Init(&argc, &argv, MPI_COMM_WORLD);
 
   const mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
@@ -38,7 +38,7 @@ int main( int argc, char **argv ) {
   // Display environment
   if ( mpi_rank == mpi_root ) {
     printf("iSVD C demo\n");
-    isvd_printEnvironment(MPI_COMM_WORLD);
+    isvd_PrintEnvironment(MPI_COMM_WORLD);
   }
   /// [init-isvd]
 
@@ -61,11 +61,11 @@ int main( int argc, char **argv ) {
   }
   mm_read_mtx_array_size(file, &m, &n);
 
-  double *a = isvd_dmalloc(m * n);
+  double *a = isvd_dMalloc(m * n);
   isvd_int_t lda = m;
   for ( isvd_int_t j = 0; j < n; ++j ) {
     for ( isvd_int_t i = 0; i < m; ++i ) {
-      isvd_dfget(file, &a[i+j*lda]);
+      isvd_dFget(file, &a[i+j*lda]);
     }
   }
 
@@ -82,12 +82,12 @@ int main( int argc, char **argv ) {
   const isvd_int_t Pmb = P * mb;
   const isvd_int_t Pnb = P * nb;
 
-  double *s  = isvd_dmalloc(l);
+  double *s  = isvd_dMalloc(l);
 
-  double *ut = isvd_dmalloc(l * Pmb);
+  double *ut = isvd_dMalloc(l * Pmb);
   isvd_int_t ldut = l;
 
-  double *vt = isvd_dmalloc(l * Pnb);
+  double *vt = isvd_dMalloc(l * Pnb);
   isvd_int_t ldvt = l;
   /// [allocate-matrix]
 
@@ -120,13 +120,13 @@ int main( int argc, char **argv ) {
 
   /// [final-isvd]
   // Deallocate matrix
-  isvd_free(a);
-  isvd_free(s);
-  isvd_free(ut);
-  isvd_free(vt);
+  isvd_Free(a);
+  isvd_Free(s);
+  isvd_Free(ut);
+  isvd_Free(vt);
 
   // Finalize iSVD
-  isvd_finalize();
+  isvd_Finalize();
   /// [final-isvd]
 
   return 0;

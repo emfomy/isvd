@@ -14,7 +14,7 @@
 #include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Gramian Orthogonalization (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -64,15 +64,15 @@ void isvd_@x@OrthogonalizeGramian(
   // Allocate memory
 
   // matrix Y'
-  @xtype_____@ *yst_ = isvd_@x@malloc(ldyst * mj);
+  @xtype_____@ *yst_ = isvd_@x@Malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
   // matrix W'
-  @xtype_____@ *w = isvd_@x@malloc(l * Nl);
+  @xtype_____@ *w = isvd_@x@Malloc(l * Nl);
   isvd_int_t ldw = l;
 
   // matrix S
-  @xtype_____@ *s = isvd_@x@malloc(l * N);
+  @xtype_____@ *s = isvd_@x@Malloc(l * N);
   isvd_int_t lds = l;
 
   // ====================================================================================================================== //
@@ -92,7 +92,7 @@ void isvd_@x@OrthogonalizeGramian(
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
   isvd_@x@Dism('R', l, Nl, 1.0, s, w, ldw);
-  isvd_@x@memcpy(yst_, yst, mj*ldyst);
+  isvd_@x@Memcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
   }
@@ -100,8 +100,8 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(yst_);
-  isvd_free(w);
-  isvd_free(s);
+  isvd_Free(yst_);
+  isvd_Free(w);
+  isvd_Free(s);
 
 }

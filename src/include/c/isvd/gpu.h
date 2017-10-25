@@ -15,15 +15,9 @@
 #include <isvd/gpu/d_stage.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_s_stage_module  Real Single Stage
-/// \ingroup   c_gpu_module
-/// \brief     The Stage Routines with Real Single Precision
-///
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_d_stage_module  Real Double Stage
-/// \ingroup   c_gpu_module
-/// \brief     The Stage Routines with Real Double Precision
+/// \defgroup  c_gpu_stage_module  GPU Stage Routines
+/// \ingroup   c_core_module
+/// \brief     The Stage Routines with GPU support
 ///
 
 #endif  // ISVD_GPU_H_

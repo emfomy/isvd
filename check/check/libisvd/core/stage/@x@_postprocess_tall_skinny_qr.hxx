@@ -47,20 +47,20 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &n), 0);
 
-  isvd_val_t *a0 = isvd_@x@malloc(m * n);
+  isvd_val_t *a0 = isvd_@x@Malloc(m * n);
   isvd_int_t lda0;
   if ( ordera_ == 'C' ) {
     lda0 = m;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        isvd_@x@fget(file, &a0[ir+ic*lda0]);
+        isvd_@x@Fget(file, &a0[ir+ic*lda0]);
       }
     }
   } else {
     lda0 = n;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        isvd_@x@fget(file, &a0[ir*lda0+ic]);
+        isvd_@x@Fget(file, &a0[ir*lda0+ic]);
       }
     }
   }
@@ -82,11 +82,11 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     ASSERT_EQ(m_, m);
   }
 
-  isvd_val_t *qt0 = isvd_@x@malloc(m * l);
+  isvd_val_t *qt0 = isvd_@x@Malloc(m * l);
   isvd_int_t ldqt0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &qt0[ir*ldqt0+ic]);
+      isvd_@x@Fget(file, &qt0[ir*ldqt0+ic]);
     }
   }
 
@@ -108,9 +108,9 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     ASSERT_EQ(one_, 1);
   }
 
-  isvd_val_t *s0 = isvd_@x@malloc(l);
+  isvd_val_t *s0 = isvd_@x@Malloc(l);
   for ( isvd_int_t ir = 0; ir < l; ++ir ) {
-    isvd_@x@fget(file, &s0[ir]);
+    isvd_@x@Fget(file, &s0[ir]);
   }
 
   if ( file != stdin ) {
@@ -131,11 +131,11 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     ASSERT_EQ(l_, l);
   }
 
-  isvd_val_t *ut0 = isvd_@x@malloc(m * l);
+  isvd_val_t *ut0 = isvd_@x@Malloc(m * l);
   isvd_int_t ldut0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &ut0[ir*ldqt0+ic]);
+      isvd_@x@Fget(file, &ut0[ir*ldqt0+ic]);
     }
   }
 
@@ -157,11 +157,11 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     ASSERT_EQ(l_, l);
   }
 
-  isvd_val_t *vt0 = isvd_@x@malloc(n * l);
+  isvd_val_t *vt0 = isvd_@x@Malloc(n * l);
   isvd_int_t ldvt0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < n; ++ir ) {
-      isvd_@x@fget(file, &vt0[ir*ldqt0+ic]);
+      isvd_@x@Fget(file, &vt0[ir*ldqt0+ic]);
     }
   }
 
@@ -199,16 +199,16 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
   }
   isvd_int_t lda = lda0;
 
-  isvd_val_t *qt = isvd_@x@malloc(l * mb);
+  isvd_val_t *qt = isvd_@x@Malloc(l * mb);
   isvd_int_t ldqt = l;
   isvd_@x@Omatcopy('N', l, mj, 1.0, qt0 + param.rowidxbegin * ldqt0, ldqt0, qt, ldqt);
 
-  isvd_val_t *s = isvd_@x@malloc(l);
+  isvd_val_t *s = isvd_@x@Malloc(l);
 
-  isvd_val_t *ut_ = isvd_@x@malloc(l * Pmb);
+  isvd_val_t *ut_ = isvd_@x@Malloc(l * Pmb);
   isvd_int_t ldut_ = l;
 
-  isvd_val_t *vt_ = isvd_@x@malloc(l * Pnb);
+  isvd_val_t *vt_ = isvd_@x@Malloc(l * Pnb);
   isvd_int_t ldvt_ = l;
 
   switch ( jobuv ) {
@@ -224,10 +224,10 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     case BlockUV: {
 
       // Create matrices
-      isvd_val_t *ut = isvd_@x@malloc(l * mb);
+      isvd_val_t *ut = isvd_@x@Malloc(l * mb);
       isvd_int_t ldut = l;
 
-      isvd_val_t *vt = isvd_@x@malloc(l * nb);
+      isvd_val_t *vt = isvd_@x@Malloc(l * nb);
       isvd_int_t ldvt = l;
 
       // Run stage
@@ -239,8 +239,8 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       MPI_Gather(vt, nb*ldvt, MPI_@XTYPE@, vt_, nb*ldvt, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
       // Deallocate memory
-      isvd_free(ut);
-      isvd_free(vt);
+      isvd_Free(ut);
+      isvd_Free(vt);
 
       break;
     }
@@ -266,13 +266,13 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
     }
     if ( jobuv != NoUV ) {
       // Compute space
-      isvd_val_t *uut_ = isvd_@x@malloc(m * m);
+      isvd_val_t *uut_ = isvd_@x@Malloc(m * m);
       isvd_int_t lduut_ = m;
-      isvd_val_t *uut0 = isvd_@x@malloc(m * m);
+      isvd_val_t *uut0 = isvd_@x@Malloc(m * m);
       isvd_int_t lduut0 = m;
-      isvd_val_t *vvt_ = isvd_@x@malloc(n * n);
+      isvd_val_t *vvt_ = isvd_@x@Malloc(n * n);
       isvd_int_t ldvvt_ = n;
-      isvd_val_t *vvt0 = isvd_@x@malloc(n * n);
+      isvd_val_t *vvt0 = isvd_@x@Malloc(n * n);
       isvd_int_t ldvvt0 = n;
       isvd_@x@Syrk('U', 'T', m, k, 1.0, ut_, ldut_, 0.0, uut_, lduut_);
       isvd_@x@Syrk('U', 'T', m, k, 1.0, ut0, ldut0, 0.0, uut0, lduut0);
@@ -292,21 +292,21 @@ static void test( char dista, char ordera, const JobUV jobuv ) {
       }
 
       // Deallocate memory
-      isvd_free(uut_);
-      isvd_free(uut0);
-      isvd_free(vvt_);
-      isvd_free(vvt0);
+      isvd_Free(uut_);
+      isvd_Free(uut0);
+      isvd_Free(vvt_);
+      isvd_Free(vvt0);
     }
   }
 
   // Deallocate memory
-  isvd_free(a0);
-  isvd_free(qt0);
-  isvd_free(s0);
-  isvd_free(ut0);
-  isvd_free(vt0);
-  isvd_free(qt);
-  isvd_free(s);
-  isvd_free(ut_);
-  isvd_free(vt_);
+  isvd_Free(a0);
+  isvd_Free(qt0);
+  isvd_Free(s0);
+  isvd_Free(ut0);
+  isvd_Free(vt0);
+  isvd_Free(qt);
+  isvd_Free(s);
+  isvd_Free(ut_);
+  isvd_Free(vt_);
 }

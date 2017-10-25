@@ -55,11 +55,11 @@ static void sketchBlockCol(
   // Allocate memory
 
   // matrix Omega'
-  @xtype_____@ *omegat = isvd_@x@malloc(Nl * nj);
+  @xtype_____@ *omegat = isvd_@x@Malloc(Nl * nj);
   isvd_int_t ldomegat = Nl;
 
   // matrix Y'
-  @xtype_____@ *yst_ = isvd_@x@malloc(Nl * Pmb);
+  @xtype_____@ *yst_ = isvd_@x@Malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
 
   // ====================================================================================================================== //
@@ -84,8 +84,8 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(omegat);
-  isvd_free(yst_);
+  isvd_Free(omegat);
+  isvd_Free(yst_);
 
 }
 
@@ -121,7 +121,7 @@ static void sketchBlockRow(
   // Allocate memory
 
   // matrix Omega'
-  @xtype_____@ *omegat = isvd_@x@malloc(Nl * n);
+  @xtype_____@ *omegat = isvd_@x@Malloc(Nl * n);
   isvd_int_t ldomegat = Nl;
 
   // ====================================================================================================================== //
@@ -141,7 +141,7 @@ static void sketchBlockRow(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(omegat);
+  isvd_Free(omegat);
 
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS

@@ -5,9 +5,9 @@
 
   <h3>Initialize Environment</h3>
 
-  The iSVD environment and random seed should be set up before calling the driver. \ref isvd_init also initialize the MPI environment and the MAGMA environment, and \ref isvd_printEnvironment display the the MPI environment and the MAGMA environment.
+  The iSVD environment and random seed should be set up before calling the driver. \ref isvd_Init also initialize the MPI environment and the MAGMA environment, and \ref isvd_PrintEnvironment display the the MPI environment and the MAGMA environment.
 
-  If one needs CPU only, one may use \ref isvd_init_cpu, \ref isvd_printEnvironment_cpu, and \ref isvd_finalize_cpu instead.
+  If one needs CPU only, one may use \ref isvd_Init_cpu, \ref isvd_PrintEnvironment_cpu, and \ref isvd_Finalize_cpu instead.
 
   \snippetlineno demo/cdemo.c init-isvd
 
@@ -37,7 +37,7 @@
 
   <h3>Finalize</h3>
 
-  Remember to \ref isvd_finalize "finalize" the environment.
+  Remember to \ref isvd_Finalize "finalize" the environment.
 
   \snippetlineno demo/cdemo.c final-isvd
 

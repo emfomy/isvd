@@ -38,11 +38,11 @@ TEST(@XStr@_WenYinIntegration, Test) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &Nl), 0);
 
-  isvd_val_t *qst0 = isvd_@x@malloc(Nl * m);
+  isvd_val_t *qst0 = isvd_@x@Malloc(Nl * m);
   isvd_int_t ldqst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &qst0[ir*ldqst0+ic]);
+      isvd_@x@Fget(file, &qst0[ir*ldqst0+ic]);
     }
   }
 
@@ -63,11 +63,11 @@ TEST(@XStr@_WenYinIntegration, Test) {
     ASSERT_EQ(m_, m);
   }
 
-  isvd_val_t *qt0 = isvd_@x@malloc(m * l);
+  isvd_val_t *qt0 = isvd_@x@Malloc(m * l);
   isvd_int_t ldqt0 = l;
   for ( isvd_int_t ic = 0; ic < l; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &qt0[ir*ldqt0+ic]);
+      isvd_@x@Fget(file, &qt0[ir*ldqt0+ic]);
     }
   }
 
@@ -93,11 +93,11 @@ TEST(@XStr@_WenYinIntegration, Test) {
   const isvd_int_t Pmb = param.nrow_total;
 
   // Create matrices
-  isvd_val_t *qst = isvd_@x@malloc(Nl * mb);
+  isvd_val_t *qst = isvd_@x@Malloc(Nl * mb);
   isvd_int_t ldqst = Nl;
   isvd_@x@Omatcopy('N', Nl, mj, 1.0, qst0 + param.rowidxbegin * ldqst0, ldqst0, qst, ldqst);
 
-  isvd_val_t *qt = isvd_@x@malloc(l * mb);
+  isvd_val_t *qt = isvd_@x@Malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // Run stage
@@ -105,7 +105,7 @@ TEST(@XStr@_WenYinIntegration, Test) {
   isvd_int_t iter = retv[0];
 
   // Gather results
-  isvd_val_t *qt_ = isvd_@x@malloc(l * Pmb);
+  isvd_val_t *qt_ = isvd_@x@Malloc(l * Pmb);
   isvd_int_t ldqt_ = l;
   MPI_Gather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
@@ -120,9 +120,9 @@ TEST(@XStr@_WenYinIntegration, Test) {
   }
 
   // Deallocate memory
-  isvd_free(qst0);
-  isvd_free(qt0);
-  isvd_free(qst);
-  isvd_free(qt);
-  isvd_free(qt_);
+  isvd_Free(qst0);
+  isvd_Free(qt0);
+  isvd_Free(qst);
+  isvd_Free(qt);
+  isvd_Free(qt_);
 }

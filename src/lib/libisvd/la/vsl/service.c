@@ -34,7 +34,7 @@ void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const isvd_int_t ns
 #include <isvd/util/memory.h>
 
 void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const isvd_int_t seed ) {
-  *streamp = isvd_imalloc(4);
+  *streamp = isvd_iMalloc(4);
   (*streamp)[0] = (seed & 0xff) + 1;
   (*streamp)[1] = ((seed >>  8) & 0xff);
   (*streamp)[2] = ((seed >> 16) & 0xff);
@@ -42,7 +42,7 @@ void isvd_vslNewStream( isvd_VSLStreamStatePtr *streamp, const isvd_int_t seed )
 }
 
 void isvd_vslDeleteStream( isvd_VSLStreamStatePtr *streamp ) {
-  isvd_free(*streamp);
+  isvd_Free(*streamp);
 }
 
 void isvd_vslSkipAheadStream( isvd_VSLStreamStatePtr stream, const isvd_int_t nskip ) {

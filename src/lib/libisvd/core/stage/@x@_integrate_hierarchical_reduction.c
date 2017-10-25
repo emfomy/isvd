@@ -14,7 +14,7 @@
 #include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Hierarchical Reduction Integration (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -75,15 +75,15 @@ void isvd_@x@IntegrateHierarchicalReduction(
   isvd_int_t ldqst = ldyst;
 
   // matrix B
-  @xtype_____@ *bs = isvd_@x@malloc(l * l * (N+1)/2);
+  @xtype_____@ *bs = isvd_@x@Malloc(l * l * (N+1)/2);
   isvd_int_t ldbs = l;
 
   // matrix T
-  @xtype_____@ *tt = isvd_@x@malloc(l * l);
+  @xtype_____@ *tt = isvd_@x@Malloc(l * l);
   isvd_int_t ldtt = l;
 
   // vector s
-  @xtype_____@ *s = isvd_@x@malloc(l);
+  @xtype_____@ *s = isvd_@x@Malloc(l);
 
   @xtype_____@ *tmpt = qt;
   isvd_int_t ldtmpt = ldqt;
@@ -134,8 +134,8 @@ void isvd_@x@IntegrateHierarchicalReduction(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(bs);
-  isvd_free(tt);
-  isvd_free(s);
+  isvd_Free(bs);
+  isvd_Free(tt);
+  isvd_Free(s);
 
 }

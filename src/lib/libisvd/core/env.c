@@ -18,7 +18,7 @@
 ///
 /// \note  This routines initializes the MPI environment.
 ///
-void isvd_init_cpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
+void isvd_Init_cpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
   ISVD_UNUSED(mpi_comm);
   MPI_Init(argcp, argvp);
 }
@@ -29,7 +29,7 @@ void isvd_init_cpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
 ///
 /// \note  This routines initializes the MPI environment.
 ///
-void isvd_finalize_cpu( void ) {
+void isvd_Finalize_cpu( void ) {
   MPI_Finalize();
 }
 
@@ -39,7 +39,7 @@ void isvd_finalize_cpu( void ) {
 ///
 /// \note  This routines displays the MPI environment.
 ///
-void isvd_printEnvironment_cpu( const isvd_MpiComm mpi_comm ) {
+void isvd_PrintEnvironment_cpu( const isvd_MpiComm mpi_comm ) {
   mpi_int_t mpi_size = isvd_getMpiSize(mpi_comm);
   omp_int_t omp_size = isvd_getOmpMaxSize();
 

@@ -52,7 +52,7 @@ endfunction()
 # Set include paths
 include_directories("${CMAKE_CURRENT_CONFIG_DIR}/lib"
                     "${PROJECT_BINARY_DIR}/include/c"
-                    "${PROJECT_BINARY_DIR}/lib"
+                    "${PROJECT_CONFIG_DIR}/src/lib"
              SYSTEM "${PROJECT_SOURCE_DIR}/ext/mmio")
 
 # Set environment variables

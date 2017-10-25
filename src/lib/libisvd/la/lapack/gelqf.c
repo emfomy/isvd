@@ -39,9 +39,9 @@ void isvd_sGelqf(
   isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sgelqf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_s_val_t *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_sMalloc(lwork);
   sgelqf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_dGelqf(
     const isvd_int_t m, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda, isvd_d_val_t *tau
@@ -49,9 +49,9 @@ void isvd_dGelqf(
   isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dgelqf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_d_val_t *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dMalloc(lwork);
   dgelqf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_cGelqf(
     const isvd_int_t m, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda, isvd_c_val_t *tau
@@ -59,9 +59,9 @@ void isvd_cGelqf(
   isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cgelqf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
-  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  isvd_c_val_t *work  = isvd_cMalloc(lwork);
   cgelqf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_zGelqf(
     const isvd_int_t m, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda, isvd_z_val_t *tau
@@ -69,8 +69,8 @@ void isvd_zGelqf(
   isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zgelqf_(&m, &n, a, &lda, tau, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  isvd_z_val_t *work  = isvd_zMalloc(lwork);
   zgelqf_(&m, &n, a, &lda, tau, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 //\}

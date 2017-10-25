@@ -24,7 +24,7 @@ size_t isvd_gpu_memory_limit = 0;
 ///
 /// \note  This routines initializes the MAGMA environment.
 ///
-void isvd_init_gpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
+void isvd_Init_gpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
   ISVD_UNUSED(argcp);
   ISVD_UNUSED(argvp);
   const isvd_int_t mpi_rank = isvd_getMpiRank(mpi_comm);
@@ -41,7 +41,7 @@ void isvd_init_gpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
 ///
 /// \note  This routines initializes the MAGMA environment.
 ///
-void isvd_finalize_gpu( void ) {
+void isvd_Finalize_gpu( void ) {
   magma_finalize();
 }
 
@@ -51,7 +51,7 @@ void isvd_finalize_gpu( void ) {
 ///
 /// \note  This routines displays the MAGMA environment.
 ///
-void isvd_printEnvironment_gpu( const isvd_MpiComm mpi_comm ) {
+void isvd_PrintEnvironment_gpu( const isvd_MpiComm mpi_comm ) {
   ISVD_UNUSED(mpi_comm);
   magma_print_environment();
   printf("\n");

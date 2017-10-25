@@ -16,9 +16,9 @@
 extern "C" {
 #endif  // __cplusplus
 
-void isvd_ifget( FILE *stream, isvd_int_t   *varp );
-void isvd_sfget( FILE *stream, isvd_s_val_t *varp );
-void isvd_dfget( FILE *stream, isvd_d_val_t *varp );
+void isvd_iFget( FILE *stream, isvd_int_t   *varp );
+void isvd_sFget( FILE *stream, isvd_s_val_t *varp );
+void isvd_dFget( FILE *stream, isvd_d_val_t *varp );
 
 #if defined(__cplusplus)
 }

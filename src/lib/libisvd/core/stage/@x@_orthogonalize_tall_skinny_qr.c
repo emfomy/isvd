@@ -15,7 +15,7 @@
 #include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Tall-Skinny QR Orthogonalization (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -81,27 +81,27 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
   // Allocate memory
 
   // matrix Y'
-  @xtype_____@ *yst_ = isvd_@x@malloc(ldyst * mj);
+  @xtype_____@ *yst_ = isvd_@x@Malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
   // matrix Qc'
-  @xtype_____@ *qct = isvd_@x@malloc(Nl * l2);
+  @xtype_____@ *qct = isvd_@x@Malloc(Nl * l2);
   isvd_int_t ldqct = Nl;
 
   // matrix Q+'
-  @xtype_____@ *qpt = isvd_@x@malloc(Nl * l2);
+  @xtype_____@ *qpt = isvd_@x@Malloc(Nl * l2);
   isvd_int_t ldqpt = Nl;
 
   // matrix Pc'
-  @xtype_____@ *pct = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *pct = isvd_@x@Malloc(Nl * l);
   isvd_int_t ldpct = Nl;
 
   // matrix P-'
-  @xtype_____@ *pmt = isvd_@x@malloc(Nl * l);
+  @xtype_____@ *pmt = isvd_@x@Malloc(Nl * l);
   isvd_int_t ldpmt = Nl;
 
   // matrix Tau
-  @xtype_____@ *tau = isvd_@x@malloc(l * N);
+  @xtype_____@ *tau = isvd_@x@Malloc(l * N);
   isvd_int_t ldtau = l;
 
   // matrix R'
@@ -131,7 +131,7 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
 
   // Copy Ric
   if ( P > 1 ) {
-    isvd_@x@memset0(rtj, ldrt * l);
+    isvd_@x@Memset0(rtj, ldrt * l);
     for ( isvd_int_t i = 0; i < N; ++i ) {
       isvd_@x@Lacpy('L', l, l, yst + i*l, ldyst, rtj + i*l, ldrt);
     }
@@ -167,7 +167,7 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
 
     // Copy Ric
     if ( t != P ) {
-      isvd_@x@memset0(rtj, ldrt * l);
+      isvd_@x@Memset0(rtj, ldrt * l);
       for ( isvd_int_t i = 0; i < N; ++i ) {
         isvd_@x@Lacpy('L', l, l, qct + i*l, ldqct, rtj + i*l, ldrt);
       }
@@ -184,7 +184,7 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
         isvd_@x@Gemm('N', 'N', l, l, l, 1.0, qctj + i*l, ldqct, pmt + i*l, ldpmt, 0.0, pct + i*l, ldpct);
       }
     } else {
-      isvd_@x@memcpy(pct, qctj, ldpct*l);
+      isvd_@x@Memcpy(pct, qctj, ldpct*l);
     }
   }
 
@@ -196,17 +196,17 @@ void isvd_@x@OrthogonalizeTallSkinnyQr(
     for ( isvd_int_t i = 0; i < N; ++i ) {
       isvd_@x@Gemm('N', 'N', l, mj, l, 1.0, pct + i*l, ldpct, yst + i*l, ldyst, 0.0, yst_ + i*l, ldyst_);
     }
-    isvd_@x@memcpy(yst, yst_, ldyst*mj);
+    isvd_@x@Memcpy(yst, yst_, ldyst*mj);
   }
 
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(yst_);
-  isvd_free(qct);
-  isvd_free(qpt);
-  isvd_free(pct);
-  isvd_free(pmt);
-  isvd_free(tau);
+  isvd_Free(yst_);
+  isvd_Free(qct);
+  isvd_Free(qpt);
+  isvd_Free(pct);
+  isvd_Free(pmt);
+  isvd_Free(tau);
 
 }

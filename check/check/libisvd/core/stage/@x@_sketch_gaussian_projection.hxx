@@ -38,20 +38,20 @@ static void test( char dista, char ordera ) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &n), 0);
 
-  isvd_val_t *a0 = isvd_@x@malloc(m * n);
+  isvd_val_t *a0 = isvd_@x@Malloc(m * n);
   isvd_int_t lda0;
   if ( ordera_ == 'C' ) {
     lda0 = m;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        isvd_@x@fget(file, &a0[ir+ic*lda0]);
+        isvd_@x@Fget(file, &a0[ir+ic*lda0]);
       }
     }
   } else {
     lda0 = n;
     for ( isvd_int_t ic = 0; ic < n; ++ic ) {
       for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-        isvd_@x@fget(file, &a0[ir*lda0+ic]);
+        isvd_@x@Fget(file, &a0[ir*lda0+ic]);
       }
     }
   }
@@ -73,12 +73,12 @@ static void test( char dista, char ordera ) {
     ASSERT_EQ(m_, m);
   }
 
-  isvd_val_t *yst0 = isvd_@x@malloc(Nl * m);
+  isvd_val_t *yst0 = isvd_@x@Malloc(Nl * m);
   isvd_int_t ldyst0 = Nl;
 
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &yst0[ir*ldyst0+ic]);
+      isvd_@x@Fget(file, &yst0[ir*ldyst0+ic]);
     }
   }
 
@@ -114,7 +114,7 @@ static void test( char dista, char ordera ) {
   }
   isvd_int_t lda = lda0;
 
-  isvd_val_t *yst = isvd_@x@malloc(Nl * mb);
+  isvd_val_t *yst = isvd_@x@Malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
   // Run stage
@@ -122,7 +122,7 @@ static void test( char dista, char ordera ) {
 
 #if defined(ISVD_USE_MKL)
   // Gather results
-  isvd_val_t *yst_ = isvd_@x@malloc(Nl * Pmb);
+  isvd_val_t *yst_ = isvd_@x@Malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
   MPI_Gather(yst, mb*ldyst, MPI_@XTYPE@, yst_, mb*ldyst, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
@@ -136,14 +136,14 @@ static void test( char dista, char ordera ) {
   }
 
   // Deallocate memory
-  isvd_free(yst_);
+  isvd_Free(yst_);
 #else
   ISVD_UNUSED(mpi_rank);
   ISVD_UNUSED(Pmb);
 #endif /// ISVD_USE_MKL
 
   // Deallocate memory
-  isvd_free(a0);
-  isvd_free(yst0);
-  isvd_free(yst);
+  isvd_Free(a0);
+  isvd_Free(yst0);
+  isvd_Free(yst);
 }

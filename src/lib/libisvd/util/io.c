@@ -18,7 +18,7 @@
 /// \param  varp    Pointer to the variable.
 ///
 //\{
-void isvd_ifget( FILE *stream, isvd_int_t *varp ) {
+void isvd_iFget( FILE *stream, isvd_int_t *varp ) {
 #if !defined(ISVD_USE_ILP64)
   isvd_int_t info = fscanf(stream, "%" PRId32, varp);
 #else  // ISVD_USE_ILP64
@@ -28,13 +28,13 @@ void isvd_ifget( FILE *stream, isvd_int_t *varp ) {
   isvd_assert_eq(info, 1);
 }
 
-void isvd_sfget( FILE *stream, isvd_s_val_t *varp ) {
+void isvd_sFget( FILE *stream, isvd_s_val_t *varp ) {
   isvd_int_t info = fscanf(stream, "%f",  varp);
   ISVD_UNUSED(info);
   isvd_assert_eq(info, 1);
 }
 
-void isvd_dfget( FILE *stream, isvd_d_val_t *varp ) {
+void isvd_dFget( FILE *stream, isvd_d_val_t *varp ) {
   isvd_int_t info = fscanf(stream, "%lf", varp);
   ISVD_UNUSED(info);
   isvd_assert_eq(info, 1);

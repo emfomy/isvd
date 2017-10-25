@@ -43,12 +43,12 @@ void isvd_sGeinv(
   isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_int_t *ipiv = isvd_imalloc(n);
-  isvd_s_val_t *work = isvd_smalloc(lwork);
+  isvd_int_t *ipiv = isvd_iMalloc(n);
+  isvd_s_val_t *work = isvd_sMalloc(lwork);
   sgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
   sgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(ipiv);
-  isvd_free(work);
+  isvd_Free(ipiv);
+  isvd_Free(work);
 }
 void isvd_dGeinv(
     const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda
@@ -56,12 +56,12 @@ void isvd_dGeinv(
   isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_int_t *ipiv = isvd_imalloc(n);
-  isvd_d_val_t *work = isvd_dmalloc(lwork);
+  isvd_int_t *ipiv = isvd_iMalloc(n);
+  isvd_d_val_t *work = isvd_dMalloc(lwork);
   dgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
   dgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(ipiv);
-  isvd_free(work);
+  isvd_Free(ipiv);
+  isvd_Free(work);
 }
 void isvd_cGeinv(
     const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda
@@ -69,12 +69,12 @@ void isvd_cGeinv(
   isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  isvd_int_t *ipiv = isvd_imalloc(n);
-  isvd_c_val_t *work  = isvd_cmalloc(lwork);
+  isvd_int_t *ipiv = isvd_iMalloc(n);
+  isvd_c_val_t *work  = isvd_cMalloc(lwork);
   cgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
   cgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(ipiv);
-  isvd_free(work);
+  isvd_Free(ipiv);
+  isvd_Free(work);
 }
 void isvd_zGeinv(
     const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda
@@ -82,10 +82,10 @@ void isvd_zGeinv(
   isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zgetri_(&n, a, &lda, NULL, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  isvd_int_t *ipiv = isvd_imalloc(n);
-  isvd_z_val_t *work  = isvd_zmalloc(lwork);
+  isvd_int_t *ipiv = isvd_iMalloc(n);
+  isvd_z_val_t *work  = isvd_zMalloc(lwork);
   zgetrf_(&n, &n, a, &lda, ipiv, &info);             isvd_assert_pass(info);
   zgetri_(&n, a, &lda, ipiv, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(ipiv);
-  isvd_free(work);
+  isvd_Free(ipiv);
+  isvd_Free(work);
 }

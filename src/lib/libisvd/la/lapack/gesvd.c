@@ -40,9 +40,9 @@ void isvd_sGesvd(
   isvd_s_val_t qwork; isvd_int_t lwork = -1, info;
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_s_val_t *work = isvd_smalloc(lwork);
+  isvd_s_val_t *work = isvd_sMalloc(lwork);
   sgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_dGesvd(
     const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_d_val_t *a, const isvd_int_t lda,
@@ -51,9 +51,9 @@ void isvd_dGesvd(
   isvd_d_val_t qwork; isvd_int_t lwork = -1, info;
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, &info); isvd_assert_pass(info);
   lwork = qwork;
-  isvd_d_val_t *work = isvd_dmalloc(lwork);
+  isvd_d_val_t *work = isvd_dMalloc(lwork);
   dgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, &info);   isvd_assert_pass(info);
-  isvd_free(work);
+  isvd_Free(work);
 }
 void isvd_cGesvd(
     const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_c_val_t *a, const isvd_int_t lda,
@@ -62,11 +62,11 @@ void isvd_cGesvd(
   isvd_c_val_t qwork; isvd_int_t lwork = -1, info;
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = crealf(qwork);
-  isvd_c_val_t *work  = isvd_cmalloc(lwork);
-  isvd_s_val_t *rwork = isvd_smalloc(5*min(m, n));
+  isvd_c_val_t *work  = isvd_cMalloc(lwork);
+  isvd_s_val_t *rwork = isvd_sMalloc(5*min(m, n));
   cgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
-  isvd_free(work);
-  isvd_free(rwork);
+  isvd_Free(work);
+  isvd_Free(rwork);
 }
 void isvd_zGesvd(
     const char jobu, const char jobvt, const isvd_int_t m, const isvd_int_t n, isvd_z_val_t *a, const isvd_int_t lda,
@@ -75,10 +75,10 @@ void isvd_zGesvd(
   isvd_z_val_t qwork; isvd_int_t lwork = -1, info;
   zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, &qwork, &lwork, NULL, &info); isvd_assert_pass(info);
   lwork = creal(qwork);
-  isvd_z_val_t *work  = isvd_zmalloc(lwork);
-  isvd_d_val_t *rwork = isvd_dmalloc(5*min(m, n));
+  isvd_z_val_t *work  = isvd_zMalloc(lwork);
+  isvd_d_val_t *rwork = isvd_dMalloc(5*min(m, n));
   zgesvd_(&jobu, &jobvt, &m, &n, a, &lda, s, u, &ldu, v, &ldvt, work, &lwork, rwork, &info);  isvd_assert_pass(info);
-  isvd_free(work);
-  isvd_free(rwork);
+  isvd_Free(work);
+  isvd_Free(rwork);
 }
 //\}

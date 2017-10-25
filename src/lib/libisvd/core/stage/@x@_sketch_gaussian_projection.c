@@ -14,7 +14,7 @@
 #include <libisvd/util/arg.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Gaussian Projection Sketching (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".

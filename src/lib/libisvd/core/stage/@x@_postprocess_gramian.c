@@ -15,7 +15,7 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Gramian Postprocessing (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -122,11 +122,11 @@ void isvd_@x@PostprocessGramian(
   // Allocate memory
 
   // matrix Z'
-  @xtype_____@ *zt = isvd_@x@malloc(l * nb);
+  @xtype_____@ *zt = isvd_@x@Malloc(l * nb);
   isvd_int_t ldzt = l;
 
   // matrix W
-  @xtype_____@ *w = isvd_@x@malloc(l * l);
+  @xtype_____@ *w = isvd_@x@Malloc(l * l);
   isvd_int_t ldw = l;
 
   // ====================================================================================================================== //
@@ -187,7 +187,7 @@ void isvd_@x@PostprocessGramian(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(zt);
-  isvd_free(w);
+  isvd_Free(zt);
+  isvd_Free(w);
 
 }
