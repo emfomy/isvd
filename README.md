@@ -1,7 +1,7 @@
-# iSVD
-Integrated Singular Value Decomposition (iSVD)
+# Integrated Singular Value Decomposition (iSVD)
 
 # Information
+This library is a C implementation of the Integrated Singular Value Decomposition (iSVD), which is an parallel algorithm for computing low-rank approximate singular value decomposition of large size matrices.
 
 ## Git
 * https://github.com/emfomy/isvd
@@ -88,7 +88,7 @@ The following table are the main Makefile rules
 # Usage
 
 * Define `ISVD_USE_ILP64` before include `isvd.h` to use 64-bit integer.
-* All 64bit libraries and executables are named with suffix "`_64`".
+* All 64bit libraries and executables are named with suffix `_64`.
 * The header files are located in `build/include`
 * The libraries are located in `build/lib`
 
