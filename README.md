@@ -1,6 +1,7 @@
 # Integrated Singular Value Decomposition (iSVD)
 
 # Information
+
 This library is a C implementation of the Integrated Singular Value Decomposition (iSVD), which is an parallel algorithm for computing low-rank approximate singular value decomposition of large size matrices.
 
 ## Git
@@ -17,6 +18,7 @@ This library is a C implementation of the Integrated Singular Value Decompositio
 * \ref tutorial_main
 
 # Requirements
+
 * [CMake](https://cmake.org) 2.8.11+ (CMake 3.0+ recommended).
 * C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.4+ recommended).
 * [BLAS](http://www.netlib.org/blas) & [LAPACK](http://www.netlib.org/lapack) library (Used for multi-core parallelization).
@@ -149,6 +151,7 @@ Please link exactly one library for all categories.
 * Note that the `tmp` folder will be deleted after `make clean`.
 
 # Reference
+
 * [Ting-Li Chen, Dawei D. Chang, Su-Yun Huang, Hung Chen, Chienyao Lin, Weichung Wang, “Integrating Multiple Random Sketches for Singular Value Decomposition”](https://arxiv.org/abs/1608.08285)
 * [Mu Yang, “Highly Scalable Parallelism of Integrated Randomized Singular Value Decomposition with Big Data Applications”](http://doi.org/10.6342/NTU201702960)
 

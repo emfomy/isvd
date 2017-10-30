@@ -93,7 +93,7 @@ message(STATUS "")
 # Display libraries
 
 if(ISVD_USE_PACKAGE AND ISVD_OMP)
-  disp("Use OpenMP:                     " "${OpenMP_C_FLAGS} ${OpenMP_LIBRARIES}")
+  disp("Use OpenMP:                     " "${OpenMP_LIBRARIES}")
 else()
   disp("Use OpenMP:                     " "OFF")
 endif()

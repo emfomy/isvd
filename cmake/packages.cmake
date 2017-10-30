@@ -40,22 +40,35 @@ if(ISVD_USE_PACKAGE)
 endif()
 
 # Set target
+
+# Set target
 find_library(
   M_LIBRARY
   NAMES m
   DOC "libm"
 )
 if(NOT M_LIBRARY)
-  set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
+  CHECK_C_COMPILER_FLAG("-lm" M_LIBRARY_DETECTED)
+  if(M_LIBRARY_DETECTED)
+    set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
+  endif()
 endif()
+
 find_library(
   PTHREAD_LIBRARY
   NAMES pthread
   DOC "libpthread"
 )
 if(NOT PTHREAD_LIBRARY)
-  set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
+  CHECK_C_COMPILER_FLAG("-lpthread" PTHREAD_LIBRARY_DETECTED)
+  if(PTHREAD_LIBRARY_DETECTED)
+    set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
+  endif()
 endif()
+
+mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
+set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
+
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
 set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
 

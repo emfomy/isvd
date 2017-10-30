@@ -11,11 +11,14 @@ if(OpenMP STREQUAL "GOMP")
   find_library(
     GOMP_LIBRARY
     NAMES gomp
-    DOC "libgomp"
+    DOC "The GNU thread library."
   )
 
   if(NOT GOMP_LIBRARY)
-    set(GOMP_LIBRARY "-lgomp" CACHE STRING "The GNU thread library." FORCE)
+    CHECK_C_COMPILER_FLAG("-lgomp" GOMP_LIBRARY_DETECTED)
+    if(GOMP_LIBRARY_DETECTED)
+      set(GOMP_LIBRARY "-lgomp" CACHE STRING "The GNU thread library." FORCE)
+    endif()
   endif()
 
   include(FindPackageHandleStandardArgs)
