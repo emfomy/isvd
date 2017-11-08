@@ -33,7 +33,7 @@ if(ISVD_USE_PACKAGE)
       message(
         FATAL_ERROR
         "The compiler ${CMAKE_CXX_COMPILER} does not support ${cxxflag}. "
-        "Please use a different CXX compiler."
+        "Please use a different C++ compiler."
       )
     endif()
   endforeach()
