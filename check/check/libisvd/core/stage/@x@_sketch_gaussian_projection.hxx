@@ -7,7 +7,7 @@
 #define YS_PATH ISVD_DATA_PATH "/ys_gp.mtx"
 
 #define serr 1e-1
-#define derr 1e-6
+#define derr 1e-8
 
 typedef @xtype_____@ isvd_val_t;
 
