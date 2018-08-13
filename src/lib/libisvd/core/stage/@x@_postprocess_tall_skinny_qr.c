@@ -24,14 +24,14 @@
 /// \param[in]   retv, retc  The return values and its length. (not using)
 /// <hr>
 /// \param[in]   dista       The parallel distribution of 𝑨. <br>
-///                          `'C'`: block-column parallelism. <br>
-///                          `'R'`: block-row parallelism.
+///                          \c 'C': block-column parallelism. <br>
+///                          \c 'R': block-row parallelism.
 /// \param[in]   ordera      The storage ordering of 𝑨. <br>
-///                          `'C'`: column-major ordering. <br>
-///                          `'R'`: row-major ordering.
+///                          \c 'C': column-major ordering. <br>
+///                          \c 'R': row-major ordering.
 /// \param[in]   a, lda      The column/row-block 𝑨 (\f$m \times n^{(j)}\f$) and its leading dimension. <br>
-///                          \b dista = `'C'`: the size must be \f$m \times n^{(j)}\f$. <br>
-///                          \b dista = `'R'`: the size must be \f$m^{(j)} \times n\f$.
+///                          \b dista = \c 'C': the size must be \f$m \times n^{(j)}\f$. <br>
+///                          \b dista = \c 'R': the size must be \f$m^{(j)} \times n\f$.
 /// \param[in]   qt, ldqt    The row-block 𝑸 (\f$ m_b \times l \f$, row-major) and its leading dimension.
 /// \param[in]   s           The vector 𝝈 (\f$k \times 1\f$).
 /// \param[in]   ut, ldut    The matrix 𝑼 (row-major) and its leading dimension. <br>

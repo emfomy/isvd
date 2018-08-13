@@ -30,6 +30,9 @@ typedef struct {
   /// \f$P\f$ The MPI size.
   const mpi_int_t mpi_size;
 
+  /// \f$P\f$ The MPI root.
+  const mpi_int_t mpi_root;
+
   /// \f$j\f$ The MPI rank.
   const mpi_int_t mpi_rank;
 

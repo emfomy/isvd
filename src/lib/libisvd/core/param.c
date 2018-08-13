@@ -12,13 +12,13 @@
 #include <isvd/util/mpi.h>
 
 isvd_Param isvd_createParam(
-    const isvd_int_t nrow,
-    const isvd_int_t ncol,
-    const isvd_int_t rank,
-    const isvd_int_t over_rank,
-    const isvd_int_t num_sketch,
-    const mpi_int_t  mpi_root,
-    const isvd_MpiComm   mpi_comm
+    const isvd_int_t   nrow,
+    const isvd_int_t   ncol,
+    const isvd_int_t   rank,
+    const isvd_int_t   over_rank,
+    const isvd_int_t   num_sketch,
+    const mpi_int_t    mpi_root,
+    const isvd_MpiComm mpi_comm
 ) {
 
   mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
@@ -58,6 +58,7 @@ isvd_Param isvd_createParam(
   isvd_Param param = {
     .mpi_comm         = mpi_comm,
     .mpi_size         = mpi_size,
+    .mpi_root         = mpi_root,
     .mpi_rank         = mpi_rank,
     .nrow             = args.nrow_,
     .ncol             = args.ncol_,
