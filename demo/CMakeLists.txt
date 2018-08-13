@@ -6,11 +6,12 @@ if(NOT ISVD_BUILD_DEMO)
 endif()
 
 # Macro
-macro(SET_TARGET name files)
+macro(SET_TARGET name lang files)
   set(target "isvd_${name}")
   add_executable(${target} EXCLUDE_FROM_ALL ${files})
 
   isvd_set_target(${target})
+  isvd_set_target_mpi(${target} ${lang})
 
   # Add run rule
   add_custom_target(
@@ -26,10 +27,10 @@ endmacro()
 include_directories("${PROJECT_BINARY_DIR}/include/c")
 
 # C demo
-set_target(cdemo cdemo.c ${PROJECT_SOURCE_DIR}/data/a.mtx /dev/null /dev/null /dev/null)
+set_target(cdemo C cdemo.c ${PROJECT_SOURCE_DIR}/data/a.mtx /dev/null /dev/null /dev/null)
 target_link_libraries(isvd_cdemo isvd extmmio)
 target_include_directories(isvd_cdemo ${SYSTEM} PRIVATE "${PROJECT_SOURCE_DIR}/ext/mmio")
 
 # C test
-set_target(ctest ctest.c)
+set_target(ctest C ctest.c)
 target_link_libraries(isvd_ctest isvd)

@@ -3,7 +3,7 @@
 /// \brief      The definitions.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  Copyright (c) 2017 Mu Yang. All rights reserved.
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
 /// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
@@ -92,7 +92,12 @@ typedef int omp_int_t;
 /// \ingroup  c_core_module
 /// \brief  The MPI communicator type.
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-typedef int isvd_MpiComm;
+#if !defined(__cplusplus)
+typedef void* isvd_MpiComm;
+#else  // __cplusplus
+#include <mpi.h>
+typedef MPI_Comm isvd_MpiComm;
+#endif  // __cplusplus
 #else  // DOXYGEN_SHOULD_SKIP_THIS)
 typedef MPI_Comm isvd_MpiComm;
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
