@@ -3,7 +3,8 @@
 /// \brief      The core header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_CORE_H_
@@ -17,27 +18,15 @@
 #include <isvd/core/d_stage.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_s_driver_module  Real Single Driver
+/// \defgroup  c_core_driver_module  Driver Routines
 /// \ingroup   c_core_module
-/// \brief     The Driver Routines with Real Single Precision
+/// \brief     The Driver Routines
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_d_driver_module  Real Double Driver
+/// \defgroup  c_core_stage_module  Core Stage Routines
 /// \ingroup   c_core_module
-/// \brief     The Driver Routines with Real Double Precision
-///
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_s_stage_module  Real Single Stage
-/// \ingroup   c_core_module
-/// \brief     The Stage Routines with Real Single Precision
-///
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_core_d_stage_module  Real Double Stage
-/// \ingroup   c_core_module
-/// \brief     The Stage Routines with Real Double Precision
+/// \brief     The Stage Routines
 ///
 
 #endif  // ISVD_CORE_H_

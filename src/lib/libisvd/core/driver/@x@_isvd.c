@@ -3,7 +3,8 @@
 /// \brief      The iSVD driver (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #include <isvd/core/@x@_driver.h>
@@ -14,12 +15,14 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_driver_module
+/// \ingroup  c_core_driver_module
 /// \brief  General iSVD driver (@xname@ precision).
 ///
+/// \param[in]   param         The \ref isvd_Param "parameters".
+/// <hr>
 /// \param[in]   alg_s         The selection of sketching algorithm. <br>
 ///                            `"GP"`:     \ref isvd_@x@SketchGaussianProjection "Gaussian Projection sketching". <br>
-///                            `"GP_gpu"`: \ref isvd_@x@SketchGaussianProjection
+///                            `"GP_gpu"`: \ref isvd_@x@SketchGaussianProjection_gpu
 ///                                               "Gaussian Projection sketching with GPU support".
 /// \param[in]   alg_o         The selection of orthogonalization algorithm. <br>
 ///                            `"TS"`:     \ref isvd_@x@OrthogonalizeTallSkinnyQr "Tall Skinny qr orthogonalization". <br>
@@ -32,16 +35,10 @@
 ///                            `"TS"`:     \ref isvd_@x@PostprocessTallSkinnyQr "Tall Skinny qr postprocessing". <br>
 ///                            `"GR"`:     \ref isvd_@x@PostprocessGramian "GRamian postprocessing". <br>
 ///                            `"SY"`:     \ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing". <br>
-///                            `"TS_gpu"`: \ref isvd_@x@PostprocessTallSkinnyQr
+///                            `"TS_gpu"`: \ref isvd_@x@PostprocessTallSkinnyQr_gpu
 ///                                               "Tall Skinny qr postprocessing with GPU support". <br>
-///                            `"GR_gpu"`: \ref isvd_@x@PostprocessGramian "GRamian postprocessing with GPU support". <br>
-///                            `"SY_gpu"`: \ref isvd_@x@PostprocessSymmetric "SYmmetric postprocessing with GPU support".
-/// <hr>
-/// \param[in]   m             The number of rows of the matrix 𝑨.
-/// \param[in]   n             The number of columns of the matrix 𝑨.
-/// \param[in]   k             The desired rank of approximate SVD.
-/// \param[in]   p             The oversampling dimension.
-/// \param[in]   N             The number of random sketches.
+///                            `"GR_gpu"`: \ref isvd_@x@PostprocessGramian_gpu "GRamian postprocessing with GPU support". <br>
+///                            `"SY_gpu"`: \ref isvd_@x@PostprocessSymmetric_gpu "SYmmetric postprocessing with GPU support".
 /// <hr>
 /// \param[in]   argv, argc    The arguments and their length of each stage. (ignored if \b argv set to `NULL`) <br>
 ///                            \b argv[0], argc[0]: The sketching arguments and their length. <br>
@@ -56,21 +53,23 @@
 /// \param[in]   stream        The stream for displaying informations. (disabled if set to `NULL`)
 /// <hr>
 /// \param[in]   dista         The parallel distribution of 𝑨. <br>
-///                            `'C'`: block-column parallelism. <br>
-///                            `'R'`: block-row parallelism.
+///                            \c 'C': block-column parallelism. <br>
+///                            \c 'R': block-row parallelism.
 /// \param[in]   ordera        The storage ordering of 𝑨. <br>
-///                            `'C'`: column-major ordering. <br>
-///                            `'R'`: row-major ordering.
+///                            \c 'C': column-major ordering. <br>
+///                            \c 'R': row-major ordering.
 /// \param[in]   a, lda        The column/row-block 𝑨 (\f$m \times n^{(j)}\f$) and its leading dimension. <br>
-///                            \b dista = `'C'`: the size must be \f$m \times n^{(j)}\f$. <br>
-///                            \b dista = `'R'`: the size must be \f$m^{(j)} \times n\f$.
+///                            \b dista = \c 'C': the size must be \f$m \times n^{(j)}\f$. <br>
+///                            \b dista = \c 'R': the size must be \f$m^{(j)} \times n\f$.
 /// \param[in]   s             The vector 𝝈 (\f$k \times 1\f$).
 /// \param[in]   ut, ldut      The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                            \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
+///                            \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$ in the root process,
+///                                             and be \f$m_b \times k\f$ in other processes. \b ldut must be \f$l\f$. <br>
 ///                            \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                            \b ut_root < -1: not referenced.
 /// \param[in]   vt, ldvt      The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                            \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                            \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$ in the root process,
+///                                             and be \f$n_b \times k\f$ in other processes. \b ldvt must be \f$l\f$. <br>
 ///                            \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
 ///                            \b vt_root < -1: not referenced.
 /// <hr>
@@ -83,8 +82,6 @@
 ///                            \b vt_root ≥  0: gather 𝑽 to the MPI process of ID \b vt_root. <br>
 ///                            \b vt_root = -1: compute row-block 𝑽. <br>
 ///                            \b vt_root < -1: does not compute 𝑽.
-/// \param[in]   mpi_root       The MPI process ID containing the parameters and random seed.
-/// \param[in]   mpi_comm      The MPI communicator.
 /// <hr>
 /// \param[out]  retv          Replaced by return values of each stage. (ignored if \b retv set to `NULL`) <br>
 ///                            \b retv[0]: The sketching return values. <br>
@@ -107,21 +104,17 @@
 /// \see isvd_Param, \ref tutorial_core_notation
 ///
 void isvd_@x@Isvd(
+    const isvd_Param    param,
     const char         *alg_s,
     const char         *alg_o,
     const char         *alg_i,
     const char         *alg_p,
-    const isvd_int_t    m,
-    const isvd_int_t    n,
-    const isvd_int_t    k,
-    const isvd_int_t    p,
-    const isvd_int_t    N,
     const @xtype_____@ *argv[4],
     const isvd_int_t    argc[4],
           @xtype_____@ *retv[4],
     const isvd_int_t    retc[4],
           double        time[4],
-          FILE        *stream,
+          FILE         *stream,
     const char          dista,
     const char          ordera,
     const @xtype_____@ *a,
@@ -133,12 +126,8 @@ void isvd_@x@Isvd(
     const isvd_int_t    ldvt,
     const isvd_int_t    seed,
     const mpi_int_t     ut_root,
-    const mpi_int_t     vt_root,
-    const mpi_int_t     mpi_root,
-    const isvd_MpiComm  mpi_comm
+    const mpi_int_t     vt_root
 ) {
-
-  const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
 
   // ====================================================================================================================== //
   // Check arguments
@@ -160,13 +149,14 @@ void isvd_@x@Isvd(
   isvd_fun_t fun_p = isvd_arg2@x@AlgP(alg_p_);
 
   // ====================================================================================================================== //
-  // Create parameters
-
-  const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, mpi_comm);
+  // Get parameters
 
   const isvd_int_t mb = param.nrow_each;
   const isvd_int_t l  = param.dim_sketch;
   const isvd_int_t Nl = param.dim_sketch_total;
+
+  const mpi_int_t mpi_root = param.mpi_root;
+  const mpi_int_t mpi_rank = param.mpi_rank;
 
   // ====================================================================================================================== //
   // Gets arguments and return values of stages
@@ -231,48 +221,48 @@ void isvd_@x@Isvd(
   // Print arguments
 
   if ( stream != NULL && mpi_rank == mpi_root ) {
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameS(alg_s_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameO(alg_o_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameI(alg_i_));
-    fprintf(stream, "Using %s\n", isvd_arg2@x@AlgNameP(alg_p_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameS(alg_s_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameO(alg_o_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameI(alg_i_));
+    fprintf(stream, "Using %s.\n", isvd_arg2@x@AlgNameP(alg_p_));
     fprintf(stream, "\n");
   }
 
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype_____@ *yst = isvd_@x@malloc(Nl * mb);
+  @xtype_____@ *yst = isvd_@x@Malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
 
-  @xtype_____@ *qt = isvd_@x@malloc(l * mb);
+  @xtype_____@ *qt = isvd_@x@Malloc(l * mb);
   isvd_int_t ldqt = l;
 
   // ====================================================================================================================== //
   // Run
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ...................... "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Sketching ..................... "); fflush(stream); }
   double time_s = MPI_Wtime();
   fun_s(param, argv_s, argc_s, retv_s, retc_s, dista, ordera, a, lda, yst, ldyst, seed, mpi_root);
   time_s = MPI_Wtime() - time_s;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ................ "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Orthogonalizing ............... "); fflush(stream); }
   double time_i = MPI_Wtime();
   fun_o(param, argv_o, argc_o, retv_o, retc_o, yst, ldyst);
   time_i = MPI_Wtime() - time_i;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Integrating .................... "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Integrating ................... "); fflush(stream); }
   double time_o = MPI_Wtime();
   fun_i(param, argv_i, argc_i, retv_i, retc_i, yst, ldyst, qt, ldqt);
   time_o = MPI_Wtime() - time_o;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................. "); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "Postprocessing ................ "); fflush(stream); }
   double time_p = MPI_Wtime();
   fun_p(param, argv_p, argc_p, retv_p, retc_p, dista, ordera, a, lda, qt, ldqt, s, ut, ldut, vt, ldvt, ut_root, vt_root);
   time_p = MPI_Wtime() - time_p;
-  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done\n"); fflush(stream); }
+  if ( stream != NULL && mpi_rank == mpi_root ) { fprintf(stream, "done.\n"); fflush(stream); }
 
   // ====================================================================================================================== //
   // Gets executing times
@@ -286,7 +276,7 @@ void isvd_@x@Isvd(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(yst);
-  isvd_free(qt);
+  isvd_Free(yst);
+  isvd_Free(qt);
 
 }

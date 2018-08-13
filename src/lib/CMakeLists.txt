@@ -2,9 +2,11 @@
 
 isvd_set_config_var()
 
+# Set 'lib' folder
+set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${PROJECT_BINARY_DIR}/lib")
+
 # Shared library
-SET(BUILD_SHARED_LIBS ON)
-SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_FOLDER}")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 
 # Macro
@@ -13,12 +15,12 @@ macro(SET_TARGET target files)
   add_library(${target} SHARED ${files})
   isvd_set_target(${target})
   set_property(TARGET ${target} PROPERTY VERSION ${ISVD_VERSION})
-  set_property(TARGET ${target} PROPERTY LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_CONFIG_DIR}")
+  set_property(TARGET ${target} PROPERTY LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
   install(TARGETS ${target} LIBRARY DESTINATION ${LIB_FOLDER})
 endmacro()
 
 # Set include paths
-include_directories("${CMAKE_CURRENT_CONFIG_DIR}/../include/c"
+include_directories("${PROJECT_BINARY_DIR}/include/c"
                     "${CMAKE_CURRENT_CONFIG_DIR}")
 
 # Break
@@ -29,6 +31,7 @@ endif()
 # libisvd
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/null.c" "")
 set_target(isvd "${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/null.c")
+set_property(TARGET isvd PROPERTY COMPILE_FLAGS "-Wno-pedantic")
 # set_property(TARGET isvd PROPERTY LINKER_LANGUAGE C)
 
 # libisvd_core

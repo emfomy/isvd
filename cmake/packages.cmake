@@ -1,11 +1,11 @@
-if(ISVD_BUILD_BIN)
+if(ISVD_USE_PACKAGE)
   set(findtype REQUIRED)
 else()
   set(findtype "")
 endif()
 
 # Check compiler support
-if(ISVD_BUILD_BIN)
+if(ISVD_USE_PACKAGE)
   string(REGEX REPLACE " " ";" cflags "${CMAKE_C_FLAGS}")
   include(CheckCCompilerFlag)
   foreach(cflag ${cflags})
@@ -33,11 +33,13 @@ if(ISVD_BUILD_BIN)
       message(
         FATAL_ERROR
         "The compiler ${CMAKE_CXX_COMPILER} does not support ${cxxflag}. "
-        "Please use a different CXX compiler."
+        "Please use a different C++ compiler."
       )
     endif()
   endforeach()
 endif()
+
+# Set target
 
 # Set target
 find_library(
@@ -46,21 +48,33 @@ find_library(
   DOC "libm"
 )
 if(NOT M_LIBRARY)
-  set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
+  CHECK_C_COMPILER_FLAG("-lm" M_LIBRARY_DETECTED)
+  if(M_LIBRARY_DETECTED)
+    set(M_LIBRARY "-lm" CACHE STRING "libm" FORCE)
+  endif()
 endif()
+
 find_library(
   PTHREAD_LIBRARY
   NAMES pthread
   DOC "libpthread"
 )
 if(NOT PTHREAD_LIBRARY)
-  set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
+  CHECK_C_COMPILER_FLAG("-lpthread" PTHREAD_LIBRARY_DETECTED)
+  if(PTHREAD_LIBRARY_DETECTED)
+    set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
+  endif()
 endif()
+
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
+set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
+
+mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
+set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
 
 function(ISVD_SET_TARGET target)
   set_property(TARGET ${target} PROPERTY OUTPUT_NAME "${target}${BIN_SUFFIX}")
-  target_link_libraries(${target} ${M_LIBRARY} ${PTHREAD_LIBRARY})
+  target_link_libraries(${target} ${DEFAULT_LIBRARY})
   set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--no-as-needed")
 endfunction()
 
@@ -68,9 +82,9 @@ endfunction()
 if(ISVD_USE_MKL)
   find_package(MKL ${findtype})
   function(ISVD_SET_TARGET_BLAS target)
-    target_include_directories(${target} ${SYSTEM} PUBLIC ${MKL_INCLUDES})
+    target_include_directories(${target} ${SYSTEM} PRIVATE ${MKL_INCLUDES})
     target_link_libraries(${target} ${MKL_LIBRARIES})
-    target_compile_definitions(${target} PUBLIC "ISVD_USE_MKL")
+    target_compile_definitions(${target} PRIVATE "ISVD_USE_MKL")
     set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MKL_FLAGS}")
   endfunction()
 endif()
@@ -112,10 +126,10 @@ endif()
 # MPI
 find_package(MPI ${findtype})
 function(ISVD_SET_TARGET_MPI target lang)
-  target_include_directories(${target} ${SYSTEM} PUBLIC "${MPI_${lang}_INCLUDE_PATH}")
+  target_include_directories(${target} ${SYSTEM} PRIVATE "${MPI_${lang}_INCLUDE_PATH}")
   target_link_libraries(${target} ${MPI_${lang}_LIBRARIES})
-  target_compile_definitions(${target} PUBLIC "OMPI_SKIP_MPICXX")
-  target_compile_definitions(${target} PUBLIC "MPICH_SKIP_MPICXX")
+  target_compile_definitions(${target} PRIVATE "OMPI_SKIP_MPICXX")
+  target_compile_definitions(${target} PRIVATE "MPICH_SKIP_MPICXX")
   set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MPI_${lang}_COMPILE_FLAGS}")
   set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS    " ${MPI_${lang}_LINK_FLAGS}")
 endfunction()
@@ -137,9 +151,9 @@ if(ISVD_USE_GPU)
   unset(CUDA_TOOLKIT_ROOT_DIR)
 
   function(ISVD_SET_TARGET_GPU target)
-    target_include_directories(${target} ${SYSTEM} PUBLIC ${MAGMA_INCLUDES} ${CUDA_INCLUDE_DIRS})
+    target_include_directories(${target} ${SYSTEM} PRIVATE ${MAGMA_INCLUDES} ${CUDA_INCLUDE_DIRS})
     target_link_libraries(${target} ${MAGMA_SPARSE_LIBRARY} ${MAGMA_LIBRARY} ${CUDA_cusparse_LIBRARY} ${CUDA_cublas_LIBRARY} ${CUDA_CUDART_LIBRARY})
-    target_compile_definitions(${target} PUBLIC "ISVD_USE_GPU")
+    target_compile_definitions(${target} PRIVATE "ISVD_USE_GPU")
   endfunction()
 else()
   function(ISVD_SET_TARGET_GPU target)
@@ -151,9 +165,9 @@ if(ISVD_BUILD_TEST)
   find_package(GTest 1.8 REQUIRED)
 
   function(ISVD_SET_TARGET_GTEST target)
-    target_include_directories(${target} ${SYSTEM} PUBLIC ${GTEST_INCLUDE_DIRS})
+    target_include_directories(${target} ${SYSTEM} PRIVATE ${GTEST_INCLUDE_DIRS})
     target_link_libraries(${target} ${GTEST_BOTH_LIBRARIES})
-    target_compile_definitions(${target} PUBLIC "ISVD_USE_GTEST")
+    target_compile_definitions(${target} PRIVATE "ISVD_USE_GTEST")
     set_property(TARGET ${target} APPEND_STRING PROPERTY COMPILE_FLAGS " ${MPI_COMPILE_FLAGS}")
     set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS    " ${MPI_LINK_FLAGS}")
   endfunction()

@@ -1,5 +1,5 @@
 # Set install prefix
-set(CMAKE_INSTALL_PREFIX "/opt/isvd-${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "Install path prefix, prepended onto install directories.")
+set(CMAKE_INSTALL_PREFIX "/opt/isvd/${ISVD_MAJOR_VERSION}.${ISVD_MINOR_VERSION}" CACHE PATH "Install path prefix, prepended onto install directories.")
 
 # Set build type
 set(CMAKE_BUILD_TYPE "Simple" CACHE STRING "Choose the type of build, options are: Simple Debug Release RelWithDebInfo MinSizeRel.")

@@ -3,7 +3,8 @@
 /// \brief      The GPU Postprocessing utilities (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef LIBISVD_GPU_STAGE_@X@_POSTPROCESS_GPU_H_
@@ -92,7 +93,7 @@ static void projectBlockCol(
   if ( use_ut ) {
     qt_ = ut;
   } else {
-    qt_ = isvd_@x@malloc(l * Pmb);
+    qt_ = isvd_@x@Malloc(l * Pmb);
   }
   isvd_int_t ldqt_ = l;
 
@@ -111,7 +112,7 @@ static void projectBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Allgather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, param.mpi_comm);
+  isvd_assert_pass(MPI_Allgather(qt, mb*ldqt, MPI_@XTYPE@, qt_, mb*ldqt, MPI_@XTYPE@, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Send data
@@ -148,7 +149,7 @@ static void projectBlockCol(
   // Deallocate memory
 
   if ( !use_ut ) {
-    isvd_free(qt_);
+    isvd_Free(qt_);
   }
 
   magma_free(a_gpu);
@@ -224,7 +225,7 @@ static void projectBlockRow(
   if ( use_vt ) {
     zt_ = vt;
   } else {
-    zt_ = isvd_@x@malloc(l * Pnb);
+    zt_ = isvd_@x@Malloc(l * Pnb);
   }
   isvd_int_t ldzt_ = l;
 
@@ -274,13 +275,13 @@ static void projectBlockRow(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Reduce_scatter_block(zt_, zt, nb*ldzt, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Deallocate memory
 
   if ( !use_vt ) {
-    isvd_free(zt_);
+    isvd_Free(zt_);
   }
 
   // magma_free(a_gpu);

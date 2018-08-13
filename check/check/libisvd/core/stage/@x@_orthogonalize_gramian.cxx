@@ -32,11 +32,11 @@ TEST(@XStr@_GramianOrthogonalization, Test) {
   EXPECT_TRUE(mm_is_general(matcode)) << mm_typecode_to_str(matcode);
   ASSERT_EQ(mm_read_mtx_array_size(file, &m, &Nl), 0);
 
-  isvd_val_t *yst0 = isvd_@x@malloc(Nl * m);
+  isvd_val_t *yst0 = isvd_@x@Malloc(Nl * m);
   isvd_int_t ldyst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &yst0[ir*ldyst0+ic]);
+      isvd_@x@Fget(file, &yst0[ir*ldyst0+ic]);
     }
   }
 
@@ -58,11 +58,11 @@ TEST(@XStr@_GramianOrthogonalization, Test) {
     ASSERT_EQ(Nl_, Nl);
   }
 
-  isvd_val_t *qst0 = isvd_@x@malloc(Nl * m);
+  isvd_val_t *qst0 = isvd_@x@Malloc(Nl * m);
   isvd_int_t ldqst0 = Nl;
   for ( isvd_int_t ic = 0; ic < Nl; ++ic ) {
     for ( isvd_int_t ir = 0; ir < m; ++ir ) {
-      isvd_@x@fget(file, &qst0[ir*ldqst0+ic]);
+      isvd_@x@Fget(file, &qst0[ir*ldqst0+ic]);
     }
   }
 
@@ -85,7 +85,7 @@ TEST(@XStr@_GramianOrthogonalization, Test) {
   const isvd_int_t Pmb = param.nrow_total;
 
   // Create matrices
-  isvd_val_t *yst = isvd_@x@malloc(Nl * mb);
+  isvd_val_t *yst = isvd_@x@Malloc(Nl * mb);
   isvd_int_t ldyst = Nl;
   isvd_@x@Omatcopy('N', Nl, mj, 1.0, yst0 + param.rowidxbegin * ldyst0, ldyst0, yst, ldyst);
 
@@ -93,15 +93,15 @@ TEST(@XStr@_GramianOrthogonalization, Test) {
   isvd_@x@OrthogonalizeGramian(param, NULL, 0, NULL, 0, yst, ldyst);
 
   // Gather results
-  isvd_val_t *qst_ = isvd_@x@malloc(Pmb * ldyst);
+  isvd_val_t *qst_ = isvd_@x@Malloc(Pmb * ldyst);
   isvd_int_t ldqst_ = ldyst;
   MPI_Gather(yst, mb*ldyst, MPI_@XTYPE@, qst_, mb*ldyst, MPI_@XTYPE@, mpi_root, MPI_COMM_WORLD);
 
   if ( mpi_rank == mpi_root ) {
     // Compute space
-    isvd_val_t *qqt_ = isvd_@x@malloc(m * m);
+    isvd_val_t *qqt_ = isvd_@x@Malloc(m * m);
     isvd_int_t ldqqt_ = m;
-    isvd_val_t *qqt0 = isvd_@x@malloc(m * m);
+    isvd_val_t *qqt0 = isvd_@x@Malloc(m * m);
     isvd_int_t ldqqt0 = m;
     isvd_@x@Syrk('U', 'T', m, Nl, 1.0, qst_, ldqst_, 0.0, qqt_, ldqqt_);
     isvd_@x@Syrk('U', 'T', m, Nl, 1.0, qst0, ldqst0, 0.0, qqt0, ldqqt0);
@@ -114,13 +114,13 @@ TEST(@XStr@_GramianOrthogonalization, Test) {
     }
 
     // Deallocate memory
-    isvd_free(qqt_);
-    isvd_free(qqt0);
+    isvd_Free(qqt_);
+    isvd_Free(qqt0);
   }
 
   // Deallocate memory
-  isvd_free(yst0);
-  isvd_free(qst0);
-  isvd_free(yst);
-  isvd_free(qst_);
+  isvd_Free(yst0);
+  isvd_Free(qst0);
+  isvd_Free(yst);
+  isvd_Free(qst_);
 }

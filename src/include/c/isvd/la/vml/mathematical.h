@@ -3,7 +3,8 @@
 /// \brief      The VML mathematical routines.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_LA_VML_MATHEMATICAL_H_

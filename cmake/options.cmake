@@ -23,7 +23,7 @@ endif()
 set(ISVD_BLAS "BLAS" CACHE STRING "Selected BLAS/LAPACK library. [BLAS/MKL]")
 set_property(CACHE ISVD_BLAS PROPERTY STRINGS "BLAS;MKL")
 if(NOT ISVD_BLAS STREQUAL "BLAS" AND NOT ISVD_BLAS STREQUAL "MKL" )
-  message(FATAL_ERROR "BLAS must be either BLAS or MKL")
+  message(FATAL_ERROR "ISVD_BLAS must be either BLAS or MKL")
 endif()
 
 set(ISVD_OMP "OFF" CACHE STRING "Selected OpenMP library. [OFF/GOMP/IOMP]")
@@ -41,9 +41,9 @@ set(OMP_THRDS 4 CACHE STRING "The number of OpenMP threads used in demo/check co
 
 # Set variables
 if(ISVD_BUILD_LIB OR ISVD_BUILD_DEMO OR ISVD_BUILD_TEST)
-  set(ISVD_BUILD_BIN "ON")
+  set(ISVD_USE_PACKAGE "ON")
 else()
-  set(ISVD_BUILD_BIN "OFF")
+  set(ISVD_USE_PACKAGE "OFF")
 endif()
 
 if(ISVD_INDEX_TYPE STREQUAL "32")

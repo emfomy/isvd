@@ -3,7 +3,8 @@
 /// \brief      The iSVD environment routines.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_CORE_ENV_H_
@@ -16,9 +17,9 @@
 extern "C" {
 #endif  // __cplusplus
 
-void isvd_init_cpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm );
-void isvd_finalize_cpu( void );
-void isvd_printEnvironment_cpu( const isvd_MpiComm comm );
+void isvd_Init_cpu( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm );
+void isvd_Finalize_cpu( void );
+void isvd_PrintEnvironment_cpu( const isvd_MpiComm comm );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
@@ -26,9 +27,9 @@ void isvd_printEnvironment_cpu( const isvd_MpiComm comm );
 ///
 /// \note  This routines initializes the MPI and MAGMA environments.
 ///
-static inline void isvd_init( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
-  isvd_init_cpu(argcp, argvp, mpi_comm);
-  isvd_init_gpu(argcp, argvp, mpi_comm);
+static inline void isvd_Init( int *argcp, char ***argvp, const isvd_MpiComm mpi_comm ) {
+  isvd_Init_cpu(argcp, argvp, mpi_comm);
+  isvd_Init_gpu(argcp, argvp, mpi_comm);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,9 +38,9 @@ static inline void isvd_init( int *argcp, char ***argvp, const isvd_MpiComm mpi_
 ///
 /// \note  This routines initializes the MPI and MAGMA environments.
 ///
-static inline void isvd_finalize() {
-  isvd_finalize_cpu();
-  isvd_finalize_gpu();
+static inline void isvd_Finalize() {
+  isvd_Finalize_cpu();
+  isvd_Finalize_gpu();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,9 +49,9 @@ static inline void isvd_finalize() {
 ///
 /// \note  This routines displays the MPI and MAGMA environments.
 ///
-static inline void isvd_printEnvironment( const isvd_MpiComm mpi_comm ) {
-  isvd_printEnvironment_cpu(mpi_comm);
-  isvd_printEnvironment_gpu(mpi_comm);
+static inline void isvd_PrintEnvironment( const isvd_MpiComm mpi_comm ) {
+  isvd_PrintEnvironment_cpu(mpi_comm);
+  isvd_PrintEnvironment_gpu(mpi_comm);
 }
 
 #if defined(__cplusplus)

@@ -5,9 +5,9 @@
 
   <h3>Initialize Environment</h3>
 
-  The iSVD environment and random seed should be set up before calling the driver. \ref isvd_init also initialize the MPI environment and the MAGMA environment, and \ref isvd_printEnvironment display the the MPI environment and the MAGMA environment.
+  The iSVD environment and random seed should be set up before calling the driver. \ref isvd_Init also initialize the MPI environment and the MAGMA environment, and \ref isvd_PrintEnvironment display the the MPI environment and the MAGMA environment.
 
-  If one needs CPU only, one may use \ref isvd_init_cpu, \ref isvd_printEnvironment_cpu, and \ref isvd_finalize_cpu instead.
+  If one needs CPU only, one may use \ref isvd_Init_cpu, \ref isvd_PrintEnvironment_cpu, and \ref isvd_Finalize_cpu instead.
 
   \snippetlineno demo/cdemo.c init-isvd
 
@@ -19,7 +19,7 @@
 
   <h3>Allocate matrices</h3>
 
-  The output matrices should be allocated before calling the driver. See \ref isvd_dIsvd for the detail of matrix sizes.
+  One should allocate the output matrices by themselves. See \ref isvd_Param and \ref isvd_dIsvd for the detail of matrix sizes. <br>
 
   \snippetlineno demo/cdemo.c allocate-matrix
 
@@ -37,7 +37,7 @@
 
   <h3>Finalize</h3>
 
-  Remember to \ref isvd_finalize "finalize" the environment.
+  Remember to \ref isvd_Finalize "finalize" the environment.
 
   \snippetlineno demo/cdemo.c final-isvd
 
@@ -49,26 +49,26 @@
   gcc demo/cdemo.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_mkl_gomp -lisvd_gpu_none
   ```
 
-  One may also use **make run_cdemo** to run it.
+  One may also use **make run_cdemo** to compile and run it.
 
   The outputs of the example are shown as below. (Note that the detailed number might be different due to the executing environment.)
 
   \code{.txt}
   iSVD C demo
-  iSVD 1.2.0, 32-bit isvd_int_t, 64-bit pointer
+  iSVD 1.3.0, 32-bit isvd_int_t, 64-bit pointer
   4 MPI processors, 4 OpenMP threads per process
 
   No GPU support
 
-  Using Real Double Precision Gaussian Projection Sketching
-  Using Real Double Precision Gramian Orthogonalization
-  Using Real Double Precision Kolmogorov-Nagumo Integration
-  Using Real Double Precision Gramian Postprocessing
+  Using Real Double Precision Gaussian Projection Sketching.
+  Using Real Double Precision Gramian Orthogonalization.
+  Using Real Double Precision Kolmogorov-Nagumo Integration.
+  Using Real Double Precision Gramian Postprocessing.
 
-  Sketching ...................... done
-  Orthogonalizing ................ done
-  Integrating .................... done
-  Postprocessing ................. done
+  Sketching ..................... done.
+  Orthogonalizing ............... done.
+  Integrating ................... done.
+  Postprocessing ................ done.
 
   Average total computing time:   0.085510 seconds.
   Average sketching time:         0.030245 seconds.

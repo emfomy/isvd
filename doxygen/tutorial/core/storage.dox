@@ -39,7 +39,7 @@
       \end{bmatrix}.
   @f]
 
-  The \f$j\f$-th block of the input matrices should contain \f$m^{(j)}\f$ rows, and the \f$j\f$-th block of the input matrices should contain \f$m_b\f$ rows.
+  The \f$j\f$-th block of the input and output matrices should contain \f$m^{(j)}\f$ and \f$m_b\f$ rows respectively.
 
   For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 rows and \f$P\f$ is 4. Then \f$\mathsf{A}^{(0)}\f$ are the (0-2)-th rows, \f$\mathsf{A}^{(1)}\f$ are the (3-5)-th rows, \f$\mathsf{A}^{(2)}\f$ are the (6-8)-th rows, \f$\mathsf{A}^{(3)}\f$ are the (9-10)-th rows.
 
@@ -54,7 +54,7 @@
       \end{bmatrix}.
   @f]
 
-  The \f$j\f$-th block of the input matrices should contain \f$n^{(j)}\f$ columns, and the \f$j\f$-th block of the input matrices should contain \f$n_b\f$ columns.
+  The \f$j\f$-th block of the input and output matrices should contain \f$n^{(j)}\f$ and \f$n_b\f$ columns respectively.
 
   For example, let \f$\boldsymbol{A}\f$ be a matrix with 11 columns and \f$P\f$ is 4. Then \f$\mathsf{A}^{\langle 0 \rangle}\f$ are the (0-2)-th columns, \f$\mathsf{A}^{\langle 1 \rangle}\f$ are the (3-5)-th columns, \f$\mathsf{A}^{\langle 2 \rangle}\f$ are the (6-8)-th columns, \f$\mathsf{A}^{\langle 3 \rangle}\f$ are the (9-10)-th columns.
 */

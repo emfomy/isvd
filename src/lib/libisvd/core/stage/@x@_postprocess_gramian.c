@@ -3,7 +3,8 @@
 /// \brief      The Gramian Postprocessing (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -14,7 +15,7 @@
 #include <isvd/util/memory.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Gramian Postprocessing (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -22,22 +23,24 @@
 /// \param[in]   retv, retc  The return values and its length. (not using)
 /// <hr>
 /// \param[in]   dista       The parallel distribution of 𝑨. <br>
-///                          `'C'`: block-column parallelism. <br>
-///                          `'R'`: block-row parallelism.
+///                          \c 'C': block-column parallelism. <br>
+///                          \c 'R': block-row parallelism.
 /// \param[in]   ordera      The storage ordering of 𝑨. <br>
-///                          `'C'`: column-major ordering. <br>
-///                          `'R'`: row-major ordering.
+///                          \c 'C': column-major ordering. <br>
+///                          \c 'R': row-major ordering.
 /// \param[in]   a, lda      The column/row-block 𝑨 (\f$m \times n^{(j)}\f$) and its leading dimension. <br>
-///                          \b dista = `'C'`: the size must be \f$m \times n^{(j)}\f$. <br>
-///                          \b dista = `'R'`: the size must be \f$m^{(j)} \times n\f$.
+///                          \b dista = \c 'C': the size must be \f$m \times n^{(j)}\f$. <br>
+///                          \b dista = \c 'R': the size must be \f$m^{(j)} \times n\f$.
 /// \param[in]   qt, ldqt    The row-block 𝑸 (\f$ m_b \times l \f$, row-major) and its leading dimension.
 /// \param[in]   s           The vector 𝝈 (\f$k \times 1\f$).
 /// \param[in]   ut, ldut    The matrix 𝑼 (row-major) and its leading dimension. <br>
-///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$, and \b ldut must be \f$l\f$. <br>
+///                          \b ut_root ≥  0: the size must be \f$Pm_b \times k\f$ in the root process,
+///                                           and be \f$m_b \times k\f$ in other processes. \b ldut must be \f$l\f$. <br>
 ///                          \b ut_root = -1: the size must be \f$m_b \times k\f$, and \b ldut must be at least \f$l\f$. <br>
 ///                          \b ut_root < -1: not referenced.
 /// \param[in]   vt, ldvt    The matrix 𝑽 (row-major) and its leading dimension. <br>
-///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$, and \b ldvt must be \f$l\f$. <br>
+///                          \b vt_root ≥  0: the size must be \f$Pn_b \times k\f$ in the root process,
+///                                           and be \f$n_b \times k\f$ in other processes. \b ldvt must be \f$l\f$. <br>
 ///                          \b vt_root = -1: the size must be \f$n_b \times k\f$, and \b ldvt must be at least \f$l\f$. <br>
 ///                          \b vt_root < -1: not referenced.
 /// \param[in]   ut_root     The option for computing 𝑼. <br>
@@ -118,10 +121,12 @@ void isvd_@x@PostprocessGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype_____@ *zt = isvd_@x@malloc(l * nb);
+  // matrix Z'
+  @xtype_____@ *zt = isvd_@x@Malloc(l * nb);
   isvd_int_t ldzt = l;
 
-  @xtype_____@ *w = isvd_@x@malloc(l * l);
+  // matrix W
+  @xtype_____@ *w = isvd_@x@Malloc(l * l);
   isvd_int_t ldw = l;
 
   // ====================================================================================================================== //
@@ -138,7 +143,7 @@ void isvd_@x@PostprocessGramian(
 
   // W := Z' * Z
   isvd_@x@Gemm('N', 'T', l, l, nj, 1.0, zt, ldzt, zt, ldzt, 0.0, w, ldw);
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, w, ldw*l, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // eig(W) = W * S^2 * W'
   const char jobw_ = (ut_root >= -1 || vt_root >= -1) ? 'O' : 'N';
@@ -154,9 +159,11 @@ void isvd_@x@PostprocessGramian(
 
     if ( ut_root >= 0 ) {
       if ( param.mpi_rank == ut_root ) {
-        MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@, ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, mb*ldut, MPI_@XTYPE@,
+                                    ut, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       } else {
-        MPI_Gather(ut, mb*ldut, MPI_@XTYPE@, NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(ut, mb*ldut, MPI_@XTYPE@,
+                                    NULL, mb*ldut, MPI_@XTYPE@, ut_root, param.mpi_comm));
       }
     }
   }
@@ -168,9 +175,11 @@ void isvd_@x@PostprocessGramian(
 
     if ( vt_root >= 0 ) {
       if ( param.mpi_rank == vt_root ) {
-        MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@XTYPE@, vt, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(MPI_IN_PLACE, nb*ldvt, MPI_@XTYPE@,
+                                    vt, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       } else {
-        MPI_Gather(vt, nb*ldvt, MPI_@XTYPE@, NULL, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm);
+        isvd_assert_pass(MPI_Gather(vt, nb*ldvt, MPI_@XTYPE@,
+                                    NULL, nb*ldvt, MPI_@XTYPE@, vt_root, param.mpi_comm));
       }
     }
   }
@@ -178,7 +187,7 @@ void isvd_@x@PostprocessGramian(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(zt);
-  isvd_free(w);
+  isvd_Free(zt);
+  isvd_Free(w);
 
 }

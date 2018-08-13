@@ -3,7 +3,8 @@
 /// \brief      The main header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_H_
@@ -18,12 +19,6 @@
 /// \defgroup  c_core_module  Core Routines
 /// \ingroup   c_module
 /// \brief     The Core Routines
-///
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_module  GPU Routines
-/// \ingroup   c_module
-/// \brief     The GPU Routines
 ///
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

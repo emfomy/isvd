@@ -3,7 +3,8 @@
 /// \brief      The I/O utilities.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_UTIL_IO_H_
@@ -15,9 +16,9 @@
 extern "C" {
 #endif  // __cplusplus
 
-void isvd_ifget( FILE *stream, isvd_int_t   *varp );
-void isvd_sfget( FILE *stream, isvd_s_val_t *varp );
-void isvd_dfget( FILE *stream, isvd_d_val_t *varp );
+void isvd_iFget( FILE *stream, isvd_int_t   *varp );
+void isvd_sFget( FILE *stream, isvd_s_val_t *varp );
+void isvd_dFget( FILE *stream, isvd_d_val_t *varp );
 
 #if defined(__cplusplus)
 }

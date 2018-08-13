@@ -7,20 +7,20 @@
 
 int main( int argc, char **argv ) {
 
-  isvd_init(&argc, &argv, MPI_COMM_WORLD);
+  isvd_Init(&argc, &argv, MPI_COMM_WORLD);
 
   if ( isvd_getMpiRank(MPI_COMM_WORLD) != 0 ) {
     std::fclose(stdout);
   }
 
   printf("iSVD " ISVD_CHECK_NAME " unit test\n");
-  isvd_printEnvironment(MPI_COMM_WORLD);
+  isvd_PrintEnvironment(MPI_COMM_WORLD);
 
   testing::InitGoogleTest(&argc, argv);
   int retval = RUN_ALL_TESTS();
   assert(testing::UnitTest::GetInstance()->test_to_run_count() > 0);
 
-  isvd_finalize();
+  isvd_Finalize();
 
   return retval;
 }

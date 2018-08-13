@@ -3,7 +3,8 @@
 /// \brief      Some useful functions.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef LIBISVD_UTIL_FUNCTION_H_
@@ -31,6 +32,10 @@ static inline size_t maxl( size_t a, size_t b ) {
 
 static inline size_t minl( size_t a, size_t b ) {
   return (a < b) ? a : b;
+}
+
+static inline bool isPowerOf2( isvd_int_t x ) {
+  return x && !(x & (x - 1));
 }
 
 #if defined(__cplusplus)

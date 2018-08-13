@@ -3,7 +3,8 @@
 /// \brief      The parameter structure.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_CORE_PARAM_H_
@@ -28,6 +29,9 @@ typedef struct {
 
   /// \f$P\f$ The MPI size.
   const mpi_int_t mpi_size;
+
+  /// \f$P\f$ The MPI root.
+  const mpi_int_t mpi_root;
 
   /// \f$j\f$ The MPI rank.
   const mpi_int_t mpi_rank;

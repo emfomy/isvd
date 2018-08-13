@@ -3,7 +3,8 @@
 /// \brief      The Gaussian Projection Sketching (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -13,7 +14,7 @@
 #include <libisvd/util/arg.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Gaussian Projection Sketching (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -21,17 +22,17 @@
 /// \param[in]   retv, retc  The return values and its length. (not using)
 /// <hr>
 /// \param[in]   dista       The parallel distribution of 𝑨. <br>
-///                          `'C'`: block-column parallelism. <br>
-///                          `'R'`: block-row parallelism.
+///                          \c 'C' block-column parallelism. <br>
+///                          \c 'R' block-row parallelism.
 /// \param[in]   ordera      The storage ordering of 𝑨. <br>
-///                          `'C'`: column-major ordering. <br>
-///                          `'R'`: row-major ordering.
+///                          \c 'C' column-major ordering. <br>
+///                          \c 'R' row-major ordering.
 /// \param[in]   a, lda      The column/row-block 𝑨 (\f$m \times n^{(j)}\f$) and its leading dimension. <br>
-///                          \b dista = `'C'`: the size must be \f$m \times n^{(j)}\f$. <br>
-///                          \b dista = `'R'`: the size must be \f$m^{(j)} \times n\f$.
+///                          \b dista = \c 'C' the size must be \f$m \times n^{(j)}\f$. <br>
+///                          \b dista = \c 'R' the size must be \f$m^{(j)} \times n\f$.
 /// \param[in]   yst, ldyst  The row-block 𝖄 (\f$m_b \times Nl\f$, row-major) and its leading dimension. <br>
-///                          \b dista = `'C'`: \b ldyst must be \f$Nl\f$. <br>
-///                          \b dista = `'R'`: no condition.
+///                          \b dista = \c 'C' \b ldyst must be \f$Nl\f$. <br>
+///                          \b dista = \c 'R' no condition.
 /// \param[in]   seed        The random seed (significant only at root MPI process).
 /// \param[in]   mpi_root    The root MPI process ID.
 /// <hr>

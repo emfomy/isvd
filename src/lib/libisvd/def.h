@@ -3,7 +3,8 @@
 /// \brief      The definitions.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef LIBISVD_DEF_H_
@@ -45,7 +46,7 @@ extern "C" {
 #define isvd_assert_gelt( val, bound1, bound2 )  { EXPECT_GE(val, bound1); EXPECT_LT(val, bound2); }
 #define isvd_assert_gele( val, bound1, bound2 )  { EXPECT_GE(val, bound1); EXPECT_LE(val, bound2); }
 
-#else  // ISVD_USE_GTEST
+#else  // ISVD_USE_GTEST && __cplusplus
 
 #define isvd_assert_true( condition )   assert(condition);
 #define isvd_assert_false( condition )  assert(!(condition));
@@ -62,7 +63,7 @@ extern "C" {
 #define isvd_assert_gelt( val, bound1, bound2 )  assert(val >= bound1 && val <  bound2);
 #define isvd_assert_gele( val, bound1, bound2 )  assert(val >= bound1 && val <= bound2);
 
-#endif  // ISVD_USE_GTEST
+#endif  // ISVD_USE_GTEST && __cplusplus
 
 #define isvd_assert_pass( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_eq(code, 0); }
 #define isvd_assert_code( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_ne(code, 0); }

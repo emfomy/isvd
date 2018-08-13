@@ -3,7 +3,8 @@
 /// \brief      The GPU Sketching utilities (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef LIBISVD_GPU_STAGE_@X@_SKETCH_GPU_H_
@@ -78,20 +79,25 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype_____@ *omegat = isvd_@x@malloc(Nl * nj);
+  // matrix Omega'
+  @xtype_____@ *omegat = isvd_@x@Malloc(Nl * nj);
   isvd_int_t ldomegat = Nl;
 
-  @xtype_____@ *yst_ = isvd_@x@malloc(Nl * Pmb);
+  // matrix Y'
+  @xtype_____@ *yst_ = isvd_@x@Malloc(Nl * Pmb);
   isvd_int_t ldyst_ = Nl;
 
+  // matrix A in GPU
   @xtype_____@ *a_gpu;
   magma_@x@malloc(&a_gpu, m * n_gpu);
   isvd_int_t lda_gpu = (ordera == 'C') ? m : n_gpu;
 
+  // matrix Omega' in GPU
   @xtype_____@ *omegat_gpu;
   magma_@x@malloc(&omegat_gpu, Nl * n_gpu);
   isvd_int_t ldomegat_gpu = Nl;
 
+  // matrix Y' in GPU
   @xtype_____@ *yst_gpu;
   magma_@x@malloc(&yst_gpu, Nl * m);
   isvd_int_t ldyst_gpu = Nl;
@@ -100,7 +106,7 @@ static void sketchBlockCol(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm);
+  isvd_assert_pass(MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm));
   isvd_v@x@RngGaussianDriver(seed_, Nl * nb * param.mpi_rank, nj * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //
@@ -136,13 +142,13 @@ static void sketchBlockCol(
   // ====================================================================================================================== //
   // Rearrange
 
-  MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Reduce_scatter_block(yst_, yst, mb*ldyst_, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(omegat);
-  isvd_free(yst_);
+  isvd_Free(omegat);
+  isvd_Free(yst_);
   magma_free(a_gpu);
   magma_free(omegat_gpu);
   magma_free(yst_gpu);
@@ -196,17 +202,21 @@ static void sketchBlockRow(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype_____@ *omegat = isvd_@x@malloc(n * Nl);
+  // matrix Omega'
+  @xtype_____@ *omegat = isvd_@x@Malloc(n * Nl);
   isvd_int_t ldomegat = Nl;
 
+  // matrix A in GPU
   @xtype_____@ *a_gpu;
   magma_@x@malloc(&a_gpu, mj * n_gpu);
   isvd_int_t lda_gpu = (ordera == 'C') ? mj : n_gpu;
 
+  // matrix Omega' in GPU
   @xtype_____@ *omegat_gpu;
   magma_@x@malloc(&omegat_gpu, Nl * n_gpu);
   isvd_int_t ldomegat_gpu = Nl;
 
+  // matrix Y' in GPU
   @xtype_____@ *yst_gpu;
   magma_@x@malloc(&yst_gpu, Nl * mj);
   isvd_int_t ldyst_gpu = Nl;
@@ -215,7 +225,7 @@ static void sketchBlockRow(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm);
+  isvd_assert_pass(MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm));
   isvd_v@x@RngGaussianDriver(seed_, 0, n * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //
@@ -251,7 +261,7 @@ static void sketchBlockRow(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(omegat);
+  isvd_Free(omegat);
   magma_free(a_gpu);
   magma_free(omegat_gpu);
   magma_free(yst_gpu);

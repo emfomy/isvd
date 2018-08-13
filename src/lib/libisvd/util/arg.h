@@ -3,7 +3,8 @@
 /// \brief      The argument utilities.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef LIBISVD_UTIL_ARG_H_
@@ -46,8 +47,6 @@ static inline isvd_int_t isvd_arg2char(
   fprintf(stderr, ".\n");
   return 0;
 }
-
-#define isvd_char2( str0, str1 ) (str0 + (str1 << 8))
 
 static inline const char* isvd_arg2str(
     const char *name,

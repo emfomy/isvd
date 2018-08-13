@@ -3,7 +3,8 @@
 /// \brief      The GPU header.
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #ifndef ISVD_GPU_H_
@@ -14,15 +15,9 @@
 #include <isvd/gpu/d_stage.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_s_stage_module  Real Single Stage
-/// \ingroup   c_gpu_module
-/// \brief     The Stage Routines with Real Single Precision
-///
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \defgroup  c_gpu_d_stage_module  Real Double Stage
-/// \ingroup   c_gpu_module
-/// \brief     The Stage Routines with Real Double Precision
+/// \defgroup  c_gpu_stage_module  GPU Stage Routines
+/// \ingroup   c_core_module
+/// \brief     The Stage Routines with GPU support
 ///
 
 #endif  // ISVD_GPU_H_

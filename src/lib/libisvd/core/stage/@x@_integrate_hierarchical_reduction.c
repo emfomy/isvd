@@ -3,7 +3,8 @@
 /// \brief      The Hierarchical Reduction Integration (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -13,7 +14,7 @@
 #include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Hierarchical Reduction Integration (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -69,33 +70,34 @@ void isvd_@x@IntegrateHierarchicalReduction(
   // ====================================================================================================================== //
   // Allocate memory
 
+  // matrix Q'
   @xtype_____@ *qst = yst;
   isvd_int_t ldqst = ldyst;
 
   // matrix B
-  @xtype_____@ *bs = isvd_@x@malloc(l * l * (N+1)/2);
+  @xtype_____@ *bs = isvd_@x@Malloc(l * l * (N+1)/2);
   isvd_int_t ldbs = l;
 
   // matrix T
-  @xtype_____@ *tt = isvd_@x@malloc(l * l);
+  @xtype_____@ *tt = isvd_@x@Malloc(l * l);
   isvd_int_t ldtt = l;
 
   // vector s
-  @xtype_____@ *s = isvd_@x@malloc(l);
+  @xtype_____@ *s = isvd_@x@Malloc(l);
 
   @xtype_____@ *tmpt = qt;
   isvd_int_t ldtmpt = ldqt;
 
   // ====================================================================================================================== //
   // Loop
-  for ( isvd_int_t Nt = N; Nt > 1; Nt = (Nt+1)/2 ) {
-    const isvd_int_t h = Nt / 2;
+  for ( isvd_int_t h2 = N; h2 > 1; h2 = (h2+1)/2 ) {
+    const isvd_int_t h = h2 / 2;
 
     // B(i) := Q(i)' * Q(i+h)
     for ( isvd_int_t i = 0; i < h; ++i ) {
       isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, qst + i*l, ldqst, qst + (i+h)*l, ldqst, 0.0, bs + i*ldbs*l, ldbs);
     }
-    MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+    isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, bs, ldbs*l*h, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
     for ( isvd_int_t i = 0; i < h; ++i ) {
 
@@ -132,8 +134,8 @@ void isvd_@x@IntegrateHierarchicalReduction(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(bs);
-  isvd_free(tt);
-  isvd_free(s);
+  isvd_Free(bs);
+  isvd_Free(tt);
+  isvd_Free(s);
 
 }

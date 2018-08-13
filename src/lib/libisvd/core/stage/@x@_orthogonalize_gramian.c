@@ -3,7 +3,8 @@
 /// \brief      The Gramian Orthogonalization (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
-/// \copyright  MIT License
+/// \copyright  Copyright (c) 2018 Mu Yang. All rights reserved.
+/// \license    This project is released under the \ref Readme_License "MIT License".
 ///
 
 #include <isvd/core/@x@_stage.h>
@@ -13,7 +14,7 @@
 #include <isvd/util/mpi.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \ingroup  c_core_@x@_stage_module
+/// \ingroup  c_core_stage_module
 /// \brief  Gramian Orthogonalization (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
@@ -62,13 +63,16 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Allocate memory
 
-  @xtype_____@ *yst_ = isvd_@x@malloc(ldyst * mj);
+  // matrix Y'
+  @xtype_____@ *yst_ = isvd_@x@Malloc(ldyst * mj);
   isvd_int_t ldyst_ = ldyst;
 
-  @xtype_____@ *w = isvd_@x@malloc(l * Nl);
+  // matrix W'
+  @xtype_____@ *w = isvd_@x@Malloc(l * Nl);
   isvd_int_t ldw = l;
 
-  @xtype_____@ *s = isvd_@x@malloc(l * N);
+  // matrix S
+  @xtype_____@ *s = isvd_@x@Malloc(l * N);
   isvd_int_t lds = l;
 
   // ====================================================================================================================== //
@@ -78,7 +82,7 @@ void isvd_@x@OrthogonalizeGramian(
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('N', 'T', l, l, mj, 1.0, yst + i*l, ldyst, yst + i*l, ldyst, 0.0, w + i*ldw*l, ldw);
   }
-  MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@XTYPE@, MPI_SUM, param.mpi_comm);
+  isvd_assert_pass(MPI_Allreduce(MPI_IN_PLACE, w, ldw*Nl, MPI_@XTYPE@, MPI_SUM, param.mpi_comm));
 
   // eig(Wi) = Wi * Si^2 * Wi'
   for ( isvd_int_t i = 0; i < N; ++i ) {
@@ -88,7 +92,7 @@ void isvd_@x@OrthogonalizeGramian(
 
   // Qi := Yi * Wi / Si (Qi' := (Wi / Si)' * Yi' )
   isvd_@x@Dism('R', l, Nl, 1.0, s, w, ldw);
-  isvd_@x@memcpy(yst_, yst, mj*ldyst);
+  isvd_@x@Memcpy(yst_, yst, mj*ldyst);
   for ( isvd_int_t i = 0; i < N; ++i ) {
     isvd_@x@Gemm('T', 'N', l, mj, l, 1.0, w + i*ldw*l, ldw, yst_ + i*l, ldyst_, 0.0, yst + i*l, ldyst);
   }
@@ -96,8 +100,8 @@ void isvd_@x@OrthogonalizeGramian(
   // ====================================================================================================================== //
   // Deallocate memory
 
-  isvd_free(yst_);
-  isvd_free(w);
-  isvd_free(s);
+  isvd_Free(yst_);
+  isvd_Free(w);
+  isvd_Free(s);
 
 }
