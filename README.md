@@ -141,7 +141,7 @@ Please link exactly one library for all categories.
 
 ## How to use 64-bit integer?
 
-* Set `ISVD_USE_ILP64` with `ccmake` before building libraries.
+* Set `ISVD_USE_ILP64` with `ccmake` before building libraries; or
 * Add `-DISVD_USE_ILP64` to compile flag.
 * Make sure your LAPACK&amp;BLAS / Intel MKL uses 64bit integer.
 
