@@ -13,6 +13,7 @@ option(ISVD_BUILD_DOC     "Build documentation."        "ON")
 option(ISVD_USE_GPU       "Enable GPU support."         "OFF")
 option(ISVD_TEST_DEEP     "Enable deep unit tests."     "ON")
 option(ISVD_TEST_VERBOSE  "Enable verbose unit tests."  "ON")
+option(CMAKE_WARNING      "Enable CMake warning."       "ON")
 
 set(ISVD_INDEX_TYPE "32" CACHE STRING "Index type. [32/64]")
 set_property(CACHE ISVD_INDEX_TYPE PROPERTY STRINGS "32;64")
