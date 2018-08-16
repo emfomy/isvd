@@ -124,7 +124,7 @@ else()
 endif()
 
 # MPI
-find_package(MPI ${findtype})
+find_package(MPI 2.2 ${findtype})
 function(ISVD_SET_TARGET_MPI target lang)
   target_include_directories(${target} ${SYSTEM} PRIVATE "${MPI_${lang}_INCLUDE_PATH}")
   target_link_libraries(${target} ${MPI_${lang}_LIBRARIES})

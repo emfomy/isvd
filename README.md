@@ -22,11 +22,11 @@ This library is a C implementation of the Integrated Singular Value Decompositio
 * [CMake](https://cmake.org) 2.8.11+ (CMake 3.0+ recommended).
 * C/C++ compiler with C99/C++98 standard support ([GCC](https://gcc.gnu.org) 4.4+ recommended).
 * [BLAS](http://www.netlib.org/blas) & [LAPACK](http://www.netlib.org/lapack) library (Used for multi-core parallelization).
-* MPI Library v2.2+ ([MPICH](http://www.mpich.org) or [OpenMPI](https://www.open-mpi.org)).
+* MPI Library with 2.2+ standard support ([MPICH](http://www.mpich.org) 1.2+ or [OpenMPI](https://www.open-mpi.org) 1.7+).
 
 ## Optional
 * [Intel&reg; Math Kernel Library](https://software.intel.com/en-us/intel-mkl) (**Recommended** for better performance, used for BLAS & LAPACK).
-* [MAGMA](http://icl.cs.utk.edu/magma/) 2+ (Used for BLAS & LAPACK with GPU support).
+* [MAGMA](http://icl.cs.utk.edu/magma/) 2.0+ (Used for BLAS & LAPACK with GPU support).
 * [OpenMP](http://openmp.org) Library (**Recommended** for better performance, used for multi-thread parallelization).
 * [Google Test Library](https://github.com/google/googletest) (Used for code testing).
 * [Doxygen](http://www.stack.nl/~dimitri/doxygen/) (Used for documentation).
@@ -141,7 +141,7 @@ Please link exactly one library for all categories.
 
 ## How to use 64-bit integer?
 
-* Set `ISVD_USE_ILP64` with `ccmake` before building libraries.
+* Set `ISVD_USE_ILP64` with `ccmake` before building libraries; or
 * Add `-DISVD_USE_ILP64` to compile flag.
 * Make sure your LAPACK&amp;BLAS / Intel MKL uses 64bit integer.
 

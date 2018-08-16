@@ -48,7 +48,7 @@
 
   The postprocessing stage forms a rank-𝑘 approximate SVD of \f$\boldsymbol{A}\f$ in the range of \f$\overline{\boldsymbol{Q}}\f$.
 
-  - The \ref isvd_dPostprocessTallSkinnyQr "Tall-Skinny QR Orthogonalization" finds the orthonormal basis using the Tall-Skinny QR (TSQR) decomposition.
+  - The \ref isvd_dPostprocessTallSkinnyQr "Tall-Skinny QR Postprocessing" finds the orthonormal basis using the Tall-Skinny QR (TSQR) decomposition.
   - The \ref isvd_dPostprocessGramian "Gramian Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \boldsymbol{A}^\top \overline{\boldsymbol{Q}}\f$.
   - The \ref isvd_dPostprocessSymmetric "Symmetric Postprocessing" finds approximate SVD using the eigen-decomposition of \f$\overline{\boldsymbol{Q}}^\top \boldsymbol{A} \overline{\boldsymbol{Q}}\f$ for symmetric input matrix \f$\boldsymbol{A}\f$.
 */

@@ -74,11 +74,12 @@ int main( int argc, char **argv ) {
 
   /// [allocate-matrix]
   // Allocate matrix
-  const isvd_int_t k = 20, p = 12, l = k+p, N = 16;
+  const isvd_int_t k = 20, p = 12, N = 16;
   const isvd_Param param = isvd_createParam(m, n, k, p, N, mpi_root, MPI_COMM_WORLD);
   const isvd_int_t mb  = param.nrow_each;
   const isvd_int_t Pmb = param.nrow_total;
   const isvd_int_t Pnb = param.ncol_total;
+  const isvd_int_t l   = param.dim_sketch;
 
   double *s  = isvd_dMalloc(l);
 

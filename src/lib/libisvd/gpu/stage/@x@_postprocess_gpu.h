@@ -284,9 +284,9 @@ static void projectBlockRow(
     isvd_Free(zt_);
   }
 
-  // magma_free(a_gpu);
-  // magma_free(qt_gpu);
-  // magma_free(zt_gpu);
+  magma_free(a_gpu);
+  magma_free(qt_gpu);
+  magma_free(zt_gpu);
 
 }
 #endif  // DOXYGEN_SHOULD_SKIP_THIS
