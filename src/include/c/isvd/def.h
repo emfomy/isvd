@@ -93,7 +93,7 @@ typedef int omp_int_t;
 /// \brief  The MPI communicator type.
 #if !defined(DOXYGEN_SHOULD_SKIP_THIS)
 #if !defined(__cplusplus)
-typedef void* isvd_MpiComm;
+typedef int isvd_MpiComm;
 #else  // __cplusplus
 #include <mpi.h>
 typedef MPI_Comm isvd_MpiComm;

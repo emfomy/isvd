@@ -128,7 +128,7 @@ static void sketchBlockRow(
   // Random generate
 
   isvd_int_t seed_ = seed;
-  isvd_assert_pass(MPI_Bcast(&seed_, sizeof(isvd_VSLStreamStatePtr), MPI_BYTE, mpi_root, param.mpi_comm));
+  isvd_assert_pass(MPI_Bcast(&seed_, sizeof(seed_), MPI_BYTE, mpi_root, param.mpi_comm));
   isvd_v@x@RngGaussianDriver(seed_, 0, n * Nl, omegat, 0.0, 1.0);
 
   // ====================================================================================================================== //

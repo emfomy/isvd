@@ -46,8 +46,10 @@
   Above example code can be compiled by
 
   ```
-  gcc demo/cdemo.c -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_mkl_gomp -lisvd_gpu_none
+  gcc demo/cdemo.c <path-to-source>/ext/mmio/mmio.c -include <path-to-source>/ext/mmio/mmio.h -I<include-path> -L<library-path> -Wl,-rpath <library-path> -lisvd_core -lisvd_la_mkl_gomp -lisvd_gpu_none
   ```
+
+  where <include-path> is the folder containing the header files (located at <path-to-source>/build/include), and <library-path> is the folder containing the libraries (located at <path-to-source>/build/lib).
 
   One may also use **make run_cdemo** to compile and run it.
 
