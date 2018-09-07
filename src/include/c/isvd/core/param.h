@@ -20,7 +20,9 @@ extern "C" {
 /// \ingroup  c_core_module
 /// \brief  The parameters.
 ///
-/// \see  \ref tutorial_core_notation
+/// \note  Use \ref isvd_createParam to initialize the parameters rather than directly declaring it.
+///
+/// \see  \ref isvd_createParam, \ref tutorial_core_notation
 ///
 typedef struct {
 
@@ -92,6 +94,8 @@ typedef struct {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_module
 /// \brief  Initializes the parameters.
+///
+/// \see  \ref isvd_Param, \ref tutorial_core_notation
 ///
 isvd_Param isvd_createParam(
     const isvd_int_t nrow, const isvd_int_t ncol, const isvd_int_t rank, const isvd_int_t over_rank,
