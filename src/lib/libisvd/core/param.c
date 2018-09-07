@@ -21,8 +21,8 @@ isvd_Param isvd_createParam(
     const isvd_MpiComm mpi_comm
 ) {
 
-  mpi_int_t mpi_size = isvd_getMpiSize(MPI_COMM_WORLD);
-  mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
+  mpi_int_t mpi_size = isvd_getMpiSize(mpi_comm);
+  mpi_int_t mpi_rank = isvd_getMpiRank(mpi_comm);
 
   struct {
     isvd_int_t nrow_;
