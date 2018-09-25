@@ -40,8 +40,6 @@ if(ISVD_USE_PACKAGE)
 endif()
 
 # Set target
-
-# Set target
 find_library(
   M_LIBRARY
   NAMES m
@@ -65,9 +63,6 @@ if(NOT PTHREAD_LIBRARY)
     set(PTHREAD_LIBRARY "-lpthread" CACHE STRING "libpthread" FORCE)
   endif()
 endif()
-
-mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
-set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
 
 mark_as_advanced(M_LIBRARY PTHREAD_LIBRARY)
 set(DEFAULT_LIBRARY ${M_LIBRARY} ${PTHREAD_LIBRARY})
