@@ -26,4 +26,9 @@
 
 static const size_t isvd_kBlockSizeGpu = 64;
 
+#define isvd_assert_pass_cuda( condition ) \
+  cudaError_t code = condition; \
+  if ( code ) fprintf(stderr, "\033[1;33m[%s] %s!\033[0m\n", cudaGetErrorName(code), cudaGetErrorString(code)); \
+  isvd_assert_pass(code);
+
 #endif  // LIBISVD_GPU_DEF_H_
