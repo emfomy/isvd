@@ -43,6 +43,6 @@ void isvd_PrintEnvironment_cpu( const isvd_MpiComm mpi_comm ) {
   mpi_int_t mpi_size = isvd_getMpiSize(mpi_comm);
   omp_int_t omp_size = isvd_getOmpMaxSize();
 
-  printf("iSVD %s, %lu-bit isvd_int_t, %lu-bit pointer\n", ISVD_VERSION, sizeof(isvd_int_t) * 8, sizeof(void*) * 8);
-  printf("%d MPI processors, %d OpenMP threads per process\n\n", mpi_size, omp_size);
+  printf("iSVD %s, %lu-bit isvd_int_t, %lu-bit pointer.\n", ISVD_VERSION, sizeof(isvd_int_t) * 8, sizeof(void*) * 8);
+  printf("%d MPI processors, %d OpenMP threads per process.\n\n", mpi_size, omp_size);
 }

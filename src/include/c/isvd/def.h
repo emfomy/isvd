@@ -23,6 +23,7 @@
 #include <inttypes.h>
 #include <complex.h>
 #include <math.h>
+#include <mpi.h>
 #include <isvd/config.h>
 
 #undef I
@@ -91,16 +92,7 @@ typedef int omp_int_t;
 
 /// \ingroup  c_core_module
 /// \brief  The MPI communicator type.
-#if !defined(DOXYGEN_SHOULD_SKIP_THIS)
-#if !defined(__cplusplus)
-typedef int isvd_MpiComm;
-#else  // __cplusplus
-#include <mpi.h>
 typedef MPI_Comm isvd_MpiComm;
-#endif  // __cplusplus
-#else  // DOXYGEN_SHOULD_SKIP_THIS)
-typedef MPI_Comm isvd_MpiComm;
-#endif  // DOXYGEN_SHOULD_SKIP_THIS
 
 #if defined(__cplusplus)
 }
