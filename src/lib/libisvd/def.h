@@ -65,8 +65,8 @@ extern "C" {
 
 #endif  // ISVD_USE_GTEST && __cplusplus
 
-#define isvd_assert_pass( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_eq(code, 0); }
-#define isvd_assert_code( condition )  { isvd_int_t code = condition; ISVD_UNUSED(code); isvd_assert_ne(code, 0); }
+#define isvd_assert_pass( condition )  { isvd_assert_eq(condition, 0); }
+#define isvd_assert_code( condition )  { isvd_assert_ne(condition, 0); }
 #define isvd_assert_fail()  { isvd_assert_true(false); }
 //\}
 

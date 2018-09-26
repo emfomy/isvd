@@ -7,7 +7,7 @@ mark_as_advanced(CMAKE_CPPLINT)
 # Break
 if(NOT CMAKE_CPPLINT)
 
-  # Add rule 'doc'
+  # Add rule 'cpplint'
   add_custom_target(
     cpplint
     COMMAND eval "exit 1"
@@ -36,5 +36,5 @@ add_custom_target(
   COMMENT "Run cpplint"
 )
 
-set_cpplint_target(include/c 128 "-build/include,-build/include_order,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens")
-set_cpplint_target(lib 128 "-build/include,-build/include_order,-build/include_what_you_use,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens")
+set_cpplint_target(tmp/src/include/c 128 "-build/include,-build/include_order,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens")
+set_cpplint_target(tmp/src/lib 128 "-build/include,-build/include_order,-build/include_what_you_use,-readability/casting,-whitespace/blank_line,-whitespace/braces,-whitespace/parens")

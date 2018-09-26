@@ -156,4 +156,5 @@ Please link exactly one library for all categories.
 * [Mu Yang, “Highly Scalable Parallelism of Integrated Randomized Singular Value Decomposition with Big Data Applications”](http://doi.org/10.6342/NTU201702960)
 
 # License {#Readme_License}
+* [MIT License](LICENSE.md)
 \include LICENSE.md

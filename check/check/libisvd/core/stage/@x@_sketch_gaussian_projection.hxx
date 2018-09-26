@@ -137,10 +137,10 @@ static void test( char dista, char ordera ) {
 
   // Deallocate memory
   isvd_Free(yst_);
-#else
+#else  // ISVD_USE_MKL
   ISVD_UNUSED(mpi_rank);
   ISVD_UNUSED(Pmb);
-#endif /// ISVD_USE_MKL
+#endif  // ISVD_USE_MKL
 
   // Deallocate memory
   isvd_Free(a0);
