@@ -38,7 +38,7 @@ PROJECT_NAME           = "iSVD"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "@ISVD_MAJOR_VERSION@.@ISVD_MINOR_VERSION@.@ISVD_PATCH_VERSION@"
+PROJECT_NUMBER         = "@ISVD_VERSION@"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a

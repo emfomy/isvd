@@ -91,7 +91,6 @@ disp("System libraries:               " "${DEFAULT_LIBRARY}")
 message(STATUS "")
 
 # Display libraries
-
 if(ISVD_USE_PACKAGE AND ISVD_OMP)
   disp("OpenMP:                         " "${OpenMP_LIBRARIES}")
 else()

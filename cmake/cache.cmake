@@ -12,7 +12,7 @@ endif()
 set(CMAKE_C_FLAGS   "-std=c99   -Wall -Wextra -pedantic -fPIC" CACHE STRING "Flags used by the compiler during all build types.")
 set(CMAKE_CXX_FLAGS "-std=c++98 -Wall -Wextra -pedantic -fPIC" CACHE STRING "Flags used by the compiler during all build types.")
 
-# Set core flags
+# Set simple flags
 set(CMAKE_C_FLAGS_SIMPLE   "-O2 -g" CACHE STRING "Flags used by the compiler during simple builds.")
 set(CMAKE_CXX_FLAGS_SIMPLE "-O2 -g" CACHE STRING "Flags used by the compiler during simple builds.")
 mark_as_advanced(CMAKE_C_FLAGS_SIMPLE CMAKE_CXX_FLAGS_SIMPLE)
