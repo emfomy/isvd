@@ -6,10 +6,12 @@
 #
 
 if(NOT MAGMA_ROOT)
-  if(DEFINED ENV{MAGMADIR})
-    set(MAGMA_ROOT "$ENV{MAGMADIR}")
+  if(DEFINED ENV{MAGMAROOT})
+    set(MAGMA_ROOT "$ENV{MAGMAROOT}")
   elseif(DEFINED ENV{MAGMA_ROOT})
     set(MAGMA_ROOT "$ENV{MAGMA_ROOT}")
+  elseif(DEFINED ENV{MAGMADIR})
+    set(MAGMA_ROOT "$ENV{MAGMADIR}")
   endif()
 endif()
 
@@ -32,7 +34,7 @@ find_library(
   MAGMA_SPARSE_LIBRARY
   NAMES magma_sparse
   HINTS "${MAGMA_ROOT}/lib"
-  DOC "The spaarse library of MAGMA."
+  DOC "The sparse library of MAGMA."
 )
 
 ################################################################################
