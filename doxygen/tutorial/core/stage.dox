@@ -27,7 +27,7 @@
 
   The sketching stage randomly sketches 𝑁 rank-𝑙 column subspaces \f$\boldsymbol{Y}_{[i]}\f$ of the input matrix \f$\boldsymbol{A}\f$.
 
-  - The \ref isvd_dSketchGaussianProjection "Gramian Projection Sketching" multiples \f$\boldsymbol{A}\f$ by some random matrices using Gaussian normal distribution.
+  - The \ref isvd_dSketchGaussianProjection "Gaussian Projection Sketching" multiples \f$\boldsymbol{A}\f$ by some random matrices using Gaussian normal distribution.
 
   <h3>Orthogonalization</h3>
 
