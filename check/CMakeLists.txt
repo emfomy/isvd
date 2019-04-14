@@ -86,7 +86,7 @@ macro(ISVD_CHECK_FN xtypes)
   if(NOT "${x}" STREQUAL "s")
     add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_wen_yin "${XName} Precision Wen-Yin Integration" "1;2;3;4;6;12")
   endif()
-  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_hierarchical_reduction "${XName} Precision Hierarchical Reduction Integration" "1;2;3;4;6;12")
+  add_mpi_check_cpu(libisvd/core/stage/${x}_integrate_multilevel_pairwise "${XName} Precision Multi-level Pairwise Integration" "1;2;3;4;6;12")
 
   # Postprocessing
   add_mpi_check_cpu(libisvd/core/stage/${x}_postprocess_gramian "${XName} Precision Gramian Postprocessing" "1;2;3;4;6;12")

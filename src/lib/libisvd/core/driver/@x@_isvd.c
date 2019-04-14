@@ -30,7 +30,7 @@
 /// \param[in]   alg_i         The selection of integration algorithm. <br>
 ///                            `"KN"`:     \ref isvd_@x@IntegrateKolmogorovNagumo "Kolmogorov-Nagumo integration". <br>
 ///                            `"WY"`:     \ref isvd_@x@IntegrateWenYin "Wen-Yin integration". <br>
-///                            `"HR"`:     \ref isvd_@x@IntegrateHierarchicalReduction "Hierarchical Reduction integration".
+///                            `"MP"`:     \ref isvd_@x@IntegrateMultilevelPairwise "Multi-level Pairwise integration".
 /// \param[in]   alg_p         The selection of postprocessing algorithm. <br>
 ///                            `"TS"`:     \ref isvd_@x@PostprocessTallSkinnyQr "Tall Skinny qr postprocessing". <br>
 ///                            `"GR"`:     \ref isvd_@x@PostprocessGramian "GRamian postprocessing". <br>
@@ -134,7 +134,7 @@ void isvd_@x@Isvd(
 
   const char *opts_s[] = {"GP", "GP_gpu"};
   const char *opts_o[] = {"TS", "GR"};
-  const char *opts_i[] = {"KN", "WY", "HR"};
+  const char *opts_i[] = {"KN", "WY", "MP"};
   const char *opts_p[] = {"TS", "GR", "SY", "TS_gpu", "GR_gpu", "SY_gpu"};
 
   const char *alg_s_ = isvd_arg2str("ALG_S", alg_s, opts_s, NULL, lenof(opts_s));

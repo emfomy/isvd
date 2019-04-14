@@ -5,14 +5,14 @@
 #include <libisvd.h>
 
 #define QS_PATH ISVD_DATA_PATH "/qs.mtx"
-#define Q_PATH  ISVD_DATA_PATH "/q_hr.mtx"
+#define Q_PATH  ISVD_DATA_PATH "/q_mp.mtx"
 
 #define serr 1e-3
 #define derr 1e-8
 
 typedef @xtype_____@ isvd_val_t;
 
-TEST(@XStr@_HierarchicalReductionIntegration, Test) {
+TEST(@XStr@_MultilevelPairwiseIntegration, Test) {
 
   const mpi_int_t mpi_rank = isvd_getMpiRank(MPI_COMM_WORLD);
   const mpi_int_t mpi_root = 0;
@@ -92,7 +92,7 @@ TEST(@XStr@_HierarchicalReductionIntegration, Test) {
   isvd_int_t ldqt = l;
 
   // Run stage
-  isvd_@x@IntegrateHierarchicalReduction(param, NULL, 0, NULL, 0, qst, ldqst, qt, ldqt);
+  isvd_@x@IntegrateMultilevelPairwise(param, NULL, 0, NULL, 0, qst, ldqst, qt, ldqt);
 
   // Gather results
   isvd_val_t *qt_ = isvd_@x@Malloc(l * Pmb);

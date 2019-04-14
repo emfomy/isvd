@@ -46,7 +46,7 @@ void isvd_@x@IntegrateWenYin(
     const @xtype_____@ *yst, const isvd_int_t ldyst, @xtype_____@ *qt, const isvd_int_t ldqt
 );
 
-void isvd_@x@IntegrateHierarchicalReduction(
+void isvd_@x@IntegrateMultilevelPairwise(
     const isvd_Param param, const @xtype_____@ *argv, const isvd_int_t argc, @xtype_____@ *retv, const isvd_int_t retc,
           @xtype_____@ *yst, const isvd_int_t ldyst, @xtype_____@ *qt, const isvd_int_t ldqt
 );

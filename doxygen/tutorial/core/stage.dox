@@ -42,7 +42,7 @@
 
   - The \ref isvd_dIntegrateKolmogorovNagumo "Kolmogorov-Nagumo-Type Integration" finds the average using Kolmogorov-Nagumo-type average.
   - The \ref isvd_dIntegrateWenYin "Wen-Yin Integration" finds the average using line search proposed by Wen and Yin.
-  - The \ref isvd_dIntegrateHierarchicalReduction "Hierarchical Reduction Integration" finds the average using divide and conquer algorithm. Note that it is faster but less accurate.
+  - The \ref isvd_dIntegrateMultilevelPairwise "Multi-level Pairwise Integration" finds the average using divide and conquer algorithm. Note that it is faster but less accurate.
 
   <h3>Postprocessing</h3>
 

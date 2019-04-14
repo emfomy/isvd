@@ -38,7 +38,7 @@ static inline isvd_fun_t isvd_arg2@x@AlgO( const char *arg ) {
 static inline isvd_fun_t isvd_arg2@x@AlgI( const char *arg ) {
   if ( !strcmp(arg, "KN")     ) return (isvd_fun_t) isvd_@x@IntegrateKolmogorovNagumo;
   if ( !strcmp(arg, "WY")     ) return (isvd_fun_t) isvd_@x@IntegrateWenYin;
-  if ( !strcmp(arg, "HR")     ) return (isvd_fun_t) isvd_@x@IntegrateHierarchicalReduction;
+  if ( !strcmp(arg, "MP")     ) return (isvd_fun_t) isvd_@x@IntegrateMultilevelPairwise;
   fprintf(stderr, "Unknown integration abbreviation \"%s\"!\n", arg);
   return NULL;
 }
@@ -71,7 +71,7 @@ static inline const char* isvd_arg2@x@AlgNameO( const char *arg ) {
 static inline const char* isvd_arg2@x@AlgNameI( const char *arg ) {
   if ( !strcmp(arg, "KN")     ) return "@XName@ Precision Kolmogorov-Nagumo Integration";
   if ( !strcmp(arg, "WY")     ) return "@XName@ Precision Wen-Yin Integration";
-  if ( !strcmp(arg, "HR")     ) return "@XName@ Precision Hierarchical Reduction Integration";
+  if ( !strcmp(arg, "MP")     ) return "@XName@ Precision Multi-level Pairwise Integration";
   fprintf(stderr, "Unknown integration abbreviation \"%s\"!\n", arg);
   return NULL;
 }

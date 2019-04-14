@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \file       lib/libisvd/core/stage/@x@_integrate_hierarchical_reduction.c
-/// \brief      The Hierarchical Reduction Integration (@xname@ precision).
+/// \file       lib/libisvd/core/stage/@x@_integrate_multilevel_pairwise.c
+/// \brief      The Multi-level Pairwise Integration (@xname@ precision).
 ///
 /// \author     Mu Yang <<emfomy@gmail.com>>
 /// \copyright  Copyright (c) 2017-2018 Mu Yang. All rights reserved.
@@ -15,7 +15,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup  c_core_stage_module
-/// \brief  Hierarchical Reduction Integration (@xname@ precision).
+/// \brief  Multi-level Pairwise Integration (@xname@ precision).
 ///
 /// \param[in]   param       The \ref isvd_Param "parameters".
 /// \param[in]   argv, argc  The arguments and its length. (not using)
@@ -33,7 +33,7 @@
 ///
 /// \see isvd_Param, \ref tutorial_core_notation
 ///
-void isvd_@x@IntegrateHierarchicalReduction(
+void isvd_@x@IntegrateMultilevelPairwise(
     const isvd_Param   param,
     const @xtype_____@ *argv,
     const isvd_int_t   argc,
